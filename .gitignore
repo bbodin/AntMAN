@@ -43,3 +43,5 @@ R/RcppExports.R
 src/*.o
 src/*.so
 src/*.rds
+*~
+Rplots.pdf
