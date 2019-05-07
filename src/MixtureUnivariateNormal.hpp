@@ -186,7 +186,7 @@ public :
 				sig2_current[l]=sig2_l; // In case 4 we have to update a matrix
 				mu_current[l]=mu_l;
 
-				// TODO : Cannot split or the random value are completly different
+				// TODO[OPTIMIZE ME] : Cannot split or the random value are completly different
 				// Update the Jumps of the allocated part of the process
 				S_current[l]=R::rgamma(nj[l]+gamma_current,1./(U_current+1.0));
 

@@ -40,10 +40,6 @@ public :
 		 _mu_current = mu_current ;
 		 _Sig_current= Sig_current ;
 
-
-
-				// TODO !!
-
 				const arma::colvec mu0  = _mu0;
 				const double       ka0  = _ka0;
 				const unsigned int nu0  = _nu0;
@@ -52,11 +48,12 @@ public :
 
 				for(int l=0;l<M;l++){
 
-					//  TODO : arma::mat rwish(const int df, const arma::mat& S)
+					//  TODO[CHECK ME] : arma::mat rwish(const int df, const arma::mat& S)
 					//  arma::vec mvrnormArma(arma::colvec mu, arma::mat Sig)
+					// TODO[CHECK ME] : Raffa study the lam0 - 1
 					const arma::mat res = riwish (nu0, Lam0);
 
-					_Sig_current.slice(l) = res; // TODO : Raffa study the lam0 - 1
+					_Sig_current.slice(l) = res;
 
 					const arma::colvec tmp = mvrnormArma (mu0, res / ka0) ;
 
@@ -226,7 +223,7 @@ public :
 						const arma::mat matmul = ylmyb * ylmybt;
 						VERBOSE_DEBUG("matmul = " << matmul);
 						VERBOSE_DEBUG("S2 = " << S2);
-						S2 =  S2 + matmul; // TODO : he does not trust me :-(
+						S2 =  S2 + matmul; // TODO[CHECK ME] : he does not trust me :-(
 					}
 
 					// Then the parameters of the posteriorr  Normal-inverse-gamma a posteriori are
@@ -242,7 +239,7 @@ public :
 					Sig_current.slice(l) = Sig_l; // In case 4 we have to update a matrix
 					mu_current.row(l)  = mu_l.t();
 
-					// TODO : Cannot split or the random value are completly different
+					// TODO[OPTIMIZE ME] : Cannot split or the random value are completly different
 					// Update the Jumps of the allocated part of the process
 					S_current[l] = R::rgamma(nj[l]+gamma_current,1./(U_current+1.0));
 
@@ -254,13 +251,13 @@ public :
 				for(int l=K; l<M;l++){
 
 							const arma::mat res = riwish (nu0, Lam0);
-							Sig_current.slice(l) = res; // TODO : Raffa study the lam0 - 1
+							Sig_current.slice(l) = res; // TODO[CHECK ME] : Raffa study the lam0 - 1
 							mu_current.row(l)   = mvrnormArma (mu0, Sig_current.slice(l) / ka0).t() ;
 							S_current[l]=R::rgamma(gamma_current,1./(U_current+1.0));
 						}
 
 
-			 // TODO : same as initializatrion but initialization can be anything philosophical problem !!!
+			 // TODO[OPTIMIZE ME] : same as initializatrion but initialization can be anything philosophical problem !!!
 
 
 				this->_Sig_current = Sig_current;

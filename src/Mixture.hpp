@@ -80,10 +80,6 @@ public:
 		int K=ci_star.size();
 
 
-		VERBOSE_DEBUG("prior->init();");
-		prior->init();
-		VERBOSE_DEBUG("Done");
-
 		int M_na= prior->init_M_na();
 		int M=K+M_na;
 		VERBOSE_DEBUG("this->init_tau (y, M);");
@@ -92,7 +88,7 @@ public:
 
 		Rcpp::NumericVector  S_current=Rcpp::NumericVector(M);
 
-		// TODO : S current initialized with gamma_current !!! should not right ??
+		// TODO[CHECK ME] : S current initialized with gamma_current !!! should not right ??
 		for(int it=0;it<M;it++){
 			S_current[it] =R::rgamma(2.0,1.0); // replace gamma current by 2.0 for now
 		}
@@ -122,7 +118,7 @@ public:
 		auto   start_gibbs           = std::chrono::system_clock::now();
 
 		int iter=0;
-
+		//TODO[CHECK ME] : Check the number of iteration versus burning !!!
 		while (iter < (niter+burnin)) {
 
 			double total_iter           = 0;
@@ -152,7 +148,7 @@ public:
 				if(iter>0){//I need this if i want that my inizialization for ci works
 				ci_current = this->up_ci(y, M, S_current); // parametricPrior = k_x,,X   Tau = Beta_current, z_current
 				}
-				// TODO: This is computed twice, could be avoided.
+				// TODO[OPTIMIZE ME]: This is computed twice, could be avoided.
 				cluster_indices_t ci_star = arma::unique(ci_current);
 				K=ci_star.size();
 				auto end_ci = std::chrono::system_clock::now();

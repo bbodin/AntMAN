@@ -117,7 +117,7 @@ public :
 				for(int l=0;l<M;l++){
 					double linpred_local= matrixProduct(i,l) ;
 
-					// TODO : Parametric here ! ldensi change.
+					// TODO[OPTIMIZE ME] : Parametric here ! ldensi change.
 					double x     = fabs ((z_current[i] - linpred_local));
 					double ldensi=	-(SQRT_2PI + 0.5 * x * x );
 					// Speed-up 30% using homemade dnorm
@@ -133,7 +133,7 @@ public :
 				all_pesi[i] = pesi;
 			}
 
-			// TODO: Does this part needs to be in order because of the rnorm ?
+			// TODO[CHECK ME]: Does this part needs to be in order because of the rnorm ?
 			for(int i=0;i<n;i++){
 				//Let me sample the allocation of the i-th individual
 				ci_current[i]= fast_sample_raf(all_pesi[i]);
@@ -214,7 +214,7 @@ public :
 					Beta_current.row(l)= beta_l;
 
 
-					// TODO : Cannot split or the random value are completly different
+					// TODO[OPTIMIZE ME] : Cannot split or the random value are completly different
 					// Update the Jumps of the allocated part of the process
 					S_current[l]=R::rgamma(nj[l]+gamma_current,1./(U_current+1.0));
 

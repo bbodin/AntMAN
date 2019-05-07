@@ -1,0 +1,95 @@
+
+// --------------------------------------------------------------------------------------------------------------------
+
+class PriorPoissonGamma : public TypedPrior <gamma_h_param_t<poisson_q_param_t>, poisson_q_param_t<gamma_h_param_t>> {
+
+private:
+	PriorPoissonGamma () : TypedPrior<gamma_h_param, poisson_q_param>() {};
+
+public:
+	PriorPoissonGamma (gamma_h_param, poisson_q_param) :
+		TypedPrior<gamma_h_param, poisson_q_param>(gamma_h_param,poisson_q_param)  {
+			// TODO : requirements ?
+		    // If I don't have init, generate
+	}
+
+	PriorPoisson (double ah, double bh , double aq, double bq, double lsd) :
+		TypedPrior<poisson_h_param_t, poisson_q_param_t>(),
+		ah(ah), bh(bh) ,
+		aq(aq), bq(bq), lsd(lsd)   {
+
+		this->q_param.lambda = R::rgamma(aq,bq);
+		VERBOSE_ASSERT(this->q_param.lambda > 0, "Please provide Lambda, R::rgamma(aq,bq) returned 0.");
+
+		this->h_param.gamma = R::rgamma(ah,bh);
+		VERBOSE_ASSERT(this->h_param.gamma > 0, "Please provide gamma, R::rgamma(ah,bh) returned 0.");
+
+	}
+
+	PriorPoisson (double lambda, double gamma) :
+		TypedPrior<poisson_h_param_t, poisson_q_param_t>(lambda, gamma),
+		ah(0.0), bh(0.0) ,
+		aq(0.0), bq(0.0), lsd(0.0)   {
+			// TODO : requirements ?
+	}
+
+	double get_gamma() {return this->h_param.gamma;};
+
+
+
+
+	inline double log_full_EPPF(  double h_param, double K , const std::vector<int> & nj, double U_current , double Lambda_current){
+		double out=0;
+		double up1g=std::pow(1+U_current,h_param);
+
+		out+=std::log(Lambda_current/up1g+K)+Lambda_current/up1g-K*std::log(up1g);
+		for(int j=0;j<K;j++){
+			out+=std::lgamma(h_param+ (double) nj[j])-std::lgamma(h_param);
+		}
+
+		return(out);
+	}
+	inline double log_full_gamma( const double Loc_gamma, const int K ,const  std::vector<int> & nj,const   double Lambda_current,const  double U_current ,const  double ag,const  double bg){
+
+		double out=0;
+		double up1g=std::pow(1+U_current,Loc_gamma);
+
+		out+=std::log(Lambda_current/up1g+K)+Lambda_current/up1g-K*std::log(up1g);
+		for(int j=0;j<K;j++){
+			out+=std::lgamma(Loc_gamma+ (double) nj[j])-std::lgamma(Loc_gamma);
+		}
+		/// When the prior is a gamma
+
+		out+=(ag-1)*std::log(Loc_gamma)-bg*Loc_gamma;
+
+		return(out);
+	}
+
+	int init_M_na() {
+		return R::rpois(this->q_param.lambda);
+	}
+	int update_M_na(const double U ,  const int K) {
+
+		int M_na;
+
+		const double phi_u=-this->h_param.gamma*log(1+U);
+		const double Lambda_u=exp(std::log(this->q_param.lambda)+phi_u);
+
+		const double unif=R::runif(0.0,1.0);
+
+		if(unif<(Lambda_u/(Lambda_u+K))){
+			M_na=R::rpois(Lambda_u)+1;
+
+		}
+		else{
+			M_na=R::rpois(Lambda_u);
+		}
+		return M_na;
+
+	}
+
+
+
+};
+// --------------------------------------------------------------------------------------------------------------------
+

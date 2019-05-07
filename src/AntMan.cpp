@@ -9,34 +9,49 @@
 #include "MixtureMultivariateBernoulli.hpp"
 
 
-/*
-*/
-
 #include "PriorPoisson.hpp"
+
+#include "utils.hpp"
+
 
 
 static const  int AM_MIXTURE_UNIVARIATE            =  0;
 static const  int AM_MIXTURE_MULTIVARIATE          =  1;
 
-static const  int AM_MIXTURE_POISSON               =  2; // 001 [0/1]
-static const  int AM_MIXTURE_BINOMIAL              =  4; // 010 [0/1]
-static const  int AM_MIXTURE_NORMAL                =  6; // 011 [0/1]
-static const  int AM_MIXTURE_PROBIT                =  8; // 100 [0/1]
+static const  int AM_MIXTURE_POISSON               =   2; // 001 [0/1]
+static const  int AM_MIXTURE_BINOMIAL              =   4; // 010 [0/1]
+static const  int AM_MIXTURE_NORMAL                =   6; // 011 [0/1]
+static const  int AM_MIXTURE_PROBIT                =   8; // 100 [0/1]
+static const  int AM_MIXTURE_BERNOULLI             =  10; // 101 [0/1]
 
 static const  int AM_MIXTURE_UNIVARIATE_POISSON    =  AM_MIXTURE_UNIVARIATE | AM_MIXTURE_POISSON ;
 static const  int AM_MIXTURE_UNIVARIATE_BINOMIAL   =  AM_MIXTURE_UNIVARIATE | AM_MIXTURE_BINOMIAL;
 static const  int AM_MIXTURE_UNIVARIATE_NORMAL     =  AM_MIXTURE_UNIVARIATE | AM_MIXTURE_NORMAL  ;
 static const  int AM_MIXTURE_UNIVARIATE_PROBIT     =  AM_MIXTURE_UNIVARIATE | AM_MIXTURE_PROBIT  ;
 
-static const  int AM_MIXTURE_MULTIVARIATE_BINOMIAL = AM_MIXTURE_MULTIVARIATE | AM_MIXTURE_BINOMIAL;
-static const  int AM_MIXTURE_MULTIVARIATE_NORMAL   = AM_MIXTURE_MULTIVARIATE | AM_MIXTURE_NORMAL;
+static const  int AM_MIXTURE_MULTIVARIATE_BERNOULLI = AM_MIXTURE_MULTIVARIATE | AM_MIXTURE_BERNOULLI;
+static const  int AM_MIXTURE_MULTIVARIATE_NORMAL    = AM_MIXTURE_MULTIVARIATE | AM_MIXTURE_NORMAL;
 
-constexpr bool is_univariate (int v) {return v & AM_MIXTURE_UNIVARIATE;};
-constexpr bool is_multivariate (int v) {return v & AM_MIXTURE_MULTIVARIATE;};
+bool is_univariate (Rcpp::List mix_kernel_hyperparams) {
+	VERBOSE_ASSERT (mix_kernel_hyperparams.containsElementNamed("type"), "mix_kernel_hyperparams does not contain a type field.");
+	std::string mixture_type = mix_kernel_hyperparams["type"];
+	return mixture_type.find("uni") != std::string::npos;
+};
+bool is_multivariate (Rcpp::List mix_kernel_hyperparams) {
+	VERBOSE_ASSERT (mix_kernel_hyperparams.containsElementNamed("type"), "mix_kernel_hyperparams does not contain a type field.");
+	std::string  mixture_type = mix_kernel_hyperparams["type"];
+	return mixture_type.find("multi") != std::string::npos;
+};
+
+
+static const int  AM_COMPONENTS_PRIOR_POISSON              = 1 ;
+static const int  AM_COMPONENTS_PRIOR_FIXED_NEGATIVE_BINOMIAL     = 3 ;
+static const int  AM_COMPONENTS_PRIOR_RANDOM_NEGATIVE_BINOMIAL    = 4 ;
+static const int  AM_COMPONENTS_PRIOR_FIXED_DELTA_DIRAC           = 5 ;
+
+static const int AM_PROPOSAL_METROPOLIS_HASTING_PARAMS = 1 ;
 
 static const int  AM_PRIOR_POISSON_GAMMA     = 1 ;
-static const int  AM_PRIOR_RANDOM_POISSON    = 1 ;
-static const int  AM_PRIOR_FIXED_POISSON     = 1 ;
 static const int  AM_PRIOR_GAMMA         	 = 2 ;
 static const int  AM_PRIOR_FIXED         	 = 2 ;
 static const int  AM_PRIOR_NEGATIVE_BINOMIAL = 3 ;
@@ -45,259 +60,206 @@ static const int  AM_GAMMA_WP       = 1 ;
 static const int  AM_FIXED_WP       = 2 ;
 
 
-//TODO: optionnal parallel parameter to set openmp
+static const int  AM_OUTPUT_CI  = 1 << 0;
+static const int  AM_OUTPUT_TAU = 1 << 1;
+static const int  AM_OUTPUT_S   = 1 << 2;
+static const int  AM_OUTPUT_M   = 1 << 3;
+static const int  AM_OUTPUT_K   = 1 << 4;
+static const int  AM_OUTPUT_Mna = 1 << 5;
+static const int  AM_OUTPUT_H   = 1 << 6;
+static const int  AM_OUTPUT_Q   = 1 << 7;
 
-// ********************************************* GENERAL *****************************************************************
+static const int  AM_OUTPUT_DEFAULT   = AM_OUTPUT_CI & AM_OUTPUT_TAU & AM_OUTPUT_S & AM_OUTPUT_M & AM_OUTPUT_K;
+
+
+
+// ************************************************ AM_mcmc_fit ********************************************************************
+
+		Mixture* gen_mix (Rcpp::List          mixture_parameters) {
+
+			VERBOSE_ASSERT (mixture_parameters.containsElementNamed("type"), "In gen_mix mixture_parameters does not contain a type field.");
+
+			if (mixture_parameters.containsElementNamed("alpha0") and mixture_parameters.containsElementNamed("beta0")) {
+				return new Mixture_UnivariatePoisson (mixture_parameters["alpha0"], mixture_parameters["beta0"]);
+			}
+
+			if (mixture_parameters.containsElementNamed("m0") and mixture_parameters.containsElementNamed("k0")
+					 and mixture_parameters.containsElementNamed("nu0")
+					 and mixture_parameters.containsElementNamed("sig02")) {
+				return new Mixture_UnivariateNormal (mixture_parameters["m0"], mixture_parameters["k0"], mixture_parameters["nu0"], mixture_parameters["sig02"]);
+			}
+
+			if (mixture_parameters.containsElementNamed("a0") and mixture_parameters.containsElementNamed("b0")
+							 and mixture_parameters.containsElementNamed("mb")) {
+				return  new Mixture_UnivariateBernoulli (mixture_parameters["a0"], mixture_parameters["b0"], mixture_parameters["mb"]) ;
+			}
+
+			if (mixture_parameters.containsElementNamed("X") and mixture_parameters.containsElementNamed("mu_beta")
+							 and mixture_parameters.containsElementNamed("Sig_beta")) {
+				return new Mixture_UnivariateProbit (mixture_parameters["X"], mixture_parameters["mu_beta"], mixture_parameters["Sig_beta"]) ;
+			}
+
+			if (mixture_parameters.containsElementNamed("mu0") and mixture_parameters.containsElementNamed("ka0")
+							 and mixture_parameters.containsElementNamed("nu0")
+							 and mixture_parameters.containsElementNamed("Lam0")) {
+				return new Mixture_MultivariateNormal (mixture_parameters["mu0"], mixture_parameters["ka0"], mixture_parameters["nu0"], mixture_parameters["Lam0"]);
+			}
+
+			if (mixture_parameters.containsElementNamed("a0") and mixture_parameters.containsElementNamed("b0")) {
+				return  new Mixture_MultivariateBernoulli (mixture_parameters["a0"], mixture_parameters["b0"]);
+			}
+
+			return NULL;
+		}
+		Prior* gen_prior (Rcpp::List mix_components_prior, Rcpp::List  mix_weight_prior , Rcpp::RObject y) {
+
+			// Q is Fixed lambda or Poisson or Binomial
+			// H is gamma
+
+			poisson_gamma_q_param_t * q;
+			poisson_gamma_h_param_t * h;
+
+			VERBOSE_ASSERT (mix_components_prior.containsElementNamed("type"), "In gen_prior mix_components_prior does not contain a type field.");
+			VERBOSE_ASSERT (mix_weight_prior.containsElementNamed("type"), "In gen_prior mix_weight_prior does not contain a type field.");
+
+			std::string prior_type   = mix_components_prior["type"];
+			std::string weight_type  = mix_weight_prior["type"];
+
+			int n = 0;
+			if(Rcpp::is<Rcpp::NumericVector>(y) || Rcpp::is<Rcpp::IntegerVector>(y)){
+				n = Rcpp::as<arma::vec>(y).size();
+			} else  if (Rcpp::is<Rcpp::NumericMatrix>(y) || Rcpp::is<Rcpp::IntegerMatrix>(y)) {
+				n = Rcpp::as<arma::mat>(y).n_rows;
+			} else {
+				VERBOSE_ERROR ("Unsupported type: y variable should be Matrix or Vector.");
+			}
+
+
+			/// ************ Q prior_components_type *******************
+
+			if (mix_components_prior.containsElementNamed("init")
+					and mix_components_prior.containsElementNamed("a")
+					and mix_components_prior.containsElementNamed("b")) {
+				q = new poisson_gamma_q_param_t(
+						Rcpp::as<double>(mix_components_prior["init"]),
+						Rcpp::as<double>(mix_components_prior["a"]),
+						Rcpp::as<double>(mix_components_prior["b"]));
+			} else if (mix_components_prior.containsElementNamed("a")
+					and mix_components_prior.containsElementNamed("b")) {
+					q = new poisson_gamma_q_param_t(
+							Rcpp::as<double>(mix_components_prior["a"]),
+							Rcpp::as<double>(mix_components_prior["b"]));
+			} else if (mix_components_prior.containsElementNamed("Lambda")) {
+					q = new poisson_gamma_q_param_t(
+							Rcpp::as<double>(mix_components_prior["Lambda"]));
+			} else {
+				q = new poisson_gamma_q_param_t(n / 10);
+			}
+
+
+
+			if (mix_weight_prior.containsElementNamed("init")
+							and mix_weight_prior.containsElementNamed("a")
+							and mix_weight_prior.containsElementNamed("b")) {
+				h = new poisson_gamma_h_param_t(
+					Rcpp::as<double>(mix_weight_prior["init"]),
+					Rcpp::as<double>(mix_weight_prior["a"]),
+					Rcpp::as<double>(mix_weight_prior["b"]),
+					1);
+			} else if (mix_weight_prior.containsElementNamed("a")
+					and mix_weight_prior.containsElementNamed("b")) {
+			h = new poisson_gamma_h_param_t(
+					1,
+					Rcpp::as<double>(mix_weight_prior["a"]),
+					Rcpp::as<double>(mix_weight_prior["b"]),
+					1);
+			} else if (mix_weight_prior.containsElementNamed("gamma")) {
+				h = new poisson_gamma_h_param_t(
+					Rcpp::as<double>(mix_weight_prior["gamma"]));
+			} else {
+				h = new poisson_gamma_h_param_t(1);
+			}
+
+
+
+			VERBOSE_ASSERT(q, "Prior error : q is not set.");
+			VERBOSE_ASSERT(h, "Prior error : h is not set.");
+
+
+
+			Prior* 	prior = new  PriorPoissonGamma (*h,*q);
+
+
+			return prior;
+		}
+
+// INTERNAL FUNCTION - No DOCUMENTATION, Please only use AM_ refixed function.
 // [[Rcpp::export]]
-Rcpp::List AM_gibbs_parameters (
-		int niter,
-		int burnin,
-		int thin,
-		int verbose) {
-
-	return Rcpp::List::create(
-				Rcpp::Named("niter")   = niter,
-				Rcpp::Named("burnin")  = burnin,
-				Rcpp::Named("thin")    = thin,
-				Rcpp::Named("verbose") = verbose);
-
-
-}
-
-
-// ************************************************ PRIOR PARAMETERS ********************************************************************
-
-// [[Rcpp::export]]
-Rcpp::List AM_poisson_gamma_prior_parameters (double inith , double initq, double ah, double bh,double aq, double bq,double lsd) {
-	return Rcpp::List::create(
-			Rcpp::Named("inith")= inith,
-			Rcpp::Named("initq")= initq,
-			Rcpp::Named("ah")   = ah,
-			Rcpp::Named("bh")   = bh,
-			Rcpp::Named("aq")   = aq,
-			Rcpp::Named("bq")   = bq,
-			Rcpp::Named("lsd")  = lsd,
-			Rcpp::Named("type") = AM_PRIOR_POISSON_GAMMA
-			);
-}
-
-// [[Rcpp::export]]
-Rcpp::List AM_gamma_prior_parameters (double inith , double initq) {
-	return Rcpp::List::create(
-			Rcpp::Named("inith")= inith,
-			Rcpp::Named("initq")= initq,
-			Rcpp::Named("type") = AM_PRIOR_GAMMA
-			);
-}
-
-// [[Rcpp::export]]
-Rcpp::List AM_negative_binomial_prior_parameters (double initgamma, double R_M, double P_M , double LSDR_M, double LSDP_M,
-	                                              double a_R, double b_R, double a_P, double b_P , double a, double b, double lsd) {
-
-	return Rcpp::List::create(
-			Rcpp::Named("initgamma")= initgamma,
-			Rcpp::Named("R_M")    = R_M,
-			Rcpp::Named("P_M")    = P_M,
-			Rcpp::Named("LSDR_M") = LSDR_M,
-			Rcpp::Named("LSDP_M") = LSDP_M,
-			Rcpp::Named("a_R")    = a_R,
-			Rcpp::Named("b_R")    = b_R,
-			Rcpp::Named("a_P")    = a_P,
-			Rcpp::Named("b_P")    = b_P,
-			Rcpp::Named("a")      = a,
-			Rcpp::Named("b")      = b,
-			Rcpp::Named("lsd")    = lsd,
-			Rcpp::Named("type")   = AM_PRIOR_NEGATIVE_BINOMIAL
-			);
-}
-
-
-// ************************************************ MIXTURE PARAMETERS ********************************************************************
-
-
-// [[Rcpp::export]]
-Rcpp::List AM_univariate_poisson_mixture_parameters (double alpha0, double beta0) {
-
-	return Rcpp::List::create(
-			Rcpp::Named("alpha0")   = alpha0,
-			Rcpp::Named("beta0")    = beta0,
-			Rcpp::Named("type")     = AM_MIXTURE_UNIVARIATE_POISSON
-			);
-
-}
-
-// [[Rcpp::export]]
-Rcpp::List AM_univariate_normal_mixture_parameters (
-		double m0, double k0, double nu0, double sig02
+Rcpp::List IAM_mcmc_fit (
+		Rcpp::RObject                        y                      , /* Not optional */
+		Rcpp::List                           mix_kernel_hyperparams , /* Not optional */
+		Rcpp::IntegerVector                  initial_clustering     , //  = Rcpp::IntegerVector::create() /* default will be 1for1 */
+		Rcpp::List                           mix_components_prior   , //  = Rcpp::List::create()          /* default will be Poisson ()  */
+		Rcpp::List                           mix_weight_prior       , //  = Rcpp::List::create()          /* default will be Gamma ()    */
+		Rcpp::List                           mcmc_parameters          //  = Rcpp::List::create()          /* (default niter=20000, ….)   */
 		) {
-	return Rcpp::List::create(
-			Rcpp::Named("m0")   = m0,
-			Rcpp::Named("k0")   = k0,
-			Rcpp::Named("nu0")   = nu0,
-			Rcpp::Named("sig02")    = sig02,
-			Rcpp::Named("type")     = AM_MIXTURE_UNIVARIATE_NORMAL
-			);
-}
-
-// [[Rcpp::export]]
-Rcpp::List AM_univariate_binomial_mixture_parameters (
-		Rcpp::NumericVector a0,
-		Rcpp::NumericVector b0,
-		Rcpp::NumericVector mb
-		) {
-	return Rcpp::List::create(
-			Rcpp::Named("a0")   = a0,
-			Rcpp::Named("b0")   = b0,
-			Rcpp::Named("mb")   = mb,
-			Rcpp::Named("type")     = AM_MIXTURE_UNIVARIATE_BINOMIAL
-			);
-}
-
-// [[Rcpp::export]]
-Rcpp::List AM_univariate_probit_mixture_parameters (
-		const Rcpp::NumericMatrix & X,
-		const Rcpp::NumericVector & Mu,
-		const Rcpp::NumericMatrix & Sig
-		) {
-	return Rcpp::List::create(
-			Rcpp::Named("X")   = X,
-			Rcpp::Named("Mu")   = Mu,
-			Rcpp::Named("Sig")   = Sig,
-			Rcpp::Named("type")     = AM_MIXTURE_UNIVARIATE_PROBIT
-			);
-}
 
 
-// [[Rcpp::export]]
-Rcpp::List AM_multivariate_binomial_mixture_parameters (
-		const arma::vec  a0,
-		const arma::vec  b0,
-		const arma::vec  mb
-		) {
-	return Rcpp::List::create(
-			Rcpp::Named("a0")   = a0,
-			Rcpp::Named("b0")   = b0,
-			Rcpp::Named("mb")   = mb,
-			Rcpp::Named("type")     = AM_MIXTURE_MULTIVARIATE_BINOMIAL
-			);
-}
+	VERBOSE_ASSERT(mcmc_parameters.containsElementNamed("niter"), "mcmc_parameters does not contains niter field." );
+	VERBOSE_ASSERT(mcmc_parameters.containsElementNamed("burnin"), "mcmc_parameters does not contains burnin field." );
+	VERBOSE_ASSERT(mcmc_parameters.containsElementNamed("thin"), "mcmc_parameters does not contains thin field." );
+	VERBOSE_ASSERT(mcmc_parameters.containsElementNamed("verbose"), "mcmc_parameters does not contains verbose field." );
+	VERBOSE_ASSERT(mcmc_parameters.containsElementNamed("output"), "mcmc_parameters does not contains output field." );
+	VERBOSE_ASSERT(mcmc_parameters.containsElementNamed("file_output"), "mcmc_parameters does not contains file_output field." );
 
-// [[Rcpp::export]]
-Rcpp::List AM_multivariate_normal_mixture_parameters (
-		arma::vec    mu0,
-		double       ka0,
-		unsigned int nu0,
-		arma::mat    Lam0) {
-	return Rcpp::List::create(
-			Rcpp::Named("mu0")   = mu0,
-			Rcpp::Named("ka0")   = ka0,
-			Rcpp::Named("nu0")   = nu0,
-			Rcpp::Named("Lam0")   = Lam0,
-			Rcpp::Named("type")     = AM_MIXTURE_MULTIVARIATE_NORMAL
-			);
-}
+	VERBOSE_LEVEL = mcmc_parameters["verbose"] ;
+
+	VERBOSE_DEBUG ("Debug mode is on.");
+	VERBOSE_INFO ("Start mcmc_fit");
+	VERBOSE_INFO ("- y = " << y);
+	VERBOSE_INFO ("- mix_kernel_hyperparams = " << mix_kernel_hyperparams.size());
+	VERBOSE_INFO ("- initial_clustering = " << initial_clustering.size());
+	VERBOSE_INFO ("- mix_components_prior = " << mix_components_prior.size());
+	VERBOSE_INFO ("- mix_weight_prior = " << mix_weight_prior.size());
+	VERBOSE_INFO ("- mcmc_parameters = " << mcmc_parameters.size());
 
 
-// ************************************************ GIBBS ********************************************************************
+	Prior*                prior    = gen_prior(mix_components_prior,mix_weight_prior, y);
+	Mixture*              mixture  = gen_mix(mix_kernel_hyperparams);
 
-// TODO facultavive initial clstering
 
-Mixture* generate_mixture (Rcpp::List          mixture_parameters) {
-	int mixture_type = mixture_parameters["type"];
-	Mixture*    mixture;
-	switch(mixture_type) {
-	case AM_MIXTURE_UNIVARIATE_POISSON :
-		mixture = new Mixture_UnivariatePoisson (mixture_parameters["alpha0"], mixture_parameters["beta0"]);
-		break;
-	case AM_MIXTURE_UNIVARIATE_NORMAL :
-		mixture = new Mixture_UnivariateNormal (mixture_parameters["m0"], mixture_parameters["k0"], mixture_parameters["nu0"], mixture_parameters["sig02"]);
-		break;
-	case AM_MIXTURE_UNIVARIATE_BINOMIAL :
-		mixture = new Mixture_UnivariateBernoulli (mixture_parameters["a0"], mixture_parameters["b0"], mixture_parameters["mb"]) ;
-		break;
-	case AM_MIXTURE_UNIVARIATE_PROBIT :
-		mixture = new Mixture_UnivariateProbit (mixture_parameters["X"], mixture_parameters["mu_beta"], mixture_parameters["Sig_beta"]) ;
-		break;
-	case AM_MIXTURE_MULTIVARIATE_NORMAL :
-		mixture = new Mixture_MultivariateNormal (mixture_parameters["mu0"], mixture_parameters["ka0"], mixture_parameters["nu0"], mixture_parameters["Lam0"]);
-		break;
-	case AM_MIXTURE_MULTIVARIATE_BINOMIAL :
-		mixture = new Mixture_MultivariateBernoulli (mixture_parameters["a0"], mixture_parameters["b0"], mixture_parameters["mb"]);
-		break;
-	default :
-		mixture = NULL;
+	VERBOSE_ASSERT(mixture, "gen_mix returned NULL");
+	VERBOSE_ASSERT(prior, "gen_prior returned NULL");
+
+
+
+	if(Rcpp::is<Rcpp::NumericVector>(y) || Rcpp::is<Rcpp::IntegerVector>(y)){
+		VERBOSE_ASSERT (is_univariate(mix_kernel_hyperparams), "y argument is a Vector while the technique is not Univariate.") ;
+		GibbsResult res =  dynamic_cast<UnivariateMixture*>(mixture)->fit(Rcpp::as<arma::vec>(y) , initial_clustering, prior ,
+				mcmc_parameters["niter"] ,mcmc_parameters["burnin"] ,mcmc_parameters["thin"] ,mcmc_parameters["verbose"] );
+
+		return Rcpp::List::create(
+					Rcpp::Named("U_post")      = res.U,
+					Rcpp::Named("ci_post")     = res.ci,
+					Rcpp::Named("S_post")      = res.S,
+					Rcpp::Named("M_post")      = res.M,
+					Rcpp::Named("K_post")      = res.K);
+
+	} else if (Rcpp::is<Rcpp::NumericMatrix>(y) || Rcpp::is<Rcpp::IntegerMatrix>(y)) {
+		VERBOSE_ASSERT (is_multivariate(mix_kernel_hyperparams), "y argument is a Matrix while the technique is not MultiVariate.") ;
+
+		GibbsResult res =  dynamic_cast<MultivariateMixture*>(mixture)->fit(Rcpp::as<arma::mat>(y) , initial_clustering, prior ,
+				mcmc_parameters["niter"] ,mcmc_parameters["burnin"] ,mcmc_parameters["thin"] ,mcmc_parameters["verbose"] );
+
+		return Rcpp::List::create(
+					Rcpp::Named("U_post")      = res.U,
+					Rcpp::Named("ci_post")     = res.ci,
+					Rcpp::Named("S_post")      = res.S,
+					Rcpp::Named("M_post")      = res.M,
+					Rcpp::Named("K_post")      = res.K);
+	} else {
+		VERBOSE_ERROR("The parameter y must be a Matrix or a Vector.");
 	}
-	return mixture;
-}
-Prior* generate_prior (Rcpp::List          prior_parameters) {
-
-	int prior_type   = prior_parameters["type"];
-
-	Prior*                prior ;
-	switch (prior_type) {
-	case AM_PRIOR_POISSON_GAMMA :
-		prior = new PriorPoisson (prior_parameters["inith"], prior_parameters["initq"],
-				prior_parameters["ah"], prior_parameters["bh"] , prior_parameters["aq"], prior_parameters["bq"], prior_parameters["lsd"]);
-		break;
-	case AM_PRIOR_GAMMA :
-		prior = new PriorPoisson (prior_parameters["inith"], prior_parameters["initq"]);
-		break;
-	default :
-		prior = NULL;
-	}
-	return prior;
-}
-
-// [[Rcpp::export]]
-Rcpp::List AM_Univariate_Gibbs_Fit (
-		Rcpp::NumericVector y,
-		Rcpp::IntegerVector initial_clustering,
-		Rcpp::List          prior_parameters,
-		Rcpp::List          mixture_parameters,
-		Rcpp::List          gibbs_parameters ) {
-
-	Prior*                prior    = generate_prior(prior_parameters);
-	UnivariateMixture*    mixture  = dynamic_cast<UnivariateMixture*>(generate_mixture(mixture_parameters));
-
-	assert(mixture);
-	assert(prior);
-
-	GibbsResult res = mixture->fit(Rcpp::as<arma::vec>(y) , Rcpp::as<cluster_indices_t>(initial_clustering), prior ,
-			   gibbs_parameters["niter"] ,gibbs_parameters["burnin"] ,gibbs_parameters["thin"] ,gibbs_parameters["verbose"] );
-
-	return Rcpp::List::create(
-				Rcpp::Named("U_post")      = res.U,
-				Rcpp::Named("ci_post")     = res.ci,
-				Rcpp::Named("S_post")      = res.S,
-				Rcpp::Named("M_post")      = res.M,
-				Rcpp::Named("K_post")      = res.K);
+	return Rcpp::List::create(Rcpp::Named("Error") = "Unexpected error."  );
 
 }
-
-// [[Rcpp::export]]
-Rcpp::List AM_Multivariate_Gibbs_Fit (
-		Rcpp::NumericMatrix y,
-		Rcpp::IntegerVector initial_clustering,
-		Rcpp::List          prior_parameters,
-		Rcpp::List          mixture_parameters,
-		Rcpp::List          gibbs_parameters ) {
-
-	Prior*                prior    = generate_prior(prior_parameters);
-	MultivariateMixture*  mixture  = dynamic_cast<MultivariateMixture*>(generate_mixture(mixture_parameters));
-
-	assert(mixture);
-	assert(prior);
-
-	GibbsResult res = mixture->fit(Rcpp::as<arma::mat>(y) , Rcpp::as<cluster_indices_t>(initial_clustering), prior ,
-			   gibbs_parameters["niter"] ,gibbs_parameters["burnin"] ,gibbs_parameters["thin"] ,gibbs_parameters["verbose"] );
-
-	return Rcpp::List::create(
-				Rcpp::Named("U_post")      = res.U,
-				Rcpp::Named("ci_post")     = res.ci,
-				Rcpp::Named("S_post")      = res.S,
-				Rcpp::Named("M_post")      = res.M,
-				Rcpp::Named("K_post")      = res.K);
-
-}
-
-

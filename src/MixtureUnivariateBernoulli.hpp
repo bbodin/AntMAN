@@ -30,7 +30,6 @@ public :
 	virtual void init_tau (const input_t & y, const int M) {
 		 _theta .resize(M)  ;
 
-		 // TODO : implement me
 		 const double b0 = _b0;
 		 const double a0 = _a0;
 		 const double mb = _mb;
@@ -46,7 +45,7 @@ public :
 				const Rcpp::NumericVector & S_current) {
 
 			const int    mb    = _mb;
-			const int n = y.size();
+			const int    n     = y.size(); // TODO[DISCUSS ME]: there is a problem between colvec rowvec and matrix and the way data is layout (d,n) or (n,1)
 
 			const std::vector<double>& theta_current = _theta;
 			Rcpp::NumericVector Log_S_current = log(S_current);
@@ -157,7 +156,7 @@ public :
 					const double bn = njl  * mb - ysum + b0;
 					theta_current[l] = R::rbeta (an, bn);
 
-					// TODO : Cannot split or the random value are completly different
+					// TODO[OPTIMIZE ME] : Cannot split or the random value are completly different
 					// Update the Jumps of the allocated part of the process
 					S_current[l]=R::rgamma(nj[l]+gamma_current,1./(U_current+1.0));
 
@@ -167,7 +166,7 @@ public :
 
 				for(int l=K; l<M;l++){
 					theta_current[l] = R::rbeta (a0, b0) ;
-					// TODO : theta_current must be non-zero
+					// TODO[CHECK ME] : theta_current must be non-zero
 					S_current[l]=R::rgamma(gamma_current,1./(U_current+1.0));
 				}
 

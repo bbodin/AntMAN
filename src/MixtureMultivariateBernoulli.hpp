@@ -15,20 +15,20 @@
 class Mixture_MultivariateBernoulli: public MultivariateMixture  {
 
 	// Parametric Prior
-	arma::vec      _mb; // TODO : all to 1 so far
+	arma::vec      _mb;
 	arma::vec _a0, _b0;
 
 	//Tau
 	arma::mat _theta;
 
 public :
-	Mixture_MultivariateBernoulli (const arma::vec  a0, const arma::vec  b0, const arma::vec  mb) :  _mb(mb), _a0 (a0), _b0 (b0) {}
+	Mixture_MultivariateBernoulli (const arma::vec  a0, const arma::vec  b0) :  _mb(a0.size(), 1), _a0 (a0), _b0 (b0) {}
+	//Mixture_MultivariateBernoulli (const arma::vec  a0, const arma::vec  b0, const arma::vec  mb) :  _mb(mb), _a0 (a0), _b0 (b0) {}
 
 	virtual void init_tau (const input_t & y, const int M) {
 
 		VERBOSE_DEBUG(" init_tau (const input_t & y, const int M)");
 
-		   // TODO : implement me
 				const arma::vec& b0 = _b0;
 				const arma::vec& a0 = _a0;
 				const arma::vec& mb = _mb;
@@ -178,7 +178,7 @@ public :
 				for (int e = 0 ; e < d; e++) {
 					theta_current(l,e) = R::rbeta (an[e], bn[e]);
 				}
-				// TODO : Cannot split or the random value are completly different
+				// TODO[OPTIMIZE ME] : Cannot split or the random value are completly different
 				// Update the Jumps of the allocated part of the process
 				S_current[l]=R::rgamma(nj[l]+gamma_current,1./(U_current+1.0));
 
@@ -190,7 +190,7 @@ public :
 				for (int e = 0 ; e < d; e++) {
 					theta_current(l,e) = R::rbeta (a0[e], b0[e]);
 				}
-				// TODO : theta_current must be non-zero
+				// TODO[CHECK ME] : theta_current must be non-zero
 				S_current[l]=R::rgamma(gamma_current,1./(U_current+1.0));
 			}
 
@@ -206,6 +206,5 @@ public :
 
 
 
-// TODO : remove those freaking size everywhere it is full of s****
 
 #endif /* PROBITFMMNEW_SRC_MIXTUREMULTIVARIATEBERNOULLI_HPP_ */

@@ -27,10 +27,10 @@ public :
 		const double beta0 = _alpha0;
 		const double alpha0 = _beta0;
 		_theta.resize(M);
-		// TODO : If alpha0 is lower than 10-3 then instability so warning to user maybe ? std::numeric_limits <double>::min ()
+		// TODO[CHECK ME] : If alpha0 is lower than 10-3 then instability so warning to user maybe ? std::numeric_limits <double>::min ()
 		for(int l=0;l<M;l++){
-			_theta[l] = (1. / beta0) * R::rgamma(alpha0, 1);
-			_theta[l] = (_theta[l] < 0.0000001) ? _theta[l]  : 0.0000001 ;
+			_theta[l] = (1. / beta0) * R::rgamma(alpha0, 1); // TODO : everytime you use gamma, no zero but epsilon with a warning!!!
+			_theta[l] = (_theta[l] < 0.0000001) ? _theta[l]  : 0.0000001 ; // TODO: this is not small need epsilon
 		}
 	}
 
@@ -104,9 +104,9 @@ public :
 			const double alphan = alpha0 + ysum;
 			const double scalen  = 1.0/(beta0 + njl);
 			theta_current[l] = scalen * R::rgamma (alphan, 1);
-			// TODO : theta_current must be non-zero
+			// TODO[CHECK ME] : theta_current must be non-zero
 
-			// TODO : Cannot split or the random value are completly different
+			// TODO[OPTIMIZE ME] : Cannot split or the random value are completly different
 			// Update the Jumps of the allocated part of the process
 			S_current[l]=R::rgamma(nj[l]+gamma_current,1./(U_current+1.0));
 
@@ -116,7 +116,7 @@ public :
 
 		for(int l=K; l<M;l++){
 			theta_current[l] = (1.0 / beta0) * R::rgamma (alpha0 , 1) ;
-			// TODO : theta_current must be non-zero
+			// TODO[CHECK ME] : theta_current must be non-zero
 			S_current[l]=R::rgamma(gamma_current,1./(U_current+1.0));
 		}
 

@@ -32,9 +32,7 @@ AM_sample_uninorm <- function(n,pro,mmu,ssd){
 
 
 
-
-
-AM_sample_unipois <- function(n,pro,mth){
+AM_sample_unipois <- function(n=1000,pro=c(0.2,0.5,0.3),mth=c(5,25,50)){
   if(length(mth)!=length(pro)){stop()}
   
   y <- vector(length=n)
