@@ -59,7 +59,7 @@ public:
 	//		const double ln_acp = (log_full_gamma_new - lmedia) - (log_full_gamma_vec - lnuovo);
 
 
-			double ln_acp = log_ful1l_gamma(nuovo , K , nj,  q_param.lambda, U , a, b ) - lmedia;
+			double ln_acp = log_full_gamma(nuovo , K , nj,  q_param.lambda, U , a, b ) - lmedia;
 
 			ln_acp= ln_acp - (log_full_gamma(vecchio , K , nj,   q_param.lambda, U , a, b) - lnuovo);
 

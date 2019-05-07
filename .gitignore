@@ -14,6 +14,8 @@
 # Output files from R CMD check
 /*.Rcheck/
 
+/*.install/
+
 # RStudio files
 .Rproj.user/
 
@@ -40,3 +42,4 @@ src/RcppExports.cpp
 R/RcppExports.R
 src/*.o
 src/*.so
+src/*.rds
