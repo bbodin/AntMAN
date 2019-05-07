@@ -13,25 +13,6 @@
 
 #include "utils.hpp"
 
-
-
-static const  int AM_MIXTURE_UNIVARIATE            =  0;
-static const  int AM_MIXTURE_MULTIVARIATE          =  1;
-
-static const  int AM_MIXTURE_POISSON               =   2; // 001 [0/1]
-static const  int AM_MIXTURE_BINOMIAL              =   4; // 010 [0/1]
-static const  int AM_MIXTURE_NORMAL                =   6; // 011 [0/1]
-static const  int AM_MIXTURE_PROBIT                =   8; // 100 [0/1]
-static const  int AM_MIXTURE_BERNOULLI             =  10; // 101 [0/1]
-
-static const  int AM_MIXTURE_UNIVARIATE_POISSON    =  AM_MIXTURE_UNIVARIATE | AM_MIXTURE_POISSON ;
-static const  int AM_MIXTURE_UNIVARIATE_BINOMIAL   =  AM_MIXTURE_UNIVARIATE | AM_MIXTURE_BINOMIAL;
-static const  int AM_MIXTURE_UNIVARIATE_NORMAL     =  AM_MIXTURE_UNIVARIATE | AM_MIXTURE_NORMAL  ;
-static const  int AM_MIXTURE_UNIVARIATE_PROBIT     =  AM_MIXTURE_UNIVARIATE | AM_MIXTURE_PROBIT  ;
-
-static const  int AM_MIXTURE_MULTIVARIATE_BERNOULLI = AM_MIXTURE_MULTIVARIATE | AM_MIXTURE_BERNOULLI;
-static const  int AM_MIXTURE_MULTIVARIATE_NORMAL    = AM_MIXTURE_MULTIVARIATE | AM_MIXTURE_NORMAL;
-
 bool is_univariate (Rcpp::List mix_kernel_hyperparams) {
 	VERBOSE_ASSERT (mix_kernel_hyperparams.containsElementNamed("type"), "mix_kernel_hyperparams does not contain a type field.");
 	std::string mixture_type = mix_kernel_hyperparams["type"];
@@ -42,23 +23,6 @@ bool is_multivariate (Rcpp::List mix_kernel_hyperparams) {
 	std::string  mixture_type = mix_kernel_hyperparams["type"];
 	return mixture_type.find("multi") != std::string::npos;
 };
-
-
-static const int  AM_COMPONENTS_PRIOR_POISSON              = 1 ;
-static const int  AM_COMPONENTS_PRIOR_FIXED_NEGATIVE_BINOMIAL     = 3 ;
-static const int  AM_COMPONENTS_PRIOR_RANDOM_NEGATIVE_BINOMIAL    = 4 ;
-static const int  AM_COMPONENTS_PRIOR_FIXED_DELTA_DIRAC           = 5 ;
-
-static const int AM_PROPOSAL_METROPOLIS_HASTING_PARAMS = 1 ;
-
-static const int  AM_PRIOR_POISSON_GAMMA     = 1 ;
-static const int  AM_PRIOR_GAMMA         	 = 2 ;
-static const int  AM_PRIOR_FIXED         	 = 2 ;
-static const int  AM_PRIOR_NEGATIVE_BINOMIAL = 3 ;
-
-static const int  AM_GAMMA_WP       = 1 ;
-static const int  AM_FIXED_WP       = 2 ;
-
 
 static const int  AM_OUTPUT_CI  = 1 << 0;
 static const int  AM_OUTPUT_TAU = 1 << 1;
@@ -222,6 +186,12 @@ Rcpp::List IAM_mcmc_fit (
 	VERBOSE_INFO ("- mix_components_prior = " << mix_components_prior.size());
 	VERBOSE_INFO ("- mix_weight_prior = " << mix_weight_prior.size());
 	VERBOSE_INFO ("- mcmc_parameters = " << mcmc_parameters.size());
+	VERBOSE_INFO ("- Rcpp::is<Rcpp::NumericVector>(y) = " << Rcpp::is<Rcpp::NumericVector>(y));
+	VERBOSE_INFO ("- Rcpp::is<Rcpp::IntegerVector>(y) = " << Rcpp::is<Rcpp::IntegerVector>(y));
+	VERBOSE_INFO ("- Rcpp::is<Rcpp::NumericMatrix>(y) = " << Rcpp::is<Rcpp::NumericMatrix>(y));
+	VERBOSE_INFO ("- Rcpp::is<Rcpp::IntegerMatrix>(y) = " << Rcpp::is<Rcpp::IntegerMatrix>(y));
+
+
 
 
 	Prior*                prior    = gen_prior(mix_components_prior,mix_weight_prior, y);
@@ -233,31 +203,31 @@ Rcpp::List IAM_mcmc_fit (
 
 
 
-	if(Rcpp::is<Rcpp::NumericVector>(y) || Rcpp::is<Rcpp::IntegerVector>(y)){
-		VERBOSE_ASSERT (is_univariate(mix_kernel_hyperparams), "y argument is a Vector while the technique is not Univariate.") ;
-		GibbsResult res =  dynamic_cast<UnivariateMixture*>(mixture)->fit(Rcpp::as<arma::vec>(y) , initial_clustering, prior ,
-				mcmc_parameters["niter"] ,mcmc_parameters["burnin"] ,mcmc_parameters["thin"] ,mcmc_parameters["verbose"] );
+	if (Rcpp::is<Rcpp::NumericMatrix>(y) || Rcpp::is<Rcpp::IntegerMatrix>(y)) {
+			VERBOSE_ASSERT (is_multivariate(mix_kernel_hyperparams), "y argument is a Matrix while the technique is not MultiVariate.") ;
 
-		return Rcpp::List::create(
-					Rcpp::Named("U_post")      = res.U,
-					Rcpp::Named("ci_post")     = res.ci,
-					Rcpp::Named("S_post")      = res.S,
-					Rcpp::Named("M_post")      = res.M,
-					Rcpp::Named("K_post")      = res.K);
+			GibbsResult res =  dynamic_cast<MultivariateMixture*>(mixture)->fit(Rcpp::as<arma::mat>(y) , initial_clustering, prior ,
+					mcmc_parameters["niter"] ,mcmc_parameters["burnin"] ,mcmc_parameters["thin"] ,mcmc_parameters["verbose"] );
 
-	} else if (Rcpp::is<Rcpp::NumericMatrix>(y) || Rcpp::is<Rcpp::IntegerMatrix>(y)) {
-		VERBOSE_ASSERT (is_multivariate(mix_kernel_hyperparams), "y argument is a Matrix while the technique is not MultiVariate.") ;
+			return Rcpp::List::create(
+						Rcpp::Named("U_post")      = res.U,
+						Rcpp::Named("ci_post")     = res.ci,
+						Rcpp::Named("S_post")      = res.S,
+						Rcpp::Named("M_post")      = res.M,
+						Rcpp::Named("K_post")      = res.K);
+		}  else if(Rcpp::is<Rcpp::NumericVector>(y) || Rcpp::is<Rcpp::IntegerVector>(y)){
+			VERBOSE_ASSERT (is_univariate(mix_kernel_hyperparams), "y argument is a Vector while the technique is not Univariate.") ;
+			GibbsResult res =  dynamic_cast<UnivariateMixture*>(mixture)->fit(Rcpp::as<arma::vec>(y) , initial_clustering, prior ,
+					mcmc_parameters["niter"] ,mcmc_parameters["burnin"] ,mcmc_parameters["thin"] ,mcmc_parameters["verbose"] );
 
-		GibbsResult res =  dynamic_cast<MultivariateMixture*>(mixture)->fit(Rcpp::as<arma::mat>(y) , initial_clustering, prior ,
-				mcmc_parameters["niter"] ,mcmc_parameters["burnin"] ,mcmc_parameters["thin"] ,mcmc_parameters["verbose"] );
+			return Rcpp::List::create(
+						Rcpp::Named("U_post")      = res.U,
+						Rcpp::Named("ci_post")     = res.ci,
+						Rcpp::Named("S_post")      = res.S,
+						Rcpp::Named("M_post")      = res.M,
+						Rcpp::Named("K_post")      = res.K);
 
-		return Rcpp::List::create(
-					Rcpp::Named("U_post")      = res.U,
-					Rcpp::Named("ci_post")     = res.ci,
-					Rcpp::Named("S_post")      = res.S,
-					Rcpp::Named("M_post")      = res.M,
-					Rcpp::Named("K_post")      = res.K);
-	} else {
+		} else {
 		VERBOSE_ERROR("The parameter y must be a Matrix or a Vector.");
 	}
 	return Rcpp::List::create(Rcpp::Named("Error") = "Unexpected error."  );

@@ -9,11 +9,13 @@ deps :
 
 AntMan.install/AntMan/libs/antman.so : ${C_FILES} ${R_FILES}
 	rm -rf AntMan_1.0.tar.gz AntMan.Rcheck AntMan.install
-	R -e  "print (1); Rcpp::compileAttributes(pkgdir = \"./\" , verbose=TRUE);"
+	R -e  "Rcpp::compileAttributes(pkgdir = \"./\" , verbose=TRUE);"
 	R CMD check . || ( cat  AntMan.Rcheck/00install.out && false )
-	R CMD build --no-manual --resave-data=no . 
+	R CMD build . 
 	mkdir -p AntMan.install
 	R CMD INSTALL  -l AntMan.install AntMan_1.0.tar.gz
+	R -e  "library(devtools) ; document() ; devtools::build_manual();"
+
 
 
 clean : 

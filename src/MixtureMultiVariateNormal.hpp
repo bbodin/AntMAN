@@ -197,7 +197,8 @@ public :
 					//Firs compute the posterior parameters
 
 					VERBOSE_DEBUG("y_l is a std::vector of  =>" << y_l.size());
-					const arma::vec ysum = vectorsum(y_l);
+
+					const arma::vec ysum = y_l.size() ? vectorsum(y_l) : arma::zeros(d);
 
 					VERBOSE_DEBUG("ysum =>" << ysum.n_rows << "x" << ysum.n_cols);
 					VERBOSE_DEBUG("++");

@@ -45,3 +45,9 @@ src/*.so
 src/*.rds
 *~
 Rplots.pdf
+
+
+.cproject
+.project
+.settings/
+

@@ -181,7 +181,7 @@ fit <- AM_mcmc_fit(
 
 summary (fit)
 plot(fit$K_post)
-plot(y_uvn,col=fit$ci_post[[length(fit$ci_post)]]+1)
+plot(y_mvn,col=fit$ci_post[[length(fit$ci_post)]]+1)
 
 
 
@@ -230,7 +230,7 @@ fit <- AM_mcmc_fit(
 
 summary (fit)
 plot(fit$K_post)
-plot(y_uvn,col=fit$ci_post[[length(fit$ci_post)]]+1)
+plot(y_mvb,col=fit$ci_post[[length(fit$ci_post)]]+1)
 
 
 1

@@ -170,7 +170,7 @@ public :
 
 
 				//First compute the posterior parameters
-				const arma::vec ysum = vectorsum(y_l);
+				const arma::vec ysum = y_l.size() ? vectorsum(y_l) : arma::zeros(d);
 
 				const arma::vec an = a0 + ysum;
 				const arma::vec bn = njvec % mb  - ysum + b0; // remove mb
