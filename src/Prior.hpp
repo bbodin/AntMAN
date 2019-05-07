@@ -1,0 +1,70 @@
+/*
+ * Prior.hpp
+ *
+ *  Created on: Apr 8, 2019
+ *      Author: toky
+ */
+
+#ifndef ANTMAN_SRC_PRIOR_HPP_
+#define ANTMAN_SRC_PRIOR_HPP_
+
+#include <cassert>
+
+// [[Rcpp::depends(RcppArmadillo)]]
+#include <RcppArmadillo.h>
+// --------------------------------------------------------------------------------------------------------------------
+
+class Prior {
+
+
+public :
+	virtual void init   () = 0 ;
+	virtual void update (const double U, const int K, const std::vector<int> &nj ) = 0 ;
+
+	virtual void init_q_param ()= 0;
+	virtual void init_h_param ()= 0;
+
+	virtual void update_q_param (const double U, const int K) = 0;
+	virtual void update_h_param (const double U, const int K, const std::vector<int> &nj )= 0;
+
+	virtual double get_gamma()= 0;
+	virtual int init_M_na()= 0;
+	virtual int update_M_na(const double U ,  const int K)= 0;
+	virtual    ~Prior() {};
+
+};
+
+template <typename h_param_t, typename q_param_t>
+class TypedPrior : public Prior {
+
+protected :
+	h_param_t h_param;
+	q_param_t q_param;
+	bool      is_fixed;
+public:
+
+	void init   () {
+		if (!is_fixed) {
+			init_q_param ();
+			init_h_param ();
+		}
+	};
+
+	void update (const double U, const int K, const std::vector<int> &nj ) {
+		if (!is_fixed) {
+			update_q_param (U, K);
+			update_h_param (U, K, nj);
+		}
+	};
+
+
+	TypedPrior(h_param_t h_param, q_param_t q_param, bool fixed) : h_param(h_param), q_param(q_param), is_fixed(fixed) {};
+	TypedPrior(h_param_t h_param, q_param_t q_param)             : h_param(h_param), q_param(q_param), is_fixed(true)  {};
+	TypedPrior()                                                 : h_param(),        q_param(),        is_fixed(false) {};
+
+
+	virtual    ~TypedPrior() {};
+
+};
+
+#endif /* ANTMAN_SRC_PRIOR_HPP_ */
