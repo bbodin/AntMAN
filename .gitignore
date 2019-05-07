@@ -39,3 +39,4 @@ rsconnect/
 src/RcppExports.cpp
 R/RcppExports.R
 src/*.o
+src/*.so
