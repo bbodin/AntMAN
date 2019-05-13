@@ -63,7 +63,8 @@ public:
 			const int niter,
 			const int burnin ,
 			const int thin,
-			const int verbose ) {
+			const int verbose,
+			const int output) {
 
 
 		const int n = y.n_rows;
@@ -100,13 +101,7 @@ public:
 		/**************************************/
 
 
-		GibbsResult result;
-
-		result.U.resize(niter);
-		result.ci.resize(niter);
-		result.S.resize(niter);
-		result.M.resize(niter);
-		result.K.resize(niter);
+		GibbsResult result (niter);
 
 		/**************************************/
 		/******* Start Gibbs                 **/
@@ -218,17 +213,41 @@ public:
 			// thinning
 			if( (iter>=burnin)){
 
-				result.U[iter-burnin]=U_current;
 
-				// NO NON NO DEVO STARE MOLTO ATTENTO ci_out[iter-burnin]=ci_current;
+				if (AM_OUTPUT_HAS(output,AM_OUTPUT_CI)) {
+					result.CI[iter-burnin]=Rcpp::IntegerVector(n);
+					std::copy(ci_current.begin(),ci_current.end(),result.CI[iter-burnin].begin());
+				};
 
 
+				if (AM_OUTPUT_HAS(output,AM_OUTPUT_TAU)) {
+					VERBOSE_ERROR("Unsupported case: AM_OUTPUT_TAU");
+				}
 
-				result.ci[iter-burnin]=Rcpp::IntegerVector(n);
-				std::copy(ci_current.begin(),ci_current.end(),result.ci[iter-burnin].begin());
+				if (AM_OUTPUT_HAS(output,AM_OUTPUT_S)) {
 				result.S[iter-burnin]=S_current;
+				}
+
+				if (AM_OUTPUT_HAS(output,AM_OUTPUT_M)) {
 				result.M[iter-burnin]=M;
+				}
+
+				if (AM_OUTPUT_HAS(output,AM_OUTPUT_K))  {
 				result.K[iter-burnin]=K;
+				}
+
+				if (AM_OUTPUT_HAS(output,AM_OUTPUT_Mna)) {
+					VERBOSE_ERROR("Unsupported case: AM_OUTPUT_Mna");
+				}
+
+				if (AM_OUTPUT_HAS(output,AM_OUTPUT_H)) {
+					VERBOSE_ERROR("Unsupported case: AM_OUTPUT_H");
+				}
+
+				if (AM_OUTPUT_HAS(output,AM_OUTPUT_Q)) {
+					VERBOSE_ERROR("Unsupported case: AM_OUTPUT_Q");
+				}
+
 			}
 
 

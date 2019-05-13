@@ -1,5 +1,5 @@
-C_FILES := $(shell find src -name *.*pp)
-R_FILES := $(shell find R -name *.R)
+C_FILES := $(shell find src -name \*.\*pp)
+R_FILES := $(shell find R -name \*.R)
 
 all : 
 	make AntMan.install/AntMan/libs/antman.so
@@ -10,7 +10,7 @@ deps :
 AntMan.install/AntMan/libs/antman.so : ${C_FILES} ${R_FILES}
 	rm -rf AntMan_1.0.tar.gz AntMan.Rcheck AntMan.install
 	R -e  "Rcpp::compileAttributes(pkgdir = \"./\" , verbose=TRUE);"
-	R CMD check . || ( cat  AntMan.Rcheck/00install.out && false )
+	R CMD check . || ( cat  ..Rcheck/00install.out && false )
 	R CMD build . 
 	mkdir -p AntMan.install
 	R CMD INSTALL  -l AntMan.install AntMan_1.0.tar.gz

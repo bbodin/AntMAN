@@ -73,7 +73,6 @@ public :
 			VERBOSE_DEBUG("GibbsFramework<Tau_MultivariateNormal>::up_ci");
 
 			const int n = y.n_rows;
-			const int d = y.n_cols;
 
 			const arma::mat& mu_current = _mu_current;
 			const arma::cube& Sig_current = _Sig_current;

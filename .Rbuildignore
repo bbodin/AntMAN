@@ -1,5 +1,9 @@
-\.git
-\.RData$
-\.Rhistory$
-\.Rprofile$
 ^Makefile$
+\.Rhistory
+\.cproject
+\.gitignore
+\.project
+\.travis.xml
+\..Rcheck
+\.git
+\.settings

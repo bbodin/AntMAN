@@ -35,7 +35,6 @@ public :
 
 				VERBOSE_DEBUG("b0=" << b0 << " a0=" << a0 << " mb=" << mb);
 
-				const int n = y.n_rows;
 				const int d = y.n_cols;
 				arma::mat theta(M,d);
 				_theta = theta;
@@ -54,12 +53,9 @@ public :
 			const Rcpp::NumericVector & S_current) {
 
 
-		const arma::vec& a0    = _a0;
-		const arma::vec& b0    = _b0;
 		const arma::vec& mb    = _mb;
 
 		const int n = y.n_rows;
-		const int d = y.n_cols;
 
 		const arma::mat& theta_current = _theta;
 

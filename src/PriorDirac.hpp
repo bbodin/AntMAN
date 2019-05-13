@@ -24,7 +24,7 @@ public:
 		return;
 	}
 
-	double log_full_gamma ( const double Loc_gamma, const int K , const  std::vector<int> & nj,const   int Mstar,const  double U_current ,const  double ag,const  double bg) const {
+	double log_full_gamma ( const double Loc_gamma, const int K , const  std::vector<int> & nj, const  double U_current ,const  double ag,const  double bg) const {
 
 		double out= - ( Loc_gamma  * Mstar ) * std::log (1 + U_current) ;
 

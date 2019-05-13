@@ -36,7 +36,7 @@ public:
 		this->lambda = lunif<lpeso ? R::rgamma(astar+1,1.0/rate) : R::rgamma(astar,1.0/rate);
 	}
 
-	double log_full_gamma( const double Loc_gamma, const int K ,const  std::vector<int> & nj, const  double U_current ,const  double ag,const  double bg) const {
+	double log_full_EPPF( const double Loc_gamma, const int K ,const  std::vector<int> & nj, const  double U_current ,const  double ag,const  double bg) const {
 		const   double Lambda_current = this->lambda;
 		double out=0;
 		double up1g=std::pow(1+U_current,Loc_gamma);
@@ -46,6 +46,12 @@ public:
 			out+=std::lgamma(Loc_gamma+ (double) nj[j])-std::lgamma(Loc_gamma);
 		}
 		/// When the prior is a gamma
+		return out;
+	}
+
+	double log_full_gamma( const double Loc_gamma, const int K ,const  std::vector<int> & nj, const  double U_current ,const  double ag,const  double bg) const {
+
+		double out = log_full_EPPF( Loc_gamma, K , nj, U_current , ag, bg);
 
 		out+=(ag-1)*std::log(Loc_gamma)-bg*Loc_gamma;
 

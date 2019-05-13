@@ -10,6 +10,8 @@
 
 
 #include "PriorPoisson.hpp"
+#include "PriorNegativeBinomial.hpp"
+#include "PriorDirac.hpp"
 
 #include "utils.hpp"
 
@@ -24,16 +26,6 @@ bool is_multivariate (Rcpp::List mix_kernel_hyperparams) {
 	return mixture_type.find("multi") != std::string::npos;
 };
 
-static const int  AM_OUTPUT_CI  = 1 << 0;
-static const int  AM_OUTPUT_TAU = 1 << 1;
-static const int  AM_OUTPUT_S   = 1 << 2;
-static const int  AM_OUTPUT_M   = 1 << 3;
-static const int  AM_OUTPUT_K   = 1 << 4;
-static const int  AM_OUTPUT_Mna = 1 << 5;
-static const int  AM_OUTPUT_H   = 1 << 6;
-static const int  AM_OUTPUT_Q   = 1 << 7;
-
-static const int  AM_OUTPUT_DEFAULT   = AM_OUTPUT_CI & AM_OUTPUT_TAU & AM_OUTPUT_S & AM_OUTPUT_M & AM_OUTPUT_K;
 
 
 
@@ -201,28 +193,27 @@ Rcpp::List IAM_mcmc_fit (
 	VERBOSE_ASSERT(mixture, "gen_mix returned NULL");
 	VERBOSE_ASSERT(prior, "gen_prior returned NULL");
 
+	int output_codes = 0;
 
 
 	if (Rcpp::is<Rcpp::NumericMatrix>(y) || Rcpp::is<Rcpp::IntegerMatrix>(y)) {
 			VERBOSE_ASSERT (is_multivariate(mix_kernel_hyperparams), "y argument is a Matrix while the technique is not MultiVariate.") ;
 
 			GibbsResult res =  dynamic_cast<MultivariateMixture*>(mixture)->fit(Rcpp::as<arma::mat>(y) , initial_clustering, prior ,
-					mcmc_parameters["niter"] ,mcmc_parameters["burnin"] ,mcmc_parameters["thin"] ,mcmc_parameters["verbose"] );
+					mcmc_parameters["niter"] ,mcmc_parameters["burnin"] ,mcmc_parameters["thin"] ,mcmc_parameters["verbose"]  ,output_codes );
 
 			return Rcpp::List::create(
-						Rcpp::Named("U_post")      = res.U,
-						Rcpp::Named("ci_post")     = res.ci,
+						Rcpp::Named("ci_post")     = res.CI,
 						Rcpp::Named("S_post")      = res.S,
 						Rcpp::Named("M_post")      = res.M,
 						Rcpp::Named("K_post")      = res.K);
 		}  else if(Rcpp::is<Rcpp::NumericVector>(y) || Rcpp::is<Rcpp::IntegerVector>(y)){
 			VERBOSE_ASSERT (is_univariate(mix_kernel_hyperparams), "y argument is a Vector while the technique is not Univariate.") ;
 			GibbsResult res =  dynamic_cast<UnivariateMixture*>(mixture)->fit(Rcpp::as<arma::vec>(y) , initial_clustering, prior ,
-					mcmc_parameters["niter"] ,mcmc_parameters["burnin"] ,mcmc_parameters["thin"] ,mcmc_parameters["verbose"] );
+					mcmc_parameters["niter"] ,mcmc_parameters["burnin"] ,mcmc_parameters["thin"] ,mcmc_parameters["verbose"]  ,output_codes );
 
 			return Rcpp::List::create(
-						Rcpp::Named("U_post")      = res.U,
-						Rcpp::Named("ci_post")     = res.ci,
+						Rcpp::Named("ci_post")     = res.CI,
 						Rcpp::Named("S_post")      = res.S,
 						Rcpp::Named("M_post")      = res.M,
 						Rcpp::Named("K_post")      = res.K);

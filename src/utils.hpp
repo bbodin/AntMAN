@@ -23,6 +23,7 @@ extern int VERBOSE_LEVEL;
 
 
 
+
 typedef arma::ivec cluster_indices_t;
 
 /// this is a function to convert an arma vec to a NumericVector object

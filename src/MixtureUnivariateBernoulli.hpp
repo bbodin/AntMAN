@@ -32,7 +32,6 @@ public :
 
 		 const double b0 = _b0;
 		 const double a0 = _a0;
-		 const double mb = _mb;
 
 				for(int l=0;l<M;l++){
 					_theta[l] = R::rbeta(a0, b0);
