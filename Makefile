@@ -19,7 +19,7 @@ AntMan.install/AntMan/libs/antman.so : ${C_FILES} ${R_FILES}
 
 
 clean : 
-	rm -rf current *~ *.install  *_1.0.tar.gz *.Rcheck src/*.o src/*.so 	src/*.rds src/RcppExports.cpp  R/RcppExports.R 
+	rm -rf current *~ *.install  *_1.0.tar.gz ..Rcheck  *.Rcheck src/*.o src/*.so 	src/*.rds src/RcppExports.cpp  R/RcppExports.R  man/AM*.Rd 
 
 .PHONY: clean
 

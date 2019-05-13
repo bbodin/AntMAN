@@ -77,7 +77,7 @@ AM_mix_components_prior_negbin <- function(a_R = NULL, b_R = NULL, a_P = NULL, b
 #' @param Mstar      Fixed value for M
 #' @return A configuration list to be used as an argument for mcmc_fit. 
 #' @examples 
-#' AM_mix_components_prior_dirac (R_M=1, P_M=1)
+#' AM_mix_components_prior_dirac (Mstar=3)
 #' @export
 AM_mix_components_prior_dirac <- function(Mstar) {
   
