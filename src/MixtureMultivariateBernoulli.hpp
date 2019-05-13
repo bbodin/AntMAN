@@ -33,6 +33,7 @@ public :
 				const arma::vec& a0 = _a0;
 				const arma::vec& mb = _mb;
 
+				VERBOSE_DEBUG("b0=" << b0 << " a0=" << a0 << " mb=" << mb);
 
 				const int n = y.n_rows;
 				const int d = y.n_cols;

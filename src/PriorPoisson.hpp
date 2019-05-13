@@ -16,62 +16,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 
-template<typename q_param_t>
-class gamma_h_param_t {
-public:
-	bool gamma_is_fixed;
-	double gamma;
-	const double a,b; // hyper-prior parameters for h
-	double lsd, lsd_g;       // this is the standard deviation of the MH algorithm to update gamma.
-	gamma_h_param_t (double gamma, double a, double b, double lsd) : gamma_is_fixed (false), gamma (gamma) , a(a), b(b), lsd(lsd), lsd_g(1) {}
-	gamma_h_param_t (              double a, double b, double lsd) : gamma_is_fixed (false), gamma (R::rgamma(a,b)) , a(a), b(b), lsd(lsd), lsd_g(1) {}
-	gamma_h_param_t (double gamma) : gamma_is_fixed (true), gamma (gamma), a(0), b(0), lsd(0), lsd_g(1)  {}
-
-	inline double log_full_gamma( const double Loc_gamma, const int K ,const  std::vector<int> & nj,const   double Lambda_current,const  double U_current ,const  double ag,const  double bg){
-
-		double out=0;
-		double up1g=std::pow(1+U_current,Loc_gamma);
-
-		out+=std::log(Lambda_current/up1g+K)+Lambda_current/up1g-K*std::log(up1g);
-		for(int j=0;j<K;j++){
-			out+=std::lgamma(Loc_gamma+ (double) nj[j])-std::lgamma(Loc_gamma);
-		}
-		/// When the prior is a gamma
-
-		out+=(ag-1)*std::log(Loc_gamma)-bg*Loc_gamma;
-
-		return(out);
-	}
-
-	void update (const  double U, const  int K, const std::vector<int> &nj , const q_param_t& q_param) {
-		if (this->gamma_is_fixed) return;
-
-		const double vecchio = this->gamma;
-		const double lmedia = std::log(vecchio);
-
-			//Propose a new value
-			const double lnuovo=R::rnorm(lmedia,lsd);
-			const double nuovo=std::exp(lnuovo);
-
-
-	//		const double log_full_gamma_new = log_full_EPPF (nuovo , K , nj,  U , this->q_param.lambda ) + (ah-1)*std::log(nuovo)-bh*nuovo;
-	//		const double log_full_gamma_vec = log_full_EPPF (vecchio , K , nj,  U , this->q_param.lambda ) + (ah-1)*std::log(vecchio)-bh*vecchio;
-	//		const double ln_acp = (log_full_gamma_new - lmedia) - (log_full_gamma_vec - lnuovo);
-
-
-			double ln_acp = log_full_gamma(nuovo , K , nj,  q_param.lambda, U , a, b ) - lmedia;
-
-			ln_acp= ln_acp - (log_full_gamma(vecchio , K , nj,   q_param.lambda, U , a, b) - lnuovo);
-
-			const double lnu=std::log(R::runif(0.0,1.0));
-
-			this->gamma = lnu<ln_acp ? nuovo : vecchio;
-
-			lsd = update_lsd (  lsd,  ln_acp,  lsd_g++) ;
-
-	}
-
-};
 
 class poisson_gamma_q_param_t {
 public:
@@ -92,6 +36,21 @@ public:
 		this->lambda = lunif<lpeso ? R::rgamma(astar+1,1.0/rate) : R::rgamma(astar,1.0/rate);
 	}
 
+	double log_full_gamma( const double Loc_gamma, const int K ,const  std::vector<int> & nj, const  double U_current ,const  double ag,const  double bg) const {
+		const   double Lambda_current = this->lambda;
+		double out=0;
+		double up1g=std::pow(1+U_current,Loc_gamma);
+
+		out+=std::log(Lambda_current/up1g+K)+Lambda_current/up1g-K*std::log(up1g);
+		for(int j=0;j<K;j++){
+			out+=std::lgamma(Loc_gamma+ (double) nj[j])-std::lgamma(Loc_gamma);
+		}
+		/// When the prior is a gamma
+
+		out+=(ag-1)*std::log(Loc_gamma)-bg*Loc_gamma;
+
+		return(out);
+	}
 
 };
 

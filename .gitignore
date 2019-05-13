@@ -51,3 +51,5 @@ Rplots.pdf
 .project
 .settings/
 
+man/*.Rd
+test.R

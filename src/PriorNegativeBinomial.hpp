@@ -43,13 +43,6 @@ private:
 	double a,b; //hyper-prior parameters for h
 	double lsd,lsd_g; //this is the standard deviation of the MH algorithm to update gamma.
 
-	PriorNegativeBinomial () :
-		TypedPrior<negative_binomial_h_param_t, negative_binomial_q_param_t>(),
-		a_R(0.0), b_R(0.0) , a_P(0.0), b_P(0.0),
-		LSDR_M(0.0) , LSDP_M(0.0) ,
-		LSDR_M_g(0.0) , LSDP_M_g(1.0) ,
-		 a(0.0), b(0.0), lsd(0.0), lsd_g(1.0) {};
-
 public:
 	PriorNegativeBinomial (double initgamma,
 			double R_M, double P_M ,

@@ -47,6 +47,47 @@ AM_mix_components_prior_pois <- function(a = NULL, b = NULL, Lambda = NULL, init
 
 
 
+#' Generate a configuration object that contains parameters for a Negative Binomial prior.
+#' When there is no arguments, the default is *** TBD ***
+#'
+#' @param a_R      The a_R parameter of the Negative binomial
+#' @param b_R      The b_R parameter of the Negative binomial
+#' @param a_P      The a_R parameter of the Negative binomial
+#' @param b_P      The b_R parameter of the Negative binomial
+#' @param R_M      Used to specify a fixed R_M (instead of using a_R,b_R).
+#' @param P_M      Used to specify a fixed P_M (instead of using a_P,b_P).
+#' @return A configuration list to be used as an argument for mcmc_fit. 
+#' @examples 
+#' AM_mix_components_prior_negbin (R_M=1, P_M=1)
+#' @export
+AM_mix_components_prior_negbin <- function(a_R = NULL, b_R = NULL, a_P = NULL, b_P = NULL, R_M = NULL, P_M = NULL) {
+  
+  paradox_error_R = "Please note that you cannot specify a_R,b_R and R_M. R_M specifies a fixed value.";
+  paradox_error_P = "Please note that you cannot specify a_P,b_P and P_M. P_M specifies a fixed value.";
+  
+  parameters = list(type = "AM_mix_components_prior_negbin");
+  
+  return (parameters);
+};
+
+
+
+#' Generate a configuration object that contains parameters for a Dirac prior.
+#'
+#' @param Mstar      Fixed value for M
+#' @return A configuration list to be used as an argument for mcmc_fit. 
+#' @examples 
+#' AM_mix_components_prior_dirac (R_M=1, P_M=1)
+#' @export
+AM_mix_components_prior_dirac <- function(Mstar) {
+  
+  parameters = list(type = "AM_mix_components_prior_dirac", Mstar = Mstar);
+  
+  return (parameters);
+};
+
+
+
 #' Generate a configuration object that contains parameters for a Gamma weight prior.
 #'
 #' @param a      The a parameter of the gamma
