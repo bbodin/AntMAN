@@ -70,7 +70,7 @@ public:
 		TypedPrior <poisson_gamma_h_param_t, poisson_gamma_q_param_t> (gamma_h_param,poisson_q_param)  {
 		}
 
-	int init_M_na () {
+	int init_M_na (const int K) {
 		return R::rpois(this->q_param.lambda);
 	}
 

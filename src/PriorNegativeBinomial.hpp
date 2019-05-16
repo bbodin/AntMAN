@@ -152,17 +152,36 @@ public:
 
 
 
-int init_M_na() {
+int init_M_na(const int K) {
+
+	    VERBOSE_DEBUG("init_M_na (K = " << K << ")");
+
+
 		const double R_M     = this->q_param.R.M;
 		const double P_M     = this->q_param.P.M;
 		// TODO[CHECK ME]: According to Rafaelle what we call P is 1-1 in R. and what we call R_M is Size in R.
-		return R::rnbinom(R_M, 1-P_M);
+
+	    VERBOSE_DEBUG("R_M = " << R_M);
+	    VERBOSE_DEBUG("P_M = " << P_M);
+
+	    int M_na =  R::rnbinom(R_M, 1-P_M);
+
+	    VERBOSE_DEBUG("M_na = " << M_na);
+
+	    return M_na;
 	}
 
 int update_M_na(const double U ,  const int K) {
 
+
+    VERBOSE_DEBUG("update_M_na (U = " << U << ",K = " << K << ")");
+
 		const double R_M     = this->q_param.R.M;
 		const double P_M     = this->q_param.P.M;
+
+	    VERBOSE_DEBUG("R_M = " << R_M);
+	    VERBOSE_DEBUG("P_M = " << P_M);
+	    VERBOSE_DEBUG("gamma = " << this->h_param.gamma);
 
 		int M_na;
 
@@ -179,6 +198,9 @@ int update_M_na(const double U ,  const int K) {
 		} else {
 			M_na=R::rnbinom(R_M - 1 + K, phi_u * P_M) ;
 		}
+
+	    VERBOSE_DEBUG("M_na = " << M_na);
+
 		return M_na;
 
 	}

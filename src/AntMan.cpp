@@ -67,7 +67,8 @@ bool is_multivariate (Rcpp::List mix_kernel_hyperparams) {
 
 			return NULL;
 		}
-		Prior* gen_prior (Rcpp::List mix_components_prior, Rcpp::List  mix_weight_prior , Rcpp::RObject y) {
+
+		Prior* gen_poisson_gamma (Rcpp::List mix_components_prior, Rcpp::List  mix_weight_prior , Rcpp::RObject y) {
 
 			// Q is Fixed lambda or Poisson or Binomial
 			// H is gamma
@@ -80,6 +81,9 @@ bool is_multivariate (Rcpp::List mix_kernel_hyperparams) {
 
 			std::string prior_type   = mix_components_prior["type"];
 			std::string weight_type  = mix_weight_prior["type"];
+
+			VERBOSE_ASSERT(prior_type == "AM_mix_components_prior_pois", "Internal_error");
+			VERBOSE_ASSERT(weight_type == "AM_mix_weights_prior_gamma", "Internal_error");
 
 			int n = 0;
 			if(Rcpp::is<Rcpp::NumericVector>(y) || Rcpp::is<Rcpp::IntegerVector>(y)){
@@ -148,6 +152,212 @@ bool is_multivariate (Rcpp::List mix_kernel_hyperparams) {
 
 			return prior;
 		}
+
+
+		negbin_component gen_negbin_comp (Rcpp::List mix_components_prior, std::string suffix) {
+
+			negbin_component C;
+
+			std::string IC = "init" + suffix;
+			std::string MC = "M" + suffix;
+			std::string aC = "a" + suffix;
+			std::string bC = "b" + suffix;
+
+			if (mix_components_prior.containsElementNamed(IC.c_str())
+				and mix_components_prior.containsElementNamed(aC.c_str())
+				and mix_components_prior.containsElementNamed(bC.c_str())) {
+				C.M = Rcpp::as<double>(mix_components_prior[IC]);
+				C.a = Rcpp::as<double>(mix_components_prior[aC]);
+				C.b = Rcpp::as<double>(mix_components_prior[bC]);
+				C.LSD = 0;
+				C.LSD_g = 0;
+				C.fixed = false;
+			} else if (mix_components_prior.containsElementNamed(MC.c_str())) {
+				C.M = Rcpp::as<double>(mix_components_prior[MC]);
+				C.LSD = 0;
+				C.LSD_g = 0;
+				C.fixed = true;
+			} else {
+				VERBOSE_ERROR("Missing value with " << suffix);
+			}
+			return C;
+		}
+
+		Prior* gen_negbin_gamma (Rcpp::List mix_components_prior, Rcpp::List  mix_weight_prior , Rcpp::RObject y) {
+
+			// Q is Negative Binomial
+			// H is gamma
+
+			negative_binomial_gamma_q_param_t * q;
+			negative_binomial_gamma_h_param_t * h;
+
+			VERBOSE_ASSERT (mix_components_prior.containsElementNamed("type"), "In gen_prior mix_components_prior does not contain a type field.");
+			VERBOSE_ASSERT (mix_weight_prior.containsElementNamed("type"), "In gen_prior mix_weight_prior does not contain a type field.");
+
+			std::string prior_type   = mix_components_prior["type"];
+			std::string weight_type  = mix_weight_prior["type"];
+
+			VERBOSE_ASSERT(prior_type == "AM_mix_components_prior_negbin", "Internal_error");
+			VERBOSE_ASSERT(weight_type == "AM_mix_weights_prior_gamma", "Internal_error");
+
+			int n = 0;
+			if(Rcpp::is<Rcpp::NumericVector>(y) || Rcpp::is<Rcpp::IntegerVector>(y)){
+				n = Rcpp::as<arma::vec>(y).size();
+			} else  if (Rcpp::is<Rcpp::NumericMatrix>(y) || Rcpp::is<Rcpp::IntegerMatrix>(y)) {
+				n = Rcpp::as<arma::mat>(y).n_rows;
+			} else {
+				VERBOSE_ERROR ("Unsupported type: y variable should be Matrix or Vector.");
+			}
+
+
+			/// ************ Q prior_components_type *******************
+
+			negbin_component R = gen_negbin_comp (mix_components_prior, "_R");
+			negbin_component P = gen_negbin_comp (mix_components_prior, "_P");
+
+			q = new negative_binomial_gamma_q_param_t(R,P);
+
+
+
+			if (mix_weight_prior.containsElementNamed("init")
+							and mix_weight_prior.containsElementNamed("a")
+							and mix_weight_prior.containsElementNamed("b")) {
+				h = new negative_binomial_gamma_h_param_t(
+					Rcpp::as<double>(mix_weight_prior["init"]),
+					Rcpp::as<double>(mix_weight_prior["a"]),
+					Rcpp::as<double>(mix_weight_prior["b"]),
+					1);
+			} else if (mix_weight_prior.containsElementNamed("a")
+					and mix_weight_prior.containsElementNamed("b")) {
+			h = new negative_binomial_gamma_h_param_t(
+					1,
+					Rcpp::as<double>(mix_weight_prior["a"]),
+					Rcpp::as<double>(mix_weight_prior["b"]),
+					1);
+			} else if (mix_weight_prior.containsElementNamed("gamma")) {
+				h = new negative_binomial_gamma_h_param_t(
+					Rcpp::as<double>(mix_weight_prior["gamma"]));
+			} else {
+				h = new negative_binomial_gamma_h_param_t(1);
+			}
+
+
+
+			VERBOSE_ASSERT(q, "Prior error : q is not set.");
+			VERBOSE_ASSERT(h, "Prior error : h is not set.");
+
+
+
+			Prior* 	prior = new  PriorNegativeBinomial (*h,*q);
+
+
+			return prior;
+		}
+
+
+		Prior* gen_dirac_gamma (Rcpp::List mix_components_prior, Rcpp::List  mix_weight_prior , Rcpp::RObject y) {
+
+			// Q is Negative Binomial
+			// H is gamma
+
+			dirac_gamma_q_param_t * q;
+			dirac_gamma_h_param_t * h;
+
+			VERBOSE_ASSERT (mix_components_prior.containsElementNamed("type"), "In gen_prior mix_components_prior does not contain a type field.");
+			VERBOSE_ASSERT (mix_weight_prior.containsElementNamed("type"), "In gen_prior mix_weight_prior does not contain a type field.");
+
+			std::string prior_type   = mix_components_prior["type"];
+			std::string weight_type  = mix_weight_prior["type"];
+
+			VERBOSE_ASSERT(prior_type == "AM_mix_components_prior_dirac", "Internal_error");
+			VERBOSE_ASSERT(weight_type == "AM_mix_weights_prior_gamma", "Internal_error");
+
+			int n = 0;
+			if(Rcpp::is<Rcpp::NumericVector>(y) || Rcpp::is<Rcpp::IntegerVector>(y)){
+				n = Rcpp::as<arma::vec>(y).size();
+			} else  if (Rcpp::is<Rcpp::NumericMatrix>(y) || Rcpp::is<Rcpp::IntegerMatrix>(y)) {
+				n = Rcpp::as<arma::mat>(y).n_rows;
+			} else {
+				VERBOSE_ERROR ("Unsupported type: y variable should be Matrix or Vector.");
+			}
+
+
+			/// ************ Q prior_components_type *******************
+
+			if (mix_components_prior.containsElementNamed("Mstar")) {
+				q = new dirac_gamma_q_param_t(
+						Rcpp::as<double>(mix_components_prior["Mstar"]));
+			} else  {
+				VERBOSE_ERROR("Mstar argument not found.");
+			}
+
+
+
+			if (mix_weight_prior.containsElementNamed("init")
+							and mix_weight_prior.containsElementNamed("a")
+							and mix_weight_prior.containsElementNamed("b")) {
+				h = new dirac_gamma_h_param_t(
+					Rcpp::as<double>(mix_weight_prior["init"]),
+					Rcpp::as<double>(mix_weight_prior["a"]),
+					Rcpp::as<double>(mix_weight_prior["b"]),
+					1);
+			} else if (mix_weight_prior.containsElementNamed("a")
+					and mix_weight_prior.containsElementNamed("b")) {
+			h = new dirac_gamma_h_param_t(
+					1,
+					Rcpp::as<double>(mix_weight_prior["a"]),
+					Rcpp::as<double>(mix_weight_prior["b"]),
+					1);
+			} else if (mix_weight_prior.containsElementNamed("gamma")) {
+				h = new dirac_gamma_h_param_t(
+					Rcpp::as<double>(mix_weight_prior["gamma"]));
+			} else {
+				h = new dirac_gamma_h_param_t(1);
+			}
+
+
+
+			VERBOSE_ASSERT(q, "Prior error : q is not set.");
+			VERBOSE_ASSERT(h, "Prior error : h is not set.");
+
+
+
+			Prior* 	prior = new  PriorDirac (*h,*q);
+
+
+			return prior;
+		}
+
+
+
+
+		Prior* gen_prior (Rcpp::List mix_components_prior, Rcpp::List  mix_weight_prior , Rcpp::RObject y) {
+
+			VERBOSE_ASSERT (mix_components_prior.containsElementNamed("type"), "In gen_prior mix_components_prior does not contain a type field.");
+			VERBOSE_ASSERT (mix_weight_prior.containsElementNamed("type"), "In gen_prior mix_weight_prior does not contain a type field.");
+
+			std::string prior_type   = mix_components_prior["type"];
+			std::string weight_type  = mix_weight_prior["type"];
+
+			VERBOSE_INFO("prior_type = " << prior_type);
+            VERBOSE_INFO("weight_type = " << weight_type);
+
+            Prior* prior;
+
+            if ((prior_type == "AM_mix_components_prior_pois") && (weight_type == "AM_mix_weights_prior_gamma")) {
+                prior = gen_poisson_gamma(mix_components_prior, mix_weight_prior, y);
+            } else if ((prior_type == "AM_mix_components_prior_negbin") && (weight_type == "AM_mix_weights_prior_gamma")) {
+                prior = gen_negbin_gamma(mix_components_prior, mix_weight_prior, y);
+            } else if ((prior_type == "AM_mix_components_prior_dirac") && (weight_type == "AM_mix_weights_prior_gamma")) {
+                prior = gen_dirac_gamma(mix_components_prior, mix_weight_prior, y);
+            } else{
+            	VERBOSE_ERROR("Unknown prior: Please could you make sure you properly used the AM_mix_components_prior and AM_mix_weights commands.");
+            }
+
+			return prior;
+
+		}
+
 
 // INTERNAL FUNCTION - No DOCUMENTATION, Please only use AM_ refixed function.
 // [[Rcpp::export]]

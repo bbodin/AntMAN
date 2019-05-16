@@ -78,10 +78,10 @@ public:
 
 		// Then the number of allocated jumps (i.e. number of cluster) is
 		cluster_indices_t ci_star = arma::unique(ci_current);
-		int K=ci_star.size();
+		unsigned int K=ci_star.size();
 
 
-		int M_na= prior->init_M_na();
+		int M_na= prior->init_M_na(K);
 		int M=K+M_na;
 		VERBOSE_DEBUG("this->init_tau (y, M);");
 		this->init_tau (y, M);
@@ -129,9 +129,9 @@ public:
 				//I first update the latent U
 
 				auto start_u = std::chrono::system_clock::now();
-				VERBOSE_DEBUG("S_current = " << S_current <<"\n");
+				VERBOSE_EXTRA("S_current = " << S_current <<"\n");
 				U_current=R::rgamma(n,1.0/Rcpp::sum(S_current));
-				VERBOSE_DEBUG("U_current = " << U_current <<"\n");
+				VERBOSE_EXTRA("U_current = " << U_current <<"\n");
 				auto end_u = std::chrono::system_clock::now();
 				auto elapsed_u = end_u - start_u;
 				total_u += elapsed_u.count() / 1000000.0;
@@ -161,10 +161,10 @@ public:
 
 
 				VERBOSE_DEBUG ( "K= " << K << "M= " << M  << std::endl);
-				VERBOSE_DEBUG ( "ci_star="<< ci_star << std::endl);
-				VERBOSE_DEBUG ( "ci_current="<< ci_current << std::endl);
+				VERBOSE_EXTRA ( "ci_star="<< ci_star << std::endl);
+				VERBOSE_EXTRA ( "ci_current="<< ci_current << std::endl);
 				VERBOSE_DEBUG ( "gamma_current="<< prior->get_gamma() << std::endl);
-				VERBOSE_DEBUG ( "U_current="<< U_current << std::endl);
+				VERBOSE_EXTRA ( "U_current="<< U_current << std::endl);
 
 
 				// Compute Allocation (ci_reorder, nj, Beta and S (allocSide))
@@ -173,7 +173,7 @@ public:
 				auto start_alloc = std::chrono::system_clock::now();
 				auto up_allocated_res = this->up_allocated_nonallocated (  K , M , ci_current ,  ci_star  , prior->get_gamma(),  U_current, y );
 				const std::vector <int> nj = up_allocated_res.nj();
-				assert(K == nj.size());
+
 				ci_current   = up_allocated_res.ci();
 				S_current = up_allocated_res.S();
 				auto end_alloc = std::chrono::system_clock::now();
@@ -190,7 +190,7 @@ public:
 			total_iter = elapsed_iter.count()  / 1000000.0;
 
 			if(verbose!=0){
-				if((iter% verbose)==0){
+				if((iter% 50)==0){
 
 					auto end_gibbs             = std::chrono::system_clock::now();
 					auto elapsed_gibbs         = end_gibbs - start_gibbs;
@@ -237,7 +237,7 @@ public:
 				}
 
 				if (AM_OUTPUT_HAS(output,AM_OUTPUT_Mna)) {
-					VERBOSE_ERROR("Unsupported case: AM_OUTPUT_Mna");
+					result.Mna[iter-burnin]=M_na;
 				}
 
 				if (AM_OUTPUT_HAS(output,AM_OUTPUT_H)) {

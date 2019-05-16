@@ -8,18 +8,22 @@
 #ifndef PROBITFMM_SRC_UTILS_HPP_
 #define PROBITFMM_SRC_UTILS_HPP_
 
+#define EXTRA_LEVEL   6
 #define DEBUG_LEVEL   4
-#define EXTRA_LEVEL   3
-#define INFO_LEVEL    2
+#define INFO_LEVEL    3
+#define LOG_LEVEL     2
 #define WARNING_LEVEL 1
+#define ERROR_LEVEL   0
 
 extern int VERBOSE_LEVEL;
 
-#define VERBOSE_DEBUG(msg) {if (VERBOSE_LEVEL > DEBUG_LEVEL)  Rcpp::Rcout  << msg << std::endl;};
-#define VERBOSE_INFO(msg)  {if (VERBOSE_LEVEL > INFO_LEVEL) Rcpp::Rcerr  << msg << std::endl;};
-#define VERBOSE_ERROR(msg) {Rcpp::Rcerr << msg << std::endl;  Rcpp::stop("Error inside the package.\n"); };
-#define VERBOSE_WARNING(test,msg) {if (not (test)) { if (VERBOSE_LEVEL >= WARNING_LEVEL) Rcpp::Rcerr << msg << std::endl;  }};
-#define VERBOSE_ASSERT(test,msg) {if (not (test)) { Rcpp::Rcerr << msg << std::endl;  Rcpp::stop("Error inside the package.\n"); }};
+#define VERBOSE_EXTRA(msg)                         {if (VERBOSE_LEVEL >= EXTRA_LEVEL)   Rcpp::Rcout  << msg << std::endl;};
+#define VERBOSE_DEBUG(msg)                         {if (VERBOSE_LEVEL >= DEBUG_LEVEL)   Rcpp::Rcout  << msg << std::endl;};
+#define VERBOSE_INFO(msg)                          {if (VERBOSE_LEVEL >= INFO_LEVEL)    Rcpp::Rcerr  << msg << std::endl;};
+#define VERBOSE_LOG(msg)                           {if (VERBOSE_LEVEL >= LOG_LEVEL)     Rcpp::Rcerr  << msg << std::endl;};
+#define VERBOSE_WARNING(test,msg) {if (not (test)) {if (VERBOSE_LEVEL >= WARNING_LEVEL) Rcpp::Rcerr  << msg << std::endl;}};
+#define VERBOSE_ERROR(msg)                         {if (VERBOSE_LEVEL >= ERROR_LEVEL)   Rcpp::Rcerr  << msg << std::endl;  Rcpp::stop("Error inside the package.\n"); };
+#define VERBOSE_ASSERT(test,msg)  {if (not (test)) {                                    Rcpp::Rcerr  << msg << std::endl;  Rcpp::stop("Error inside the package.\n"); }};
 
 
 

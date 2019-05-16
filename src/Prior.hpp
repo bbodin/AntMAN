@@ -12,10 +12,18 @@
 
 // [[Rcpp::depends(RcppArmadillo)]]
 #include <RcppArmadillo.h>
+#include "utils.hpp"
 // --------------------------------------------------------------------------------------------------------------------
 
-template<typename q_param_t>
-class gamma_h_param_t {
+
+class h_param_t {
+};
+
+class q_param_t {
+};
+
+template<typename Q_t>
+class gamma_h_param_t : h_param_t {
 public:
 	bool gamma_is_fixed;
 	double gamma;
@@ -26,7 +34,7 @@ public:
 	gamma_h_param_t (double gamma) : gamma_is_fixed (true), gamma (gamma), a(0), b(0), lsd(0), lsd_g(1)  {}
 
 
-	void update (const  double U, const  int K, const std::vector<int> &nj , const  q_param_t& q_param) {
+	void update (const  double U, const  int K, const std::vector<int> &nj , const  Q_t& q_param) {
 		if (this->gamma_is_fixed) return;
 
 		const double vecchio = this->gamma;
@@ -66,19 +74,19 @@ public :
 
 	virtual double  get_gamma() const = 0;
 
-	virtual int     init_M_na()= 0;
+	virtual int     init_M_na(const int K)= 0;
 	virtual int     update_M_na(const double U ,  const int K)= 0;
 
 	virtual        ~Prior() {};
 
 };
 
-template <typename h_param_t, typename q_param_t>
+template <typename H_t, typename Q_t>
 class TypedPrior : public Prior {
 
 protected :
-	h_param_t h_param;
-	q_param_t q_param;
+	H_t h_param;
+	Q_t q_param;
 public:
 
 	void update (const double U, const int K, const std::vector<int> &nj ) {
@@ -88,7 +96,7 @@ public:
 
 	double get_gamma() const {return this->h_param.gamma;};
 
-	TypedPrior(h_param_t h_param, q_param_t q_param)             : h_param(h_param), q_param(q_param) {};
+	TypedPrior(H_t h_param, Q_t q_param)             : h_param(h_param), q_param(q_param) {};
 
 
 	virtual    ~TypedPrior() {};

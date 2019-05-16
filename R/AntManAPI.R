@@ -1,4 +1,8 @@
 
+
+##### TODO : list class S3 to produce a print fun.
+
+
 #' Generate a configuration object that contains parameters for a Poisson prior.
 #' When there is no arguments, the default is a fixed Lambda = 1 / N, with N the input data size.
 #'
@@ -58,14 +62,23 @@ AM_mix_components_prior_pois <- function(a = NULL, b = NULL, Lambda = NULL, init
 #' @param P_M      Used to specify a fixed P_M (instead of using a_P,b_P).
 #' @return A configuration list to be used as an argument for mcmc_fit. 
 #' @examples 
-#' AM_mix_components_prior_negbin (R_M=1, P_M=1)
+#' AM_mix_components_prior_negbin (M_R=1, M_P=1)
 #' @export
-AM_mix_components_prior_negbin <- function(a_R = NULL, b_R = NULL, a_P = NULL, b_P = NULL, R_M = NULL, P_M = NULL) {
+AM_mix_components_prior_negbin <- function(a_R = NULL, b_R = NULL, a_P = NULL, b_P = NULL, M_R = NULL, M_P = NULL, init_R = NULL, init_P = NULL) {
   
   paradox_error_R = "Please note that you cannot specify a_R,b_R and R_M. R_M specifies a fixed value.";
   paradox_error_P = "Please note that you cannot specify a_P,b_P and P_M. P_M specifies a fixed value.";
   
   parameters = list(type = "AM_mix_components_prior_negbin");
+   if (!is.null(a_R)) parameters = append(parameters, list(a_R = a_R));
+   if (!is.null(b_R)) parameters = append(parameters, list(b_R = b_R));
+   if (!is.null(init_R)) parameters = append(parameters, list(init_R = init_R));
+   if (!is.null(M_R)) parameters = append(parameters, list(M_R = M_R));
+   if (!is.null(a_P)) parameters = append(parameters, list(a_P = a_P));
+   if (!is.null(b_P)) parameters = append(parameters, list(b_P = b_P));
+   if (!is.null(init_P)) parameters = append(parameters, list(init_P = init_P));
+   if (!is.null(M_P)) parameters = append(parameters, list(M_P = M_P));
+    
   
   return (parameters);
 };
@@ -257,13 +270,12 @@ mcmc_parameters = AM_mcmc_parameters() ) {
   
   if (is.null(init_K) & !is.null(initial_clustering)) {
   } else if (!is.null(init_K) & is.null(initial_clustering)) {
-    initial_clustering <- kmeans(y, init_K)
+    initial_clustering <- kmeans(y, init_K)$cluster
   } else if (is.null(init_K) & is.null(initial_clustering)) {
     initial_clustering <- 0:(length(y)-1)
   } else {
     stop("Please provide either K_init or initial_clustering.")
   }
-  
   
   IAM_mcmc_fit(y = y, mix_kernel_hyperparams = mix_kernel_hyperparams, initial_clustering = initial_clustering, mix_components_prior = mix_components_prior, mix_weight_prior = mix_weight_prior, mcmc_parameters = mcmc_parameters);
   
