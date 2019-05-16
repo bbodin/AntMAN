@@ -24,7 +24,7 @@ struct negbin_component {
 	 bool   fixed;
 };
 
-class negative_binomial_gamma_q_param_t {
+class negative_binomial_gamma_q_param_t  : public q_param_t  {
 public:
 	negbin_component R,P;
 

@@ -23,7 +23,7 @@ class q_param_t {
 };
 
 template<typename Q_t>
-class gamma_h_param_t : h_param_t {
+class gamma_h_param_t : public h_param_t {
 public:
 	bool gamma_is_fixed;
 	double gamma;
@@ -73,6 +73,8 @@ public :
 	virtual void    update (const double U, const int K, const std::vector<int> &nj ) = 0 ;
 
 	virtual double  get_gamma() const = 0;
+	virtual const h_param_t * get_h() const = 0;
+	virtual const q_param_t * get_q() const = 0;
 
 	virtual int     init_M_na(const int K)= 0;
 	virtual int     update_M_na(const double U ,  const int K)= 0;
@@ -95,6 +97,9 @@ public:
 	};
 
 	double get_gamma() const {return this->h_param.gamma;};
+
+	const h_param_t* get_h() const {return & (this->h_param);};
+	const q_param_t* get_q() const {return & (this->q_param);};
 
 	TypedPrior(H_t h_param, Q_t q_param)             : h_param(h_param), q_param(q_param) {};
 

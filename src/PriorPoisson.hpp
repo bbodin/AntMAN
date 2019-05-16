@@ -17,7 +17,7 @@
 
 
 
-class poisson_gamma_q_param_t {
+class poisson_gamma_q_param_t : public q_param_t  {
 public:
 	bool lambda_is_fixed;
 	double lambda ;

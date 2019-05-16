@@ -15,7 +15,7 @@
 
 // --------------------------------------------------------------------------------------------------------------------
 
-class dirac_gamma_q_param_t {
+class dirac_gamma_q_param_t : public q_param_t {
 public:
 	int Mstar;
 	dirac_gamma_q_param_t (int Mstar) :  Mstar (Mstar){}

@@ -225,15 +225,15 @@ public:
 				}
 
 				if (AM_OUTPUT_HAS(output,AM_OUTPUT_S)) {
-				result.S[iter-burnin]=S_current;
+					result.S[iter-burnin]=S_current;
 				}
 
 				if (AM_OUTPUT_HAS(output,AM_OUTPUT_M)) {
-				result.M[iter-burnin]=M;
+					result.M[iter-burnin]=M;
 				}
 
 				if (AM_OUTPUT_HAS(output,AM_OUTPUT_K))  {
-				result.K[iter-burnin]=K;
+					result.K[iter-burnin]=K;
 				}
 
 				if (AM_OUTPUT_HAS(output,AM_OUTPUT_Mna)) {
