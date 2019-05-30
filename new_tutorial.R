@@ -5,7 +5,6 @@
 library("AntMan", lib.loc = "./AntMan.install")
 
 
-
 ##############################################
 ### BUILD THE UNIVARIATE POISSON DATA
 ##############################################
@@ -37,8 +36,7 @@ fit_poisson <- AM_mcmc_fit(
                         mcmc_parameters = mcmc_params)
 
 summary (fit_poisson)
-plot(fit_poisson$K_post)
-plot(y_uvp,col=fit_poisson$ci_post[[length(fit_poisson$ci_post)]]+1)
+plot (fit_poisson)
 
 
 
@@ -77,8 +75,7 @@ fit <- AM_mcmc_fit(
                         mcmc_parameters = mcmc_params)
 
 summary (fit)
-plot(fit$K_post)
-plot(y_uvn,col=fit$ci_post[[length(fit$ci_post)]]+1)
+plot (fit)
 
 
 
@@ -98,10 +95,9 @@ fit_poisson_dirac <- AM_mcmc_fit(
                         mix_weight_prior = weights_prior,
                         mcmc_parameters = mcmc_params)
 
-summary (fit_poisson_dirac)
-plot(fit_poisson_dirac$K_post)
-plot(y_uvp,col=fit_poisson_dirac$ci_post[[length(fit_poisson_dirac$ci_post)]]+1)
 
+summary (fit_poisson_dirac)
+plot (fit_poisson_dirac)
 
 ##############################################
 ### BUILD THE UNIVARIATE NORMAL DATA
@@ -135,9 +131,9 @@ fit <- AM_mcmc_fit(
                         mix_weight_prior = weights_prior,
                         mcmc_parameters = mcmc_params)
 
+
 summary (fit)
-plot(fit$K_post)
-plot(y_uvn,col=fit$ci_post[[length(fit$ci_post)]]+1)
+plot (fit)
 
 
 
@@ -175,8 +171,7 @@ fit <- AM_mcmc_fit(
                         mcmc_parameters = mcmc_params)
 
 summary (fit)
-plot(fit$K_post)
-plot(y_uvb,col=fit$ci_post[[length(fit$ci_post)]]+1)
+plot (fit)
 
 
 ##############################################
@@ -241,10 +236,7 @@ fit <- AM_mcmc_fit(
                         mcmc_parameters = mcmc_params)
 
 summary (fit)
-plot(fit$K_post)
-plot(y_mvn,col=fit$ci_post[[length(fit$ci_post)]]+1)
-
-
+plot (fit)
 
 ##############################################
 ### BUILD THE MULTIVARIATE BINOMIAL DATA
@@ -290,8 +282,6 @@ fit <- AM_mcmc_fit(
                         mcmc_parameters = mcmc_params)
 
 summary (fit)
-plot(fit$K_post)
-plot(y_mvb,col=fit$ci_post[[length(fit$ci_post)]]+1)
-
+plot (fit)
 
 1
