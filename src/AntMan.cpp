@@ -1,17 +1,7 @@
 
-#include "MixtureUnivariatePoisson.hpp"
-#include "MixtureUnivariateNormal.hpp"
+#include "Mixtures.hpp"
+#include "Priors.hpp"
 
-
-#include "MixtureMultiVariateNormal.hpp"
-#include "MixtureUnivariateProbit.hpp"
-#include "MixtureUnivariateBernoulli.hpp"
-#include "MixtureMultivariateBernoulli.hpp"
-
-
-#include "PriorPoisson.hpp"
-#include "PriorNegativeBinomial.hpp"
-#include "PriorDirac.hpp"
 
 #include "utils.hpp"
 
@@ -359,6 +349,22 @@ bool is_multivariate (Rcpp::List mix_kernel_hyperparams) {
 		}
 
 
+		Rcpp::List Result2List ( GibbsResult & res) {
+
+			Rcpp::List::create();
+
+
+			return Rcpp::List::create(
+									Rcpp::Named("ci_post")     = res.CI,
+									Rcpp::Named("S_post")      = res.S,
+									Rcpp::Named("M_post")      = res.M,
+									Rcpp::Named("K_post")      = res.K);
+
+
+
+		}
+
+
 // INTERNAL FUNCTION - No DOCUMENTATION, Please only use AM_ refixed function.
 // [[Rcpp::export]]
 Rcpp::List IAM_mcmc_fit (
@@ -387,11 +393,13 @@ Rcpp::List IAM_mcmc_fit (
 	VERBOSE_INFO ("- initial_clustering = " << initial_clustering.size());
 	VERBOSE_INFO ("- mix_components_prior = " << mix_components_prior.size());
 	VERBOSE_INFO ("- mix_weight_prior = " << mix_weight_prior.size());
-	VERBOSE_INFO ("- mcmc_parameters = " << mcmc_parameters.size());
+	VERBOSE_INFO ("- size(mcmc_parameters) = " << mcmc_parameters.size());
+
 	VERBOSE_INFO ("- Rcpp::is<Rcpp::NumericVector>(y) = " << Rcpp::is<Rcpp::NumericVector>(y));
 	VERBOSE_INFO ("- Rcpp::is<Rcpp::IntegerVector>(y) = " << Rcpp::is<Rcpp::IntegerVector>(y));
 	VERBOSE_INFO ("- Rcpp::is<Rcpp::NumericMatrix>(y) = " << Rcpp::is<Rcpp::NumericMatrix>(y));
 	VERBOSE_INFO ("- Rcpp::is<Rcpp::IntegerMatrix>(y) = " << Rcpp::is<Rcpp::IntegerMatrix>(y));
+
 
 
 
@@ -403,7 +411,13 @@ Rcpp::List IAM_mcmc_fit (
 	VERBOSE_ASSERT(mixture, "gen_mix returned NULL");
 	VERBOSE_ASSERT(prior, "gen_prior returned NULL");
 
-	int output_codes = 0;
+
+	std::vector<std::string> output_list = Rcpp::as<std::vector<std::string>>(mcmc_parameters["output"]);
+
+	int output_codes = AM_GENERATOR_OUTPUT_CODE(output_list);
+
+	VERBOSE_INFO ("- size(mcmc_parameters[output]) = " << output_list.size());
+	VERBOSE_INFO ("- output_codes = " << output_codes);
 
 
 	if (Rcpp::is<Rcpp::NumericMatrix>(y) || Rcpp::is<Rcpp::IntegerMatrix>(y)) {
@@ -412,22 +426,15 @@ Rcpp::List IAM_mcmc_fit (
 			GibbsResult res =  dynamic_cast<MultivariateMixture*>(mixture)->fit(Rcpp::as<arma::mat>(y) , initial_clustering, prior ,
 					mcmc_parameters["niter"] ,mcmc_parameters["burnin"] ,mcmc_parameters["thin"] ,mcmc_parameters["verbose"]  ,output_codes );
 
-			return Rcpp::List::create(
-						Rcpp::Named("ci_post")     = res.CI,
-						Rcpp::Named("S_post")      = res.S,
-						Rcpp::Named("M_post")      = res.M,
-						Rcpp::Named("K_post")      = res.K);
+
+			return Result2List(res);
 		}  else if(Rcpp::is<Rcpp::NumericVector>(y) || Rcpp::is<Rcpp::IntegerVector>(y)){
 			VERBOSE_ASSERT (is_univariate(mix_kernel_hyperparams), "y argument is a Vector while the technique is not Univariate.") ;
 			GibbsResult res =  dynamic_cast<UnivariateMixture*>(mixture)->fit(Rcpp::as<arma::vec>(y) , initial_clustering, prior ,
 					mcmc_parameters["niter"] ,mcmc_parameters["burnin"] ,mcmc_parameters["thin"] ,mcmc_parameters["verbose"]  ,output_codes );
 
-			return Rcpp::List::create(
-						Rcpp::Named("ci_post")     = res.CI,
-						Rcpp::Named("S_post")      = res.S,
-						Rcpp::Named("M_post")      = res.M,
-						Rcpp::Named("K_post")      = res.K);
 
+			return Result2List(res);
 		} else {
 		VERBOSE_ERROR("The parameter y must be a Matrix or a Vector.");
 	}

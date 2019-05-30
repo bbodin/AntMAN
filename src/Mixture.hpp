@@ -101,7 +101,7 @@ public:
 		/**************************************/
 
 
-		GibbsResult result (niter);
+		GibbsResult result (niter,output);
 
 		/**************************************/
 		/******* Start Gibbs                 **/
