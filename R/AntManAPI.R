@@ -1,6 +1,15 @@
 
 
-##### TODO : list class S3 to produce a print fun.
+##### Summary, Plot, and print functions for AntMan results
+
+plot.AM_mcmc_fitness_result=function(x,...){
+  plot(x$K,main="K Values")
+  plot(x$Y,col=x$CI[[length(x$CI)]]+1,main="Clusters")
+}
+
+summary.AM_mcmc_fitness_result=function(x,...){
+  sprintf("Mean value of K is %d" , mean(x$K))
+}
 
 
 #' Generate a configuration object that contains parameters for a Poisson prior.
@@ -158,7 +167,7 @@ AM_mix_weights_prior_gamma <- function(a = NULL, b = NULL, gamma = NULL, init = 
 #' @return A configuration list to be used as an argument for mcmc_fit. 
 #' @examples 
 #' AM_mcmc_parameters (niter=1000, burnin=10000, thin=50)
-#' AM_mcmc_parameters (niter=1000, burnin=10000, thin=50, output=c("CI","S","TAU"), file_output="filename")
+#' AM_mcmc_parameters (niter=1000, burnin=10000, thin=50, output=c("CI","S","TAU"), file_output=c("all"))
 #' @export
 AM_mcmc_parameters <- function(  niter=20000,
                                  burnin=10000,
@@ -277,6 +286,7 @@ mcmc_parameters = AM_mcmc_parameters() ) {
     stop("Please provide either K_init or initial_clustering.")
   }
   
-  IAM_mcmc_fit(y = y, mix_kernel_hyperparams = mix_kernel_hyperparams, initial_clustering = initial_clustering, mix_components_prior = mix_components_prior, mix_weight_prior = mix_weight_prior, mcmc_parameters = mcmc_parameters);
-  
+  structure(IAM_mcmc_fit(y = y, mix_kernel_hyperparams = mix_kernel_hyperparams, initial_clustering = initial_clustering, mix_components_prior = mix_components_prior, mix_weight_prior = mix_weight_prior, mcmc_parameters = mcmc_parameters)
+            , class = "AM_mcmc_fitness_result") 
 }
+
