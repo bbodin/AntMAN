@@ -158,13 +158,13 @@ AM_mix_weights_prior_gamma <- function(a = NULL, b = NULL, gamma = NULL, init = 
 #' @return A configuration list to be used as an argument for mcmc_fit. 
 #' @examples 
 #' AM_mcmc_parameters (niter=1000, burnin=10000, thin=50)
-#' AM_mcmc_parameters (niter=1000, burnin=10000, thin=50, output=list("CI","S","TAU"), file_output=list("all"))
+#' AM_mcmc_parameters (niter=1000, burnin=10000, thin=50, output=c("CI","S","TAU"), file_output="filename")
 #' @export
 AM_mcmc_parameters <- function(  niter=20000,
                                  burnin=10000,
                                  thin=10,
                                  verbose = 1,
-                                 output="all",
+                                 output=c("CI","K"),
                                  parallel=0,
                                  file_output="M,K,Mna,Gamma") {
   
