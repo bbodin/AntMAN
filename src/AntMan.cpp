@@ -351,15 +351,29 @@ bool is_multivariate (Rcpp::List mix_kernel_hyperparams) {
 
 		Rcpp::List Result2List ( GibbsResult & res) {
 
-			Rcpp::List::create();
+			Rcpp::List list = Rcpp::List::create(
+					Rcpp::Named("CI")    =  res.CI ,
+					Rcpp::Named("S")     =  res.S  ,
+					Rcpp::Named("M")     =  res.M  ,
+					Rcpp::Named("K")     =  res.K  ,
+					Rcpp::Named("Mna")   =  res.Mna
+								);
 
 
-			return Rcpp::List::create(
-									Rcpp::Named("ci_post")     = res.CI,
-									Rcpp::Named("S_post")      = res.S,
-									Rcpp::Named("M_post")      = res.M,
-									Rcpp::Named("K_post")      = res.K);
+			//					Rcpp::Named("H")     =  res.H  ,
+			//					Rcpp::Named("Q")     =  res.Q
+			//					Rcpp::Named("TAU")   =  res.TAU,
 
+			 if (not res.CI .size()) list["CI"]  = R_NilValue ;
+			 if (not res.TAU.size()) list["TAU"] = R_NilValue ;
+			 if (not res.S  .size()) list["S"]   = R_NilValue ;
+			 if (not res.M  .size()) list["M"]   = R_NilValue ;
+			 if (not res.K  .size()) list["K"]   = R_NilValue ;
+			 if (not res.Mna.size()) list["Mna"] = R_NilValue ;
+			 if (not res.H  .size()) list["H"]   = R_NilValue ;
+			 if (not res.Q  .size()) list["Q"]   = R_NilValue ;
+
+			 return list;
 
 
 		}

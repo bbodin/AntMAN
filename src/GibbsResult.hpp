@@ -54,6 +54,10 @@ static inline int AM_GENERATOR_OUTPUT_CODE (std::vector <std::string> output) {
 
 
 class GibbsResult {
+
+private :
+	int iteration;
+
 public:
 	// Ouput Variables
 	std::vector<Rcpp::IntegerVector> CI;
@@ -68,7 +72,7 @@ public:
 	int niter;
 	int output_codes;
 
-	GibbsResult(int niter, int output_codes) : niter(niter), output_codes (output_codes) {
+	GibbsResult(int niter, int output_codes) : iteration(0),  niter(niter), output_codes (output_codes) {
 
 		if (AM_OUTPUT_HAS(output_codes,AM_OUTPUT_CI )) { VERBOSE_INFO("Record    CI   "); CI.resize(niter);   }
 		if (AM_OUTPUT_HAS(output_codes,AM_OUTPUT_TAU)) { VERBOSE_INFO("Record    TAU  "); TAU.resize(niter);  }
@@ -78,6 +82,46 @@ public:
 		if (AM_OUTPUT_HAS(output_codes,AM_OUTPUT_Mna)) { VERBOSE_INFO("Record    Mna  "); Mna.resize(niter);  }
 		if (AM_OUTPUT_HAS(output_codes,AM_OUTPUT_H  )) { VERBOSE_INFO("Record    H    "); H.resize(niter);    }
 		if (AM_OUTPUT_HAS(output_codes,AM_OUTPUT_Q  )) { VERBOSE_INFO("Record    Q    "); Q.resize(niter);    }
+	}
+
+	 void log_output (cluster_indices_t& ci_current, Rcpp::NumericVector & S_current, unsigned int M, unsigned int K, unsigned int M_na, Prior * prior) {
+
+		 GibbsResult & result = *this;
+		 int output           = this->output_codes;
+
+		 if (AM_OUTPUT_HAS(output,AM_OUTPUT_CI)) {
+			 result.CI[iteration]=ci_current;
+		 };
+
+		 if (AM_OUTPUT_HAS(output,AM_OUTPUT_S)) {
+			 result.S[iteration]=S_current;
+		 }
+
+		 if (AM_OUTPUT_HAS(output,AM_OUTPUT_M)) {
+			 result.M[iteration]=M;
+		 }
+
+		if (AM_OUTPUT_HAS(output,AM_OUTPUT_K))  {
+			result.K[iteration]=K;
+		}
+
+		if (AM_OUTPUT_HAS(output,AM_OUTPUT_Mna)) {
+			result.Mna[iteration]=M_na;
+		}
+
+		if (AM_OUTPUT_HAS(output,AM_OUTPUT_TAU)) {
+			VERBOSE_ERROR("Unsupported case: AM_OUTPUT_TAU");
+		}
+
+		if (AM_OUTPUT_HAS(output,AM_OUTPUT_H)) {
+			VERBOSE_ERROR("Unsupported case: AM_OUTPUT_H");
+		}
+
+		if (AM_OUTPUT_HAS(output,AM_OUTPUT_Q)) {
+			VERBOSE_ERROR("Unsupported case: AM_OUTPUT_Q");
+		}
+
+		iteration++;
 	}
 
 };

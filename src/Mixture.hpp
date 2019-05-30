@@ -55,6 +55,9 @@ protected:
 			const  InputType & y ) = 0;
 
 
+
+
+
 public:
 
 	GibbsResult fit(InputType y,
@@ -112,9 +115,8 @@ public:
 		double total_gibbs           = 0;
 		auto   start_gibbs           = std::chrono::system_clock::now();
 
-		int iter=0;
 		//TODO[CHECK ME] : Check the number of iteration versus burning !!!
-		while (iter < (niter+burnin)) {
+		for (unsigned int iter = 0 ; iter < (niter+burnin) ; iter++)  {
 
 			double total_iter           = 0;
 			double total_u              = 0;
@@ -140,8 +142,8 @@ public:
 				// Update CI and CI*
 				VERBOSE_DEBUG("Call up_ci\n");
 				auto start_ci = std::chrono::system_clock::now();				
-				if(iter>0){//I need this if i want that my inizialization for ci works
-				ci_current = this->up_ci(y, M, S_current); // parametricPrior = k_x,,X   Tau = Beta_current, z_current
+				if ((thi > 0) and (iter > 0)) {//I need this if i want that my inizialization for ci works
+					ci_current = this->up_ci(y, M, S_current); // parametricPrior = k_x,,X   Tau = Beta_current, z_current
 				}
 				// TODO[OPTIMIZE ME]: This is computed twice, could be avoided.
 				cluster_indices_t ci_star = arma::unique(ci_current);
@@ -189,9 +191,7 @@ public:
 			auto elapsed_iter = end_iter - start_iter;
 			total_iter = elapsed_iter.count()  / 1000000.0;
 
-			if(verbose!=0){
-				if((iter% 50)==0){
-
+			if((verbose!=0) and ((iter% 50)==0)) {
 					auto end_gibbs             = std::chrono::system_clock::now();
 					auto elapsed_gibbs         = end_gibbs - start_gibbs;
 					     start_gibbs           = std::chrono::system_clock::now();
@@ -204,55 +204,14 @@ public:
 							"ms alloc=" <<total_alloc <<
 							"ms total_iter=" <<total_iter <<
 							"ms total_gibbs=" <<total_gibbs<< "ms" << std::endl;
-
-				}
 			}
 
 
 			// Save output after the burn-in and taking into account
 			// thinning
 			if( (iter>=burnin)){
-
-
-				if (AM_OUTPUT_HAS(output,AM_OUTPUT_CI)) {
-					result.CI[iter-burnin]=Rcpp::IntegerVector(n);
-					std::copy(ci_current.begin(),ci_current.end(),result.CI[iter-burnin].begin());
-				};
-
-
-				if (AM_OUTPUT_HAS(output,AM_OUTPUT_TAU)) {
-					VERBOSE_ERROR("Unsupported case: AM_OUTPUT_TAU");
-				}
-
-				if (AM_OUTPUT_HAS(output,AM_OUTPUT_S)) {
-					result.S[iter-burnin]=S_current;
-				}
-
-				if (AM_OUTPUT_HAS(output,AM_OUTPUT_M)) {
-					result.M[iter-burnin]=M;
-				}
-
-				if (AM_OUTPUT_HAS(output,AM_OUTPUT_K))  {
-					result.K[iter-burnin]=K;
-				}
-
-				if (AM_OUTPUT_HAS(output,AM_OUTPUT_Mna)) {
-					result.Mna[iter-burnin]=M_na;
-				}
-
-				if (AM_OUTPUT_HAS(output,AM_OUTPUT_H)) {
-					VERBOSE_ERROR("Unsupported case: AM_OUTPUT_H");
-				}
-
-				if (AM_OUTPUT_HAS(output,AM_OUTPUT_Q)) {
-					VERBOSE_ERROR("Unsupported case: AM_OUTPUT_Q");
-				}
-
+				result.log_output (ci_current,  S_current,  M,  K,  M_na, prior) ;
 			}
-
-
-
-			iter +=1;
 
 		}//I close the while
 

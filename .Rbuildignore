@@ -1,9 +1,9 @@
 ^Makefile$
-\.Rhistory
-\.cproject
-\.gitignore
-\.project
-\.travis.xml
-\..Rcheck
-\.git
-\.settings
+.Rhistory
+.cproject
+.gitignore
+.project
+.travis.xml
+..Rcheck
+.git
+.settings

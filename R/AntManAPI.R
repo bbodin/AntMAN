@@ -3,12 +3,12 @@
 ##### Summary, Plot, and print functions for AntMan results
 
 plot.AM_mcmc_fitness_result=function(x,...){
-  plot(x$K,main="K Values")
-  plot(x$Y,col=x$CI[[length(x$CI)]]+1,main="Clusters")
+  if (!is.null(x$K)) plot(x$K,main="K Values")
+  if (!is.null(x$CI)) plot(x$Y,col=x$CI[[length(x$CI)]]+1,main="Clusters")
 }
 
 summary.AM_mcmc_fitness_result=function(x,...){
-  sprintf("Mean value of K is %d" , mean(x$K))
+	if (!is.null(x$K)) sprintf("Mean value of K is %f" , mean(x$K));
 }
 
 

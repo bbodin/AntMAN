@@ -37,6 +37,7 @@ fit_poisson <- AM_mcmc_fit(
 
 summary (fit_poisson)
 plot (fit_poisson)
+print(fit_poisson)
 
 
 
