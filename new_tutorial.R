@@ -35,10 +35,9 @@ fit_poisson <- AM_mcmc_fit(
                         mix_weight_prior = weights_prior,
                         mcmc_parameters = mcmc_params)
 
+
 summary (fit_poisson)
 plot (fit_poisson)
-print(fit_poisson)
-
 
 
 

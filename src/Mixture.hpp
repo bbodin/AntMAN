@@ -63,11 +63,11 @@ public:
 	GibbsResult fit(InputType y,
 			cluster_indices_t initial_clustering,
 			Prior * prior,
-			const int niter,
-			const int burnin ,
-			const int thin,
-			const int verbose,
-			const int output) {
+			const unsigned int niter,
+			const unsigned int burnin ,
+			const unsigned int thin,
+			const unsigned int verbose,
+			const unsigned int output) {
 
 
 		const int n = y.n_rows;
