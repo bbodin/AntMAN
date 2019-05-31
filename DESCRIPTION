@@ -1,12 +1,28 @@
-Package: AntMan
-Type: Package
-Title: What the package does (short line)
+Package: AntMAN
 Version: 1.0
 Date: 2019-04-01
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Type: Package
+Title: Anthology of Mixture ANalysis tools
+Authors@R: c(person("Raffaele", "Argiento", role = c("aut", "cre"), email= "raffaele.argiento@unito.it"), 
+             person("Maria", "De Iorio", role = "ctb", email = "m.deiorio@ucl.ac.uk"), 
+             person("Bruno", "Bodin", role = "ctb", email = "bruno.bodin@yale-nus.edu.sg"))
+Author: Raffaele Argiento [aut, cre], Maria De Iorio [ctb], Bruno Bodin [ctb]
+Maintainer: Raffaele Argiento [aut, cre]
+NeedsCompilation: yes
+Description: AntMan is a R package to fit Finite Bayesian Mixture  model with random number of component. 
+             It is an alternative to Reversible Jump. 
+             Different kernels: Univariate Gaussian, 
+                                Univariate Poisson, 
+                                Univariate Binomial, 
+                                Multivariate Gaussian, 
+                                Multivariate Bernoulli (Latent Class Analysis). 
+                                Conjugate priors.  
+             We allow for different choices for the prior on the number of components: 
+             Shifted Poisson, 
+             Negative Binomial, 
+             and Point Masses (i.e. mixtures with fixed number of components).
+License: BSD
+URL: http://www.raffaeleargiento.it/
 Imports: Rcpp (>= 1.0.0)
 LinkingTo: Rcpp, RcppArmadillo
 RoxygenNote: 6.1.1

@@ -1,0 +1,10 @@
+citHeader("To cite AntMAN in publications use:")
+
+citEntry(entry = "Article",
+  title        = "Anthology of Mixture ANalysis tools",
+  author       = personList(as.person("Raffaele Argiento"),
+                   as.person("Bruno Bodin"),
+                   as.person("Maria De Iorio")),
+  journal      = "Journal of Statistical Software",
+  year         = "2020"
+)
