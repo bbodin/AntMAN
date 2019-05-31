@@ -7,9 +7,10 @@
 
 
 
-#include <PriorNegativeBinomial.hpp>
+#include "PriorNegativeBinomial.hpp"
 
-int main () {
+// [[Rcpp::export]]
+int test_negative_binomial () {
 
 	std::cout << "test starts" << std::endl;
 

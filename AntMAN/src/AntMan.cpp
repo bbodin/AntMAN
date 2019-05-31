@@ -379,6 +379,7 @@ bool is_multivariate (Rcpp::List mix_kernel_hyperparams) {
 		}
 
 
+
 // INTERNAL FUNCTION - No DOCUMENTATION, Please only use AM_ refixed function.
 // [[Rcpp::export]]
 Rcpp::List IAM_mcmc_fit (
