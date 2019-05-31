@@ -1,9 +1,14 @@
 C_FILES := $(shell find ./AntMAN/src -name \*.\*pp)
-R_FILES := $(shell find ./AntMAN/R -name \*.R)
+R_FILES := $(shell find ./AntMAN/R ./AntMAN/tests -name \*.R)
 
+infos :
+	@echo "C_FILES=${C_FILES}"
+	@echo "R_FILES=${R_FILES}"
+	
 all :  AntMan.install/AntMan/libs/antman.so
 
 %_1.0.tar.gz : ${C_FILES} ${R_FILES}
+	rm -rf AntMAN/src/*.o
 	R CMD build ./$*
 	
 %.Rcheck/ : %_1.0.tar.gz
@@ -23,9 +28,8 @@ AntMan.install/AntMan/libs/antman.so : ${C_FILES} ${R_FILES}
 
 
 clean_object :
-	rm -rf AntMAN/src/*.o
 clean : 
-	rm -rf current *~ *.install  *_1.0.tar.gz ..Rcheck  *.Rcheck src/*.o src/*.so 	src/*.rds src/RcppExports.cpp  R/RcppExports.R  man/AM*.Rd 
+	rm -rf current *~ *.install  *_1.0.tar.gz *.Rcheck ./AntMAN/src/*.o ./AntMAN/src/*.so 	./AntMAN/src/*.rds ./AntMAN/src/RcppExports.cpp  ./AntMAN/R/RcppExports.R  ./AntMAN/man/AM*.Rd 
 
 .PHONY: clean
 

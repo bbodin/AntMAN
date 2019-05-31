@@ -1,5 +1,5 @@
 
-library("AntMan", lib.loc = "./AntMan.install")
+library("AntMAN")
 
 data(galaxy)
 y_uvn = galaxy$speed

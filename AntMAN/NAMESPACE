@@ -1,8 +1,13 @@
 useDynLib(AntMAN, .registration=TRUE)
+
 importFrom(Rcpp, evalCpp)
+
 importFrom("stats", "kmeans", "rbinom", "rnorm", "rpois", "runif")
+
 importFrom("graphics", "plot")
+
 S3method(plot, AM_mcmc_fitness_result)
 S3method(summary, AM_mcmc_fitness_result)
+
 exportPattern("^[[:alpha:]]+")
 
