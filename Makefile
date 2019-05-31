@@ -4,6 +4,11 @@ R_FILES := $(shell find ./AntMAN/R ./AntMAN/tests -name \*.R -not -name RcppExpo
 	
 all :  AntMAN.Rinstall/
 
+download : 
+	cp ~/Dropbox/AntMan/AntManAPI.R AntMAN/R/AntManAPI.R
+upload : 
+	cp AntMAN/R/AntManAPI.R ~/Dropbox/AntMan/AntManAPI.R 
+	
 infos :
 	@echo "C_FILES=${C_FILES}"
 	@echo "R_FILES=${R_FILES}"
@@ -30,7 +35,7 @@ deps :
 	echo "To be defined."
 
 clean : 
-	rm -rf current *~ *.install  *_1.0.tar.gz *.Rcheck ./AntMAN/src/*.o ./AntMAN/src/*.so 	./AntMAN/src/*.rds ./AntMAN/src/RcppExports.cpp  ./AntMAN/R/RcppExports.R  ./AntMAN/man/AM*.Rd 
+	rm -rf current *~ *.Rinstall *_1.0.pdf  *_1.0.tar.gz *.Rcheck ./AntMAN/src/*.o ./AntMAN/src/*.so 	./AntMAN/src/*.rds ./AntMAN/src/RcppExports.cpp  ./AntMAN/R/RcppExports.R  ./AntMAN/man/AM*.Rd 
 
 .PHONY: clean
 

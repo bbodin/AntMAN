@@ -2,7 +2,7 @@
 ##############################################
 ### Load the AntMan package
 ##############################################
-library("AntMAN", lib.loc = "./AntMAN.install")
+library("AntMAN", lib.loc = "./AntMAN.Rinstall")
 
 
 ##############################################
