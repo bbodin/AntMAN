@@ -164,15 +164,15 @@ int init_M_na(const int K) {
 	    VERBOSE_DEBUG("R_M = " << R_M);
 	    VERBOSE_DEBUG("P_M = " << P_M);
 
-	    int M_na =  R::rnbinom(R_M, 1-P_M);
+	    double M_na =  R::rnbinom(R_M, 1-P_M);
 
-	    VERBOSE_DEBUG("M_na = " << M_na);
+	    VERBOSE_DEBUG("M_na = R::rnbinom(R_M, 1-P_M) = " << M_na << " = ");
 
 	    return M_na;
 	}
 
-int update_M_na(const double U ,  const int K) {
-
+int update_M_na(const double U ,  const int KasInt) {
+	const double K = KasInt;
 
     VERBOSE_DEBUG("update_M_na (U = " << U << ",K = " << K << ")");
 
@@ -183,20 +183,24 @@ int update_M_na(const double U ,  const int K) {
 	    VERBOSE_DEBUG("P_M = " << P_M);
 	    VERBOSE_DEBUG("gamma = " << this->h_param.gamma);
 
-		int M_na;
+		double M_na;
 
 		const double phi_u  = 1 / std::pow(1 + U, this->h_param.gamma);
+	    VERBOSE_DEBUG("phi_u = " << " 1 / std::pow(" << 1 + U <<  ", " <<  this->h_param.gamma << ")" << " 1 / " << std::pow(1 + U, this->h_param.gamma) << " = " << " = " << phi_u);
 
 		const double up     = (R_M + K) * phi_u * (P_M) ;
-		const double down   =  R_M * phi_u *P_M + K ;
+		const double down   =  R_M * phi_u * P_M + K ;
 		const double peso   =  up / down;
 
 		const double unif=R::runif(0.0,1.0);
+	    VERBOSE_DEBUG("unif = " << unif << " peso = " << peso);
 
 		if(unif < peso){
-			M_na=R::rnbinom(R_M + K, phi_u * P_M) + 1;
+			M_na=R::rnbinom(R_M + K, 1- phi_u * P_M) + 1;
+		    VERBOSE_DEBUG("M_na=R::rnbinom( " <<  R_M + K <<  ", " <<  phi_u * P_M <<  ") + 1;");
 		} else {
-			M_na=R::rnbinom(R_M - 1 + K, phi_u * P_M) ;
+			M_na=R::rnbinom(R_M - 1 + K, 1-phi_u * P_M) ;
+		    VERBOSE_DEBUG("M_na=R::rnbinom( " << R_M - 1 + K <<  ", " <<  phi_u * P_M <<  ") ;");
 		}
 
 	    VERBOSE_DEBUG("M_na = " << M_na);

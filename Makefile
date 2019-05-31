@@ -16,6 +16,7 @@ infos :
 
 
 %/src/RcppExports.cpp  %/R/RcppExports.R : % ${C_FILES} ${R_FILES}
+	rm -f $*/src/RcppExports.cpp  $*/R/RcppExports.R
 	R -e  "Rcpp::compileAttributes(pkgdir = \"$*\" , verbose=TRUE);"
 
 %_1.0.tar.gz : ${C_FILES} ${R_FILES} %/src/RcppExports.cpp  %/R/RcppExports.R  AntMAN_1.0.pdf
