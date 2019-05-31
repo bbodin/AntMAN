@@ -2,9 +2,9 @@
 
 ##### Summary, Plot, and print functions for AntMan results
 
-plot.AM_mcmc_fitness_result=function(object,...){
-  if (!is.null(object$K)) plot(object$K,main="K Values") ;
-  if (!is.null(object$CI) && !is.null(object$Y)) plot(object$Y,col=object$CI[[length(object$CI)]]+1,main="Clusters") ;
+plot.AM_mcmc_fitness_result=function(x,...){
+  if (!is.null(x$K)) plot(x$K,main="K Values") ;
+  if (!is.null(x$CI) && !is.null(x$Y)) plot(x$Y,col=x$CI[[length(x$CI)]]+1,main="Clusters") ;
 }
 
 summary.AM_mcmc_fitness_result=function(object,...){

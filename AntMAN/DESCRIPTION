@@ -6,9 +6,8 @@ Title: Anthology of Mixture ANalysis tools
 Authors@R: c(person("Raffaele", "Argiento", role = c("aut", "cre"), email= "raffaele.argiento@unito.it"), 
              person("Maria", "De Iorio", role = "ctb", email = "m.deiorio@ucl.ac.uk"), 
              person("Bruno", "Bodin", role = "ctb", email = "bruno.bodin@yale-nus.edu.sg"))
-Author: Raffaele Argiento [aut, cre], Maria De Iorio [ctb], Bruno Bodin [ctb]
-Maintainer: Raffaele Argiento [aut, cre]
-NeedsCompilation: yes
+Author:      Raffaele Argiento
+Maintainer:  Raffaele Argiento <raffaele.argiento@unito.it>
 Description: AntMan is a R package to fit Finite Bayesian Mixture  model with random number of component. 
              It is an alternative to Reversible Jump. 
              Different kernels: Univariate Gaussian, 

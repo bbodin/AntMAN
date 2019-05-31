@@ -1,25 +1,25 @@
-\name{AntMan-package}
-\alias{AntMan-package}
-\alias{AntMan}
+\name{AntMAN-package}
+\alias{AntMAN-package}
+\alias{AntMAN}
 \docType{package}
 \title{
-\packageTitle{AntMan}
+\packageTitle{AntMAN}
 }
 \description{
-\packageDescription{AntMan}
+\packageDescription{AntMAN}
 }
 \details{
 
 The DESCRIPTION file:
-\packageDESCRIPTION{AntMan}
-\packageIndices{AntMan}
+\packageDESCRIPTION{AntMAN}
+\packageIndices{AntMAN}
 ~~ An overview of how to use the package, including the most important ~~
 ~~ functions ~~
 }
 \author{
-\packageAuthor{AntMan}
+\packageAuthor{AntMAN}
 
-Maintainer: \packageMaintainer{AntMan}
+Maintainer: \packageMaintainer{AntMAN}
 }
 \references{
 ~~ Literature or other references for background information ~~

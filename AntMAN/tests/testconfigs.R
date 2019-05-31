@@ -1,5 +1,5 @@
 library(testthat)
-library(AntMan)
+library(AntMAN)
 
 context("Configuration generation") 
 

@@ -1,5 +1,0 @@
-useDynLib(AntMan, .registration=TRUE)
-importFrom(Rcpp, evalCpp)
-importFrom("stats", "kmeans", "rbinom", "rnorm", "rpois", "runif")
-exportPattern("^[[:alpha:]]+")
-
