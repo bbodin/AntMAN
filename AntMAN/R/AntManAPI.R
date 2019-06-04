@@ -1,31 +1,51 @@
 
-
+#################################################################################
 ##### Summary, Plot, and print functions for AntMan results
+#################################################################################
 
 plot.AM_mcmc_fitness_result=function(x,...){
-  if (!is.null(x$K)) plot(x$K,main="K Values") ;
+  if (!is.null(x$K)) hist(x$K,main="K values") ;
+  if (!is.null(x$M)) hist(x$M,main="M values") ;
   if (!is.null(x$CI) && !is.null(x$Y)) plot(x$Y,col=x$CI[[length(x$CI)]]+1,main="Clusters") ;
+  if (!is.null(x$K)) hist(x$K,main="Clusters") ;
+  #### Histogram of  Gamma, ...
+  #### Co clustering probability : How many time two are in the same custer. 
 }
 
 summary.AM_mcmc_fitness_result=function(object,...){
-	if (!is.null(object$K)) sprintf("Mean value of K is %f" , mean(object$K));
+	sprintf("Name\tMean\tStdDev")
+	if (!is.null(object$K)) sprintf("%s\t%f\t%f","K" ,  mean(object$K) , sd(object$K))
+	if (!is.null(object$M)) sprintf("%s\t%f\t%f","M" ,  mean(object$M) , sd(object$M))
+	if (!is.null(object$Mna)) sprintf("%s\t%f\t%f","Mna" ,  mean(object$Mna) , sd(object$Mna))
 }
 
 
+#################################################################################
+##### Configuration functions
+#################################################################################
+
 #' Generate a configuration object that contains parameters for a Poisson prior.
+#' 
 #' When there is no arguments, the default is a fixed Lambda = 1 / N, with N the input data size.
 #'
-#' @param a      The a parameter of the Poisson
-#' @param b      The b parameter of the Poisson
-#' @param init   The init value for Lambda of the Poisson
-#' @param Lambda used to specify a fixed Lambda (instead of using a,b, and init).
-#' @return A configuration list to be used as an argument for mcmc_fit. 
-#' @examples 
+#' @param a      The \code{a} parameter of the Poisson
+#' @param b      The \code{b} parameter of the Poisson
+#' @param init   The \code{init} value for \code{Lambda} of the Poisson
+#' @param Lambda used to specify a fixed Lambda (instead of using \code{a},\code{b}, and \code{init}).
+#'
+#' @return output A configuration list to be used as an argument for mcmc_fit. 
+#'
+#' @keywords prior
+#'
+#' @export
+#' 
+#' @examples
 #' AM_mix_components_prior_pois (a=1, b=1)
 #' AM_mix_components_prior_pois (a=1, b=1, init=1)
 #' AM_mix_components_prior_pois (Lambda = 3)
 #' AM_mix_components_prior_pois () 
-#' @export
+#' 
+
 AM_mix_components_prior_pois <- function(a = NULL, b = NULL, Lambda = NULL, init = NULL) {
   
   paradox_error = "Please note that you cannot specify a,b,init and Lambda. Lambda specifies a fixed value.";
@@ -252,6 +272,9 @@ AM_multinorm_mix_hyperparams <- function(mu0, ka0, nu0, Lam0) {
   return ( list ( type = "AM_multinorm_mix_hyperparams", mu0 = mu0 , ka0 = ka0 , nu0 = nu0 , Lam0 = Lam0 ) );
 }
 
+#################################################################################
+##### Fit function
+#################################################################################
 
 
 #' Performs a Gibbs fit for the input data y, given a specific kernel (mix_kernel_hyperparams).

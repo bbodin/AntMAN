@@ -112,17 +112,23 @@ public:
 
 		Rcpp::Rcout <<"Let's start the Gibbs!"<<"\n";
 
-		double total_gibbs           = 0;
-		auto   start_gibbs           = std::chrono::system_clock::now();
+		double total_iter           = 0;
+		double total_u              = 0;
+		double total_ci             = 0;
+		double total_mna            = 0;
+		double total_alloc          = 0;
+		double total_gibbs          = 0;
+		auto   start_gibbs          = std::chrono::system_clock::now();
 
 		//TODO[CHECK ME] : Check the number of iteration versus burning !!!
 		for (unsigned int iter = 0 ; iter < (niter+burnin) ; iter++)  {
 
-			double total_iter           = 0;
-			double total_u              = 0;
-			double total_ci             = 0;
-			double total_mna            = 0;
-			double total_alloc          = 0;
+			total_iter           = 0;
+			total_u              = 0;
+			total_ci             = 0;
+			total_mna            = 0;
+			total_alloc          = 0;
+
 			auto start_iter = std::chrono::system_clock::now();
 
 			for(int thi=0;thi<thin;thi++){
@@ -195,14 +201,14 @@ public:
 					auto end_gibbs             = std::chrono::system_clock::now();
 					auto elapsed_gibbs         = end_gibbs - start_gibbs;
 					     start_gibbs           = std::chrono::system_clock::now();
-					total_gibbs                = elapsed_gibbs.count() / 1000000.0;
+					total_gibbs               += elapsed_gibbs.count() / 1000000.0;
 
 					Rcpp::Rcout <<"iter="<<iter<<" K="<<K<<" M_na="<<M_na<<" M="<<M<<
 							" u=" <<total_u <<
 							"ms ci=" <<total_ci <<
 							"ms mna=" <<total_mna <<
 							"ms alloc=" <<total_alloc <<
-							"ms total_iter=" <<total_iter <<
+							"ms iter=" <<total_iter <<
 							"ms total_gibbs=" <<total_gibbs<< "ms" << std::endl;
 			}
 

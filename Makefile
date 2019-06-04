@@ -1,9 +1,11 @@
 C_FILES := $(shell find ./AntMAN/src -name \*.\*pp -not -name RcppExports.cpp)
 R_FILES := $(shell find ./AntMAN/R ./AntMAN/tests -name \*.R -not -name RcppExports.R)
 
-
+all : test
 test :  AntMAN.Rinstall/   AntMAN_1.0.pdf
 	R_LIBS_USER=./AntMAN.Rinstall/ R -f AntMAN/tests/testWordCount.R
+	R_LIBS_USER=./AntMAN.Rinstall/ R -f AntMAN/tests/testGalaxy.R	
+	R_LIBS_USER=./AntMAN.Rinstall/ R -f AntMAN/tests/testSegmentation.R
 
 download : 
 	cp ~/Dropbox/AntMan/AntManAPI.R AntMAN/R/AntManAPI.R

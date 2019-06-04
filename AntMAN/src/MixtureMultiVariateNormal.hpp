@@ -87,21 +87,20 @@ public :
 			VERBOSE_DEBUG("mu_current :" << mu_current.n_rows << "x" << mu_current.n_cols);
 			VERBOSE_DEBUG("Sig_current  :"  << Sig_current.n_rows << "x" << Sig_current.n_cols << "x" << Sig_current.n_slices );
 
+			arma::vec pesi(M);
+			double max_lpesi=-INFINITY;
+
+			omp_set_dynamic(0);
 			for (int i=0; i < n; i++) {
 
-				arma::vec pesi(M);
-				double max_lpesi=-INFINITY;
-
+			    #pragma omp parallel for num_threads(4)
 				for(int l=0;l<M;l++){
 
-
-					const arma::vec dmvnorm1_y   = y.row(i).t();
 					const arma::vec dmvnorm1_mu  = mu_current.row(l).t();
 					const arma::mat dmvnorm1_Sig =Sig_current.slice(l);
 
 
-					double ldensi = dmvnorm1(dmvnorm1_y,dmvnorm1_mu,dmvnorm1_Sig,true);
-					VERBOSE_DEBUG ("i=" << i << " l=" << l << " ldensi=" << ldensi);
+					double ldensi = dmvnorm(y.row(i), dmvnorm1_mu,dmvnorm1_Sig,true)[0];
 					 pesi[l]=Log_S_current[l]+ldensi;
 					 if(max_lpesi<pesi[l]){max_lpesi=pesi[l];}
 				}
