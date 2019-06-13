@@ -25,6 +25,10 @@ public :
 	Mixture_MultivariateBernoulli (const arma::vec  a0, const arma::vec  b0) :  _mb(a0.size(), arma::fill::ones), _a0 (a0), _b0 (b0) {}
 	//Mixture_MultivariateBernoulli (const arma::vec  a0, const arma::vec  b0, const arma::vec  mb) :  _mb(mb), _a0 (a0), _b0 (b0) {}
 
+	Rcpp::List get_tau () {
+		return Rcpp::List::create(Rcpp::Named("theta") = _theta ) ;
+	}
+
 	virtual void init_tau (const input_t & y, const int M) {
 
 		VERBOSE_DEBUG(" init_tau (const input_t & y, const int M)");

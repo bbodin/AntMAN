@@ -1,5 +1,6 @@
 
 
+.libPaths(c("./AntMAN.Rinstall", .libPaths()))
 library("AntMAN")
 
 y_uvp <- c( 24, 14, 17, 2, 30, 26, 9, 0, 22, 17, 3, 11, 5, 7, 10, 0, 1, 0, 23, 13, 20, 24, 12, 16, 17, 2, 14,

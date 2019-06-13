@@ -22,6 +22,9 @@ struct negbin_component {
 	 double LSD_g;
 	 double M;
 	 bool   fixed;
+	 negbin_component() : a(0.0), b(0.0) ,  LSD(0.0), LSD_g(0.0) ,  M(0.0), fixed(true) {
+
+	 }
 };
 
 class negative_binomial_gamma_q_param_t  : public q_param_t  {

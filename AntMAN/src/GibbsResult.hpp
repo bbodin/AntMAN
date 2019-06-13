@@ -8,6 +8,10 @@
 #ifndef ANTMAN_SRC_GIBBSRESULT_HPP_
 #define ANTMAN_SRC_GIBBSRESULT_HPP_
 
+#include "utils.hpp"
+
+class Mixture;
+class Prior;
 
 static const std::string  AM_OUTPUT_STR_CI  = "CI";
 static const std::string  AM_OUTPUT_STR_TAU = "Tau";
@@ -52,7 +56,6 @@ static inline int AM_GENERATOR_OUTPUT_CODE (std::vector <std::string> output) {
 	};
 
 
-
 class GibbsResult {
 
 private :
@@ -61,69 +64,30 @@ private :
 public:
 	// Ouput Variables
 	std::vector<Rcpp::IntegerVector> CI;
-	std::vector<void*>               TAU;
-	std::vector<Rcpp::NumericVector> S;
-	std::vector<long>                M;
-	std::vector<long>                K;
-	std::vector<long>                Mna;
 	std::vector<void*>               H;
+	std::vector<long>                K;
+	std::vector<long>                M;
+	std::vector<long>                Mna;
 	std::vector<void*>               Q;
+	std::vector<Rcpp::NumericVector> S;
+	std::vector<Rcpp::List>          TAU;
 
 	int niter;
 	int output_codes;
 
-	GibbsResult(int niter, int output_codes) : iteration(0),  niter(niter), output_codes (output_codes) {
+	GibbsResult(int niter, int output_codes)  ;
 
-		if (AM_OUTPUT_HAS(output_codes,AM_OUTPUT_CI )) { VERBOSE_INFO("Record    CI   "); CI.resize(niter);   }
-		if (AM_OUTPUT_HAS(output_codes,AM_OUTPUT_TAU)) { VERBOSE_INFO("Record    TAU  "); TAU.resize(niter);  }
-		if (AM_OUTPUT_HAS(output_codes,AM_OUTPUT_S  )) { VERBOSE_INFO("Record    S    "); S.resize(niter);    }
-		if (AM_OUTPUT_HAS(output_codes,AM_OUTPUT_M  )) { VERBOSE_INFO("Record    M    "); M.resize(niter);    }
-		if (AM_OUTPUT_HAS(output_codes,AM_OUTPUT_K  )) { VERBOSE_INFO("Record    K    "); K.resize(niter);    }
-		if (AM_OUTPUT_HAS(output_codes,AM_OUTPUT_Mna)) { VERBOSE_INFO("Record    Mna  "); Mna.resize(niter);  }
-		if (AM_OUTPUT_HAS(output_codes,AM_OUTPUT_H  )) { VERBOSE_INFO("Record    H    "); H.resize(niter);    }
-		if (AM_OUTPUT_HAS(output_codes,AM_OUTPUT_Q  )) { VERBOSE_INFO("Record    Q    "); Q.resize(niter);    }
-	}
+	 void log_output (
+			 cluster_indices_t& ci_current,
+			 Rcpp::NumericVector & S_current,
+			 unsigned int M,
+			 unsigned int K,
+			 unsigned int M_na,
+			 Mixture * mixture,
+			 Prior * prior) ;
 
-	 void log_output (cluster_indices_t& ci_current, Rcpp::NumericVector & S_current, unsigned int M, unsigned int K, unsigned int M_na, Prior * prior) {
 
-		 GibbsResult & result = *this;
-		 int output           = this->output_codes;
-
-		 if (AM_OUTPUT_HAS(output,AM_OUTPUT_CI)) {
-			 result.CI[iteration]=ci_current;
-		 };
-
-		 if (AM_OUTPUT_HAS(output,AM_OUTPUT_S)) {
-			 result.S[iteration]=S_current;
-		 }
-
-		 if (AM_OUTPUT_HAS(output,AM_OUTPUT_M)) {
-			 result.M[iteration]=M;
-		 }
-
-		if (AM_OUTPUT_HAS(output,AM_OUTPUT_K))  {
-			result.K[iteration]=K;
-		}
-
-		if (AM_OUTPUT_HAS(output,AM_OUTPUT_Mna)) {
-			result.Mna[iteration]=M_na;
-		}
-
-		if (AM_OUTPUT_HAS(output,AM_OUTPUT_TAU)) {
-			VERBOSE_ERROR("Unsupported case: AM_OUTPUT_TAU");
-		}
-
-		if (AM_OUTPUT_HAS(output,AM_OUTPUT_H)) {
-			VERBOSE_ERROR("Unsupported case: AM_OUTPUT_H");
-		}
-
-		if (AM_OUTPUT_HAS(output,AM_OUTPUT_Q)) {
-			VERBOSE_ERROR("Unsupported case: AM_OUTPUT_Q");
-		}
-
-		iteration++;
-	}
-
+		Rcpp::List getList () ;
 };
 
 

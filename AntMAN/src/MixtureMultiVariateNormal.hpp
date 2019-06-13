@@ -29,7 +29,9 @@ class Mixture_MultivariateNormal: public MultivariateMixture  {
 
 public :
 	Mixture_MultivariateNormal (const arma::vec & mu0, const double ka0, const unsigned int nu0, const arma::mat & Lam0) : _mu0 (mu0), _ka0 (ka0), _nu0 (nu0), _Lam0  (Lam0){}
-
+	Rcpp::List get_tau () {
+		return Rcpp::List::create(Rcpp::Named("Error") = "Unexpected error."  ) ;
+	}
 	virtual void init_tau (const input_t & y, const int M){
 
 		VERBOSE_DEBUG(" init_tau (const input_t & y, const int M)");

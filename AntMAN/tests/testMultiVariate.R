@@ -7,10 +7,10 @@
 ### Load packages
 ##############################################
 
-library(jpeg)
+.libPaths(c("./AntMAN.Rinstall", .libPaths()))
+library("jpeg")
 library(plot3D)
-setwd("/home/toky/yalenus/research/mixture/AntMan")
-library("AntMAN", lib.loc = "./AntMAN.Rinstall")
+library("AntMAN")
 
 
 rm(list=ls())

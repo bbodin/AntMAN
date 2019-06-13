@@ -349,34 +349,6 @@ bool is_multivariate (Rcpp::List mix_kernel_hyperparams) {
 		}
 
 
-		Rcpp::List Result2List ( GibbsResult & res) {
-
-			Rcpp::List list = Rcpp::List::create(
-					Rcpp::Named("CI")    =  res.CI ,
-					Rcpp::Named("S")     =  res.S  ,
-					Rcpp::Named("M")     =  res.M  ,
-					Rcpp::Named("K")     =  res.K  ,
-					Rcpp::Named("Mna")   =  res.Mna
-								);
-
-
-			//					Rcpp::Named("H")     =  res.H  ,
-			//					Rcpp::Named("Q")     =  res.Q
-			//					Rcpp::Named("TAU")   =  res.TAU,
-
-			 if (not res.CI .size()) list["CI"]  = R_NilValue ;
-			 if (not res.TAU.size()) list["TAU"] = R_NilValue ;
-			 if (not res.S  .size()) list["S"]   = R_NilValue ;
-			 if (not res.M  .size()) list["M"]   = R_NilValue ;
-			 if (not res.K  .size()) list["K"]   = R_NilValue ;
-			 if (not res.Mna.size()) list["Mna"] = R_NilValue ;
-			 if (not res.H  .size()) list["H"]   = R_NilValue ;
-			 if (not res.Q  .size()) list["Q"]   = R_NilValue ;
-
-			 return list;
-
-
-		}
 
 
 
@@ -434,22 +406,22 @@ Rcpp::List IAM_mcmc_fit (
 	VERBOSE_INFO ("- size(mcmc_parameters[output]) = " << output_list.size());
 	VERBOSE_INFO ("- output_codes = " << output_codes);
 
+	GibbsResult res (mcmc_parameters["niter"],output_codes);
 
 	if (Rcpp::is<Rcpp::NumericMatrix>(y) || Rcpp::is<Rcpp::IntegerMatrix>(y)) {
 			VERBOSE_ASSERT (is_multivariate(mix_kernel_hyperparams), "y argument is a Matrix while the technique is not MultiVariate.") ;
+			dynamic_cast<MultivariateMixture*>(mixture)->fit(Rcpp::as<arma::mat>(y) , initial_clustering, prior ,
+					mcmc_parameters["niter"] ,mcmc_parameters["burnin"] ,mcmc_parameters["thin"] ,mcmc_parameters["verbose"]  ,output_codes , &res );
+			VERBOSE_INFO("End of Gibbs");
+			return res.getList();
 
-			GibbsResult res =  dynamic_cast<MultivariateMixture*>(mixture)->fit(Rcpp::as<arma::mat>(y) , initial_clustering, prior ,
-					mcmc_parameters["niter"] ,mcmc_parameters["burnin"] ,mcmc_parameters["thin"] ,mcmc_parameters["verbose"]  ,output_codes );
-
-
-			return Result2List(res);
 		}  else if(Rcpp::is<Rcpp::NumericVector>(y) || Rcpp::is<Rcpp::IntegerVector>(y)){
 			VERBOSE_ASSERT (is_univariate(mix_kernel_hyperparams), "y argument is a Vector while the technique is not Univariate.") ;
-			GibbsResult res =  dynamic_cast<UnivariateMixture*>(mixture)->fit(Rcpp::as<arma::vec>(y) , initial_clustering, prior ,
-					mcmc_parameters["niter"] ,mcmc_parameters["burnin"] ,mcmc_parameters["thin"] ,mcmc_parameters["verbose"]  ,output_codes );
+			dynamic_cast<UnivariateMixture*>(mixture)->fit(Rcpp::as<arma::vec>(y) , initial_clustering, prior ,
+					mcmc_parameters["niter"] ,mcmc_parameters["burnin"] ,mcmc_parameters["thin"] ,mcmc_parameters["verbose"]  ,output_codes , &res );
 
-
-			return Result2List(res);
+			VERBOSE_INFO("End of Gibbs");
+			return res.getList();
 		} else {
 		VERBOSE_ERROR("The parameter y must be a Matrix or a Vector.");
 	}

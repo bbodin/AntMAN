@@ -70,7 +70,9 @@ class Mixture_UnivariateProbit: public UnivariateMixture {
 
 public :
 	Mixture_UnivariateProbit (const arma::mat & X, const arma::colvec & Mu, const arma::mat & Sig) : _X(X), _mu_beta(Mu), _Sig_beta(Sig) , _Sig_betam1 ( arma::pinv(Sig)),  _k_x  (X.n_cols){}
-
+	Rcpp::List get_tau () {
+		return Rcpp::List::create(Rcpp::Named("Error") = "Unexpected error."  ) ;
+	}
 	virtual void init_tau (const input_t & y, const int M) {
 		_Beta_current.resize (M,_k_x);
 		_z_current.resize (y.size()) ;

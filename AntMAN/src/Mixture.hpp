@@ -28,7 +28,8 @@ public :
 
 class Mixture {
 public :
-	virtual    ~Mixture() {};
+	virtual             ~Mixture() {};
+	virtual Rcpp::List  get_tau () = 0;
 };
 
 
@@ -39,7 +40,8 @@ public :
 protected:
 	typedef InputType input_t ;
 
-	virtual void init_tau (const InputType & y, const int M) = 0;
+	virtual void        init_tau (const InputType & y, const int M) = 0;
+
 
 	virtual cluster_indices_t  up_ci(const  InputType & y,
 			const long M,
@@ -60,14 +62,15 @@ protected:
 
 public:
 
-	GibbsResult fit(InputType y,
+	void fit(InputType y,
 			cluster_indices_t initial_clustering,
 			Prior * prior,
 			const unsigned int niter,
 			const unsigned int burnin ,
 			const unsigned int thin,
 			const unsigned int verbose,
-			const unsigned int output) {
+			const unsigned int output,
+			GibbsResult * results) {
 
 
 		const int n = y.n_rows;
@@ -104,7 +107,6 @@ public:
 		/**************************************/
 
 
-		GibbsResult result (niter,output);
 
 		/**************************************/
 		/******* Start Gibbs                 **/
@@ -216,13 +218,13 @@ public:
 			// Save output after the burn-in and taking into account
 			// thinning
 			if( (iter>=burnin)){
-				result.log_output (ci_current,  S_current,  M,  K,  M_na, prior) ;
+				results->log_output (ci_current,  S_current,  M,  K,  M_na, this , prior) ;
 			}
 
 		}//I close the while
 
 		Rcpp::Rcout <<"End of Iterations." << std::endl;
-		return result;
+
 
 	}
 

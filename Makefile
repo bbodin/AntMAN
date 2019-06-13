@@ -3,9 +3,9 @@ R_FILES := $(shell find ./AntMAN/R ./AntMAN/tests -name \*.R -not -name RcppExpo
 
 all : test
 test :  AntMAN.Rinstall/   AntMAN_1.0.pdf
-	R_LIBS_USER=./AntMAN.Rinstall/ R -f AntMAN/tests/testWordCount.R
-	R_LIBS_USER=./AntMAN.Rinstall/ R -f AntMAN/tests/testGalaxy.R	
-	R_LIBS_USER=./AntMAN.Rinstall/ R -f AntMAN/tests/testSegmentation.R
+	R -f AntMAN/tests/testWordCount.R
+	R -f AntMAN/tests/testGalaxy.R	
+	R -f AntMAN/tests/testSegmentation.R
 
 download : 
 	cp ~/Dropbox/AntMan/AntManAPI.R AntMAN/R/AntManAPI.R
@@ -32,7 +32,7 @@ infos :
 %.Rinstall/ : %_1.0.tar.gz 
 	mkdir -p $@
 	R CMD INSTALL  -l $@ $*_1.0.tar.gz
-
+	
 %_1.0.pdf : %
 	R -e  "library(devtools) ; pkgbuild::compile_dll(\"$*\");  document(\"$*\"); devtools::build_manual(\"$*\"); "
 
@@ -43,4 +43,4 @@ clean :
 	rm -rf current *~ *.Rinstall *_1.0.pdf  *_1.0.tar.gz *.Rcheck ./AntMAN/src/*.o ./AntMAN/src/*.so 	./AntMAN/src/*.rds ./AntMAN/src/RcppExports.cpp  ./AntMAN/R/RcppExports.R  ./AntMAN/man/AM*.Rd 
 
 .PHONY: clean
-
+.SECONDARY:

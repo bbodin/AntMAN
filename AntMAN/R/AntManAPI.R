@@ -13,10 +13,11 @@ plot.AM_mcmc_fitness_result=function(x,...){
 }
 
 summary.AM_mcmc_fitness_result=function(object,...){
-	sprintf("Name\tMean\tStdDev")
-	if (!is.null(object$K)) sprintf("%s\t%f\t%f","K" ,  mean(object$K) , sd(object$K))
-	if (!is.null(object$M)) sprintf("%s\t%f\t%f","M" ,  mean(object$M) , sd(object$M))
-	if (!is.null(object$Mna)) sprintf("%s\t%f\t%f","Mna" ,  mean(object$Mna) , sd(object$Mna))
+	print("Run summary") ;
+	sprintf("Name\tMean\tStdDev") ;
+	if (!is.null(object$K)) sprintf("%s\t%f\t%f","K" ,  mean(object$K) , sd(object$K)) ;
+	if (!is.null(object$M)) sprintf("%s\t%f\t%f","M" ,  mean(object$M) , sd(object$M)) ;
+	if (!is.null(object$Mna)) sprintf("%s\t%f\t%f","Mna" ,  mean(object$Mna) , sd(object$Mna)) ;
 }
 
 
@@ -187,7 +188,7 @@ AM_mix_weights_prior_gamma <- function(a = NULL, b = NULL, gamma = NULL, init = 
 #' @return A configuration list to be used as an argument for mcmc_fit. 
 #' @examples 
 #' AM_mcmc_parameters (niter=1000, burnin=10000, thin=50)
-#' AM_mcmc_parameters (niter=1000, burnin=10000, thin=50, output=c("CI","S","TAU"), file_output=c("all"))
+#' AM_mcmc_parameters (niter=1000, burnin=10000, thin=50, output=c("CI","S","TAU"), file_output="")
 #' @export
 AM_mcmc_parameters <- function(  niter=20000,
                                  burnin=10000,
@@ -195,7 +196,7 @@ AM_mcmc_parameters <- function(  niter=20000,
                                  verbose = 1,
                                  output=c("CI","K"),
                                  parallel=0,
-                                 file_output="M,K,Mna,Gamma") {
+                                 file_output="") {
   
   
   return (list(type="AM_MCMC_PARAMETERS", 
