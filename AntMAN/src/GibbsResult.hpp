@@ -13,6 +13,8 @@
 class Mixture;
 class Prior;
 
+
+
 static const std::string  AM_OUTPUT_STR_CI  = "CI";
 static const std::string  AM_OUTPUT_STR_TAU = "Tau";
 static const std::string  AM_OUTPUT_STR_S   = "S";

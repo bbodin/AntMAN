@@ -13,11 +13,10 @@ plot.AM_mcmc_fitness_result=function(x,...){
 }
 
 summary.AM_mcmc_fitness_result=function(object,...){
-	print("Run summary") ;
-	sprintf("Name\tMean\tStdDev") ;
-	if (!is.null(object$K)) sprintf("%s\t%f\t%f","K" ,  mean(object$K) , sd(object$K)) ;
-	if (!is.null(object$M)) sprintf("%s\t%f\t%f","M" ,  mean(object$M) , sd(object$M)) ;
-	if (!is.null(object$Mna)) sprintf("%s\t%f\t%f","Mna" ,  mean(object$Mna) , sd(object$Mna)) ;
+	print("Name\tMean\tStdDev") ;
+	if (!is.null(object$K)) print(sprintf("%s\t%f\t%f","K" ,  mean(object$K) , sd(object$K))) ;
+	if (!is.null(object$M)) print(sprintf("%s\t%f\t%f","M" ,  mean(object$M) , sd(object$M))) ;
+	if (!is.null(object$Mna)) print(sprintf("%s\t%f\t%f","Mna" ,  mean(object$Mna) , sd(object$Mna))) ;
 }
 
 
