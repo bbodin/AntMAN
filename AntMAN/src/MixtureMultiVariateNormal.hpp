@@ -87,13 +87,15 @@ public :
 			VERBOSE_DEBUG("mu_current :" << mu_current.n_rows << "x" << mu_current.n_cols);
 			VERBOSE_DEBUG("Sig_current  :"  << Sig_current.n_rows << "x" << Sig_current.n_cols << "x" << Sig_current.n_slices );
 
-			arma::vec pesi(M);
-			double max_lpesi=-INFINITY;
 
 			omp_set_dynamic(0);
+
+			#pragma omp parallel for num_threads(8)
 			for (int i=0; i < n; i++) {
 
-			    #pragma omp parallel for num_threads(4)
+				arma::vec pesi(M);
+				double max_lpesi=-INFINITY;
+
 				for(int l=0;l<M;l++){
 
 					const arma::vec dmvnorm1_mu  = mu_current.row(l).t();
@@ -102,7 +104,9 @@ public :
 
 					double ldensi = dmvnorm(y.row(i), dmvnorm1_mu,dmvnorm1_Sig,true)[0];
 					 pesi[l]=Log_S_current[l]+ldensi;
-					 if(max_lpesi<pesi[l]){max_lpesi=pesi[l];}
+					 if(max_lpesi<pesi[l]) {
+						 max_lpesi=pesi[l];
+					 }
 				}
 
 				// I put the weights in natural scale and re-normalize then
@@ -163,6 +167,8 @@ public :
 				}
 
 				VERBOSE_DEBUG("I know but does it print ? ");
+				omp_set_dynamic(0);
+
 				for(int l=0; l<K;l++){
 
 					VERBOSE_DEBUG("++");
@@ -237,8 +243,10 @@ public :
 
 					Sig_current.slice(l) = Sig_l; // In case 4 we have to update a matrix
 					mu_current.row(l)  = mu_l.t();
+				}
 
-					// TODO[OPTIMIZE ME] : Cannot split or the random value are completly different
+				for(int l=0; l<K;l++){
+					// TODO[CHECK ME] : I split the loop, random generation is not the saame as before, but it should be theoricaly equivalent, isnt it ?
 					// Update the Jumps of the allocated part of the process
 					S_current[l] = R::rgamma(nj[l]+gamma_current,1./(U_current+1.0));
 

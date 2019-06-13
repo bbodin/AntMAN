@@ -17,8 +17,14 @@
 
 extern int VERBOSE_LEVEL;
 
+#ifdef VERBOSE_BINARY
 #define VERBOSE_EXTRA(msg)                         {if (VERBOSE_LEVEL >= EXTRA_LEVEL)   Rcpp::Rcout  << msg << std::endl;};
 #define VERBOSE_DEBUG(msg)                         {if (VERBOSE_LEVEL >= DEBUG_LEVEL)   Rcpp::Rcout  << msg << std::endl;};
+#else
+#define VERBOSE_EXTRA(msg)                         {};
+#define VERBOSE_DEBUG(msg)                         {};
+#endif
+
 #define VERBOSE_INFO(msg)                          {if (VERBOSE_LEVEL >= INFO_LEVEL)    Rcpp::Rcerr  << msg << std::endl;};
 #define VERBOSE_LOG(msg)                           {if (VERBOSE_LEVEL >= LOG_LEVEL)     Rcpp::Rcerr  << msg << std::endl;};
 #define VERBOSE_WARNING(test,msg) {if (not (test)) {if (VERBOSE_LEVEL >= WARNING_LEVEL) Rcpp::Rcerr  << msg << std::endl;}};
