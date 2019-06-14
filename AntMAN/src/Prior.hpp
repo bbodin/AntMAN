@@ -9,6 +9,7 @@
 #define ANTMAN_SRC_PRIOR_HPP_
 
 #include <cassert>
+#include "math_utils.hpp"
 #include "utils.hpp"
 // --------------------------------------------------------------------------------------------------------------------
 

@@ -23,11 +23,11 @@ extern int VERBOSE_LEVEL;
 #define COUT_STREAM Rcpp::Rcout
 #define CERR_STREAM Rcpp::Rcerr
 
-static inline void stop_cmd () {Rcpp::stop("Error inside the package.\n");} ;
+static inline void stop_cmd () {Rcpp::stop("Error inside the package.\n");}
 #else
 #define COUT_STREAM std::cout
 #define CERR_STREAM std::cerr
-static inline void stop_cmd () {abort();} ;
+static inline void stop_cmd () {abort();}
 #endif
 
 #ifdef VERBOSE_BINARY

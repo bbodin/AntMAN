@@ -26,9 +26,11 @@ public:
 
 public :
 	Mixture_UnivariateBernoulli (const double a0, const double b0, const int mb) :  _mb(mb), _a0 (a0), _b0 (b0) {}
+#ifndef NO_RCPP
 	Rcpp::List get_tau () {
 		return Rcpp::List::create(Rcpp::Named("Error") = "Unexpected error."  ) ;
 	}
+#endif
 	virtual void init_tau (const input_t & y, const int M) {
 		 _theta .resize(M)  ;
 

@@ -38,7 +38,7 @@ static const int  AM_OUTPUT_Q   = 1 << 7;
 static const int  AM_OUTPUT_DEFAULT   = AM_OUTPUT_CI | AM_OUTPUT_S | AM_OUTPUT_M | AM_OUTPUT_K;
 static const int  AM_OUTPUT_ALL       = AM_OUTPUT_CI | AM_OUTPUT_TAU | AM_OUTPUT_S | AM_OUTPUT_M | AM_OUTPUT_K | AM_OUTPUT_Mna | AM_OUTPUT_H | AM_OUTPUT_Q;
 
-static inline bool AM_OUTPUT_HAS (int CODE, int ITEM) {return CODE & ITEM;};
+static inline bool AM_OUTPUT_HAS (int CODE, int ITEM) {return CODE & ITEM;}
 
 static inline int AM_GENERATOR_OUTPUT_CODE (std::vector <std::string> output) {
 		int res = 0 ;
@@ -55,29 +55,27 @@ static inline int AM_GENERATOR_OUTPUT_CODE (std::vector <std::string> output) {
 			else {VERBOSE_ERROR ("Unsupported output item: " << e);}
 		}
 		return res;
-	};
+	}
 
 
 class GibbsResult {
+public :
+	virtual ~GibbsResult() {} ;
 
-private :
-	int iteration;
+	virtual void log_output (
+				 cluster_indices_t& ci_current,
+				 arma::vec & S_current,
+				 unsigned int M,
+				 unsigned int K,
+				 unsigned int M_na,
+				 Mixture * mixture,
+				 Prior * prior) = 0;
+};
 
+
+class GibbsResultPlain : public GibbsResult {
 public:
-	// Ouput Variables
-	std::vector<Rcpp::IntegerVector> CI;
-	std::vector<void*>               H;
-	std::vector<long>                K;
-	std::vector<long>                M;
-	std::vector<long>                Mna;
-	std::vector<void*>               Q;
-	std::vector<arma::vec>           S;
-	std::vector<Rcpp::List>          TAU;
-
-	int niter;
-	int output_codes;
-
-	GibbsResult(int niter, int output_codes)  ;
+	GibbsResultPlain () {} ;
 
 	 void log_output (
 			 cluster_indices_t& ci_current,
@@ -86,10 +84,8 @@ public:
 			 unsigned int K,
 			 unsigned int M_na,
 			 Mixture * mixture,
-			 Prior * prior) ;
+			 Prior * prior) {} ;
 
-
-		Rcpp::List getList () ;
 };
 
 

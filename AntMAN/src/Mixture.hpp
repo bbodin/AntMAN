@@ -29,7 +29,9 @@ public :
 class Mixture {
 public :
 	virtual             ~Mixture() {};
+#ifndef NO_RCPP
 	virtual Rcpp::List  get_tau () = 0;
+#endif
 };
 
 
@@ -69,7 +71,6 @@ public:
 			const unsigned int burnin ,
 			const unsigned int thin,
 			const unsigned int verbose,
-			const unsigned int output,
 			GibbsResult * results) {
 
 
@@ -102,10 +103,6 @@ public:
 
 
 
-		/**************************************/
-		/*******       initialize the output **/
-		/**************************************/
-
 
 
 		/**************************************/
@@ -133,7 +130,7 @@ public:
 
 			auto start_iter = std::chrono::system_clock::now();
 
-			for(int thi=0;thi<thin;thi++){
+			for(unsigned int thi=0 ; thi < thin ; thi++) {
 
 				//Following the scheme in Figure 1 of the paper
 				//I first update the latent U

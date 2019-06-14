@@ -22,9 +22,11 @@ class Mixture_UnivariatePoisson : public UnivariateMixture {
 
 public :
 	Mixture_UnivariatePoisson (const double alpha0, const double beta0) : _alpha0 (alpha0), _beta0 (beta0) {}
+#ifndef NO_RCPP
 	Rcpp::List get_tau () {
 		return Rcpp::List::create(Rcpp::Named("Error") = "Unexpected error."  ) ;
 	}
+#endif
 	void init_tau (const input_t & y, const int M) {
 		const double beta0 = _alpha0;
 		const double alpha0 = _beta0;

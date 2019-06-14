@@ -60,7 +60,8 @@ inline double  update_lsd ( double lsd, double ln_acp, double iter) {
 
 inline arma::vec mvrnormArma(arma::colvec mu, arma::mat Sig) {
 	int ncols = Sig.n_cols;
-	arma::vec Y = Rcpp::as<arma::vec>(Rcpp::rnorm(ncols,0.0,1.0 ));
+	arma::vec Y = arma::randn<arma::vec>(ncols);
+
 	return mu +  arma::chol(Sig) * Y;
 }
 

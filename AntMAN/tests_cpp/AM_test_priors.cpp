@@ -59,7 +59,6 @@ PriorNegativeBinomial prepare_negative_binomial () {
 	return to_test;
 }
 
-// [[Rcpp::export]]
 void test_priors () {
 
 	VERBOSE_LEVEL = DEBUG_LEVEL ;
@@ -73,3 +72,4 @@ void test_priors () {
 
 
 }
+

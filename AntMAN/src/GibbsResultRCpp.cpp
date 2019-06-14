@@ -6,14 +6,14 @@
  */
 
 #include <RcppArmadillo.h>
-#include "GibbsResult.hpp"
+#include "GibbsResultRCpp.hpp"
 
 
 #include "Prior.hpp"
 #include "Mixture.hpp"
 
 
-	GibbsResult::GibbsResult(int niter, int output_codes) : iteration(0),  niter(niter), output_codes (output_codes) {
+	GibbsResultRCpp::GibbsResultRCpp(int niter, int output_codes) : iteration(0),  niter(niter), output_codes (output_codes) {
 
 		if (AM_OUTPUT_HAS(output_codes,AM_OUTPUT_CI )) { VERBOSE_INFO("Record    CI   "); CI.resize(niter);   }
 		if (AM_OUTPUT_HAS(output_codes,AM_OUTPUT_TAU)) { VERBOSE_INFO("Record    TAU  "); TAU.resize(niter);  }
@@ -25,7 +25,7 @@
 		if (AM_OUTPUT_HAS(output_codes,AM_OUTPUT_Q  )) { VERBOSE_INFO("Record    Q    "); Q.resize(niter);    }
 	}
 
-	 void GibbsResult::log_output (
+	 void GibbsResultRCpp::log_output (
 			 cluster_indices_t& ci_current,
 			 arma::vec & S_current,
 			 unsigned int M,
@@ -36,7 +36,7 @@
 
 
 
-		 GibbsResult & result = *this;
+		 GibbsResultRCpp & result = *this;
 		 int output           = this->output_codes;
 
 		 if (AM_OUTPUT_HAS(output,AM_OUTPUT_CI)) {
@@ -75,7 +75,7 @@
 	}
 
 
-		Rcpp::List GibbsResult::getList () {
+		Rcpp::List GibbsResultRCpp::getList () {
 
 			Rcpp::List list = Rcpp::List::create(
 					Rcpp::Named("CI")    =  this->CI ,

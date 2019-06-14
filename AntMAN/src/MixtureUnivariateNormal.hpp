@@ -23,9 +23,11 @@ class Mixture_UnivariateNormal: public UnivariateMixture  {
 
 public :
 	Mixture_UnivariateNormal (const double m0, const double k0, const double nu0, const double sig02) : _m0 (m0), _k0 (k0), _nu0 (nu0), _sig02  (sig02){}
+#ifndef NO_RCPP
 	Rcpp::List get_tau () {
 		return Rcpp::List::create(Rcpp::Named("mu") =  _mu_current, Rcpp::Named("sig2") =  _sig2_current  ) ;
 	}
+#endif
 	virtual void init_tau (const input_t & y, const int M) {
 		 _mu_current.resize(M);
 		 _sig2_current.resize(M);
@@ -38,8 +40,8 @@ public :
 		 const double scale_loc=std::pow(nu0/2*sig02,-1.0);
 
 		 for(int l=0;l<M;l++){
-			 _sig2_current[l] = pow(R::rgamma(nu0/2,scale_loc),-1);
-			 _mu_current[l]   = R::rnorm(m0, pow(_sig2_current[l]/k0,0.5));
+			 _sig2_current[l] = pow(am_rgamma(nu0/2,scale_loc),-1);
+			 _mu_current[l]   = am_rnorm(m0, pow(_sig2_current[l]/k0,0.5));
 		 }
 
 	}
@@ -57,7 +59,7 @@ public :
 		std::vector<double> pow_sig2_current (M);
 		std::vector<double> log_pow_sig2_current (M);
 
-		arma::vec random_u   = Rcpp::runif(n,0.0,1.0 );
+		arma::vec random_u   = arma::randu(n);
 
 
 		for(int l=0;l<M;l++){

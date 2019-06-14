@@ -5,16 +5,19 @@
 
 #include "utils.hpp"
 
+#include "GibbsResultRCpp.hpp"
+
 bool is_univariate (Rcpp::List mix_kernel_hyperparams) {
 	VERBOSE_ASSERT (mix_kernel_hyperparams.containsElementNamed("type"), "mix_kernel_hyperparams does not contain a type field.");
 	std::string mixture_type = mix_kernel_hyperparams["type"];
 	return mixture_type.find("uni") != std::string::npos;
-};
+}
+
 bool is_multivariate (Rcpp::List mix_kernel_hyperparams) {
 	VERBOSE_ASSERT (mix_kernel_hyperparams.containsElementNamed("type"), "mix_kernel_hyperparams does not contain a type field.");
 	std::string  mixture_type = mix_kernel_hyperparams["type"];
 	return mixture_type.find("multi") != std::string::npos;
-};
+}
 
 
 
@@ -187,11 +190,12 @@ bool is_multivariate (Rcpp::List mix_kernel_hyperparams) {
 			VERBOSE_ASSERT(prior_type == "AM_mix_components_prior_negbin", "Internal_error");
 			VERBOSE_ASSERT(weight_type == "AM_mix_weights_prior_gamma", "Internal_error");
 
-			int n = 0;
 			if(Rcpp::is<Rcpp::NumericVector>(y) || Rcpp::is<Rcpp::IntegerVector>(y)){
-				n = Rcpp::as<arma::vec>(y).size();
+				const unsigned int n = Rcpp::as<arma::vec>(y).size();
+				VERBOSE_INFO ("Input size is " << n);
 			} else  if (Rcpp::is<Rcpp::NumericMatrix>(y) || Rcpp::is<Rcpp::IntegerMatrix>(y)) {
-				n = Rcpp::as<arma::mat>(y).n_rows;
+				const unsigned int n = Rcpp::as<arma::mat>(y).n_rows;
+				VERBOSE_INFO ("Input size is " << n);
 			} else {
 				VERBOSE_ERROR ("Unsupported type: y variable should be Matrix or Vector.");
 			}
@@ -259,14 +263,16 @@ bool is_multivariate (Rcpp::List mix_kernel_hyperparams) {
 			VERBOSE_ASSERT(prior_type == "AM_mix_components_prior_dirac", "Internal_error");
 			VERBOSE_ASSERT(weight_type == "AM_mix_weights_prior_gamma", "Internal_error");
 
-			int n = 0;
 			if(Rcpp::is<Rcpp::NumericVector>(y) || Rcpp::is<Rcpp::IntegerVector>(y)){
-				n = Rcpp::as<arma::vec>(y).size();
+				const unsigned int n = Rcpp::as<arma::vec>(y).size();
+				VERBOSE_INFO ("Input size is " << n);
 			} else  if (Rcpp::is<Rcpp::NumericMatrix>(y) || Rcpp::is<Rcpp::IntegerMatrix>(y)) {
-				n = Rcpp::as<arma::mat>(y).n_rows;
+				const unsigned int n = Rcpp::as<arma::mat>(y).n_rows;
+				VERBOSE_INFO ("Input size is " << n);
 			} else {
 				VERBOSE_ERROR ("Unsupported type: y variable should be Matrix or Vector.");
 			}
+
 
 
 			/// ************ Q prior_components_type *******************
@@ -403,19 +409,19 @@ Rcpp::List IAM_mcmc_fit (
 	VERBOSE_INFO ("- size(mcmc_parameters[output]) = " << output_list.size());
 	VERBOSE_INFO ("- output_codes = " << output_codes);
 
-	GibbsResult res (mcmc_parameters["niter"],output_codes);
+	GibbsResultRCpp res (mcmc_parameters["niter"],output_codes);
 
 	if (Rcpp::is<Rcpp::NumericMatrix>(y) || Rcpp::is<Rcpp::IntegerMatrix>(y)) {
 			VERBOSE_ASSERT (is_multivariate(mix_kernel_hyperparams), "y argument is a Matrix while the technique is not MultiVariate.") ;
 			dynamic_cast<MultivariateMixture*>(mixture)->fit(Rcpp::as<arma::mat>(y) , initial_clustering, prior ,
-					mcmc_parameters["niter"] ,mcmc_parameters["burnin"] ,mcmc_parameters["thin"] ,mcmc_parameters["verbose"]  ,output_codes , &res );
+					mcmc_parameters["niter"] ,mcmc_parameters["burnin"] ,mcmc_parameters["thin"] ,mcmc_parameters["verbose"] , &res );
 			VERBOSE_INFO("End of Gibbs");
 			return res.getList();
 
 		}  else if(Rcpp::is<Rcpp::NumericVector>(y) || Rcpp::is<Rcpp::IntegerVector>(y)){
 			VERBOSE_ASSERT (is_univariate(mix_kernel_hyperparams), "y argument is a Vector while the technique is not Univariate.") ;
 			dynamic_cast<UnivariateMixture*>(mixture)->fit(Rcpp::as<arma::vec>(y) , initial_clustering, prior ,
-					mcmc_parameters["niter"] ,mcmc_parameters["burnin"] ,mcmc_parameters["thin"] ,mcmc_parameters["verbose"]  ,output_codes , &res );
+					mcmc_parameters["niter"] ,mcmc_parameters["burnin"] ,mcmc_parameters["thin"] ,mcmc_parameters["verbose"] , &res );
 
 			VERBOSE_INFO("End of Gibbs");
 			return res.getList();
