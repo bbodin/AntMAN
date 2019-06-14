@@ -8,39 +8,11 @@
 #ifndef PROBITFMM_SRC_UTILS_HPP_
 #define PROBITFMM_SRC_UTILS_HPP_
 
-#define EXTRA_LEVEL   6
-#define DEBUG_LEVEL   4
-#define INFO_LEVEL    3
-#define LOG_LEVEL     2
-#define WARNING_LEVEL 1
-#define ERROR_LEVEL   0
-
-extern int VERBOSE_LEVEL;
-
-#ifdef VERBOSE_BINARY
-#define VERBOSE_EXTRA(msg)                         {if (VERBOSE_LEVEL >= EXTRA_LEVEL)   Rcpp::Rcout  << msg << std::endl;};
-#define VERBOSE_DEBUG(msg)                         {if (VERBOSE_LEVEL >= DEBUG_LEVEL)   Rcpp::Rcout  << msg << std::endl;};
-#else
-#define VERBOSE_EXTRA(msg)                         {};
-#define VERBOSE_DEBUG(msg)                         {};
-#endif
-
-#define VERBOSE_INFO(msg)                          {if (VERBOSE_LEVEL >= INFO_LEVEL)    Rcpp::Rcerr  << msg << std::endl;};
-#define VERBOSE_LOG(msg)                           {if (VERBOSE_LEVEL >= LOG_LEVEL)     Rcpp::Rcerr  << msg << std::endl;};
-#define VERBOSE_WARNING(test,msg) {if (not (test)) {if (VERBOSE_LEVEL >= WARNING_LEVEL) Rcpp::Rcerr  << msg << std::endl;}};
-#define VERBOSE_ERROR(msg)                         {if (VERBOSE_LEVEL >= ERROR_LEVEL)   Rcpp::Rcerr  << msg << std::endl;  Rcpp::stop("Error inside the package.\n"); };
-#define VERBOSE_ASSERT(test,msg)  {if (not (test)) {                                    Rcpp::Rcerr  << msg << std::endl;  Rcpp::stop("Error inside the package.\n"); }};
-
-
-
+#include <random>
+#include "math_utils.hpp"
+#include "verbose.hpp"
 
 typedef arma::ivec cluster_indices_t;
-
-/// this is a function to convert an arma vec to a NumericVector object
-template <typename T>
-inline Rcpp::NumericVector arma2vec(const T& x) {
-	return Rcpp::NumericVector(x.begin(), x.end());
-}
 
 inline arma::vec vectorsum (std::vector <arma::vec> elems ) {
 	arma::vec out = elems[0];
@@ -100,7 +72,7 @@ inline arma::vec dmvnorm(const arma::mat& x, const arma::vec& mu,
     arma::uword n = x.n_rows, m = x.n_cols;
     double det_S = arma::det(S);
 
-    arma::mat S_inv = S.i();
+    arma::mat S_inv = arma::inv(S);
 
     arma::vec result(n);
 
@@ -146,11 +118,11 @@ inline arma::mat rwish(const int df, const arma::mat& S) {
     arma::mat A(m, m, arma::fill::zeros);
     for ( i = 1; i < m; ++i ) {
         for ( j = 0; j < i; ++j ) {
-            A(i, j) = R::rnorm(0.0, 1.0);
+            A(i, j) =  am_rnorm(0.0, 1.0);
         }
     }
     for ( i = 0; i < m; ++i ) {
-        A(i, i) = sqrt(R::rchisq(df - i));
+        A(i, i) = sqrt(am_rchisq(df - i));
     }
     arma::mat B = A.t() * arma::chol(S);
     return B.t() * B;
@@ -158,7 +130,7 @@ inline arma::mat rwish(const int df, const arma::mat& S) {
 
 // TODO[LICENCE ISSUE !!] : We took that from Rcpp-dist, our code must be GPL !
 inline arma::mat riwish(const int df, const arma::mat& S) {
-    return rwish(df, S.i()).i();
+    return  arma::inv(rwish(df, arma::inv(S) ));
 }
 
 
@@ -170,13 +142,13 @@ inline double rnorm_soprasoglia_cr2(double mumeno, double alpha=0){
 	}
 
 	if(mumeno==0){
-		Rcpp::Rcout<<__LINE__<<"Errore! mumeno non puo' essere zero\n";
+		VERBOSE_ERROR("Errore! mumeno non puo' essere zero");
 	}
 
 	while(true){
 
 		// Step 1
-		const double u1= R::runif(0,1);
+		const double u1= am_runif(0,1);
 		const double z = mumeno-std::log(u1)/alpha;
 
 		//Step 2
@@ -185,7 +157,7 @@ inline double rnorm_soprasoglia_cr2(double mumeno, double alpha=0){
 
 		// Step 3
 		// TODO[CHECK ME] : could never finish ... ?
-		const double u = R::runif(0,1);
+		const double u = am_runif(0,1);
 		const double log_u = std::log(u);
 
 		if(log_u<laccept){
@@ -205,9 +177,9 @@ inline double fast_rnorm_truncated(const double mean, const bool sopra){
 	double soglia = -imean;
 
 	if(soglia<0.1){
-		double down = R::pnorm(soglia,0.0,1.0,true,false);
-		double u = R::runif(down,1);
-		out =R::qnorm(u, 0.0, 1.0,true,false);
+		double down = am_pnorm(soglia,0.0,1.0,true,false);
+		double u = am_runif(down,1);
+		out =am_qnorm(u, 0.0, 1.0,true,false);
 	}
 	else{
 		out=rnorm_soprasoglia_cr2(soglia,0);
@@ -227,9 +199,9 @@ inline double rnorm_truncated(const double mean,const double sd, const double so
 	const double tmp_soglia = (soglia*factor-meanf)/sd;
 
 	if(tmp_soglia<0.1){
-		double down = R::pnorm(tmp_soglia,0.0,1.0,true,false);
-		double u = R::runif(down,1);
-		out =R::qnorm(u, 0.0, 1.0,true,false);
+		double down = am_pnorm(tmp_soglia,0.0,1.0,true,false);
+		double u = am_runif(down,1);
+		out =am_qnorm(u, 0.0, 1.0,true,false);
 	}
 	else{
 		out=rnorm_soprasoglia_cr2(tmp_soglia,0);
@@ -269,19 +241,17 @@ inline arma::vec sample_raf(unsigned int max,int hm, arma::vec weights, int plus
 
 
 	if(!(somma>0)){
-		Rcpp::Rcout<<"Problem with the sum of the weights!"<<"\n";
-		throw std::runtime_error(" ");
+		VERBOSE_ERROR("Problem with the sum of the weights!");
 	}
 
 	if(max!=weights.size())
 	{
-		Rcpp::Rcout<<"The support has a length different from the weights"<<"\n";
-		throw std::runtime_error(" ");
+		VERBOSE_ERROR ( "The support has a length different from the weights");
 	}
 
 	for(int g = 0; g < hm; g++){
 
-		const double u = R::runif(0,1);
+		const double u = am_runif(0,1);
 
 		cdf = 0.0;
 		for(unsigned int ii = 0; ii < max; ii++){
@@ -300,13 +270,12 @@ inline double fast_sample_raf(const arma::vec& weights ) { // sample_raf when (p
 	const double somma = sum(weights); // TODO[CHECK ME] : Must be 1 not ??
 
 	if(!(somma>0)){
-		Rcpp::Rcout<<"Problem with the sum of the weights!"<<"\n";
-		throw std::runtime_error(" ");
+		VERBOSE_ERROR ("Problem with the sum of the weights!");
 	}
 
 
 
-	const double u = R::runif(0,1);
+	const double u = am_runif(0,1);
 
 	double cdf = 0.0;
 	for(unsigned int ii = 0; ii < weights.size(); ii++){

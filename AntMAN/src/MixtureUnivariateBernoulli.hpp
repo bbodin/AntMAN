@@ -9,7 +9,7 @@
 #define PROBITFMMNEW_SRC_MIXTUREUNIVARIATEBERNOULLI_HPP_
 
 
-#include <RcppArmadillo.h>
+#include "math_utils.hpp"
 #include "Mixture.hpp"
 
 class Mixture_UnivariateBernoulli : public UnivariateMixture  {
@@ -43,15 +43,15 @@ public :
 
 		virtual cluster_indices_t  up_ci(const  input_t & y,
 				const long M,
-				const Rcpp::NumericVector & S_current) {
+				const arma::vec & S_current) {
 
 			const int    mb    = _mb;
 			const int    n     = y.size(); // TODO[DISCUSS ME]: there is a problem between colvec rowvec and matrix and the way data is layout (d,n) or (n,1)
 
 			const std::vector<double>& theta_current = _theta;
-			Rcpp::NumericVector Log_S_current = log(S_current);
+			arma::vec Log_S_current = arma::log(S_current);
 			cluster_indices_t ci_current(n);
-			Rcpp::NumericVector random_u   = Rcpp::runif(n,0.0,1.0 );
+			arma::vec random_u   = Rcpp::runif(n,0.0,1.0 );
 
 			for (int i=0; i < n; i++) {
 
@@ -102,7 +102,7 @@ public :
 
 				//Allocation_result output ;
 				std::vector<double> theta_current(M);
-				Rcpp::NumericVector S_current    = Rcpp::NumericVector(M);
+				arma::vec S_current    (M);
 
 				cluster_indices_t ci_reorder(y.size());
 				ci_reorder.fill(-1);

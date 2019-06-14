@@ -10,7 +10,7 @@
 
 
 #include <cassert>
-#include <RcppArmadillo.h> // [[Rcpp::depends(RcppArmadillo)]]
+#include "math_utils.hpp"
 #include "Prior.hpp"
 #include "utils.hpp"
 
@@ -95,7 +95,7 @@ public:
 				double R_lmedia = std::log(R_vecchio);
 
 				//Propose a new value
-				double R_lnuovo=R::rnorm(R_lmedia,R.LSD);
+				double R_lnuovo=am_rnorm(R_lmedia,R.LSD);
 				double R_nuovo=std::exp(R_lnuovo);
 
 				double log_full_r_m_new =  compute_lPsi ( U ,  h_param.gamma,  K ,   P.M ,  R_nuovo) + (R.a-1)*std::log(R_nuovo)-R.b*R_nuovo ;
@@ -103,7 +103,7 @@ public:
 
 				double R_ln_acp = (log_full_r_m_new - R_lmedia) - (log_full_r_m_vec - R_lnuovo);
 
-				double R_lnu=std::log(R::runif(0.0,1.0));
+				double R_lnu=std::log(am_runif(0.0,1.0));
 
 				this->R.M = R_lnu < R_ln_acp ? R_nuovo : R_vecchio;
 
@@ -119,7 +119,7 @@ public:
 				double P_lmedia = std::log(P_vecchio) - std::log(1 - P_vecchio);
 
 				//Propose a new value
-				double P_lnuovo=R::rnorm(P_lmedia,P.LSD);
+				double P_lnuovo=am_rnorm(P_lmedia,P.LSD);
 				double P_nuovo=std::exp(P_lnuovo) / (1 + std::exp (P_lnuovo));
 
 				double log_full_p_m_new =  compute_lPsi ( U ,  h_param.gamma,  K ,   P.M ,  P_nuovo) + (R.a-1)*std::log(P_nuovo)+(R.b - 1)* std::log(1 - P_nuovo) ;
@@ -127,7 +127,7 @@ public:
 
 				double P_ln_acp = (log_full_p_m_new - P_lmedia - std::log(1 - P_vecchio ) ) - (log_full_p_m_vec - P_lnuovo - std::log(1 - P_nuovo ));
 
-				double P_lnu=std::log(R::runif(0.0,1.0));
+				double P_lnu=std::log(am_runif(0.0,1.0));
 
 				this->P.M = P_lnu < P_ln_acp ? P_nuovo : P_vecchio;
 				P.LSD = update_lsd (  P.LSD,  P_ln_acp,  P.LSD_g++) ;
@@ -167,7 +167,7 @@ int init_M_na(const int K) {
 	    VERBOSE_DEBUG("R_M = " << R_M);
 	    VERBOSE_DEBUG("P_M = " << P_M);
 
-	    double M_na =  R::rnbinom(R_M, 1-P_M);
+	    double M_na =  am_rnbinom(R_M, 1-P_M);
 
 	    VERBOSE_DEBUG("M_na = R::rnbinom(R_M, 1-P_M) = " << M_na << " = ");
 
@@ -195,14 +195,14 @@ int update_M_na(const double U ,  const int KasInt) {
 		const double down   =  R_M * phi_u * P_M + K ;
 		const double peso   =  up / down;
 
-		const double unif=R::runif(0.0,1.0);
+		const double unif=am_runif(0.0,1.0);
 	    VERBOSE_DEBUG("unif = " << unif << " peso = " << peso);
 
 		if(unif < peso){
-			M_na=R::rnbinom(R_M + K, 1- phi_u * P_M) + 1;
+			M_na=am_rnbinom(R_M + K, 1- phi_u * P_M) + 1;
 		    VERBOSE_DEBUG("M_na=R::rnbinom( " <<  R_M + K <<  ", " <<  phi_u * P_M <<  ") + 1;");
 		} else {
-			M_na=R::rnbinom(R_M - 1 + K, 1-phi_u * P_M) ;
+			M_na=am_rnbinom(R_M - 1 + K, 1-phi_u * P_M) ;
 		    VERBOSE_DEBUG("M_na=R::rnbinom( " << R_M - 1 + K <<  ", " <<  phi_u * P_M <<  ") ;");
 		}
 

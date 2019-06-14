@@ -10,7 +10,7 @@
 
 
 #include <cassert>
-#include <RcppArmadillo.h> // [[Rcpp::depends(RcppArmadillo)]]
+#include "math_utils.hpp"
 #include "Prior.hpp"
 
 // --------------------------------------------------------------------------------------------------------------------

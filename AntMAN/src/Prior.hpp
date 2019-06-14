@@ -9,9 +9,6 @@
 #define ANTMAN_SRC_PRIOR_HPP_
 
 #include <cassert>
-
-// [[Rcpp::depends(RcppArmadillo)]]
-#include <RcppArmadillo.h>
 #include "utils.hpp"
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -30,7 +27,7 @@ public:
 	const double a,b; // hyper-prior parameters for h
 	double lsd, lsd_g;       // this is the standard deviation of the MH algorithm to update gamma.
 	gamma_h_param_t (double gamma, double a, double b, double lsd) : gamma_is_fixed (false), gamma (gamma) , a(a), b(b), lsd(lsd), lsd_g(1) {}
-	gamma_h_param_t (              double a, double b, double lsd) : gamma_is_fixed (false), gamma (R::rgamma(a,b)) , a(a), b(b), lsd(lsd), lsd_g(1) {}
+	gamma_h_param_t (              double a, double b, double lsd) : gamma_is_fixed (false), gamma (am_rgamma(a,b)) , a(a), b(b), lsd(lsd), lsd_g(1) {}
 	gamma_h_param_t (double gamma) : gamma_is_fixed (true), gamma (gamma), a(0), b(0), lsd(0), lsd_g(1)  {}
 
 
@@ -41,7 +38,7 @@ public:
 		const double lmedia = std::log(vecchio);
 
 			//Propose a new value
-			const double lnuovo=R::rnorm(lmedia,lsd);
+			const double lnuovo=am_rnorm(lmedia,lsd);
 			const double nuovo=std::exp(lnuovo);
 
 
@@ -54,7 +51,7 @@ public:
 					      - (q_param.log_full_gamma(vecchio , K , nj,   U , a, b) - lnuovo);
 
 
-			const double lnu=std::log(R::runif(0.0,1.0));
+			const double lnu=std::log(am_runif(0.0,1.0));
 
 			this->gamma = lnu<ln_acp ? nuovo : vecchio;
 

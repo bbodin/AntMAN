@@ -71,7 +71,7 @@ public:
 	std::vector<long>                M;
 	std::vector<long>                Mna;
 	std::vector<void*>               Q;
-	std::vector<Rcpp::NumericVector> S;
+	std::vector<arma::vec>           S;
 	std::vector<Rcpp::List>          TAU;
 
 	int niter;
@@ -81,7 +81,7 @@ public:
 
 	 void log_output (
 			 cluster_indices_t& ci_current,
-			 Rcpp::NumericVector & S_current,
+			 arma::vec & S_current,
 			 unsigned int M,
 			 unsigned int K,
 			 unsigned int M_na,

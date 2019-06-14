@@ -10,7 +10,6 @@
 
 #include "MixtureUnivariatePoisson.hpp"
 #include "MixtureUnivariateNormal.hpp"
-#include "MixtureUnivariateProbit.hpp"
 #include "MixtureUnivariateBernoulli.hpp"
 
 #include "MixtureMultiVariateNormal.hpp"

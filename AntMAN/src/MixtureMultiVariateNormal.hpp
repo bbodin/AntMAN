@@ -9,7 +9,7 @@
 #define PROBITFMMNEW_SRC_MIXTUREMULTIVARIATENORMAL_HPP_
 
 
-#include <RcppArmadillo.h>
+#include "math_utils.hpp"
 #include "utils.hpp"
 #include "Mixture.hpp"
 // [[Rcpp::depends(RcppArmadillo)]]
@@ -69,7 +69,7 @@ public :
 
 		virtual cluster_indices_t  up_ci(const  input_t & y,
 				const long M,
-				const Rcpp::NumericVector & S_current){
+				const arma::vec & S_current){
 
 
 			VERBOSE_DEBUG("GibbsFramework<Tau_MultivariateNormal>::up_ci");
@@ -80,8 +80,8 @@ public :
 			const arma::cube& Sig_current = _Sig_current;
 
 			cluster_indices_t ci_current(n);
-			Rcpp::NumericVector Log_S_current = log(S_current);
-			Rcpp::NumericVector random_u   = Rcpp::runif(n,0.0,1.0 );
+			arma::vec Log_S_current = arma::log(S_current);
+			arma::vec random_u   = Rcpp::runif(n,0.0,1.0 );
 
 			VERBOSE_DEBUG("GibbsFramework<Tau_MultivariateNormal>::up_ci: for (int i=0; i < n; i++) {");
 

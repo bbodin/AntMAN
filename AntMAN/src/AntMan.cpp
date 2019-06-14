@@ -40,10 +40,7 @@ bool is_multivariate (Rcpp::List mix_kernel_hyperparams) {
 				return  new Mixture_UnivariateBernoulli (mixture_parameters["a0"], mixture_parameters["b0"], mixture_parameters["mb"]) ;
 			}
 
-			if (mixture_parameters.containsElementNamed("X") and mixture_parameters.containsElementNamed("mu_beta")
-							 and mixture_parameters.containsElementNamed("Sig_beta")) {
-				return new Mixture_UnivariateProbit (mixture_parameters["X"], mixture_parameters["mu_beta"], mixture_parameters["Sig_beta"]) ;
-			}
+
 
 			if (mixture_parameters.containsElementNamed("mu0") and mixture_parameters.containsElementNamed("ka0")
 							 and mixture_parameters.containsElementNamed("nu0")

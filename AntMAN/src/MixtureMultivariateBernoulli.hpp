@@ -9,7 +9,7 @@
 #define PROBITFMMNEW_SRC_MIXTUREMULTIVARIATEBERNOULLI_HPP_
 
 
-#include <RcppArmadillo.h>
+#include "math_utils.hpp"
 #include "Mixture.hpp"
 
 class Mixture_MultivariateBernoulli: public MultivariateMixture  {
@@ -54,7 +54,7 @@ public :
 
 	virtual cluster_indices_t  up_ci(const  input_t & y,
 			const long M,
-			const Rcpp::NumericVector & S_current) {
+			const arma::vec & S_current) {
 
 
 		const arma::vec& mb    = _mb;
@@ -63,9 +63,9 @@ public :
 
 		const arma::mat& theta_current = _theta;
 
-		Rcpp::NumericVector Log_S_current = log(S_current);
+		arma::vec Log_S_current = arma::log(S_current);
 		cluster_indices_t ci_current(n);
-		Rcpp::NumericVector random_u   = Rcpp::runif(n,0.0,1.0 );
+		arma::vec random_u   = Rcpp::runif(n,0.0,1.0 );
 
 		for (int i=0; i < n; i++) {
 

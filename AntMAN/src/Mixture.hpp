@@ -17,11 +17,11 @@ class allocation_result {
 
 	cluster_indices_t          _ci;
 	std::vector<int>           _nj;
-	Rcpp::NumericVector         _S;
+	arma::vec                   _S;
 public :
-	allocation_result (cluster_indices_t & ci , std::vector<int>  & nj, Rcpp::NumericVector & S) : _ci (ci) , _nj(nj), _S(S) {} ;
+	allocation_result (const cluster_indices_t & ci , const  std::vector<int>  & nj, const arma::vec & S) : _ci (ci) , _nj(nj), _S(S) {} ;
 
-	inline const Rcpp::NumericVector  &        S          () const {return _S;}
+	inline const arma::vec            &        S          () const {return _S;}
 	inline const std::vector<int>     &        nj         () const {return _nj;}
 	inline const cluster_indices_t    &        ci         () const {return _ci;}
 };
@@ -45,7 +45,7 @@ protected:
 
 	virtual cluster_indices_t  up_ci(const  InputType & y,
 			const long M,
-			const Rcpp::NumericVector & S) = 0;
+			const arma::vec & S) = 0;
 
 	 virtual allocation_result up_allocated_nonallocated (
 			const int K ,
@@ -93,11 +93,11 @@ public:
 		this->init_tau (y, M);
 		VERBOSE_DEBUG("Done");
 
-		Rcpp::NumericVector  S_current=Rcpp::NumericVector(M);
+		arma::vec  S_current (M);
 
 		// TODO[CHECK ME] : S current initialized with gamma_current !!! should not right ??
 		for(int it=0;it<M;it++){
-			S_current[it] =R::rgamma(2.0,1.0); // replace gamma current by 2.0 for now
+			S_current[it] =am_rgamma(2.0,1.0); // replace gamma current by 2.0 for now
 		}
 
 
@@ -112,7 +112,7 @@ public:
 		/******* Start Gibbs                 **/
 		/**************************************/
 
-		Rcpp::Rcout <<"Let's start the Gibbs!"<<"\n";
+		VERBOSE_LOG ( "Let's start the Gibbs!");
 
 		double total_iter           = 0;
 		double total_u              = 0;
@@ -140,7 +140,7 @@ public:
 
 				auto start_u = std::chrono::system_clock::now();
 				VERBOSE_EXTRA("S_current = " << S_current <<"\n");
-				U_current=R::rgamma(n,1.0/Rcpp::sum(S_current));
+				U_current=am_rgamma(n,1.0/arma::sum(S_current));
 				VERBOSE_EXTRA("U_current = " << U_current <<"\n");
 				auto end_u = std::chrono::system_clock::now();
 				auto elapsed_u = end_u - start_u;
@@ -205,13 +205,13 @@ public:
 					     start_gibbs           = std::chrono::system_clock::now();
 					total_gibbs               += elapsed_gibbs.count() / 1000000.0;
 
-					Rcpp::Rcout <<"iter="<<iter<<" K="<<K<<" M_na="<<M_na<<" M="<<M<<
+					VERBOSE_LOG("iter="<<iter<<" K="<<K<<" M_na="<<M_na<<" M="<<M<<
 							" u=" <<total_u <<
 							"ms ci=" <<total_ci <<
 							"ms mna=" <<total_mna <<
 							"ms alloc=" <<total_alloc <<
 							"ms iter=" <<total_iter <<
-							"ms total_gibbs=" <<total_gibbs<< "ms" << std::endl;
+							"ms total_gibbs=" <<total_gibbs<< "ms" );
 			}
 
 
@@ -223,7 +223,7 @@ public:
 
 		}//I close the while
 
-		Rcpp::Rcout <<"End of Iterations." << std::endl;
+		VERBOSE_LOG("End of Iterations." );
 
 
 	}

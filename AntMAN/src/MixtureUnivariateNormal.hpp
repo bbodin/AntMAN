@@ -8,7 +8,8 @@
 #ifndef PROBITFMMNEW_SRC_MIXTUREUNIVARIATENORMAL_HPP_
 #define PROBITFMMNEW_SRC_MIXTUREUNIVARIATENORMAL_HPP_
 
-#include <RcppArmadillo.h>
+#include <omp.h>
+#include "math_utils.hpp"
 #include "Mixture.hpp"
 
 class Mixture_UnivariateNormal: public UnivariateMixture  {
@@ -45,18 +46,18 @@ public :
 
 	virtual cluster_indices_t  up_ci(const  input_t & y,
 			const long M,
-			const Rcpp::NumericVector & S_current) {
+			const arma::vec & S_current) {
 		const int n = y.size();
 
 		const std::vector<double>& mu_current = _mu_current;
 		const std::vector<double>& sig2_current = _sig2_current;
 
 		cluster_indices_t ci_current(n);
-		Rcpp::NumericVector Log_S_current = log(S_current);
+		arma::vec Log_S_current = arma::log(S_current);
 		std::vector<double> pow_sig2_current (M);
 		std::vector<double> log_pow_sig2_current (M);
 
-		Rcpp::NumericVector random_u   = Rcpp::runif(n,0.0,1.0 );
+		arma::vec random_u   = Rcpp::runif(n,0.0,1.0 );
 
 
 		for(int l=0;l<M;l++){
@@ -119,7 +120,7 @@ public :
 			std::vector<double> sig2_current(M);
 			std::vector<double> mu_current(M);
 
-			Rcpp::NumericVector S_current    = Rcpp::NumericVector(M);
+			arma::vec S_current (M);
 
 			cluster_indices_t ci_reorder(y.size());
 			ci_reorder.fill(-1);
@@ -182,15 +183,15 @@ public :
 				const double scalen  = 2.0/(nun*s2n);
 
 
-				const double sig2_l = pow(R::rgamma(alphan,scalen),-1.0);
-				const double mu_l  = R::rnorm(mn, pow(sig2_l/kn,0.5));
+				const double sig2_l = pow(am_rgamma(alphan,scalen),-1.0);
+				const double mu_l  = am_rnorm(mn, pow(sig2_l/kn,0.5));
 
 				sig2_current[l]=sig2_l; // In case 4 we have to update a matrix
 				mu_current[l]=mu_l;
 
 				// TODO[OPTIMIZE ME] : Cannot split or the random value are completly different
 				// Update the Jumps of the allocated part of the process
-				S_current[l]=R::rgamma(nj[l]+gamma_current,1./(U_current+1.0));
+				S_current[l]=am_rgamma(nj[l]+gamma_current,1./(U_current+1.0));
 
 			}
 
@@ -200,9 +201,9 @@ public :
 			const double scale_loc=std::pow(nu0/2*sig02,-1.0);
 
 			for(int l=K; l<M;l++){
-				sig2_current[l] = pow(R::rgamma(alpha_loc,scale_loc),-1);
-				mu_current[l] =	R::rnorm(m0,pow(sig2_current[l]/k0,0.5));
-				S_current[l]=R::rgamma(gamma_current,1./(U_current+1.0));
+				sig2_current[l] = pow(am_rgamma(alpha_loc,scale_loc),-1);
+				mu_current[l] =	am_rnorm(m0,pow(sig2_current[l]/k0,0.5));
+				S_current[l]=am_rgamma(gamma_current,1./(U_current+1.0));
 			}
 
 

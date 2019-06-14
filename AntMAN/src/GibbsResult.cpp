@@ -27,7 +27,7 @@
 
 	 void GibbsResult::log_output (
 			 cluster_indices_t& ci_current,
-			 Rcpp::NumericVector & S_current,
+			 arma::vec & S_current,
 			 unsigned int M,
 			 unsigned int K,
 			 unsigned int M_na,

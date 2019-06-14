@@ -106,7 +106,7 @@ fit <- AM_mcmc_fit(
                         mcmc_parameters = mcmc_params)
 
 summary (fit)
-plot(fit$K_post)
+plot(fit)
 plot(y_uvn,col=fit$ci_post[[length(fit$ci_post)]]+1)
 
 

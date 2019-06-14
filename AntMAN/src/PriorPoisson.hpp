@@ -10,7 +10,8 @@
 
 
 #include <cassert>
-#include <RcppArmadillo.h> // [[Rcpp::depends(RcppArmadillo)]]
+
+#include "math_utils.hpp"
 #include "Prior.hpp"
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -30,10 +31,10 @@ public:
 		if (lambda_is_fixed) return;
 		double lphi_u=-h_param.gamma*std::log(1+U);
 		double lpeso=lphi_u-std::log(1+b);
-		double lunif=std::log(R::runif(0.0,1.1));
+		double lunif=std::log(am_runif(0.0,1.1));
 		double astar=K+a ;// See the notation of Point 4 in 10.1
 		double rate=(1-std::exp(lphi_u)+b);
-		this->lambda = lunif<lpeso ? R::rgamma(astar+1,1.0/rate) : R::rgamma(astar,1.0/rate);
+		this->lambda = lunif<lpeso ? am_rgamma(astar+1,1.0/rate) : am_rgamma(astar,1.0/rate);
 	}
 
 	double log_full_EPPF( const double Loc_gamma, const int K ,const  std::vector<int> & nj, const  double U_current ,const  double ag,const  double bg) const {
@@ -71,7 +72,7 @@ public:
 		}
 
 	int init_M_na (const int K) {
-		return R::rpois(this->q_param.lambda);
+		return am_rpois(this->q_param.lambda);
 	}
 
 	int update_M_na (const double U ,  const int K) {
@@ -81,13 +82,13 @@ public:
 		const double phi_u=-this->h_param.gamma*log(1+U);
 		const double Lambda_u=exp(std::log(this->q_param.lambda)+phi_u);
 
-		const double unif=R::runif(0.0,1.0);
+		const double unif=am_runif(0.0,1.0);
 
 		if(unif<(Lambda_u/(Lambda_u+K))){
-			M_na=R::rpois(Lambda_u)+1;
+			M_na=am_rpois(Lambda_u)+1;
 
 		} else {
-			M_na=R::rpois(Lambda_u);
+			M_na=am_rpois(Lambda_u);
 		}
 		return M_na;
 
