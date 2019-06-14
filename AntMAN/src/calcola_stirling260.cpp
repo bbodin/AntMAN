@@ -48,13 +48,13 @@ Rcpp::NumericVector calcola_stirling_ricor(double gamma, unsigned int n){
 
 
 
-	for(int j=1;j<n;j++){
+	for(unsigned int j=1;j<n;j++){
 
 		std::copy(row_jp1.begin(),row_jp1.end(),row_j.begin()); // row j+1 becomes row j!
 		//Rcpp::Rcout<<"j="<<j<<" row_j="<<row_j<<"\n";
 
 
-		for(int k=1;k<=(j+1);k++){
+		for(unsigned int k=1;k<=(j+1);k++){
 			row_jp1[k]=(gamma*k-j)*row_j[k]+gamma*row_j[k-1];
 		}
 
@@ -80,13 +80,13 @@ Rcpp::NumericVector calcola_stirling_ricor_abs(double gamma, unsigned int n){
 
 
 
-	for(int j=1;j<n;j++){
+	for(unsigned int j=1;j<n;j++){
 
 		std::copy(row_jp1.begin(),row_jp1.end(),row_j.begin()); // row j+1 becomes row j!
 		//Rcpp::Rcout<<"j="<<j<<" row_j="<<row_j<<"\n";
 
 		//row_jp1[0]=std::exp(std::lgamma(j-1+1)-std::lgamma(j-1-j+1));
-		for(int k=1;k<=(j+1);k++){
+		for(unsigned int k=1;k<=(j+1);k++){
 			row_jp1[k]=(gamma*k+j)*row_j[k]+gamma*row_j[k-1];
 		}
 
@@ -117,7 +117,7 @@ Rcpp::NumericVector calcola_stirling_ricor_log(double gamma, unsigned int n){
 
 
 
-	for(int j=1;j<n;j++){
+	for(unsigned int j=1;j<n;j++){
 
 		std::copy(lrow_jp1.begin(),lrow_jp1.end(),lrow_j.begin()); // lrow j+1 becomes lrow j!
 		//Rcpp::Rcout<<"j="<<j<<" lrow_j="<<lrow_j<<"\n";
@@ -126,7 +126,7 @@ Rcpp::NumericVector calcola_stirling_ricor_log(double gamma, unsigned int n){
 
 
 
-		for(int k=1;k<=(j);k++){
+		for(unsigned int k=1;k<=(j);k++){
 			lrow_jp1[k]= std::log(gamma*k+j)+lrow_j[k]+ std::log(1+gamma/(gamma*k+j)*std::exp(lrow_j[k-1]-lrow_j[k]));
 		}
 
@@ -232,7 +232,7 @@ Rcpp::NumericVector VnkNegBin(unsigned int n,double r,double p,double gamma){
 
 	double ldensnegbin;
 	double controllo;
-	for(int k=1;k<=n;k++){
+	for(unsigned int k=1;k<=n;k++){
 		controllo=1.;
 		m=0;
 		out[k-1]=0;
@@ -284,7 +284,7 @@ Rcpp::NumericVector VnkDelta(unsigned int n,unsigned int Mstar,double gamma){
 	double infinito = std::numeric_limits<double>::infinity();
 
 
-	for(int k=1;k<=n;k++){
+	for(unsigned int k=1;k<=n;k++){
 		m=0;
 
 		if(k<=Mstar){
@@ -349,7 +349,7 @@ Rcpp::NumericVector prior_K_Pois(unsigned int n,double gamma,double Lambda){
 		Rcpp::stop("Unexpected condition occurred");
 	}
 	
-	for(int l=0;l<n;l++){
+	for(unsigned int l=0;l<n;l++){
 			pstrk[l]=pstrk[l]/sum;
 	}
 	return(pstrk);
@@ -382,7 +382,7 @@ Rcpp::NumericVector prior_K_NegBin(unsigned int n,double gamma,double r, double 
 		Rcpp::stop("Unexpected condition occurred");
 	}
 	
-	for(int l=0;l<n;l++){
+	for(unsigned int l=0;l<n;l++){
 			pstrk[l]=pstrk[l]/sum;
 	}
 	return(pstrk);
@@ -414,7 +414,7 @@ Rcpp::NumericVector prior_K_Delta(const unsigned int n,const double gamma,const 
 		Rcpp::stop("Unexpected condition occurred");
 	}
 	
-	for(int l=0;l<n;l++){
+	for(unsigned int l=0;l<n;l++){
 			pstrk[l]=pstrk[l]/sum;
 	}
 	return(pstrk);
@@ -446,7 +446,7 @@ Rcpp::NumericVector prior_K_Delta(const unsigned int n,const double gamma,const 
 double calcola_media(const Rcpp::NumericVector prob,const unsigned n){
 	
 	double out=0;
-	for(int i =0;i<n;i++){
+	for(unsigned int i =0;i<n;i++){
 		out += (i+1)*prob[i];
 	}
 
@@ -486,7 +486,7 @@ double find_gamma_Pois(const unsigned int n,const double Lambda,const unsigned i
 	double obs_tol=Kmax-Kmin;
 	unsigned niter=0;
 
-	while( (obs_tol>=tollerance) & niter<max_iter ){
+	while( (obs_tol>=tollerance) && (niter<max_iter) ){
 		//Compute the center
 		gam_mean=(gam_min+gam_max)/2;	
 		p_mean=prior_K_Pois(n,gam_mean,Lambda);
@@ -561,7 +561,7 @@ double find_gamma_NegBin(const unsigned int n,const double r, const double p,con
 	double obs_tol=Kmax-Kmin;
 	unsigned niter=0;
 
-	while( (obs_tol>=tollerance) & niter<max_iter ){
+	while( (obs_tol>=tollerance) && (niter<max_iter) ){
 		//Compute the center
 		gam_mean=(gam_min+gam_max)/2;	
 		p_mean=prior_K_NegBin(n,gam_mean,r,p);
@@ -633,7 +633,7 @@ double find_gamma_Delta(const unsigned int n,const unsigned Mstar,const unsigned
 	double obs_tol=Kmax-Kmin;
 	unsigned niter=0;
 
-	while( (obs_tol>=tollerance) & niter<max_iter ){
+	while( (obs_tol>=tollerance) && (niter<max_iter) ){
 		//Compute the center
 		gam_mean=(gam_min+gam_max)/2;	
 		p_mean=prior_K_Delta(n,gam_mean,Mstar);
