@@ -20,11 +20,11 @@ private :
 public:
 	// Ouput Variables
 	std::vector<Rcpp::IntegerVector> CI;
-	std::vector<void*>               H;
+	std::vector<Rcpp::List>          H;
 	std::vector<long>                K;
 	std::vector<long>                M;
 	std::vector<long>                MNA;
-	std::vector<void*>               Q;
+	std::vector<Rcpp::List>          Q;
 	std::vector<arma::vec>           S;
 	std::vector<Rcpp::List>          TAU;
 

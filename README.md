@@ -3,9 +3,10 @@
 What has to be done : 
   - DESCRIPTION file 
   - Check all the comments in the code
-  - Add example for each function.
+  - File writing feature
+  - Correct Parallel arguments
+  
 
-https://www.flickr.com/photos/nida-nih/29741916012
 
 The main function of the AntMAN package is \code{AM_mcmc_fit} that performs a Gibbs sampling in order to estimate a mixture of a predifined type \code{mix_kernel_hyperparams} and that models a particular population given a sample \code{y}.
 Additionnaly a particular component prior \code{mix_components_prior} and a weight prior \code{mix_weight_prior} can be specified and \code{mcmc_parameters} will define the MCMC parameters for the Gibbs sampler (number of interation, burn-in, ...).

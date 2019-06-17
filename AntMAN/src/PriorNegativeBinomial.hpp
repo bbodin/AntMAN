@@ -85,7 +85,11 @@ public:
 		return(out);
 	}
 
-
+#ifdef HAS_RCPP
+	virtual const Rcpp::List get_Rcpp_list () const  {
+		return Rcpp::List::create(Rcpp::Named("R") = this->R.M , Rcpp::Named("P") = this->P.M ) ;
+	};
+#endif
 	void update (const  double U, const  int K, const gamma_h_param_t <negative_binomial_gamma_q_param_t>& h_param) {
 
 			// Metropolis-Hasting for R_M
@@ -151,8 +155,6 @@ public:
 	PriorNegativeBinomial (negative_binomial_gamma_h_param_t gamma_h_param, negative_binomial_gamma_q_param_t negative_binomial_q_param) :
 			TypedPrior <negative_binomial_gamma_h_param_t, negative_binomial_gamma_q_param_t> (gamma_h_param,negative_binomial_q_param)  {
 			}
-
-
 
 
 int init_M_na(const int K) {

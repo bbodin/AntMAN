@@ -42,8 +42,8 @@
 		 if (AM_OUTPUT_HAS(output_codes,AM_OUTPUTS.at("K").code) ) {result.K[iteration]=K;		}
 		 if (AM_OUTPUT_HAS(output_codes,AM_OUTPUTS.at("MNA").code) ) {result.MNA[iteration]=M_na;		}
 		 if (AM_OUTPUT_HAS(output_codes,AM_OUTPUTS.at("TAU").code)) {result.TAU[iteration]=mixture->get_tau();		}
-		 if (AM_OUTPUT_HAS(output_codes,AM_OUTPUTS.at("H").code) ) {VERBOSE_ERROR("Unsupported case: AM_OUTPUT_H");		}
-		 if (AM_OUTPUT_HAS(output_codes,AM_OUTPUTS.at("Q").code) ) {VERBOSE_ERROR("Unsupported case: AM_OUTPUT_Q");		}
+		 if (AM_OUTPUT_HAS(output_codes,AM_OUTPUTS.at("H").code) ) {result.H[iteration]=prior->get_h()->get_Rcpp_list();	}
+		 if (AM_OUTPUT_HAS(output_codes,AM_OUTPUTS.at("Q").code) ) {result.H[iteration]=prior->get_q()->get_Rcpp_list();	}
 
 		iteration++;
 	}
@@ -57,10 +57,9 @@
 					Rcpp::Named("M")     =  this->M  ,
 					Rcpp::Named("K")     =  this->K  ,
 					Rcpp::Named("MNA")   =  this->MNA,
-					Rcpp::Named("TAU")   =  this->TAU
-								);
-			//					Rcpp::Named("H")     =  res.H  ,
-			//					Rcpp::Named("Q")     =  res.Q
+					Rcpp::Named("TAU")   =  this->TAU,
+					Rcpp::Named("H")     =  this->H  ,
+					Rcpp::Named("Q")     =  this->Q );
 
 			 if (not this->CI .size()) list["CI"]  = R_NilValue ;
 			 if (not this->TAU.size()) list["TAU"] = R_NilValue ;
