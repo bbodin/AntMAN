@@ -1,6 +1,8 @@
 
-
-#I sample 100 observation from a mixture of three components.
+#' AM_sample_uninorm
+#'  
+#'  
+#' @export
 AM_sample_uninorm <- function(n,pro,mmu,ssd){
   if(length(mmu)!=length(pro)){stop()}
   if(length(ssd)!=length(pro)){stop()}
@@ -31,7 +33,10 @@ AM_sample_uninorm <- function(n,pro,mmu,ssd){
 }
 
 
-
+#' AM_sample_unipois
+#'  
+#'  
+#' @export
 AM_sample_unipois <- function(n=1000,pro=c(0.2,0.5,0.3),mth=c(5,25,50)){
   if(length(mth)!=length(pro)){stop()}
   
@@ -63,6 +68,10 @@ AM_sample_unipois <- function(n=1000,pro=c(0.2,0.5,0.3),mth=c(5,25,50)){
 
 
 
+#' AM_sample_unibin
+#'  
+#'  
+#' @export
 AM_sample_unibin <- function(n,mb, pro,mth){
   if(length(mth)!=length(pro)){stop()}
   
@@ -92,6 +101,10 @@ AM_sample_unibin <- function(n,mb, pro,mth){
   return(list(y=y,ci=ci))
 }
 
+#' AM_sample_multibin
+#'  
+#'  
+#' @export
 AM_sample_multibin <- function(n,d,pro,TH){
   
   y <- matrix(nrow=n,ncol=d)
@@ -121,6 +134,10 @@ AM_sample_multibin <- function(n,d,pro,TH){
   return(list(y=y,ci=ci))
 }
 
+#' AM_sample_multinorm
+#'  
+#'  
+#' @export
 AM_sample_multinorm <- function(n,d,pro,MU,SIG){
   if(dim(SIG)[1]!=length(pro)){stop()}
   y <- matrix(nrow=n,ncol=d)
@@ -152,6 +169,10 @@ AM_sample_multinorm <- function(n,d,pro,MU,SIG){
 
 
 
+#' AM_sample_multibin
+#'  
+#'  
+#' @export
 AM_sample_multibin <- function(n,d,pro,TH){
   
   y <- matrix(nrow=n,ncol=d)

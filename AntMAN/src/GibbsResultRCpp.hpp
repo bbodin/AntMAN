@@ -8,6 +8,8 @@
 #ifndef ANTMAN_SRC_GIBBSRESULTRCPP_HPP_
 #define ANTMAN_SRC_GIBBSRESULTRCPP_HPP_
 
+#undef NO_RCPP
+
 #include "GibbsResult.hpp"
 
 class GibbsResultRCpp : public GibbsResult {

@@ -13,6 +13,7 @@
 
 #ifdef NO_RCPP
 
+#include "beta_distribution.hpp"
 #include <armadillo>
 
 #ifndef M_LN_2PI
@@ -45,6 +46,11 @@ static inline double am_rnbinom (double a ,double b)                   {
 	 return (distribution(generator));
 }
 
+static inline double am_rbeta (double a ,double b)                   {
+	 static std::default_random_engine generator;
+	 beta_distribution<double> distribution(a,b);
+	 return (distribution(generator));
+}
 static inline double am_rgamma (double a ,double b)                   {
 	 static std::default_random_engine generator;
 	 std::gamma_distribution<double> distribution(a,b);
@@ -67,7 +73,7 @@ static inline double am_pnorm   (double,double, double,bool,bool) {VERBOSE_ERROR
 static inline double am_qnorm   (double,double, double,bool,bool) {VERBOSE_ERROR("Unsupported function: am_qnorm  "); return 0.0;}
 
 
-#else
+#elif HAS_RCPP
 #include <RcppArmadillo.h>
 
 
@@ -75,6 +81,7 @@ static inline double am_rpois   (double n)                    {return R::rpois(n
 static inline double am_runif   (double a ,double b)          {return R::runif(a,b);  }
 static inline double am_rnbinom (double a ,double b)          {return R::rnbinom(a,b);}
 static inline double am_rgamma (double a ,double b)           {return R::rgamma(a,b); }
+static inline double am_rbeta  (double a ,double b)           {return R::rbeta(a,b); }
 static inline double am_rnorm (double a ,double b)            {return R::rnorm(a,b); }
 static inline double am_rchisq (double a)                     {return R::rchisq(a); }
 
@@ -83,7 +90,8 @@ static inline double am_pnorm   (double,double, double,bool,bool) {VERBOSE_ERROR
 static inline double am_qnorm   (double,double, double,bool,bool) {VERBOSE_ERROR("Unsupported function: am_qnorm  "); return 0.0;}
 
 
-
+#else
+#error "Unsupported Compilation flags, Need NO_RCPP or HAS_RCPP"
 #endif
 
 #endif /* ANTMAN_MIXTURE_CPP_MATHS_HPP_ */

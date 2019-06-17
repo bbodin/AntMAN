@@ -169,7 +169,7 @@ int init_M_na(const int K) {
 
 	    double M_na =  am_rnbinom(R_M, 1-P_M);
 
-	    VERBOSE_DEBUG("M_na = R::rnbinom(R_M, 1-P_M) = " << M_na << " = ");
+	    VERBOSE_DEBUG("M_na = rnbinom(R_M, 1-P_M) = " << M_na << " = ");
 
 	    return M_na;
 	}
@@ -200,10 +200,10 @@ int update_M_na(const double U ,  const int KasInt) {
 
 		if(unif < peso){
 			M_na=am_rnbinom(R_M + K, 1- phi_u * P_M) + 1;
-		    VERBOSE_DEBUG("M_na=R::rnbinom( " <<  R_M + K <<  ", " <<  phi_u * P_M <<  ") + 1;");
+		    VERBOSE_DEBUG("M_na=rnbinom( " <<  R_M + K <<  ", " <<  phi_u * P_M <<  ") + 1;");
 		} else {
 			M_na=am_rnbinom(R_M - 1 + K, 1-phi_u * P_M) ;
-		    VERBOSE_DEBUG("M_na=R::rnbinom( " << R_M - 1 + K <<  ", " <<  phi_u * P_M <<  ") ;");
+		    VERBOSE_DEBUG("M_na=rnbinom( " << R_M - 1 + K <<  ", " <<  phi_u * P_M <<  ") ;");
 		}
 
 	    VERBOSE_DEBUG("M_na = " << M_na);

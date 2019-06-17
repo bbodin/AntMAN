@@ -29,7 +29,7 @@ public :
 class Mixture {
 public :
 	virtual             ~Mixture() {};
-#ifndef NO_RCPP
+#ifdef HAS_RCPP
 	virtual Rcpp::List  get_tau () = 0;
 #endif
 };

@@ -29,7 +29,7 @@ class Mixture_MultivariateNormal: public MultivariateMixture  {
 
 public :
 	Mixture_MultivariateNormal (const arma::vec & mu0, const double ka0, const unsigned int nu0, const arma::mat & Lam0) : _mu0 (mu0), _ka0 (ka0), _nu0 (nu0), _Lam0  (Lam0){}
-#ifndef NO_RCPP
+#ifdef HAS_RCPP
 	Rcpp::List get_tau () {
 		return Rcpp::List::create(Rcpp::Named("Error") = "Unexpected error."  ) ;
 	}
@@ -120,7 +120,7 @@ public :
 				const double u = random_u[i];
 				double cdf = 0.0;
 				unsigned int ii = 0;
-				while (u >= cdf) { // This loop assumes (correctly) that R::runif(0,1) never return 1.
+				while (u >= cdf) { // This loop assumes (correctly) that runif(0,1) never return 1.
 					cdf += pesi[ii++];
 				}
 				ci_current[i] = ii;
@@ -252,7 +252,7 @@ public :
 				for(int l=0; l<K;l++){
 					// TODO[CHECK ME] : I split the loop, random generation is not the saame as before, but it should be theoricaly equivalent, isnt it ?
 					// Update the Jumps of the allocated part of the process
-					S_current[l] = R::rgamma(nj[l]+gamma_current,1./(U_current+1.0));
+					S_current[l] = am_rgamma(nj[l]+gamma_current,1./(U_current+1.0));
 
 				}
 
@@ -264,7 +264,7 @@ public :
 							const arma::mat res = riwish (nu0, Lam0);
 							Sig_current.slice(l) = res; // TODO[CHECK ME] : Raffa study the lam0 - 1
 							mu_current.row(l)   = mvrnormArma (mu0, Sig_current.slice(l) / ka0).t() ;
-							S_current[l]=R::rgamma(gamma_current,1./(U_current+1.0));
+							S_current[l]=am_rgamma(gamma_current,1./(U_current+1.0));
 						}
 
 

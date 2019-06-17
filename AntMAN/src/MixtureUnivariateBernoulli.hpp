@@ -26,7 +26,7 @@ public:
 
 public :
 	Mixture_UnivariateBernoulli (const double a0, const double b0, const int mb) :  _mb(mb), _a0 (a0), _b0 (b0) {}
-#ifndef NO_RCPP
+#ifdef HAS_RCPP
 	Rcpp::List get_tau () {
 		return Rcpp::List::create(Rcpp::Named("Error") = "Unexpected error."  ) ;
 	}
@@ -38,7 +38,7 @@ public :
 		 const double a0 = _a0;
 
 				for(int l=0;l<M;l++){
-					_theta[l] = R::rbeta(a0, b0);
+					_theta[l] = am_rbeta(a0, b0);
 				}
 
 	}
@@ -75,7 +75,7 @@ public :
 				const double u = random_u[i];
 				double cdf = 0.0;
 				unsigned int ii = 0;
-				while (u >= cdf) { // This loop assumes (correctly) that R::runif(0,1) never return 1.
+				while (u >= cdf) { // This loop assumes (correctly) that runif(0,1) never return 1.
 					cdf += pesi[ii++];
 				}
 				ci_current[i] = ii;
@@ -157,20 +157,20 @@ public :
 
 					const double an = a0 + ysum;
 					const double bn = njl  * mb - ysum + b0;
-					theta_current[l] = R::rbeta (an, bn);
+					theta_current[l] = am_rbeta (an, bn);
 
 					// TODO[OPTIMIZE ME] : Cannot split or the random value are completly different
 					// Update the Jumps of the allocated part of the process
-					S_current[l]=R::rgamma(nj[l]+gamma_current,1./(U_current+1.0));
+					S_current[l]=am_rgamma(nj[l]+gamma_current,1./(U_current+1.0));
 
 				}
 
 				// Fill non-allocated
 
 				for(int l=K; l<M;l++){
-					theta_current[l] = R::rbeta (a0, b0) ;
+					theta_current[l] = am_rbeta (a0, b0) ;
 					// TODO[CHECK ME] : theta_current must be non-zero
-					S_current[l]=R::rgamma(gamma_current,1./(U_current+1.0));
+					S_current[l]=am_rgamma(gamma_current,1./(U_current+1.0));
 				}
 
 

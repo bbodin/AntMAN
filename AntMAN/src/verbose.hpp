@@ -9,17 +9,16 @@
 #define ANTMAN_SRC_MIXTURE_CPP_VERBOSE_HPP_
 
 
-#ifdef NO_RCPP
-#include <cstdlib>
-#define COUT_STREAM std::cout
-#define CERR_STREAM std::cerr
-static inline void stop_cmd () {abort();}
-#else
-
+#ifdef HAS_RCPP
 #include <RcppArmadillo.h>
 #define COUT_STREAM Rcpp::Rcout
 #define CERR_STREAM Rcpp::Rcerr
 static inline void stop_cmd () {Rcpp::stop("Error inside the package.\n");}
+#else
+#include <cstdlib>
+#define COUT_STREAM std::cout
+#define CERR_STREAM std::cerr
+static inline void stop_cmd () {abort();}
 #endif
 
 

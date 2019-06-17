@@ -24,7 +24,7 @@ class Mixture_MultivariateBernoulli: public MultivariateMixture  {
 public :
 	Mixture_MultivariateBernoulli (const arma::vec  a0, const arma::vec  b0) :  _mb(a0.size(), arma::fill::ones), _a0 (a0), _b0 (b0) {}
 	//Mixture_MultivariateBernoulli (const arma::vec  a0, const arma::vec  b0, const arma::vec  mb) :  _mb(mb), _a0 (a0), _b0 (b0) {}
-#ifndef NO_RCPP
+#ifdef HAS_RCPP
 	Rcpp::List get_tau () {
 		return Rcpp::List::create(Rcpp::Named("theta") = _theta ) ;
 	}
@@ -44,7 +44,7 @@ public :
 
 				for(int l = 0; l < M; l++){
 					for(int e = 0; e < d ; e++){
-						_theta(l,e) = R::rbeta(a0[e], b0[e]);
+						_theta(l,e) = am_rbeta(a0[e], b0[e]);
 					}
 				}
 
@@ -64,7 +64,7 @@ public :
 
 		arma::vec Log_S_current = arma::log(S_current);
 		cluster_indices_t ci_current(n);
-		arma::vec random_u   = Rcpp::runif(n,0.0,1.0 );
+		arma::vec random_u   = arma::randu(n);
 
 		for (int i=0; i < n; i++) {
 
@@ -91,7 +91,7 @@ public :
 			const double u = random_u[i];
 			double cdf = 0.0;
 			unsigned int ii = 0;
-			while (u >= cdf) { // This loop assumes (correctly) that R::runif(0,1) never return 1.
+			while (u >= cdf) { // This loop assumes (correctly) that am_runif(0,1) never return 1.
 				cdf += pesi[ii++];
 			}
 			ci_current[i] = ii;
@@ -176,11 +176,11 @@ public :
 				const arma::vec bn = njvec % mb  - ysum + b0; // remove mb
 				
 				for (int e = 0 ; e < d; e++) {
-					theta_current(l,e) = R::rbeta (an[e], bn[e]);
+					theta_current(l,e) = am_rbeta (an[e], bn[e]);
 				}
 				// TODO[OPTIMIZE ME] : Cannot split or the random value are completly different
 				// Update the Jumps of the allocated part of the process
-				S_current[l]=R::rgamma(nj[l]+gamma_current,1./(U_current+1.0));
+				S_current[l]=am_rgamma(nj[l]+gamma_current,1./(U_current+1.0));
 
 			}
 
@@ -188,10 +188,10 @@ public :
 
 			for(int l=K; l<M;l++){
 				for (int e = 0 ; e < d; e++) {
-					theta_current(l,e) = R::rbeta (a0[e], b0[e]);
+					theta_current(l,e) = am_rbeta (a0[e], b0[e]);
 				}
 				// TODO[CHECK ME] : theta_current must be non-zero
-				S_current[l]=R::rgamma(gamma_current,1./(U_current+1.0));
+				S_current[l]=am_rgamma(gamma_current,1./(U_current+1.0));
 			}
 
 

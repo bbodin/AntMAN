@@ -11,6 +11,5 @@
 	void test_mixtures ();
 
 int main (int, char**) {
-	test_priors   ();
 	test_mixtures ();
 }

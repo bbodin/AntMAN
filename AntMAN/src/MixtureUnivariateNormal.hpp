@@ -23,7 +23,7 @@ class Mixture_UnivariateNormal: public UnivariateMixture  {
 
 public :
 	Mixture_UnivariateNormal (const double m0, const double k0, const double nu0, const double sig02) : _m0 (m0), _k0 (k0), _nu0 (nu0), _sig02  (sig02){}
-#ifndef NO_RCPP
+#ifdef HAS_RCPP
 	Rcpp::List get_tau () {
 		return Rcpp::List::create(Rcpp::Named("mu") =  _mu_current, Rcpp::Named("sig2") =  _sig2_current  ) ;
 	}
@@ -78,7 +78,7 @@ public :
 			for(int l=0;l<M;l++){
 
 				// Speed-up 30% using homemade dnorm
-				 //double ldensi = R::dnorm(y[i],mu_current[l],pow_sig2_current[l],true);
+				 //double ldensi = dnorm(y[i],mu_current[l],pow_sig2_current[l],true);
 				 const double x       = fabs ( (y[i] - mu_current[l]) / pow_sig2_current[l] ) ;
 				 const double ldensi  = -(M_LN_SQRT_2PI + 0.5 * x * x + log_pow_sig2_current[l]);
 
@@ -93,7 +93,7 @@ public :
 			const double u = random_u[i];
 			double cdf = 0.0;
 			unsigned int ii = 0;
-			while (u >= cdf) { // This loop assumes (correctly) that R::runif(0,1) never return 1.
+			while (u >= cdf) { // This loop assumes (correctly) that runif(0,1) never return 1.
 				cdf += pesi[ii++];
 			}
 			ci_current[i] = ii;
