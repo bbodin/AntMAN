@@ -54,7 +54,7 @@ public :
 		//Allocation_result output ;
 		std::vector<double> theta_current(M);
 
-		Rcpp::NumericVector S_current    = Rcpp::NumericVector(M);
+		arma::vec S_current  (M);
 
 		cluster_indices_t ci_reorder(y.size());
 		ci_reorder.fill(-1);
@@ -142,7 +142,7 @@ public :
 			const std::vector<double>& theta_current = this->_theta;
 			arma::vec Log_S_current = arma::log(S_current);
 			cluster_indices_t ci_current(n);
-			arma::vec random_u   = Rcpp::runif(n,0.0,1.0 );
+			arma::vec random_u   = arma::randu(n);
 
 			for (int i=0; i < n; i++) {
 

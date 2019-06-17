@@ -122,7 +122,7 @@ public :
 
 			//Allocation_result output ;
 			arma::mat theta_current(M,d);
-			Rcpp::NumericVector S_current    = Rcpp::NumericVector(M);
+			arma::vec S_current  (M);
 
 			cluster_indices_t ci_reorder(n);
 			ci_reorder.fill(-1);

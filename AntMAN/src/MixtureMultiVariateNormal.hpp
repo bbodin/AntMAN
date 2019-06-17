@@ -83,7 +83,7 @@ public :
 
 			cluster_indices_t ci_current(n);
 			arma::vec Log_S_current = arma::log(S_current);
-			arma::vec random_u   = Rcpp::runif(n,0.0,1.0 );
+			arma::vec random_u   = arma::randu(n);
 
 			VERBOSE_DEBUG("GibbsFramework<Tau_MultivariateNormal>::up_ci: for (int i=0; i < n; i++) {");
 
@@ -151,7 +151,7 @@ public :
 				 arma::mat mu_current (M, d);
 				 arma::cube Sig_current (d , d, M);
 
-				Rcpp::NumericVector S_current    = Rcpp::NumericVector(M);
+					arma::vec S_current  (M);
 
 				cluster_indices_t ci_reorder(y.n_rows);
 				ci_reorder.fill(-1);

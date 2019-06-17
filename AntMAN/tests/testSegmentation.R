@@ -84,7 +84,7 @@ DrawResult <- function(mat,imgDm,clusters) {
   
 }
 
-res <- LoadAndGenerate("AntMAN/tests/peppers100.jpg")
+res <- LoadAndGenerate("AntMAN/tests/brain.jpg")
 x <- res$x
 imgDm <- res$dim
 bn <- imgDm[1] * imgDm[2]
