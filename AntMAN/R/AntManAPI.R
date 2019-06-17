@@ -1,5 +1,29 @@
 
 #################################################################################
+##### Package Definition
+#################################################################################
+
+#' AntMAN: A package for fitting Finite Bayesian Mixture model with random number of component.
+#'
+#' AntMAN: Anthology of Mixture ANalysis tools 
+#' AntMan is a R package to fit Finite Bayesian Mixture  model with random number of component. 
+#' It is an alternative to Reversible Jump. 
+#' Different kernels: Univariate Gaussian, Univariate Poisson, Univariate Binomial, Multivariate Gaussian, 
+#' Multivariate Bernoulli (Latent Class Analysis). Conjugate priors.  
+#'  We allow for different choices for the prior on the number of components: 
+#' Shifted Poisson, Negative Binomial, and Point Masses (i.e. mixtures with fixed number of components).
+#' 
+#' @section Prior functions:
+#' The Prior functions ...
+#' @importFrom Rcpp evalCpp
+#' @importFrom stats kmeans rbinom rnorm rpois runif 
+#' @importFrom graphics plot
+#' @docType package
+#' @name AntMAN
+NULL
+
+
+#################################################################################
 ##### Datasets
 #################################################################################
 
@@ -141,6 +165,12 @@
 ##### Summary, Plot, and print functions for AntMan results
 #################################################################################
 
+#' plot AM_mcmc_fitness_result  
+#'  
+#'  
+#' @rdname AM_mcmc_fitness_result
+#' @method plot AM_mcmc_fitness_result 
+#' @export
 plot.AM_mcmc_fitness_result=function(x,...){
   if (!is.null(x$K)) {
    hist(x$K,main="K values") ; 
@@ -153,6 +183,13 @@ plot.AM_mcmc_fitness_result=function(x,...){
   #### Co clustering probability : How many time two are in the same custer. 
 }
 
+#'  summary AM_mcmc_fitness_result 
+#'  
+#'  
+#'  
+#' @rdname AM_mcmc_fitness_result
+#' @method summary AM_mcmc_fitness_result 
+#' @export
 summary.AM_mcmc_fitness_result=function(object,...){
 	print("Name\tMean\tStdDev") ;
 	if (!is.null(object$K)) print(sprintf("%s\t%f\t%f","K" ,  mean(object$K) , sd(object$K))) ;
@@ -455,7 +492,8 @@ AM_multinorm_mix_hyperparams <- function(mu0, ka0, nu0, Lam0) {
 #' @return The output as specified by the mcmc parameters.
 #' @examples
 #' AM_mcmc_fit(AM_sample_unipois()$y, AM_unipois_mix_hyperparams (alpha0=2, beta0=0.2), mcmc_parameters = AM_mcmc_parameters(niter=2000, burnin=1000, thin=10))
-
+#' @useDynLib AntMAN
+#' @export
  
 AM_mcmc_fit <- function(
 y, 
