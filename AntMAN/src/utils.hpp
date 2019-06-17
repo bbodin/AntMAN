@@ -59,8 +59,8 @@ inline double  update_lsd ( double lsd, double ln_acp, double iter) {
 //  Normal with mean vector mu and varcov Sig
 
 inline arma::vec mvrnormArma(arma::colvec mu, arma::mat Sig) {
-	int ncols = Sig.n_cols;
-	arma::vec Y = arma::randn<arma::vec>(ncols);
+
+	arma::vec Y = arma::randn<arma::vec>(Sig.n_cols);
 
 	return mu +  arma::chol(Sig) * Y;
 }
@@ -105,11 +105,6 @@ inline double dmvnorm1(const arma::vec& x, const arma::vec& mu,
 	return dmvnorm(x.t(), mu,S,log_p)[0];
 }
 
-inline double dmvnorm_raffa(const arma::vec& x, const arma::vec& mu,
-        const arma::mat& S, const bool log_p = false) {
-    return 0.0;
-
-}
 
 
 // TODO[LICENCE ISSUE !!] : We took that from Rcpp-dist, our code must be GPL !
@@ -133,172 +128,6 @@ inline arma::mat rwish(const int df, const arma::mat& S) {
 inline arma::mat riwish(const int df, const arma::mat& S) {
     return  arma::inv(rwish(df, arma::inv(S) ));
 }
-
-
-//Proposition 2.3 og Robert
-inline double rnorm_soprasoglia_cr2(double mumeno, double alpha=0){
-
-	if(alpha==0){
-		alpha=mumeno;
-	}
-
-	if(mumeno==0){
-		VERBOSE_ERROR("Errore! mumeno non puo' essere zero");
-	}
-
-	while(true){
-
-		// Step 1
-		const double u1= am_runif(0,1);
-		const double z = mumeno-std::log(u1)/alpha;
-
-		//Step 2
-		const double lM = std::pow(alpha,2)/2;
-		const double laccept = -std::pow(z,2)/2+alpha*z-lM;
-
-		// Step 3
-		// TODO[CHECK ME] : could never finish ... ?
-		const double u = am_runif(0,1);
-		const double log_u = std::log(u);
-
-		if(log_u<laccept){
-			return z;
-		}
-	}
-}
-
-
-
-inline double fast_rnorm_truncated(const double mean, const bool sopra){
-
-
-	double out;
-	int factor = sopra ? 1 : -1;
-	double imean = mean*factor;
-	double soglia = -imean;
-
-	if(soglia<0.1){
-		double down = am_pnorm(soglia,0.0,1.0,true,false);
-		double u = am_runif(down,1);
-		out =am_qnorm(u, 0.0, 1.0,true,false);
-	}
-	else{
-		out=rnorm_soprasoglia_cr2(soglia,0);
-	}
-
-	return( factor*(imean+out));
-}
-
-
-inline double rnorm_truncated(const double mean,const double sd, const double soglia, const bool sopra) {
-
-	double out;
-
-	int factor = sopra ? 1 : -1;
-	const double meanf = mean*factor;
-
-	const double tmp_soglia = (soglia*factor-meanf)/sd;
-
-	if(tmp_soglia<0.1){
-		double down = am_pnorm(tmp_soglia,0.0,1.0,true,false);
-		double u = am_runif(down,1);
-		out =am_qnorm(u, 0.0, 1.0,true,false);
-	}
-	else{
-		out=rnorm_soprasoglia_cr2(tmp_soglia,0);
-	}
-
-	return( factor*(meanf+sd*out));
-}
-
-
-
-
-
-inline std::vector<int> which_eq(std::vector<int> x, int j) {
-	int nx = x.size();
-	std::vector<int> out;
-	out.reserve(nx);
-	for(int i = 0; i < nx; i++) {
-		if (x[i]==j ) out.push_back(i);
-	}
-	return out;
-}
-
-
-
-////// Here I consider my own functions to sample from a discrete!
-
-inline arma::vec sample_raf(unsigned int max,int hm, arma::vec weights, int plus1 ) {
-	//this function sample hm observations from a discrete
-	//distribution with support in 0,1,...,max-1
-	//with p.m.f. proportional to weights
-	//  if plus1 = 1 -> support is (1, max)
-
-	double somma;
-	double cdf;
-	arma::vec out(hm);
-	somma = sum(weights);
-
-
-	if(!(somma>0)){
-		VERBOSE_ERROR("Problem with the sum of the weights!");
-	}
-
-	if(max!=weights.size())
-	{
-		VERBOSE_ERROR ( "The support has a length different from the weights");
-	}
-
-	for(int g = 0; g < hm; g++){
-
-		const double u = am_runif(0,1);
-
-		cdf = 0.0;
-		for(unsigned int ii = 0; ii < max; ii++){
-			cdf += weights[ii]/somma;
-			if(u < cdf){
-				out[g] = ii + plus1;
-				break;
-			}
-		}
-	}
-
-	return out;
-}
-
-inline double fast_sample_raf(const arma::vec& weights ) { // sample_raf when (plus1 == 0) and (hm == 1)
-	const double somma = sum(weights); // TODO[CHECK ME] : Must be 1 not ??
-
-	if(!(somma>0)){
-		VERBOSE_ERROR ("Problem with the sum of the weights!");
-	}
-
-
-
-	const double u = am_runif(0,1);
-
-	double cdf = 0.0;
-	for(unsigned int ii = 0; ii < weights.size(); ii++){
-		cdf += weights[ii]/somma;
-		if(u < cdf){
-			return ii;
-		}
-	}
-	// TODO[CHECK ME] What happen if condition not met ?
-	VERBOSE_ERROR("This might be a mistake in the algorithm implementation.");
-	return 0.0;
-}
-
-
-
-
-
-///////////////////////////////////////////////////////////////////////
-//THE FOLLOWING ARE TWO FUNCTIONS TO SAMPLE FROM TRUNCATED GAUSSIAN////
-///////////////////////////////////////////////////////////////////////
-
-
 
 
 

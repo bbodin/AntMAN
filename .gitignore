@@ -63,3 +63,4 @@ AntMAN/src/RcppExports.cpp
 AntMAN/src/*.o
 AntMAN_1.0.pdf
 AntMAN/NAMESPACE
+AntMAN/tests_cpp/testAntMAN

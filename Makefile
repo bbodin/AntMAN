@@ -3,12 +3,14 @@ R_FILES := $(shell find ./AntMAN/R ./AntMAN/tests -name \*.R -not -name RcppExpo
 
 R_CMD := R -q
 
-all : test AntMAN/tests_cpp/testAntMAN
+all : test 
 
-test :  AntMAN.Rinstall/AntMAN/libs/AntMAN.so   AntMAN_1.0.pdf
+test :  AntMAN.Rinstall/AntMAN/libs/AntMAN.so  AntMAN/tests_cpp/testAntMAN  AntMAN_1.0.pdf
 	${R_CMD} -f AntMAN/tests/testWordCount.R
 	${R_CMD} -f AntMAN/tests/testGalaxy.R	
 	${R_CMD} -f AntMAN/tests/testSegmentation.R
+	${R_CMD} -f new_tutorial.R
+	AntMAN/tests_cpp/testAntMAN
 
 infos :
 	@echo "C_FILES=${C_FILES}"
