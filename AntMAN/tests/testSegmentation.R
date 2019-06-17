@@ -39,7 +39,7 @@ LoadAndGenerate <- function(img_path) {
   
   x <- imgRGB[,c(3,4,5)]
   
-  return (list(x = x, dim = imgDm))
+  return (list(pic = x, dim = imgDm))
 }
 
 RunKmeans <- function(x , imgDm , kClusters = 5) {
@@ -84,9 +84,9 @@ DrawResult <- function(mat,imgDm,clusters) {
   
 }
 
-res <- LoadAndGenerate("AntMAN/tests/brain.jpg")
-x <- res$x
-imgDm <- res$dim
+data(brain)
+imgDm <- brain$dim
+x = brain$pic
 bn <- imgDm[1] * imgDm[2]
 mat <- matrix(0,bn,3)
 mat[,1 ] <-x$R

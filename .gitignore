@@ -57,8 +57,9 @@ test.R
 *.Rinstall
 
 AntMAN/R/RcppExports.R
-AntMAN/man/AM_*.Rd
+AntMAN/man/*
 AntMAN/src/*.so
 AntMAN/src/RcppExports.cpp
 AntMAN/src/*.o
 AntMAN_1.0.pdf
+AntMAN/NAMESPACE

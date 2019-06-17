@@ -87,7 +87,7 @@ This data set consider the frequency of appearance of the word said in the Borwn
  data(said)
  
  @keyword datasets}
-\format{An object of class \code{matrix} with 499 rows and 1 columns.}
+\format{An object of class \code{data.frame} with 500 rows and 1 columns.}
 \usage{
 said
 }

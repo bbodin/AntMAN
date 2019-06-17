@@ -18,7 +18,7 @@ Picture of brain activity from a teenager consumming drugs.
  data(brain)
  
  @keyword datasets}
-\format{An object of class \code{data.frame} with 11280 rows and 3 columns.}
+\format{An object of class \code{list} of length 2.}
 \usage{
 brain
 }

@@ -3,11 +3,10 @@
 
 library("AntMAN")
 
-load(file = "./AntMAN/data/carcinoma.rda")
-
+data(carcinoma)
 
 ### Data quantities
-y <- carc
+y <- carcinoma
 n <- dim(y)[1] ## The number of observation
 d <- dim(y)[2] ## The dimension of the data
 mcmc_params        = AM_mcmc_parameters(niter=5000, burnin=1000, thin=10, verbose=1, output = c("CI","K","M","TAU"))
