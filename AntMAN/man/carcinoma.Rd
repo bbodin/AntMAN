@@ -1,0 +1,19 @@
+\name{carcinoma}
+\alias{carcinoma}
+\docType{data}
+\title{carcinoma}
+\description{
+	carcinoma
+}
+\usage{data(carcinoma)}
+\format{
+  carcinoma
+}
+\source{
+}
+\references{
+}
+\examples{
+data(carcinoma)
+}
+\keyword{datasets}
