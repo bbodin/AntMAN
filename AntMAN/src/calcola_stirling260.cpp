@@ -171,11 +171,10 @@ Rcpp::NumericVector VnkPoisson(unsigned int n,double Lambda,double gamma){
 
 	double ldenspoi;
 	double controllo;
-	for(int k=1;k<=n;k++){
+	for(unsigned int k=1;k<=n;k++){
 		controllo=1.;
 		m=0;
 		out[k-1]=0;
-		int lfactn=std::lgammaf(n);
 		//Rcpp::Rcout<<"k="<<k<<"\n";
 
 		Rcpp::NumericVector appoggio(0);
@@ -236,7 +235,6 @@ Rcpp::NumericVector VnkNegBin(unsigned int n,double r,double p,double gamma){
 		controllo=1.;
 		m=0;
 		out[k-1]=0;
-		int lfactn=std::lgammaf(n);
 		Rcpp::Rcout<<"k="<<k<<"\n";
 
 		Rcpp::NumericVector appoggio(0);
@@ -280,12 +278,12 @@ Rcpp::NumericVector VnkNegBin(unsigned int n,double r,double p,double gamma){
 Rcpp::NumericVector VnkDelta(unsigned int n,unsigned int Mstar,double gamma){
 
 	Rcpp::NumericVector out(n);
-	int m;
+
 	double infinito = std::numeric_limits<double>::infinity();
 
 
 	for(unsigned int k=1;k<=n;k++){
-		m=0;
+
 
 		if(k<=Mstar){
 			//int lfactn=std::lgammaf(n);

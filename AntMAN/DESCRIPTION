@@ -21,8 +21,12 @@ Description: AntMan is a R package to fit Finite Bayesian Mixture  model with ra
              Negative Binomial, 
              and Point Masses (i.e. mixtures with fixed number of components).
 License: BSD
+LazyData: true
 URL: http://www.raffaeleargiento.it/
-Imports: Rcpp (>= 0.12.3)
+Imports: 
+    stats,
+    graphics,
+    Rcpp (>= 0.12.3)
 LinkingTo: Rcpp, RcppArmadillo
 RoxygenNote: 6.1.1
 Suggests: 

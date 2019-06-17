@@ -8,7 +8,21 @@
 #ifndef ANTMAN_SRC_MIXTURE_CPP_VERBOSE_HPP_
 #define ANTMAN_SRC_MIXTURE_CPP_VERBOSE_HPP_
 
+
+#ifdef NO_RCPP
 #include <cstdlib>
+#define COUT_STREAM std::cout
+#define CERR_STREAM std::cerr
+static inline void stop_cmd () {abort();}
+#else
+
+#include <RcppArmadillo.h>
+#define COUT_STREAM Rcpp::Rcout
+#define CERR_STREAM Rcpp::Rcerr
+static inline void stop_cmd () {Rcpp::stop("Error inside the package.\n");}
+#endif
+
+
 
 #define EXTRA_LEVEL   4
 #define DEBUG_LEVEL   3
@@ -19,16 +33,6 @@
 
 extern int VERBOSE_LEVEL;
 
-#ifdef Rcpp
-#define COUT_STREAM Rcpp::Rcout
-#define CERR_STREAM Rcpp::Rcerr
-
-static inline void stop_cmd () {Rcpp::stop("Error inside the package.\n");}
-#else
-#define COUT_STREAM std::cout
-#define CERR_STREAM std::cerr
-static inline void stop_cmd () {abort();}
-#endif
 
 #ifdef VERBOSE_BINARY
 #define VERBOSE_EXTRA(msg)                         {if (VERBOSE_LEVEL >= EXTRA_LEVEL)   COUT_STREAM  << msg << std::endl;};

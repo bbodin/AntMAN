@@ -1,5 +1,143 @@
 
 #################################################################################
+##### Datasets
+#################################################################################
+
+
+#' said
+#'  
+#' Frequency of the word said in the Brown corpus.
+#'  
+#' This data set consider the frequency of appearance of the word said in the Borwn corpus.  
+#'  
+#'       For the record, here is how this data set has been generated : 
+#'      
+#'     	1. Download and unzip the data. Result is 500 files that contain series of sentences.
+#'     
+#'     >>> ls
+#'     ca01  ca16  ca31  cb02  cb17  cc05  cd03  ce01  ce16  ce31  cf10  cf25  cf40  cg07  cg22  cg37  cg52  cg67  ch07  ch22  cj07  cj22  cj37  cj52  cj67  ck02  ck17  cl03  cl18  cn03  cn18  cp04  cp19  cr05
+#'     ca02  ca17  ca32  cb03  cb18  cc06  cd04  ce02  ce17  ce32  cf11  cf26  cf41  cg08  cg23  cg38  cg53  cg68  ch08  ch23  cj08  cj23  cj38  cj53  cj68  ck03  ck18  cl04  cl19  cn04  cn19  cp05  cp20  cr06
+#'     ca03  ca18  ca33  cb04  cb19  cc07  cd05  ce03  ce18  ce33  cf12  cf27  cf42  cg09  cg24  cg39  cg54  cg69  ch09  ch24  cj09  cj24  cj39  cj54  cj69  ck04  ck19  cl05  cl20  cn05  cn20  cp06  cp21  cr07
+#'     ca04  ca19  ca34  cb05  cb20  cc08  cd06  ce04  ce19  ce34  cf13  cf28  cf43  cg10  cg25  cg40  cg55  cg70  ch10  ch25  cj10  cj25  cj40  cj55  cj70  ck05  ck20  cl06  cl21  cn06  cn21  cp07  cp22  cr08
+#'     ca05  ca20  ca35  cb06  cb21  cc09  cd07  ce05  ce20  ce35  cf14  cf29  cf44  cg11  cg26  cg41  cg56  cg71  ch11  ch26  cj11  cj26  cj41  cj56  cj71  ck06  ck21  cl07  cl22  cn07  cn22  cp08  cp23  cr09
+#'     ca06  ca21  ca36  cb07  cb22  cc10  cd08  ce06  ce21  ce36  cf15  cf30  cf45  cg12  cg27  cg42  cg57  cg72  ch12  ch27  cj12  cj27  cj42  cj57  cj72  ck07  ck22  cl08  cl23  cn08  cn23  cp09  cp24
+#'     ca07  ca22  ca37  cb08  cb23  cc11  cd09  ce07  ce22  cf01  cf16  cf31  cf46  cg13  cg28  cg43  cg58  cg73  ch13  ch28  cj13  cj28  cj43  cj58  cj73  ck08  ck23  cl09  cl24  cn09  cn24  cp10  cp25
+#'     ca08  ca23  ca38  cb09  cb24  cc12  cd10  ce08  ce23  cf02  cf17  cf32  cf47  cg14  cg29  cg44  cg59  cg74  ch14  ch29  cj14  cj29  cj44  cj59  cj74  ck09  ck24  cl10  cm01  cn10  cn25  cp11  cp26
+#'     ca09  ca24  ca39  cb10  cb25  cc13  cd11  ce09  ce24  cf03  cf18  cf33  cf48  cg15  cg30  cg45  cg60  cg75  ch15  ch30  cj15  cj30  cj45  cj60  cj75  ck10  ck25  cl11  cm02  cn11  cn26  cp12  cp27
+#'     ca10  ca25  ca40  cb11  cb26  cc14  cd12  ce10  ce25  cf04  cf19  cf34  cg01  cg16  cg31  cg46  cg61  ch01  ch16  cj01  cj16  cj31  cj46  cj61  cj76  ck11  ck26  cl12  cm03  cn12  cn27  cp13  cp28
+#'     ca11  ca26  ca41  cb12  cb27  cc15  cd13  ce11  ce26  cf05  cf20  cf35  cg02  cg17  cg32  cg47  cg62  ch02  ch17  cj02  cj17  cj32  cj47  cj62  cj77  ck12  ck27  cl13  cm04  cn13  cn28  cp14  cp29
+#'     ca12  ca27  ca42  cb13  cc01  cc16  cd14  ce12  ce27  cf06  cf21  cf36  cg03  cg18  cg33  cg48  cg63  ch03  ch18  cj03  cj18  cj33  cj48  cj63  cj78  ck13  ck28  cl14  cm05  cn14  cn29  cp15  cr01
+#'     ca13  ca28  ca43  cb14  cc02  cc17  cd15  ce13  ce28  cf07  cf22  cf37  cg04  cg19  cg34  cg49  cg64  ch04  ch19  cj04  cj19  cj34  cj49  cj64  cj79  ck14  ck29  cl15  cm06  cn15  cp01  cp16  cr02
+#'     ca14  ca29  ca44  cb15  cc03  cd01  cd16  ce14  ce29  cf08  cf23  cf38  cg05  cg20  cg35  cg50  cg65  ch05  ch20  cj05  cj20  cj35  cj50  cj65  cj80  ck15  cl01  cl16  cn01  cn16  cp02  cp17  cr03
+#'     ca15  ca30  cb01  cb16  cc04  cd02  cd17  ce15  ce30  cf09  cf24  cf39  cg06  cg21  cg36  cg51  cg66  ch06  ch21  cj06  cj21  cj36  cj51  cj66  ck01  ck16  cl02  cl17  cn02  cn17  cp03  cp18  cr04
+#'     
+#'     
+#'     
+#'     	2. Analyse the shape of data, each sentences is a combinaison of words format like xxx/yyyy. 
+#'     	To make sure of that, we replace every space by new line and makesure avery line has a '/' character.  
+#'     
+#'     >>> for f in c* ; do echo $f ;  cat $f | tr " " "\\n" | tr "\\t" "\\n" | grep -v "/" | sort -u ; done
+#'     
+#'     ca01
+#'     
+#'     ca02
+#'     
+#'     ca03
+#'     
+#'     ca04
+#'     
+#'     ....
+#'     
+#'     
+#'     	3. for each file, we count the number of word.
+#'     
+#'     >>> cat ca01 | tr " " "\\n" | tr "\\t" "\\n" | grep -v  "^$" | sort -u| wc
+#'         900     900    9706
+#'     >>> cat ca01 | tr " " "\\n" | tr "\\t" "\\n" | grep -v  "^$" | wc
+#'        2242    2242   20037
+#'     
+#'     
+#'     	3bis. The average number of word is : 
+#'     
+#'     >>> for f in c* ; do cat $f | tr " " "\\n" | tr "\\t" "\\n" | grep -v  "^$" | awk ' { n++ } END { print n }'  ;  done | awk ' { sum += $1; n++ } END { print sum/n }' 
+#'     2322.39
+#'     
+#'     	4. The word said, and it's different forms
+#'     
+#'     >>> for f in c* ; do cat $f | tr " " "\\n" | tr "\\t" "\\n" | grep -v  "^$" ;  done | grep "^[sS]aid/" | sort -u
+#'     said/vbd
+#'     Said/vbd
+#'     said/vbn
+#'     Said/vbn
+#'     said/vbn-hl
+#'     
+#'     vbd is Verb, past tense
+#'     vbn is Verb, past participle
+#'     vbn-hl is Verb, past participle AND part of headline.
+#'     
+#'     	5. The frequency of the word "[Ss]aid/.*"
+#'     
+#'     >>> for f in c* ; do cat $f | tr " " "\\n" | tr "\\t" "\\n" | grep -v  "^$" | awk ' { n++ ; if ($1 == "said/vbd") m++ ;  if ($1 == "Said/vbd") m++ ;  if ($1 == "said/vbn") m++ ;  if ($1 == "Said/vbn") m++ ;  if ($1 == "said/vbn-hl") m++ ;  } END { print (2322.39 * m) / n; }'  ;  done >> said_frequency
+#'     
+#'     
+#'  @format  A list with 500 observations on the frequency of said in a text.
+#'  
+#'  @source https://www.kaggle.com/nltkdata/brown-corpus
+#'  @reference  Francis, W., and Kucera, H. (1982) Frequency Analysis of English Usage, Houghton Mifflin Company, Boston.
+#'  @examples
+#'  data(said)
+#'  
+#'  @keyword datasets
+"said"
+
+#' galaxy
+#'  
+#' carcinoma is .... 
+#'  
+#'  @format A data frame with X rows and Y variables.
+#'  
+#'  @source URL?
+#'  
+#'  @examples
+#'  data(carcinoma)
+#'  
+#'  @keyword datasets
+"galaxy"
+
+
+#' carcinoma
+#'  
+#' carcinoma is .... 
+#'  
+#'  @format A data frame with X rows and Y variables.
+#'  
+#'  @source URL?
+#'  
+#'  @examples
+#'  data(carcinoma)
+#'  
+#'  @keyword datasets
+"carcinoma"
+
+#' brain
+#'  
+#' Teen Brain Images from the National Institutes of Health, U.S.
+#'  
+#' Picture of brain activity from a teenager consumming drugs. 
+#'  
+#'  @format  A list of pixel taken from a YxY image in RGB format.
+#'  
+#'  @source https://www.flickr.com/photos/nida-nih/29741916012
+#'  @references Crowley TJ, Dalwani MS, Mikulich-Gilbertson SK, Young SE, Sakai JT, Raymond KM, et al. (2015) Adolescents' Neural Processing of Risky Decisions: Effects of Sex and Behavioral Disinhibition. PLoS ONE 10(7): e0132322. doi:10.1371/journal.pone.0132322
+#'  
+#'  @examples
+#'  data(brain)
+#'  
+#'  @keyword datasets
+"brain"
+
+
+#################################################################################
 ##### Summary, Plot, and print functions for AntMan results
 #################################################################################
 
