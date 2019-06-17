@@ -409,19 +409,28 @@ Rcpp::List IAM_mcmc_fit (
 	VERBOSE_INFO ("- size(mcmc_parameters[output]) = " << output_list.size());
 	VERBOSE_INFO ("- output_codes = " << output_codes);
 
-	GibbsResultRCpp res (mcmc_parameters["niter"],output_codes);
+	unsigned long niter  = mcmc_parameters["niter"];
+	unsigned long burnin = mcmc_parameters["burnin"];
+	unsigned long thin   = mcmc_parameters["thin"];
+	unsigned long stored = (niter - burnin)  / thin;
+
+	VERBOSE_ASSERT(niter > burnin, "Please keep niter > burnin.");
+	VERBOSE_ASSERT(niter > thin, "Please keep niter > thin.");
+
+	VERBOSE_INFO(" - Stored observations " << stored);
+	GibbsResultRCpp res (  (niter - burnin)  / thin ,output_codes);
 
 	if (Rcpp::is<Rcpp::NumericMatrix>(y) || Rcpp::is<Rcpp::IntegerMatrix>(y)) {
 			VERBOSE_ASSERT (is_multivariate(mix_kernel_hyperparams), "y argument is a Matrix while the technique is not MultiVariate.") ;
 			dynamic_cast<MultivariateMixture*>(mixture)->fit(Rcpp::as<arma::mat>(y) , initial_clustering, prior ,
-					mcmc_parameters["niter"] ,mcmc_parameters["burnin"] ,mcmc_parameters["thin"] ,mcmc_parameters["verbose"] , &res );
+					niter ,burnin ,thin ,mcmc_parameters["verbose"] , &res );
 			VERBOSE_INFO("End of Gibbs");
 			return res.getList();
 
 		}  else if(Rcpp::is<Rcpp::NumericVector>(y) || Rcpp::is<Rcpp::IntegerVector>(y)){
 			VERBOSE_ASSERT (is_univariate(mix_kernel_hyperparams), "y argument is a Vector while the technique is not Univariate.") ;
 			dynamic_cast<UnivariateMixture*>(mixture)->fit(Rcpp::as<arma::vec>(y) , initial_clustering, prior ,
-					mcmc_parameters["niter"] ,mcmc_parameters["burnin"] ,mcmc_parameters["thin"] ,mcmc_parameters["verbose"] , &res );
+					niter ,burnin ,thin ,mcmc_parameters["verbose"] , &res );
 
 			VERBOSE_INFO("End of Gibbs");
 			return res.getList();

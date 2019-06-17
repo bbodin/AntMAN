@@ -222,7 +222,7 @@ summary.AM_mcmc_fitness_result=function(object,...){
 
 #' Generate a configuration object that contains parameters for a Poisson prior.
 #' 
-#' When there is no arguments, the default is a  a=b=1 with N the input data size.
+#' When there is no arguments, the default is a  a=b=1
 #'
 #' @param a      The \code{a} parameter of the Poisson
 #' @param b      The \code{b} parameter of the Poisson
@@ -246,7 +246,8 @@ AM_mix_components_prior_pois <- function(a = NULL, b = NULL, Lambda = NULL, init
   
   paradox_error = "Please note that you cannot specify a,b,init and Lambda. Lambda specifies a fixed value.";
   
-  parameters = list(type = "AM_mix_components_prior_pois");
+  ### Default value ###
+  parameters = list(type = "AM_mix_components_prior_pois",  a = 1, b = 1);
   
   if (!is.null(a) & !is.null(b)) {
     parameters = list(type = "AM_mix_components_prior_pois",  a = a, b = b);
@@ -311,7 +312,7 @@ AM_mix_components_prior_negbin <- function(a_R = NULL, b_R = NULL, a_P = NULL, b
 
 
 #' Generate a configuration object that contains parameters for a Dirac prior.
-#' no default 
+#' No default value. 
 #'
 #' @param Mstar      Fixed value for M
 #' @return A configuration list to be used as an argument for mcmc_fit. 

@@ -3,7 +3,8 @@ R_FILES := $(shell find ./AntMAN/R ./AntMAN/tests -name \*.R -not -name RcppExpo
 
 R_CMD := R -q
 
-all : test 
+
+all : AntMAN.Rinstall/AntMAN/libs/AntMAN.so  AntMAN/tests_cpp/testAntMAN  AntMAN_1.0.pdf 
 
 test :  AntMAN.Rinstall/AntMAN/libs/AntMAN.so  AntMAN/tests_cpp/testAntMAN  AntMAN_1.0.pdf
 	${R_CMD} -f AntMAN/tests/testWordCount.R
