@@ -30,7 +30,7 @@ ca15  ca30  cb01  cb16  cc04  cd02  cd17  ce15  ce30  cf09  cf24  cf39  cg06  cg
 	2. Analyse the shape of data, each sentences is a combinaison of words format like xxx/yyyy. 
 	To make sure of that, we replace every space by new line and makesure avery line has a '/' character.  
 
->>> for f in c* ; do echo $f ;  cat $f | tr " " "\n" | tr "\t" "\n" | grep -v "/" | sort -u ; done
+>>> for f in c* ; do echo $f ;  cat $f | tr " " "\\n" | tr "\\t" "\\n" | grep -v "/" | sort -u ; done
 
 ca01
 
@@ -45,20 +45,20 @@ ca04
 
 	3. for each file, we count the number of word.
 
->>> cat ca01 | tr " " "\n" | tr "\t" "\n" | grep -v  "^$" | sort -u| wc
+>>> cat ca01 | tr " " "\\n" | tr "\\t" "\\n" | grep -v  "^$" | sort -u| wc
     900     900    9706
->>> cat ca01 | tr " " "\n" | tr "\t" "\n" | grep -v  "^$" | wc
+>>> cat ca01 | tr " " "\\n" | tr "\\t" "\\n" | grep -v  "^$" | wc
    2242    2242   20037
 
 
 	3bis. The average number of word is : 
 
->>> for f in c* ; do cat $f | tr " " "\n" | tr "\t" "\n" | grep -v  "^$" | awk ' { n++ } END { print n }'  ;  done | awk ' { sum += $1; n++ } END { print sum/n }' 
+>>> for f in c* ; do cat $f | tr " " "\\n" | tr "\\t" "\\n" | grep -v  "^$" | awk ' { n++ } END { print n }'  ;  done | awk ' { sum += $1; n++ } END { print sum/n }' 
 2322.39
 
 	4. The word said, and it's different forms
 
->>> for f in c* ; do cat $f | tr " " "\n" | tr "\t" "\n" | grep -v  "^$" ;  done | grep "^[sS]aid/" | sort -u
+>>> for f in c* ; do cat $f | tr " " "\\n" | tr "\\t" "\\n" | grep -v  "^$" ;  done | grep "^[sS]aid/" | sort -u
 said/vbd
 Said/vbd
 said/vbn
@@ -71,7 +71,7 @@ vbn-hl is Verb, past participle AND part of headline.
 
 	5. The frequency of the word "[Ss]aid/.*"
 
->>> for f in c* ; do cat $f | tr " " "\n" | tr "\t" "\n" | grep -v  "^$" | awk ' { n++ ; if ($1 == "said/vbd") m++ ;  if ($1 == "Said/vbd") m++ ;  if ($1 == "said/vbn") m++ ;  if ($1 == "Said/vbn") m++ ;  if ($1 == "said/vbn-hl") m++ ;  } END { print (2322.39 * m) / n; }'  ;  done >> said_frequency
+>>> for f in c* ; do cat $f | tr " " "\\n" | tr "\\t" "\\n" | grep -v  "^$" | awk ' { n++ ; if ($1 == "said/vbd") m++ ;  if ($1 == "Said/vbd") m++ ;  if ($1 == "said/vbn") m++ ;  if ($1 == "Said/vbn") m++ ;  if ($1 == "said/vbn-hl") m++ ;  } END { print (2322.39 * m) / n; }'  ;  done >> said_frequency
 
 
   

@@ -40,7 +40,7 @@ static inline void stop_cmd () {abort();}
 
 #define VERBOSE_INFO(msg)                          {if (VERBOSE_LEVEL >= INFO_LEVEL)    CERR_STREAM  << msg << std::endl;};
 #define VERBOSE_LOG(msg)                           {if (VERBOSE_LEVEL >= LOG_LEVEL)     CERR_STREAM  << msg << std::endl;};
-#define VERBOSE_WARNING(test,msg) {if (not (test)) {if (VERBOSE_LEVEL >= WARNING_LEVEL) CERR_STREAM  << msg << std::endl;}};
+#define VERBOSE_WARNING(msg)                       {if (VERBOSE_LEVEL >= WARNING_LEVEL) CERR_STREAM  << msg << std::endl;};
 #define VERBOSE_ERROR(msg)                         {if (VERBOSE_LEVEL >= ERROR_LEVEL)   CERR_STREAM  << msg << std::endl;  stop_cmd () ;  };
 #define VERBOSE_ASSERT(test,msg)  {if (not (test)) {                                    CERR_STREAM  << msg << std::endl;  stop_cmd () ; }};
 

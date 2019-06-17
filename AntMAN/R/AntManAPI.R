@@ -4,10 +4,13 @@
 #################################################################################
 
 plot.AM_mcmc_fitness_result=function(x,...){
-  if (!is.null(x$K)) hist(x$K,main="K values") ;
-  if (!is.null(x$M)) hist(x$M,main="M values") ;
-  if (!is.null(x$CI) && !is.null(x$Y)) plot(x$Y,col=x$CI[[length(x$CI)]]+1,main="Clusters") ;
-  if (!is.null(x$K)) hist(x$K,main="Clusters") ;
+  if (!is.null(x$K)) {
+   hist(x$K,main="K values") ; 
+   readline(prompt="Press [enter] to continue");
+   }
+  if (!is.null(x$M)) {hist(x$M,main="M values") ; readline(prompt="Press [enter] to continue");}
+  if (!is.null(x$CI) && !is.null(x$Y)) {plot(x$Y,col=x$CI[[length(x$CI)]]+1,main="Clusters") ; readline(prompt="Press [enter] to continue");}
+  if (!is.null(x$K)) {hist(x$K,main="Clusters") ; readline(prompt="Press [enter] to continue");}
   #### Histogram of  Gamma, ...
   #### Co clustering probability : How many time two are in the same custer. 
 }

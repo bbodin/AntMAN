@@ -21,7 +21,7 @@ public:
 	std::vector<void*>               H;
 	std::vector<long>                K;
 	std::vector<long>                M;
-	std::vector<long>                Mna;
+	std::vector<long>                MNA;
 	std::vector<void*>               Q;
 	std::vector<arma::vec>           S;
 	std::vector<Rcpp::List>          TAU;

@@ -6,12 +6,13 @@ R_FLAGS= -m64 -std=gnu++11  -DNDEBUG   -fopenmp   -O2 -g -pipe -Wall -Werror=for
 
 TEST_FILES=$(shell ls *.cpp)
 
-all : testAntMan 
+all : testAntMAN
+	./testAntMAN
 
-testAntMan : ${TEST_FILES} ../src/verbose.cpp
+testAntMAN : ${TEST_FILES} ../src/verbose.cpp
 	g++ ${R_FLAGS} $^ -DNO_RCPP -I../src -I /usr/include/R/  -larmadillo  -o $@ 
 
 	
 clean :
-	rm  testMixture 
+	rm  testAntMAN 
 	
