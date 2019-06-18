@@ -7,7 +7,7 @@
 
 #ifndef ANTMAN_SRC_MIXTURE_HPP_
 #define ANTMAN_SRC_MIXTURE_HPP_
-
+#include <map>
 #include "utils.hpp"
 #include "Prior.hpp"
 #include "GibbsResult.hpp"
