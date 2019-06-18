@@ -1,17 +1,21 @@
 FROM rocker/r-ver:3.4.4
 
-RUN apt-get -y update && apt-get -y install libarmadillo-dev
+RUN apt-get -y update && apt-get -y install libarmadillo-dev libxml2-dev curl libssl-dev libcurl4-gnutls-dev 
 
 RUN  R -q -e "options(repos = list(CRAN = 'http://mran.revolutionanalytics.com/snapshot/2018-03-15/')); install.packages('Rcpp')"
 RUN  R -q -e "options(repos = list(CRAN = 'http://mran.revolutionanalytics.com/snapshot/2018-03-15/')); install.packages('RcppArmadillo')"
 RUN  R -q -e "options(repos = list(CRAN = 'http://mran.revolutionanalytics.com/snapshot/2018-03-15/')); install.packages('jpeg')"
 RUN  R -q -e "options(repos = list(CRAN = 'http://mran.revolutionanalytics.com/snapshot/2018-03-15/')); install.packages('plot3D')"
 RUN  R -q -e "options(repos = list(CRAN = 'http://mran.revolutionanalytics.com/snapshot/2018-03-15/')); install.packages('mvtnorm')"
+RUN  R -q -e "options(repos = list(CRAN = 'http://mran.revolutionanalytics.com/snapshot/2018-03-15/')); install.packages('devtools')"
+RUN  R -q -e "options(repos = list(CRAN = 'http://mran.revolutionanalytics.com/snapshot/2018-03-15/')); install.packages('roxygen2')"
+
+RUN apt-get -y update && apt-get -y install  texlive-latex-base
 
 RUN  mkdir    /tmp/mixture/
 COPY .        /tmp/mixture/
 RUN  make -C  /tmp/mixture/ clean 
 RUN  make -C  /tmp/mixture/ all 
-RUN  make -C  /tmp/mixture/ test
+CMD  make -C  /tmp/mixture/ test
 
 
