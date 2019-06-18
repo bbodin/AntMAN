@@ -6,6 +6,9 @@ R_CMD := R -q
 
 all : AntMAN.Rinstall/AntMAN/libs/AntMAN.so  AntMAN/tests_cpp/testAntMAN  AntMAN_1.0.pdf 
 
+docker : Dockerfile
+	docker build -f Dockerfile -t bbodin/antman .
+
 test :  AntMAN.Rinstall/AntMAN/libs/AntMAN.so  AntMAN/tests_cpp/testAntMAN  AntMAN_1.0.pdf
 	${R_CMD} -f AntMAN/tests/testWordCount.R
 	${R_CMD} -f AntMAN/tests/testGalaxy.R	
