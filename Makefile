@@ -42,7 +42,7 @@ infos :
 	R CMD INSTALL  -l $*.Rinstall $*_1.0.tar.gz
 
 %_1.0.pdf : %/NAMESPACE
-	${R_CMD} -e  "library(devtools) ; devtools::build_manual(\"$*\"); " || touch $@
+	${R_CMD} -e  "library(devtools) ; devtools::build_manual(\"$*\"); " || ${R_CMD} -e  "library(devtools) ; devtools::check(\"$*\",manual=TRUE); " || touch $@
 
 AntMAN/tests_cpp/testAntMAN :
 	make -C AntMAN/tests_cpp/ testAntMAN
