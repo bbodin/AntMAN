@@ -20,7 +20,7 @@ infos :
 	@echo "C_FILES=${C_FILES}"
 	@echo "R_FILES=${R_FILES}"
 
-%/NAMESPACE : %
+%/NAMESPACE : %/R/AntManAPI.R %/DESCRIPTION
 	rm -f $*/NAMESPACE  $*/man/*
 	${R_CMD} -e  "library(devtools) ; document(\"$*\");"
 
@@ -38,10 +38,10 @@ infos :
 %.Rinstall/AntMAN/libs/AntMAN.so : %_1.0.tar.gz 
 	mkdir -p $*.Rinstall
 	R CMD INSTALL  -l $*.Rinstall $*_1.0.tar.gz
-	
+
 %_1.0.pdf : %/NAMESPACE
 	${R_CMD} -e  "library(devtools) ; devtools::build_manual(\"$*\"); " || touch $@
-	
+
 AntMAN/tests_cpp/testAntMAN :
 	make -C AntMAN/tests_cpp/ testAntMAN
 

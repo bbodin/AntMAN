@@ -10,6 +10,7 @@ RUN  R -q -e "options(repos = list(CRAN = 'http://mran.revolutionanalytics.com/s
 
 RUN  mkdir    /tmp/mixture/
 COPY .        /tmp/mixture/
+RUN  make -C  /tmp/mixture/ clean 
 RUN  make -C  /tmp/mixture/ all 
 RUN  make -C  /tmp/mixture/ test
 

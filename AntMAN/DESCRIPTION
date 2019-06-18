@@ -9,17 +9,8 @@ Authors@R: c(person("Raffaele", "Argiento", role = c("aut", "cre"), email= "raff
 Author:      Raffaele Argiento
 Maintainer:  Raffaele Argiento <raffaele.argiento@unito.it>
 Description: AntMan is a R package to fit Finite Bayesian Mixture  model with random number of component. 
-             It is an alternative to Reversible Jump. 
-             Different kernels: Univariate Gaussian, 
-                                Univariate Poisson, 
-                                Univariate Binomial, 
-                                Multivariate Gaussian, 
-                                Multivariate Bernoulli (Latent Class Analysis). 
-                                Conjugate priors.  
-             We allow for different choices for the prior on the number of components: 
-             Shifted Poisson, 
-             Negative Binomial, 
-             and Point Masses (i.e. mixtures with fixed number of components).
+             It is an alternative to Reversible Jump. Different kernels: Univariate Gaussian, Univariate Poisson, Univariate Binomial, Multivariate Gaussian, Multivariate Bernoulli (Latent Class Analysis). 
+             Conjugate priors. We allow for different choices for the prior on the number of components: Shifted Poisson, Negative Binomial, and Point Masses (i.e. mixtures with fixed number of components).
 License: BSD
 LazyData: true
 URL: http://www.raffaeleargiento.it/
@@ -32,4 +23,4 @@ RoxygenNote: 6.1.1
 Suggests: 
     testthat
 Encoding: UTF-8
-
+Roxygen: list(markdown = TRUE)
