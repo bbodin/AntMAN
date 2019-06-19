@@ -8,8 +8,8 @@ TEST_FILES=$(shell ls *.cpp)
 all : testAntMAN
 	./testAntMAN
 
-testAntMAN : ${TEST_FILES} ../src/verbose.cpp
-	g++ ${R_FLAGS} $^ -DNO_RCPP -I../src -I /usr/include/R/  -larmadillo  -o $@ 
+testAntMAN : ${TEST_FILES} ../AntMAN/src/verbose.cpp
+	g++ ${R_FLAGS} $^ -DNO_RCPP -I../AntMAN/src -I /usr/include/R/  -larmadillo  -o $@ 
 
 
 clean :
