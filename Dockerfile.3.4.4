@@ -15,6 +15,7 @@ RUN apt-get -y update && apt-get -y install scala
 
 RUN  R -q -e "options(repos = list(CRAN = 'http://mran.revolutionanalytics.com/snapshot/2018-03-15/')); install.packages('sdols')"
 
+RUN apt-get -y update && apt-get install texinfo texlive-fonts-recommended texlive-fonts-extra
 
 CMD  make -C  /tmp/mixture/ clean 
 CMD  make -C  /tmp/mixture/ all 

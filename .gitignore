@@ -64,3 +64,5 @@ AntMAN/src/*.o
 AntMAN_1.0.pdf
 AntMAN/NAMESPACE
 tests_cpp/testAntMAN
+AntMAN.pdf
+docker_share/

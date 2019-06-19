@@ -4,7 +4,7 @@ R_FILES := $(shell find ./AntMAN/R ./AntMAN/tests -name \*.R -not -name RcppExpo
 R_CMD := R -q
 
 
-all : AntMAN.Rinstall/AntMAN/libs/AntMAN.so  tests_cpp/testAntMAN  AntMAN_1.0.pdf 
+all : AntMAN.Rinstall/AntMAN/libs/AntMAN.so  tests_cpp/testAntMAN  AntMAN.pdf 
 
 docker : Dockerfile
 	mkdir -p docker_share
@@ -15,7 +15,7 @@ docker : Dockerfile
 	sudo docker run -v `pwd`/docker_share:/tmp/mixture bbodin/antman344 
 
 
-test :  AntMAN.Rinstall/AntMAN/libs/AntMAN.so  tests_cpp/testAntMAN  AntMAN_1.0.pdf
+test :  AntMAN.Rinstall/AntMAN/libs/AntMAN.so  tests_cpp/testAntMAN  AntMAN.pdf
 	${R_CMD} -f AntMAN/tests/testWordCount.R
 	${R_CMD} -f AntMAN/tests/testGalaxy.R	
 	${R_CMD} -f AntMAN/tests/testSegmentation.R
@@ -36,11 +36,11 @@ infos :
 	${R_CMD} -e  "Rcpp::compileAttributes(pkgdir = \"$*\" , verbose=TRUE);"
 
 
-%_1.0.tar.gz : ${C_FILES} ${R_FILES} %/src/RcppExports.cpp  %/R/RcppExports.R  AntMAN_1.0.pdf
+%_1.0.tar.gz : ${C_FILES} ${R_FILES} %/src/RcppExports.cpp  %/R/RcppExports.R  
 	rm -rf AntMAN/src/*.o ./AntMAN/src/*.so 
 	R CMD build ./$*
 
-%.Rcheck/ : ${C_FILES} ${R_FILES} %/src/RcppExports.cpp  %/R/RcppExports.R  AntMAN_1.0.pdf
+%.Rcheck/ : ${C_FILES} ${R_FILES} %/src/RcppExports.cpp  %/R/RcppExports.R  
 	R CMD check ./$*
 
 %.Rinstall/AntMAN/libs/AntMAN.so : %_1.0.tar.gz 
@@ -50,6 +50,9 @@ infos :
 %_1.0.pdf : %/NAMESPACE
 	${R_CMD} -e  "library(devtools) ; devtools::build_manual(\"$*\"); " || ${R_CMD} -e  "library(devtools) ; devtools::check(\"$*\",manual=TRUE); " || touch $@
 
+%.pdf : %/NAMESPACE
+	R CMD Rd2pdf $* --no-preview --force
+
 tests_cpp/testAntMAN :
 	make -C tests_cpp/ testAntMAN
 
@@ -57,7 +60,7 @@ deps :
 	echo "To be defined."
 
 clean : 
-	rm -rf current *~ *.Rinstall *_1.0.pdf  *_1.0.tar.gz *.Rcheck ./AntMAN/NAMESPACE ./AntMAN/src/*.o ./AntMAN/src/*.so 	./AntMAN/src/*.rds ./AntMAN/src/RcppExports.cpp  ./AntMAN/R/RcppExports.R  ./AntMAN/man/AM*.Rd tests_cpp/testAntMAN
+	rm -rf current *~ *.Rinstall *.pdf  *_1.0.tar.gz *.Rcheck ./AntMAN/NAMESPACE ./AntMAN/src/*.o ./AntMAN/src/*.so 	./AntMAN/src/*.rds ./AntMAN/src/RcppExports.cpp  ./AntMAN/R/RcppExports.R  ./AntMAN/man/AM*.Rd tests_cpp/testAntMAN
 
 .PHONY: clean
 .SECONDARY:
