@@ -4,17 +4,23 @@ R_FILES := $(shell find ./AntMAN/R ./AntMAN/tests -name \*.R -not -name RcppExpo
 R_CMD := R -q
 
 
-all : AntMAN.Rinstall/AntMAN/libs/AntMAN.so  AntMAN/tests_cpp/testAntMAN  AntMAN_1.0.pdf 
+all : AntMAN.Rinstall/AntMAN/libs/AntMAN.so  tests_cpp/testAntMAN  AntMAN_1.0.pdf 
 
 docker : Dockerfile
-	docker build -f Dockerfile -t bbodin/antman .
+	mkdir -p docker_share
+	sudo rm docker_share/* -rf
+	chcon -Rt svirt_sandbox_file_t  docker_share/
+	cp AntMAN Makefile new_tutorial.R docker_share/ -rf
+	sudo docker build -f Dockerfile.3.4.4 -t bbodin/antman344 .
+	sudo docker run -v `pwd`/docker_share:/tmp/mixture bbodin/antman344 
 
-test :  AntMAN.Rinstall/AntMAN/libs/AntMAN.so  AntMAN/tests_cpp/testAntMAN  AntMAN_1.0.pdf
+
+test :  AntMAN.Rinstall/AntMAN/libs/AntMAN.so  tests_cpp/testAntMAN  AntMAN_1.0.pdf
 	${R_CMD} -f AntMAN/tests/testWordCount.R
 	${R_CMD} -f AntMAN/tests/testGalaxy.R	
 	${R_CMD} -f AntMAN/tests/testSegmentation.R
 	${R_CMD} -f new_tutorial.R
-	AntMAN/tests_cpp/testAntMAN
+	./tests_cpp/testAntMAN
 
 infos :
 	@echo "C_FILES=${C_FILES}"
@@ -44,14 +50,14 @@ infos :
 %_1.0.pdf : %/NAMESPACE
 	${R_CMD} -e  "library(devtools) ; devtools::build_manual(\"$*\"); " || ${R_CMD} -e  "library(devtools) ; devtools::check(\"$*\",manual=TRUE); " || touch $@
 
-AntMAN/tests_cpp/testAntMAN :
-	make -C AntMAN/tests_cpp/ testAntMAN
+tests_cpp/testAntMAN :
+	make -C tests_cpp/ testAntMAN
 
 deps :
 	echo "To be defined."
 
 clean : 
-	rm -rf current *~ *.Rinstall *_1.0.pdf  *_1.0.tar.gz *.Rcheck ./AntMAN/NAMESPACE ./AntMAN/src/*.o ./AntMAN/src/*.so 	./AntMAN/src/*.rds ./AntMAN/src/RcppExports.cpp  ./AntMAN/R/RcppExports.R  ./AntMAN/man/AM*.Rd AntMAN/tests_cpp/testAntMAN
+	rm -rf current *~ *.Rinstall *_1.0.pdf  *_1.0.tar.gz *.Rcheck ./AntMAN/NAMESPACE ./AntMAN/src/*.o ./AntMAN/src/*.so 	./AntMAN/src/*.rds ./AntMAN/src/RcppExports.cpp  ./AntMAN/R/RcppExports.R  ./AntMAN/man/AM*.Rd tests_cpp/testAntMAN
 
 .PHONY: clean
 .SECONDARY:

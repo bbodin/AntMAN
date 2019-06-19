@@ -5,7 +5,7 @@
 
 #' AntMAN: A package for fitting Finite Bayesian Mixture model with random number of component.
 #'
-#' AntMAN: Anthology of Mixture ANalysis tools 
+#'@description AntMAN: Anthology of Mixture ANalysis tools 
 #' AntMan is a R package to fit Finite Bayesian Mixture  model with random number of component. 
 #' It is an alternative to Reversible Jump. 
 #' Different kernels: Univariate Gaussian, Univariate Poisson, Univariate Binomial, Multivariate Gaussian, 
@@ -65,9 +65,12 @@
 #' ```
 #' 
 #'@importFrom Rcpp evalCpp
-#'@importFrom stats kmeans rbinom rnorm rpois runif 
-#'@importFrom graphics plot
-#'@description  
+#'@importFrom stats kmeans rbinom rnorm rpois runif sd
+#'@importFrom graphics plot hist rasterImage
+#'@importFrom sdols dlso
+#'
+#'
+#'
 #'@docType package
 #'@name AntMAN
 NULL
@@ -406,7 +409,8 @@ AM_unipois_mix_hyperparams <- function(alpha0, beta0) {
 #'      
 #'      data(galaxy)
 #'      y_uvn = galaxy
-#'      mixture_uvn_params = AM_uninorm_mix_hyperparams  (m0=20.83146, k0=0.3333333, nu0=4.222222, sig02=3.661027)
+#'      mixture_uvn_params = AM_uninorm_mix_hyperparams  (m0=20.83146, k0=0.3333333,
+#'                                                        nu0=4.222222, sig02=3.661027)
 #'      
 #'      mcmc_params        = AM_mcmc_parameters(niter=20000, burnin=5000, thin=10, verbose=1)
 #'      components_prior   = AM_mix_components_prior_pois (init=3,  a=1, b=1) 
@@ -501,7 +505,7 @@ AM_multinorm_mix_hyperparams <- function(mu0, ka0, nu0, Lam0) {
 #'@param mix_components_prior is a configuration list generated with AM_mix_components_prior_* functions.
 #'@param mix_weight_prior is a configuration list generated with AM_weight_prior_* functions.
 #'@param mcmc_parameters is a configuration list generated with AM_mcmc_parameters. 
-#'@return The return value is a \code{\link{AM_mcmc_fitness_result}} object. 
+#'@return The return value is a \code{AM_mcmc_fitness_result} object. 
 #'@examples
 #' AM_mcmc_fit( AM_sample_unipois()$y, 
 #'              AM_unipois_mix_hyperparams (alpha0=2, beta0=0.2), 

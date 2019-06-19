@@ -3,8 +3,7 @@
 ### Load packages
 ##############################################
 .libPaths(c("./AntMAN.Rinstall", .libPaths()))
-library("jpeg")
-library(plot3D)
+
 library("AntMAN")
 
 
@@ -15,58 +14,7 @@ set.seed(123)
 ### Functions
 ##############################################
 
-### Load image and generate dataset
-LoadAndGenerate <- function(img_path) {
   
-  # Import the image in R
-  img <- readJPEG(img_path) # Read the image
-  
-  ## We can plot the image with the command rasterImage
-  plot(1:2, type='n')
-  rasterImage(img, 1.01, 1.01, 1.99, 1.99)
-  
-  # Obtain the dimension
-  imgDm <- dim(img)
-  
-  # Assign RGB channels to data frame
-  imgRGB <- data.frame(
-    x = rep(1:imgDm[2], each = imgDm[1]),
-    y = rep(imgDm[1]:1, imgDm[2]),
-    R = as.vector(img[,,1]),
-    G = as.vector(img[,,2]),
-    B = as.vector(img[,,3])
-  )
-  
-  x <- imgRGB[,c(3,4,5)]
-  
-  return (list(pic = x, dim = imgDm))
-}
-
-RunKmeans <- function(x , imgDm , kClusters = 5) {
-
-  
-  ### cluster the pixels according the RGB channels
-  kMeans <- kmeans(x, centers = kClusters)
-  
-  
-  ### This are the k centroids that we have (the k colours with which we aim at representing the image)
-  
-  rgb(kMeans$centers)
-  
-  ### The image reconstructed with just k colors (the kcentroids)
-  segmented <- kMeans$centers[kMeans$cluster,]
-  
-  ### we have to transform the data with three colums in an an array 
-  ### of three matrices 
-  img_seg <- array(dim=imgDm)
-  
-  img_seg[,,1] <- matrix(segmented[,1],nrow=imgDm[1],ncol=imgDm[2])
-  img_seg[,,2] <- matrix(segmented[,2],nrow=imgDm[1],ncol=imgDm[2])
-  img_seg[,,3] <- matrix(segmented[,3],nrow=imgDm[1],ncol=imgDm[2])
-  plot(1:2, type='n')
-  rasterImage(img_seg, 1.01, 1.01, 1.99, 1.99)
-  
-}
 
 
 DrawResult <- function(mat,imgDm,clusters) {
@@ -93,7 +41,7 @@ mat[,1 ] <-x$R
 mat[,2 ] <-x$G
 mat[,3 ] <-x$B
 
-scatter3D(x=mat[,1],y=mat[,2],z=mat[,3])
+### scatter3D(x=mat[,1],y=mat[,2],z=mat[,3])
 
 
 mixture_mvn_params = AM_multinorm_mix_hyperparams   (mu0=c(0,0,0),ka0=.1,nu0=5,Lam0=0.1*diag(3))

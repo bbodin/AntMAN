@@ -256,7 +256,7 @@ SIG[2,,] <- Sig2
 SIG[3,,] <- Sig3
 
 
-library(mvtnorm) ##  TODO Why do I need this !!!!
+
 demo_multivariate_normal <-AM_sample_multinorm(n = 1000 ,d = 2,c(0.3,0.3,0.4),MU,SIG)
 y_mvn  <- demo_multivariate_normal$y
 ci_mvn <- demo_multivariate_normal$ci

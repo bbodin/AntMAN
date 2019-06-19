@@ -17,10 +17,10 @@ URL: http://www.raffaeleargiento.it/
 Imports: 
     stats,
     graphics,
-    Rcpp (>= 0.12.3)
+    Rcpp (>= 0.12.3),
+    sdols,
+    mvtnorm
 LinkingTo: Rcpp, RcppArmadillo
 RoxygenNote: 6.1.1
-Suggests: 
-    testthat
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

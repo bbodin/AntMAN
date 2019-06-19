@@ -1,3 +1,4 @@
+library(mvtnorm)
 
 #' AM_sample_uninorm
 #'  
@@ -136,7 +137,7 @@ AM_sample_multibin <- function(n,d,pro,TH){
 
 #' AM_sample_multinorm
 #'  
-#'  
+#' @importFrom mvtnorm rmvnorm
 #' @export
 AM_sample_multinorm <- function(n,d,pro,MU,SIG){
   if(dim(SIG)[1]!=length(pro)){stop()}

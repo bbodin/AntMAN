@@ -6,5 +6,6 @@ citEntry(entry = "Article",
                    as.person("Bruno Bodin"),
                    as.person("Maria De Iorio")),
   journal      = "Journal of Statistical Software",
-  year         = "2020"
+  year         = "2020",
+  textVersion = "R. Argiento, Anthology of Mixture ANalysis tools."
 )
