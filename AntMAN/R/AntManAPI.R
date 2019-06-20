@@ -149,12 +149,15 @@ NULL
 #' S3 class AM_mcmc_output.
 #' @description test
 #' @exportClass AM_mcmc_output
+#'@nameAM_mcmc_output
 NULL
 
-#
+
 #' plot AM_mcmc_output  
+#' 
+#' plot some useful informations about the mcmc results
 #'  
-#'  This fun...
+#'@param x a AM_mcmc_output object
 #'  
 #'@method plot AM_mcmc_output 
 #'@export
@@ -172,7 +175,9 @@ plot.AM_mcmc_output=function(x,...){
 
 #'  summary AM_mcmc_output 
 #'  
-#'  This fun...
+#'  Print some useful informations about the mcmc results
+#'  
+#'@param object a AM_mcmc_output object
 #'  
 #'  
 #'@method summary AM_mcmc_output 
@@ -248,30 +253,30 @@ AM_mcmc_fit <- function(
 
 
 
-#' Generate a configuration object that contains parameters for the MCMC.
-#' burnin ===burnin  number of initial iteration to be dicarded, default niter/2  
-#' niter= number of iteration after butnin  default 5000
-#' thin, how oftern you save sample after burnn, i.e. one every thin, thin =1 save everything 
+#' MCMC Parameters
 #' 
+#' This generates an MCMC parameters list to be used as \code{mcmc_parameters} argument with \code{AM_mcmc_fit}. 
 #' 
-#' 
+#' The \code{niter} argument specify the total number of iteration. 
+#' \code{burnin} is the number of first iteration to drop.
+#' \code{thin} specifies how oftern you save sample after burnin, i.e. one every thin, thin =1 save everything. 
 #' 
 #' 
 #'@param niter        Total number of iteration required.
 #'@param burnin       Number of iteration to burn.
-#'@param thin         Number of iteration to thin.
+#'@param thin         Thining rate.
 #'@param verbose      A value from 0 to 4, that specify the degres of verbosity (0:None,1:Warnings,2:Infos,4:Debug)
 #'@param output       A list of output to return
 #'@param file_output  A list of output to save in files
 #'@param parallel     Some of the algorithms can be run in parallel using OpenMP. This parameter triggers the parallelism.
-#'@return A configuration list to be used as an argument for mcmc_fit. 
+#'@return list to be used as \code{mcmc_parameters} argument with \code{AM_mcmc_fit}. 
 #'@examples 
 #' AM_mcmc_parameters (niter=1000, burnin=10000, thin=50)
 #' AM_mcmc_parameters (niter=1000, burnin=10000, thin=50, output=c("CI","S","TAU"), file_output="")
 #'@export
-AM_mcmc_parameters <- function(  niter=20000,
-                                 burnin=10000,
-                                 thin=10,
+AM_mcmc_parameters <- function(  niter=5000,
+                                 burnin=2500, ## niter / 2
+                                 thin=1,
                                  verbose = 1,
                                  output=c("CI","K"),
                                  parallel=0,
@@ -299,7 +304,7 @@ AM_mcmc_parameters <- function(  niter=20000,
 #' such that \eqn{P(M=\widetilde{M}) =1}.
 #'
 #'@param Mstar      Fixed value for \eqn{\widetilde{M}} 
-#'@return A configuration list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_fit}}. 
+#'@return list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_fit}}. 
 #'
 #'@keywords prior
 #'@seealso \code{\link{AM_mcmc_fit}}
@@ -319,24 +324,24 @@ AM_mix_components_prior_dirac <- function(Mstar) {
 
 
 
-#' Generate a configuration object for a Negative Binomial prior.
+#' Negative Binomial Prior.
 #' 
 #' This generate a configuration object for a Negative Binomial prior such as 
 #'  \deqn{q_M(m)=\frac{\Gamma(r+m-1)}{(m-1)!\Gamma(r)} p^{m-1}(1-p)^r, \quad m=1,2,3,\ldots}
 #' The hyper-parameters \eqn{p\in (0,1)} and \eqn{r>0} can either be fixed using \code{r} and \code{p}
 #' or assigned prior distributions. 
-#' In the latter case, we assume \eqn{p \sim Beta(c,d)} and \eqn{r \sim  Gamma(a_1,b_1)}
+#' In the latter case, we assume \eqn{p \sim Beta(a_P,b_P)} and \eqn{r \sim  Gamma(a_R,b_R)}
 #' 
-#' If no arguments are provided, the default is r = 1 , c = 1 and d = 1.
+#' If no arguments are provided, the default is \eqn{r = 1 , a_P = 1 and b_P = 1}.
 #'
-#'@param a_R      The \eqn{a_1} parameter of \eqn{Gamma(a_1,b_1)} prior distribution for \eqn{r}.
-#'@param b_R      The \eqn{b_1} parameter of \eqn{Gamma(a_1,b_1)} prior distribution for \eqn{r}.
-#'@param a_P      The \eqn{c} parameter of \eqn{Beta(c,d)} prior distribution for \eqn{p}.
-#'@param b_P      The \eqn{d} parameter of \eqn{Beta(c,d)} prior distribution for \eqn{p}.
-#'@param M_R      Used to specify a fixed value \eqn{r}.
-#'@param M_P      Used to specify a fixed value \eqn{p}.
+#'@param a_R      The \eqn{a} parameter of \eqn{Gamma(a,b)} prior distribution for \eqn{r}.
+#'@param b_R      The \eqn{b} parameter of \eqn{Gamma(a,b)} prior distribution for \eqn{r}.
 #'@param init_R   The first value of \eqn{r} when using \code{a_R} and \code{b_R}.
+#'@param a_P      The \eqn{a} parameter of \eqn{Beta(a,b)} prior distribution for \eqn{p}.
+#'@param b_P      The \eqn{a} parameter of \eqn{Beta(a,b)} prior distribution for \eqn{p}.
 #'@param init_P   The first value of \eqn{p} when using \code{a_P} and \code{b_P}.
+#'@param R      Used to specify a fixed value \eqn{r}.
+#'@param P      Used to specify a fixed value \eqn{p}.
 #'@return A configuration list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_fit}}. 
 #'
 #'@keywords prior
@@ -346,9 +351,9 @@ AM_mix_components_prior_dirac <- function(Mstar) {
 #'@examples
 #' 
 #' ## See \code{\link{???}} example.
-#' AM_mix_components_prior_negbin (M_R=1, M_P=1)
+#' AM_mix_components_prior_negbin (R=1, P=1)
 
-AM_mix_components_prior_negbin <- function(a_R = NULL, b_R = NULL, a_P = NULL, b_P = NULL, M_R = NULL, M_P = NULL, 
+AM_mix_components_prior_negbin <- function(a_R = NULL, b_R = NULL, a_P = NULL, b_P = NULL, R = NULL, P = NULL, 
                                            init_R = NULL, init_P = NULL) {
   
   paradox_error_R = "Please note that you cannot specify a_R,b_R and R_M. R_M specifies a fixed value.";
@@ -358,11 +363,11 @@ AM_mix_components_prior_negbin <- function(a_R = NULL, b_R = NULL, a_P = NULL, b
   if (!is.null(a_R)) parameters = append(parameters, list(a_R = a_R));
   if (!is.null(b_R)) parameters = append(parameters, list(b_R = b_R));
   if (!is.null(init_R)) parameters = append(parameters, list(init_R = init_R));
-  if (!is.null(M_R)) parameters = append(parameters, list(M_R = M_R));
+  if (!is.null(R)) parameters = append(parameters, list(M_R = R));
   if (!is.null(a_P)) parameters = append(parameters, list(a_P = a_P));
   if (!is.null(b_P)) parameters = append(parameters, list(b_P = b_P));
   if (!is.null(init_P)) parameters = append(parameters, list(init_P = init_P));
-  if (!is.null(M_P)) parameters = append(parameters, list(M_P = M_P));
+  if (!is.null(P)) parameters = append(parameters, list(M_P = P));
   
   
   return (parameters);
@@ -445,7 +450,7 @@ AM_mix_components_prior_pois <- function(a=NULL, b=NULL, Lambda=NULL, init=NULL)
 #'@param b      The b parameter of the gamma
 #'@param init   The init value for Lambda of the gamma
 #'@param gamma used to specify a fixed gamma (instead of using a,b, and init).
-#'@return A configuration list to be used as \code{mix_weight_prior} argument for mcmc_fit. 
+#'@return A configuration list to be used as \code{mix_weight_prior} argument for \code{mcmc_fit}. 
 #'@examples 
 #' AM_mix_weights_prior_gamma (a=1, b=1)
 #' AM_mix_weights_prior_gamma (a=1, b=1, init=1)
@@ -485,18 +490,23 @@ AM_mix_weights_prior_gamma <- function(a = NULL, b = NULL, gamma = NULL, init = 
 };
 
 
+#################################################################################
+##### Mixture Hyperparameters.
+#################################################################################
+
 
 #' Univariate Poisson Mixture Hyperparameters.
 #' 
-#' 
-#' Generate a configuration object that define univariate Poisson mixture hyperparameters.
-#'alpha0=beta0=1
+#'  Generate a configuration object that define univariate Poisson mixture hyperparameters suc has :
+#'  \deqn{\pi(\tau \mid \alpha,\beta)=\frac{\beta^\alpha}{\Gamma(\alpha)}\tau^{\alpha-1}\mathrm{e}^{-\beta\tau}, \qquad \tau >0}
+#'
+#'  By default alpha0=1 and beta0=1.
 #'
 #'
 #'
 #'@param alpha0        The alpha0 hyperparameter.
 #'@param beta0        The beta0 hyperparameter.
-#'@return A configuration list to be used as an argument for mcmc_fit. 
+#'@return A list to be used as \code{mix_kernel_hyperparams} argument for \code{mcmc_fit}.
 #'@examples 
 #' AM_unipois_mix_hyperparams (alpha0=2, beta0=0.2)
 #'@export
@@ -549,16 +559,18 @@ AM_uninorm_mix_hyperparams <- function(m0, k0, nu0, sig02) {
   return ( list ( type = "AM_uninorm_mix_hyperparams", m0 = m0 , k0 = k0 , nu0 = nu0 , sig02 = sig02 ) );
 }
 
-#' Generate a configuration object that define univariate binomial mixture hyperparameters.
+#' Univariate Binomial Mixture Hyperparameters.
+#'  
+#' Generate a configuration object that define Univariate Binomial Mixture Hyperparameters such as :
+#' \deqn{ \pi(\theta\mid \alpha,\beta)=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)} \tau^{\alpha-1}\left( 1-\tau \right)^{\beta-1} , \qquad 0\le\tau\le1}
+#'with \eqn{\alpha} is \code{a0},\eqn{\beta} is \code{b0}, and N is ... oups I need to add more infos in those sections.
 #' a0=1 b0=1
-#' 
-#' 
 #' 
 #' 
 #'@param a0        The a0 hyperparameter.
 #'@param b0        The b0 hyperparameter.
 #'@param mb        size of binomial .
-#'@return A configuration list to be used as an argument for mcmc_fit. 
+#'@return A list to be used as \code{mix_kernel_hyperparams} argument for \code{mcmc_fit}.
 #'@examples 
 #' AM_unibin_mix_hyperparams (a0=1,b0=1,mb=100)
 #'@export
@@ -567,12 +579,14 @@ AM_unibin_mix_hyperparams <- function(a0, b0, mb) {
 }
 
 
+#' Multivariate Bernoulli Mixture Hyperparameters (Latent Class analysis)
+#' 
 #' Generate a configuration object that define multivariate Bernoulli mixture hyperparameters.
 #'Default is (a0= c(1,....,1),b0= c(1,....,1))
 #'
 #'@param a0        The a0 hyperparameter.
 #'@param b0        The b0 hyperparameter.
-#'@return A configuration list to be used as an argument for mcmc_fit. 
+#'@return A list to be used as \code{mix_kernel_hyperparams} argument for \code{mcmc_fit}.
 #'@examples 
 #' AM_multiber_mix_hyperparams (a0= c(1,1,1,1),b0= c(1,1,1,1))
 #'@export
@@ -595,11 +609,11 @@ AM_multiber_mix_hyperparams <- function(a0, b0) {
 #'@param ka0    The hyperparameter \eqn{\kappa_0}.
 #'@param nu0    The hyperparameter \eqn{\nu_0}.
 #'@param Lam0   The hyperparameter \eqn{\Lambda_0}.
-#'@return A configuration list to be used as an argument for mcmc_fit. 
+#'@return A list to be used as \code{mix_kernel_hyperparams} argument for \code{mcmc_fit}.
 #'@examples 
 #' AM_multinorm_mix_hyperparams ()
 #'@export
-AM_multinorm_mix_hyperparams <- function(mu0, ka0, nu0, Lam0) {
+AM_multinorm_mix_hyperparams <- function(mu0 = NULL, ka0 = NULL, nu0 = NULL, Lam0 = NULL) {
   return ( list ( type = "AM_multinorm_mix_hyperparams", mu0 = mu0 , ka0 = ka0 , nu0 = nu0 , Lam0 = Lam0 ) );
 }
 

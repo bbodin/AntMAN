@@ -2,7 +2,7 @@ library(mvtnorm)
 
 #' AM_sample_uninorm
 #'  
-#'  
+#' @keywords internal
 #' @export
 AM_sample_uninorm <- function(n,pro,mmu,ssd){
   if(length(mmu)!=length(pro)){stop()}
@@ -37,6 +37,7 @@ AM_sample_uninorm <- function(n,pro,mmu,ssd){
 #' AM_sample_unipois
 #'  
 #'  
+#' @keywords internal
 #' @export
 AM_sample_unipois <- function(n=1000,pro=c(0.2,0.5,0.3),mth=c(5,25,50)){
   if(length(mth)!=length(pro)){stop()}
@@ -72,6 +73,7 @@ AM_sample_unipois <- function(n=1000,pro=c(0.2,0.5,0.3),mth=c(5,25,50)){
 #' AM_sample_unibin
 #'  
 #'  
+#' @keywords internal
 #' @export
 AM_sample_unibin <- function(n,mb, pro,mth){
   if(length(mth)!=length(pro)){stop()}
@@ -105,6 +107,7 @@ AM_sample_unibin <- function(n,mb, pro,mth){
 #' AM_sample_multibin
 #'  
 #'  
+#' @keywords internal
 #' @export
 AM_sample_multibin <- function(n,d,pro,TH){
   
@@ -137,6 +140,7 @@ AM_sample_multibin <- function(n,d,pro,TH){
 
 #' AM_sample_multinorm
 #'  
+#' @keywords internal
 #' @importFrom mvtnorm rmvnorm
 #' @export
 AM_sample_multinorm <- function(n,d,pro,MU,SIG){
@@ -173,6 +177,7 @@ AM_sample_multinorm <- function(n,d,pro,MU,SIG){
 #' AM_sample_multibin
 #'  
 #'  
+#' @keywords internal
 #' @export
 AM_sample_multibin <- function(n,d,pro,TH){
   
