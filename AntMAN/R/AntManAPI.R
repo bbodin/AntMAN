@@ -89,22 +89,22 @@ NULL
 #'@references  Francis, W., and Kucera, H. (1982) Frequency Analysis of English Usage, Houghton Mifflin Company, Boston.
 #'@examples
 #'  data(said)
-#'  
 #'@keywords datasets
 #'@docType data
 "said"
 
-#' galaxy
-#'  
-#' carcinoma is .... 
+#' Galaxy velocities dataset
+#' 
+#' This data set consider physical information on velocities (km/second) for
+#' 82 galaxies reported by Roeder (1990). These are drawn from six well-separated
+#' conic sections of the Corona Borealis region.
 #'  
 #'@format A data frame with X rows and Y variables.
 #'  
-#'@source URL?
-#'  
+#'@format A numeric vector giving the speed of galaxies (1000*(km/second)) 
 #'@examples
-#'  data(carcinoma)
-#'  
+#'  data(galaxy)
+#'@source  Roeder, K. (1990) Density estimation with confidence sets exemplified by superclusters and voids in the galaxies, Journal of the American Statistical Association, 85: 617-624.  
 #'@keywords datasets
 #'@docType data
 "galaxy"
@@ -125,13 +125,11 @@ NULL
 #'@docType data
 "carcinoma"
 
-#' brain
-#'  
 #' Teen Brain Images from the National Institutes of Health, U.S.
+#'
+#' Picture of brain activities from a teenager consumming drugs. 
 #'  
-#' Picture of brain activity from a teenager consumming drugs. 
-#'  
-#'@format  A list of pixel taken from a YxY image in RGB format.
+#'@format  A list that contains \code{dim} a (W:width,H:height) pair, and  \code{pic} a data frame (W*H pixels image in RGB format).
 #'  
 #'@source https://www.flickr.com/photos/nida-nih/29741916012
 #'@references Crowley TJ, Dalwani MS, Mikulich-Gilbertson SK, Young SE, Sakai JT, Raymond KM, et al. (2015) Adolescents' Neural Processing of Risky Decisions: Effects of Sex and Behavioral Disinhibition. PLoS ONE 10(7): e0132322. doi:10.1371/journal.pone.0132322
@@ -301,7 +299,7 @@ AM_mcmc_parameters <- function(  niter=20000,
 #' such that \eqn{P(M=\widetilde{M}) =1}.
 #'
 #'@param Mstar      Fixed value for \eqn{\widetilde{M}} 
-#'@return A configuration list to be used as an argument for \code{\link{AM_mcmc_fit}}. 
+#'@return A configuration list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_fit}}. 
 #'
 #'@keywords prior
 #'@seealso \code{\link{AM_mcmc_fit}}
@@ -339,7 +337,7 @@ AM_mix_components_prior_dirac <- function(Mstar) {
 #'@param M_P      Used to specify a fixed value \eqn{p}.
 #'@param init_R   The first value of \eqn{r} when using \code{a_R} and \code{b_R}.
 #'@param init_P   The first value of \eqn{p} when using \code{a_P} and \code{b_P}.
-#'@return A configuration list to be used as an argument for \code{\link{AM_mcmc_fit}}. 
+#'@return A configuration list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_fit}}. 
 #'
 #'@keywords prior
 #'@seealso \code{\link{AM_mcmc_fit}}
@@ -387,7 +385,7 @@ AM_mix_components_prior_negbin <- function(a_R = NULL, b_R = NULL, a_P = NULL, b
 #'@param init   The \code{init} value for \eqn{\Lambda} when using \code{a} and \code{b}.
 #'@param Lambda used to specify a fixed  hyper-parameter \eqn{\Lambda}.
 #'
-#'@return A configuration list to be used as an argument for \code{\link{AM_mcmc_fit}}. 
+#'@return A configuration list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_fit}}. 
 #'
 #'@keywords prior
 #'@seealso \code{\link{AM_mcmc_fit}}
@@ -447,7 +445,7 @@ AM_mix_components_prior_pois <- function(a=NULL, b=NULL, Lambda=NULL, init=NULL)
 #'@param b      The b parameter of the gamma
 #'@param init   The init value for Lambda of the gamma
 #'@param gamma used to specify a fixed gamma (instead of using a,b, and init).
-#'@return A configuration list to be used as an argument for mcmc_fit. 
+#'@return A configuration list to be used as \code{mix_weight_prior} argument for mcmc_fit. 
 #'@examples 
 #' AM_mix_weights_prior_gamma (a=1, b=1)
 #' AM_mix_weights_prior_gamma (a=1, b=1, init=1)
@@ -488,6 +486,9 @@ AM_mix_weights_prior_gamma <- function(a = NULL, b = NULL, gamma = NULL, init = 
 
 
 
+#' Univariate Poisson Mixture Hyperparameters.
+#' 
+#' 
 #' Generate a configuration object that define univariate Poisson mixture hyperparameters.
 #'alpha0=beta0=1
 #'
@@ -503,14 +504,23 @@ AM_unipois_mix_hyperparams <- function(alpha0, beta0) {
   return ( list ( type = "AM_unipois_mix_hyperparams", alpha0 = alpha0, beta0 = beta0 ) );
 }
 
-#' Generate a configuration object that define univariate Normal mixture hyperparameters.
-#'default m0=0 k0=1 nu0= 3 sig02=1
+#' Univariate Normal Mixture Hyperparameters
+#' 
+#' 
+#' Generate a configuration object that define univariate Normal mixture hyperparameters as
+#' \deqn{\pi(\mu,\sigma^2\mid m_0,\kappa_0,\nu_0,\sigma^2_0) = \pi_{\mu}(\mu|\sigma^2,m_0,\kappa_0)\pi_{\sigma^2}(\sigma^2\mid \nu_0,\sigma^2_0)}
+#' Where \eqn{m_0} is \code{m0}, 
+#'       \eqn{\kappa_0} is \code{k0}, 
+#'       \eqn{\nu_0} is \code{nu0}, 
+#'       \eqn{\sigma^2_0} is \code{sig02}. 
+#' 
+#'If hyperparameters are not, default is \code{m0=0}, \code{k0=1}, \code{nu0=3}, \code{sig02=1}.
 #'
-#'@param m0      The m0 hyperparameter.
-#'@param k0      The k0 hyperparameter.
-#'@param nu0     The nu0 hyperparameter.
-#'@param sig02   The sig02 hyperparameter.
-#'@return A configuration list to be used as an argument for mcmc_fit. 
+#'@param m0      The \eqn{m_0} hyperparameter.
+#'@param k0      The \eqn{\kappa_0} hyperparameter.
+#'@param nu0     The \eqn{\nu_0} hyperparameter.
+#'@param sig02   The \eqn{\sigma^2_0} hyperparameter.
+#'@return A list to be used as \code{mix_kernel_hyperparams} argument for \code{mcmc_fit}. 
 #'@examples 
 #'      
 #'      #### This example ...
@@ -570,17 +580,24 @@ AM_multiber_mix_hyperparams <- function(a0, b0) {
   return ( list ( type = "AM_multiber_mix_hyperparams", a0 = a0 , b0 = b0  ) );
 }
 
-#' Generate a configuration object that define multivariate Normal mixture hyperparameters.
-#' Default is (mu0=c(0,..,0),ka0=1,nu0=Dimension+2,Lam0=diag(Dim))
+#' Multivariate Normal Mixture Hyperparameters.
+#' 
+#' 
+#' Generate Multivariate Normal Mixture hyperparameters such as 
+#' \deqn{\pi(\boldsymbol \mu, \boldsymbol \Sigma\mid\boldsymbol m_0,\kappa_0,\nu_0,\boldsymbol \Lambda_0)= \pi_{\mu}(\boldsymbol \mu|\boldsymbol \Sigma,\boldsymbol m_0,\kappa_0)\pi_{\Sigma}(\boldsymbol \Sigma \mid \nu_0,\boldsymbol \Lambda_0)}
+#' with \code{mu0} is \eqn{\boldsymbol m_0}, \code{ka0} is \eqn{\kappa_0}, 
+#' \code{nu0} is \eqn{\nu_0}, \code{Lam0} is \eqn{\Lambda_0}.
+#' 
+#' Default is \code{(mu0=c(0,..,0),ka0=1,nu0=Dim+2,Lam0=diag(Dim))} with \code{Dim} the number of variable per observation.
 #'
 #'
-#'@param mu0      The mu0 hyperparameter.
-#'@param ka0      The ka0 hyperparameter.
-#'@param nu0     The nu0 hyperparameter.
-#'@param sig02   The sig02 hyperparameter.
+#'@param mu0    The hyperparameter \eqn{\boldsymbol m_0}.
+#'@param ka0    The hyperparameter \eqn{\kappa_0}.
+#'@param nu0    The hyperparameter \eqn{\nu_0}.
+#'@param Lam0   The hyperparameter \eqn{\Lambda_0}.
 #'@return A configuration list to be used as an argument for mcmc_fit. 
 #'@examples 
-#' AM_multinorm_mix_hyperparams (mu0=c(0,0),ka0=1,nu0=4,Lam0=diag(2))
+#' AM_multinorm_mix_hyperparams ()
 #'@export
 AM_multinorm_mix_hyperparams <- function(mu0, ka0, nu0, Lam0) {
   return ( list ( type = "AM_multinorm_mix_hyperparams", mu0 = mu0 , ka0 = ka0 , nu0 = nu0 , Lam0 = Lam0 ) );
