@@ -144,7 +144,7 @@ bool is_multivariate (Rcpp::List mix_kernel_hyperparams) {
 		}
 
 
-		negbin_component gen_negbin_comp (Rcpp::List mix_components_prior, std::string suffix) {
+		negbin_component gen_negbin_comp (Rcpp::List mix_components_prior, std::string suffix, double default_init ) {
 
 			negbin_component C;
 
@@ -203,8 +203,8 @@ bool is_multivariate (Rcpp::List mix_kernel_hyperparams) {
 
 			/// ************ Q prior_components_type *******************
 
-			negbin_component R = gen_negbin_comp (mix_components_prior, "_R");
-			negbin_component P = gen_negbin_comp (mix_components_prior, "_P");
+			negbin_component R = gen_negbin_comp (mix_components_prior, "_R", 1);
+			negbin_component P = gen_negbin_comp (mix_components_prior, "_P", 0.5); // TODO : DEFAULT AVERAGE (a, b)
 
 			q = new negative_binomial_gamma_q_param_t(R,P);
 

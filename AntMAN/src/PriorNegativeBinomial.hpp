@@ -126,8 +126,8 @@ public:
 				double P_lnuovo=am_rnorm(P_lmedia,P.LSD);
 				double P_nuovo=std::exp(P_lnuovo) / (1 + std::exp (P_lnuovo));
 
-				double log_full_p_m_new =  compute_lPsi ( U ,  h_param.gamma,  K ,   P.M ,  P_nuovo) + (R.a-1)*std::log(P_nuovo)+(R.b - 1)* std::log(1 - P_nuovo) ;
-				double log_full_p_m_vec =  compute_lPsi ( U ,  h_param.gamma,  K ,   P.M ,  P_vecchio) + (R.a-1)*std::log(P_vecchio)-(R.b - 1 )*std::log(1 -P_vecchio);
+				double log_full_p_m_new =  compute_lPsi ( U ,  h_param.gamma,  K ,    P_nuovo,R.M)    + (P.a-1)*std::log(P_nuovo)  +(P.b - 1)* std::log(1 - P_nuovo) ;
+				double log_full_p_m_vec =  compute_lPsi ( U ,  h_param.gamma,  K ,    P_vecchio, R.M) + (P.a-1)*std::log(P_vecchio)-(P.b - 1 )*std::log(1 -P_vecchio);
 
 				double P_ln_acp = (log_full_p_m_new - P_lmedia - std::log(1 - P_vecchio ) ) - (log_full_p_m_vec - P_lnuovo - std::log(1 - P_nuovo ));
 
@@ -181,7 +181,7 @@ int update_M_na(const double U ,  const int KasInt) {
 
     VERBOSE_DEBUG("update_M_na (U = " << U << ",K = " << K << ")");
 
-		const double R_M     = this->q_param.R.M;
+		const double R_M     = this->q_param.R.M; // TODO : fix that M makes no sense
 		const double P_M     = this->q_param.P.M;
 
 	    VERBOSE_DEBUG("R_M = " << R_M);
