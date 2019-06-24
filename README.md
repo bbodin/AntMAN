@@ -1,5 +1,37 @@
 # antman
 
+## How to Install 
+
+```
+devtools::install_github("bbodin/AntMAN", subdir="AntMAN")
+```
+
+## How to test
+
+```
+library("AntMAN")
+data(galaxy, package = "AntMAN")
+y_uvn = galaxy
+mixture_uvn_params = AntMAN::AM_uninorm_mix_hyperparams  (m0=20.83146, k0=0.3333333, nu0=4.222222, sig02=3.661027)
+
+mcmc_params        = AntMAN::AM_mcmc_parameters(niter=20000, burnin=5000, thin=10, verbose=1)
+components_prior   = AntMAN::AM_mix_components_prior_pois (init=3,  a=1, b=1) 
+weights_prior      = AntMAN::AM_mix_weights_prior_gamma(init=2, a=1, b=1)
+
+fit <- AntMAN::AM_mcmc_fit(
+  y = y_uvn,
+  mix_kernel_hyperparams = mixture_uvn_params,
+  mix_components_prior =components_prior,
+  mix_weight_prior = weights_prior,
+  mcmc_parameters = mcmc_params)
+
+summary (fit)
+plot (fit)
+```
+
+
+
+
 What has to be done : 
   - DESCRIPTION file 
   - Check all the comments in the code
