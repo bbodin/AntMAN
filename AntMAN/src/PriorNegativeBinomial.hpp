@@ -27,7 +27,7 @@ struct negbin_component {
 	 }
 };
 
-std::ostream & operator << (std::ostream &out, const negbin_component &c)
+inline std::ostream & operator << (std::ostream &out, const negbin_component &c)
 {
 	if (c.fixed) {out << "(fixed=" << c.value << ")";}
 	else {out << "(a=" << c.a << ", b=" << c.b << ", v=" << c.value << ")";}
@@ -151,7 +151,7 @@ public:
 };
 
 
-std::ostream & operator << (std::ostream &out, const negative_binomial_gamma_q_param_t &c)
+inline std::ostream & operator << (std::ostream &out, const negative_binomial_gamma_q_param_t &c)
 {
     out << "R:" << c.R << " P:" << c.P;
     return out;

@@ -119,6 +119,8 @@ public:
 		double total_gibbs          = 0;
 		auto   start_gibbs          = std::chrono::system_clock::now();
 
+		int verbose_slice = niter / 100;
+
 		for (unsigned int iter = 0 ; iter < niter ; iter++)  {
 
 			total_iter           = 0;
@@ -193,13 +195,13 @@ public:
 			auto elapsed_iter = end_iter - start_iter;
 			total_iter = elapsed_iter.count()  / 1000000.0;
 
-			if((verbose!=0) and ((iter % 50)==0)) {
+			if((verbose!=0) and ((iter % verbose_slice)==0)) {
 				auto end_gibbs             = std::chrono::system_clock::now();
 				auto elapsed_gibbs         = end_gibbs - start_gibbs;
 				start_gibbs           = std::chrono::system_clock::now();
 				total_gibbs               += elapsed_gibbs.count() / 1000000.0;
 
-				VERBOSE_LOG("iter="<<iter<<" K="<<K<<" M_na="<<M_na<<" M="<<M<<
+				VERBOSE_LOG("[" << iter / verbose_slice << "%] iter="<<iter<<" K="<<K<<" M_na="<<M_na<<" M="<<M<<
 						" u=" <<total_u <<
 						"ms ci=" <<total_ci <<
 						"ms mna=" <<total_mna <<

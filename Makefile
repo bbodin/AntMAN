@@ -16,10 +16,17 @@ docker : Dockerfile
 
 
 test :  AntMAN.Rinstall/AntMAN/libs/AntMAN.so  tests_cpp/testAntMAN  AntMAN.pdf
-	${R_CMD} -f AntMAN/tests/testWordCount.R
-	${R_CMD} -f AntMAN/tests/testGalaxy.R	
+	${R_CMD} -f AntMAN/tests/testBasicMultiBer.R
+	${R_CMD} -f AntMAN/tests/testBasicMultiNorm.R
+	${R_CMD} -f AntMAN/tests/testBasicUniBin.R
+	${R_CMD} -f AntMAN/tests/testBasicUniNormNegBin.R
+	${R_CMD} -f AntMAN/tests/testBasicUniNormPois.R
+	${R_CMD} -f AntMAN/tests/testBasicUniPoisDirac.R
+	${R_CMD} -f AntMAN/tests/testBasicUniPoisGamma.R
+	${R_CMD} -f AntMAN/tests/testCarcinoma.R
+	${R_CMD} -f AntMAN/tests/testGalaxy.R
 	${R_CMD} -f AntMAN/tests/testSegmentation.R
-	${R_CMD} -f new_tutorial.R
+	${R_CMD} -f AntMAN/tests/testWordCount.R
 	./tests_cpp/testAntMAN
 
 infos :
@@ -43,9 +50,6 @@ check : AntMAN/src/RcppExports.cpp
 %_1.0.tar.gz : ${C_FILES} ${R_FILES} %/src/RcppExports.cpp  %/R/RcppExports.R  
 	rm -rf AntMAN/src/*.o ./AntMAN/src/*.so 
 	R CMD build ./$*
-
-%.Rcheck/ : ${C_FILES} ${R_FILES} %/src/RcppExports.cpp  %/R/RcppExports.R  
-	R CMD check ./$*
 
 %.Rinstall/AntMAN/libs/AntMAN.so : %_1.0.tar.gz 
 	mkdir -p $*.Rinstall
