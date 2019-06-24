@@ -20,10 +20,19 @@ AM_multinorm_mix_hyperparams(mu0 = NULL, ka0 = NULL, nu0 = NULL,
 A list to be used as \code{mix_kernel_hyperparams} argument for \code{mcmc_fit}.
 }
 \description{
-Speicifies the hyperparameter for the conjugate prior for a mixture of Multivariate Normals. I NEED TO NOW THE PARAMETRIZATION
-\deqn{\pi(\boldsymbol \mu, \boldsymbol \Sigma\mid\boldsymbol m_0,\kappa_0,\nu_0,\boldsymbol \Lambda_0)= \pi_{\mu}(\boldsymbol \mu|\boldsymbol \Sigma,\boldsymbol m_0,\kappa_0)\pi_{\Sigma}(\boldsymbol \Sigma \mid \nu_0,\boldsymbol \Lambda_0)}
-with \code{mu0} is \eqn{\boldsymbol m_0}, \code{ka0} is \eqn{\kappa_0},
-\code{nu0} is \eqn{\nu_0}, \code{Lam0} is \eqn{\Lambda_0}.
+This fnctions allows the user to specify the hyperparameters for the conjugate prior for a mixture of Multivariate Normals. We assume that the data are d-dimensional vectors \eqn{y_i}, where \eqn{y_i} are iid
+Normal randm variables with mean \eqn{\boldsymbol{\mu}} and covariance matrix \eqn{\boldsymbol{\Sigma}}.
+The conjugate prior is
+\deqn{\pi(\boldsymbol \mu, \boldsymbol \Sigma\mid\boldsymbol m_0,\kappa_0,\nu_0,\boldsymbol \Lambda_0)= 
+\pi_{\mu}(\boldsymbol \mu|\boldsymbol \Sigma,\boldsymbol m_0,\kappa_0)\pi_{\Sigma}(\boldsymbol \Sigma \mid \nu_0,\boldsymbol \Lambda_0)}
+\deqn{ \pi_{\mu}(\boldsymbol \mu|\boldsymbol \Sigma,\boldsymbol m_0,\kappa_0)  = 
+ \frac{\sqrt{\kappa_0^d}}{\sqrt {(2\pi )^{d}|{\boldsymbol \Sigma }|}} \exp \left(-{\frac {\kappa_0}{2}}(\boldsymbol\mu -{\boldsymbol m_0 })^{\mathrm {T} }{\boldsymbol{\Sigma }}^{-1}(\boldsymbol\mu-{\boldsymbol m_0 })\right) \qquad \boldsymbol \mu\in\mathcal{R}^d}
+\deqn{\pi_{\Sigma}(\boldsymbol \Sigma\mid \nu_0,\boldsymbol \Lambda_0)= {\frac {\left|{\boldsymbol \Lambda_0 }\right|^{\nu_0 /2}}{2^{\nu_0 d/2}\Gamma _{d}({\frac {\nu_0 }{2}})}}\left|\boldsymbol \Sigma \right|^{-(\nu_0 +d+1)/2}e^{-{\frac {1}{2}}\mathrm {tr} (\boldsymbol \Lambda_0 \boldsymbol \Sigma^{-1})}
+, \qquad \boldsymbol \Sigma^2>0}
+with \code{mu0} corresponds to \eqn{\boldsymbol m_0}, \code{ka0} corresponds to  \eqn{\kappa_0},
+\code{nu0} to \eqn{\nu_0}, \code{Lam0} to \eqn{\Lambda_0}.
+Default is \code{(mu0=c(0,..,0),ka0=1,nu0=Dim+2,Lam0=diag(Dim))} with \code{Dim} is the dimension of the data \code{y}.
+We advise the user to set \eqn{\nu_0} equal to at least the dimension of the data, \code{Dim}, plus 2
 }
 \examples{
 AM_multinorm_mix_hyperparams ()

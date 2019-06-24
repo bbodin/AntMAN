@@ -3,8 +3,7 @@
 \name{AM_mix_weights_prior_gamma}
 \alias{AM_mix_weights_prior_gamma}
 \title{Generate a configuration object to specify a prior on the hyper-parameter \eqn{\gamma} for the Dirichlet prior on the
-mixture weights. We assume \eqn{\gamma \sim  Gamma(a,b)}. ALternatively we can fix \eqn{\gamma} to a specific value.
-Default is \eqn{\gamma=1/N}, where N is the number of observations.}
+mixture weights.}
 \usage{
 AM_mix_weights_prior_gamma(a = NULL, b = NULL, gamma = NULL,
   init = NULL)
@@ -14,17 +13,21 @@ AM_mix_weights_prior_gamma(a = NULL, b = NULL, gamma = NULL,
 
 \item{b}{The rate parameter b of the Gamma prior}
 
-\item{gamma}{It allows to fix \eqn{gamma}  to a specific value.}
+\item{gamma}{It allows to fix \eqn{\gamma}  to a specific value.}
 
-\item{init}{The init value for \eqn{gammma}, when we assume \eqn{gamma} random.}
+\item{init}{The init value for \eqn{\gamma}, when we assume \eqn{\gamma} random.}
 }
 \value{
 A configuration list to be used as \code{mix_weight_prior} argument for \code{mcmc_fit}.
 }
 \description{
 Generate a configuration object to specify a prior on the hyper-parameter \eqn{\gamma} for the Dirichlet prior on the
-mixture weights. We assume \eqn{\gamma \sim  Gamma(a,b)}. ALternatively we can fix \eqn{\gamma} to a specific value.
+mixture weights.
+We assume \eqn{\gamma \sim  Gamma(a,b)}. Alternatively we can fix \eqn{\gamma} to a specific value.
 Default is \eqn{\gamma=1/N}, where N is the number of observations.
+In AntMAN we assume the following
+parametrization of the Gamma density:
+\deqn{p(x\mid a,b )= \frac{b^a x^{a-1}}{\Gamma(a)} \exp\{ -bx \}, \quad x>0  }
 }
 \examples{
 AM_mix_weights_prior_gamma (a=1, b=1)

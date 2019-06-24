@@ -4,11 +4,6 @@
 #include <RcppArmadilloExtensions/sample.h>
 #include <limits>
 
-#include <exception>      // to terminate a function by the command throw
-// throw std::runtime_error("message")
-//also includes std::exception, std::terminate
-
-
 // [[Rcpp::export]]
 
 Rcpp::NumericVector calcola_stirling(double gamma, int n){

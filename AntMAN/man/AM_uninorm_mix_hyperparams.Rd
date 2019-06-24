@@ -20,14 +20,18 @@ A list to be used as \code{mix_kernel_hyperparams} argument for \code{mcmc_fit}.
 }
 \description{
 Generate a configuration object that specifies univariate Normal mixture kernel and allows to set the hyperparameters of the Normal-InverseGamma conjugate prior. As such, the kernel is a Gaussian dsistribution
-with mean \eqn{\mu} and variance \eqn{\sigma^2}. WRITE THE PRIOR
+with mean \eqn{\mu} and variance \eqn{\sigma^2}. The prior on \eqn{(\mu,\sigma^2)} the Normal-InverseGamma:
 \deqn{\pi(\mu,\sigma^2\mid m_0,\kappa_0,\nu_0,\sigma^2_0) = \pi_{\mu}(\mu|\sigma^2,m_0,\kappa_0)\pi_{\sigma^2}(\sigma^2\mid \nu_0,\sigma^2_0)}
-Where \eqn{m_0} is \code{m0},
-\eqn{\kappa_0} is \code{k0},
-\eqn{\nu_0} is \code{nu0},
-\eqn{\sigma^2_0} is \code{sig02}.
+\deqn{\pi_{\mu}(\mu|\sigma^2,m_0,\kappa_0)  =\frac{\sqrt{\kappa_0}}{\sqrt{2\pi\sigma^2}} 
+ \exp^{-\frac{\kappa_0}{2\sigma^2}(\mu-m_0)^2 }, \qquad \mu\in\mathcal{R}}
+\deqn{\pi_{\sigma^2}(\sigma^2\mid \nu_0,\sigma^2_0)= {\frac {\sigma_0^{2^{\nu_0 }}}{\Gamma (\nu_0 )}}(1/\sigma^2)^{\nu_0 +1}\exp \left(-\frac{\sigma_0^2}{\sigma^2}\right), \qquad \sigma^2>0}
 }
 \details{
+where \eqn{m_0} corresponds \code{m0},
+\eqn{\kappa_0} corresponds \code{k0},
+\eqn{\nu_0} corresponds \code{nu0},
+\eqn{\sigma^2_0} corresponds \code{sig02}.
+
 If hyperparameters are not specified, the default is \code{m0=0}, \code{k0=1}, \code{nu0=3}, \code{sig02=1}.
 }
 \examples{

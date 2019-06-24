@@ -4,10 +4,12 @@
 \alias{AM_unibin_mix_hyperparams}
 \title{Univariate Binomial Mixture Hyperparameters.
 
-Generate a configuration object that define Univariate Binomial Mixture Hyperparameters such as :
-\deqn{ \pi(\theta\mid \alpha,\beta)=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)} \tau^{\alpha-1}\left( 1-\tau \right)^{\beta-1} , \qquad 0\le\tau\le1}
-with \eqn{\alpha} is \code{a0},\eqn{\beta} is \code{b0}, and N is ... oups I need to add more infos in those sections.
-a0=1 b0=1}
+Generate a configuration object that specifies the prior hyperparameters for a mixture of  Univariate Binomial kernels wth probability of success \eqn{\tau} and size \eqn{N}.
+The conjugate prior on \eqn{\tau} is a Beta distribution:
+\deqn{ \pi(\tau\mid \alpha,\beta)=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)} \tau^{\alpha-1}\left( 1-\tau \right)^{\beta-1} , \qquad 0\le\tau\le1}
+\eqn{N} is fixed by the user and should always be specified. Here,
+\eqn{\alpha} corresponds to \code{a0},\eqn{\beta} to \code{b0}.
+The default for the prior hyperparameters is \eqn{a0=1, b0=1}.}
 \usage{
 AM_unibin_mix_hyperparams(a0, b0, N)
 }
@@ -16,7 +18,7 @@ AM_unibin_mix_hyperparams(a0, b0, N)
 
 \item{b0}{The b0 hyperparameter.}
 
-\item{N}{size of binomial .}
+\item{N}{size of the Binomial distribution.}
 }
 \value{
 A list to be used as \code{mix_kernel_hyperparams} argument for \code{mcmc_fit}.
@@ -24,10 +26,12 @@ A list to be used as \code{mix_kernel_hyperparams} argument for \code{mcmc_fit}.
 \description{
 Univariate Binomial Mixture Hyperparameters.
 
-Generate a configuration object that define Univariate Binomial Mixture Hyperparameters such as :
-\deqn{ \pi(\theta\mid \alpha,\beta)=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)} \tau^{\alpha-1}\left( 1-\tau \right)^{\beta-1} , \qquad 0\le\tau\le1}
-with \eqn{\alpha} is \code{a0},\eqn{\beta} is \code{b0}, and N is ... oups I need to add more infos in those sections.
-a0=1 b0=1
+Generate a configuration object that specifies the prior hyperparameters for a mixture of  Univariate Binomial kernels wth probability of success \eqn{\tau} and size \eqn{N}.
+The conjugate prior on \eqn{\tau} is a Beta distribution:
+\deqn{ \pi(\tau\mid \alpha,\beta)=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)} \tau^{\alpha-1}\left( 1-\tau \right)^{\beta-1} , \qquad 0\le\tau\le1}
+\eqn{N} is fixed by the user and should always be specified. Here,
+\eqn{\alpha} corresponds to \code{a0},\eqn{\beta} to \code{b0}.
+The default for the prior hyperparameters is \eqn{a0=1, b0=1}.
 }
 \examples{
 AM_unibin_mix_hyperparams (a0=1,b0=1,N=100)

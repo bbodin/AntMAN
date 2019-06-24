@@ -16,8 +16,8 @@ A list to be used as \code{mix_kernel_hyperparams} argument for \code{mcmc_fit}.
 }
 \description{
 Generate a configuration object that defines the prior hyperparameters for a mixture of multivariate Bernoulli.
-If the dimensio of the data is P, then the prior is a product of P independet Beta distributions, Beta(\eqn{a_{0i},a_{0i}}). Therefore,
-the vectors of hyperpaprameters, a0 and b0,  are P-dimensional. Default is (a0= c(1,....,1),b0= c(1,....,1))
+If the dimension of the data is P, then the prior is a product of P independent Beta distributions, Beta(\eqn{a_{0i},a_{0i}}). Therefore,
+the vectors of hyperparameters, a0 and b0,  are P-dimensional. Default is (a0= c(1,....,1),b0= c(1,....,1))
 }
 \examples{
 AM_multiber_mix_hyperparams (a0= c(1,1,1,1),b0= c(1,1,1,1))

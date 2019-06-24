@@ -20,11 +20,13 @@ AM_mix_components_prior_pois(a = NULL, b = NULL, Lambda = NULL,
 A configuration list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_fit}}.
 }
 \description{
-This fucntion generate a configuration object for a Poisson prior on the number
-of mixture components I THOUGHT IT WAS SHIFTED such that
+This function generates a configuration object for a Shifted Poisson prior on the number
+of mixture components such that
 \deqn{q_M(m)=     Pr (M=m)= \frac{e^{-\Lambda}\Lambda^{m-1} }{(m-1)!}    ,      \quad m=1,2,3,\ldots}
 The hyper-parameter \eqn{\Lambda} can either be fixed using \code{Lambda}
 or assigned a \eqn{Gamma(a,b)} prior distribution with \code{a} and \code{b}.
+In AntMAN we assume the following parametrization of the Gamma density:
+\deqn{p(x\mid a,b )= \frac{b^a x^{a-1}}{\Gamma(a)} \exp\{ -bx \}, \quad x>0  }
 }
 \details{
 If no arguments are provided, the default is a prior distribution with \code{a = 1} and \code{b = 1}.

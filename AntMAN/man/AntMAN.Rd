@@ -8,7 +8,7 @@
 \description{
 AntMAN: Anthology of Mixture ANalysis tools
 AntMan is a R package to fit Finite Bayesian Mixture  model with random number of component.
-The MCMC algorithm beyond batman is based on point processes and offer a more computational
+The MCMC algorithm beyond AntMan is based on point processes and offer a more computational
 efficeint  alternative to Reversible Jump.
 Different mixture kernels can be specified: Univariate Gaussian, Univariate Poisson, Univariate Binomial, Multivariate Gaussian,
 Multivariate Bernoulli (Latent Class Analysis). For the parameters characterising the mixture kernel, we specify

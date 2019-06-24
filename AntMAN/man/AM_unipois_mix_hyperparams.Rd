@@ -15,10 +15,15 @@ AM_unipois_mix_hyperparams(alpha0, beta0)
 A list to be used as \code{mix_kernel_hyperparams} argument for \code{mcmc_fit}.
 }
 \description{
-Univariate Poisson Mixture Hyperparameters.
+Generate a configuration object that specifies a univariate Poisson mixture kernel and allows to
+specify the hyperparameters of the  conjugate Gamma prior, i.e. the kernel is a \eqn{Poisson(\tau) }
+and \eqn{\tau\sim Gamma(\alpha_0,\beta_0)}.
+In AntMAN we assume the following
+parametrization of the Gamma density:
+\deqn{p(x\mid a,b )= \frac{b^a x^{a-1}}{\Gamma(a)} \exp\{ -bx \}, \quad x>0  }
 }
 \details{
-By default alpha0=1 and beta0=1.
+Note, by default alpha0=1 and beta0=1.
 }
 \examples{
 AM_unipois_mix_hyperparams (alpha0=2, beta0=0.2)

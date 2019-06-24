@@ -29,15 +29,19 @@ AM_mix_components_prior_negbin(a_R = NULL, b_R = NULL, a_P = NULL,
 }
 }
 \description{
-This generate a configuration object for a Negative Binomial prior on the number of mixture components such as
+This generate a configuration object for a Shifted Negative Binomial prior on the number of mixture components such as
 \deqn{q_M(m)=Pr(M=m) =\frac{\Gamma(r+m-1)}{(m-1)!\Gamma(r)} p^{m-1}(1-p)^r, \quad m=1,2,3,\ldots}
 The hyper-parameters \eqn{p\in (0,1)}  (probability of success) and \eqn{r>0} (size) can either be fixed using \code{r} and \code{p}
-or assigned appropriate prior distributions. WHICH DEFINITION OF GAMMA ARE WE USING> IN WHAT FOLLOWS I ASSUME R
-In the latter case, we assume \eqn{p \sim Beta(a_P,b_P)} and \eqn{r \sim  Gamma(a_R,b_R)}.
+or assigned appropriate prior distributions.
+In the latter case, we assume \eqn{p \sim Beta(a_P,b_P)} and \eqn{r \sim  Gamma(a_R,b_R)}. In AntMAN we assume the following
+parametrization of the Gamma density:
+\deqn{p(x\mid a,b )= \frac{b^a x^{a-1}}{\Gamma(a)} \exp\{ -bx \}, \quad x>0  }
 }
 \details{
-If no arguments are provided, the default is \eqn{r = 1 , a_P = 1 and b_P = 1}.
-WHAT IS DEFAULT FOR init_R AND init_P ?
+If no arguments are provided, the default is \eqn{r = 1 , a_P = 1, b_P = 1}.
+
+Additionnaly, when init_R and init_P are no specified, there is default values :
+\eqn{init_R = 1} and \eqn{init_P = 0.5}
 }
 \examples{
 

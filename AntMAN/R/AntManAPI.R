@@ -7,7 +7,7 @@
 #'
 #'@description AntMAN: Anthology of Mixture ANalysis tools 
 #' AntMan is a R package to fit Finite Bayesian Mixture  model with random number of component. 
-#' The MCMC algorithm beyond batman is based on point processes and offer a more computational  
+#' The MCMC algorithm beyond AntMan is based on point processes and offer a more computational  
 #' efficeint  alternative to Reversible Jump. 
 #' Different mixture kernels can be specified: Univariate Gaussian, Univariate Poisson, Univariate Binomial, Multivariate Gaussian, 
 #' Multivariate Bernoulli (Latent Class Analysis). For the parameters characterising the mixture kernel, we specify 
@@ -336,14 +336,19 @@ AM_mix_components_prior_dirac <- function(Mstar) {
 
 #' Negative Binomial Prior.
 #' 
-#' This generate a configuration object for a Negative Binomial prior on the number of mixture components such as 
+#' This generate a configuration object for a Shifted Negative Binomial prior on the number of mixture components such as 
 #'  \deqn{q_M(m)=Pr(M=m) =\frac{\Gamma(r+m-1)}{(m-1)!\Gamma(r)} p^{m-1}(1-p)^r, \quad m=1,2,3,\ldots}
 #' The hyper-parameters \eqn{p\in (0,1)}  (probability of success) and \eqn{r>0} (size) can either be fixed using \code{r} and \code{p}
-#' or assigned appropriate prior distributions. WHICH DEFINITION OF GAMMA ARE WE USING> IN WHAT FOLLOWS I ASSUME R 
-#' In the latter case, we assume \eqn{p \sim Beta(a_P,b_P)} and \eqn{r \sim  Gamma(a_R,b_R)}.
+#' or assigned appropriate prior distributions. 
+#' In the latter case, we assume \eqn{p \sim Beta(a_P,b_P)} and \eqn{r \sim  Gamma(a_R,b_R)}. In AntMAN we assume the following 
+#' parametrization of the Gamma density: 
+#' \deqn{p(x\mid a,b )= \frac{b^a x^{a-1}}{\Gamma(a)} \exp\{ -bx \}, \quad x>0  }
 #' 
-#' If no arguments are provided, the default is \eqn{r = 1 , a_P = 1 and b_P = 1}.
-#' WHAT IS DEFAULT FOR init_R AND init_P ?
+#' 
+#' If no arguments are provided, the default is \eqn{r = 1 , a_P = 1, b_P = 1}.
+#' 
+#' Additionnaly, when init_R and init_P are no specified, there is default values : 
+#' \eqn{init_R = 1} and \eqn{init_P = 0.5}
 #'
 #'@param a_R      The shape parameter \eqn{a}  of the \eqn{Gamma(a,b)} prior distribution for \eqn{r}.
 #'@param b_R      The  rate parameter \eqn{b} of the \eqn{Gamma(a,b)} prior distribution for \eqn{r}.
@@ -393,11 +398,13 @@ AM_mix_components_prior_negbin <- function(a_R = NULL, b_R = NULL, a_P = NULL, b
 
 #' Generate a configuration object for a Poisson prior on the number of mixture components.
 #' 
-#' This fucntion generate a configuration object for a Poisson prior on the number 
-#' of mixture components I THOUGHT IT WAS SHIFTED such that  
+#' This function generates a configuration object for a Shifted Poisson prior on the number 
+#' of mixture components such that  
 #' \deqn{q_M(m)=     Pr (M=m)= \frac{e^{-\Lambda}\Lambda^{m-1} }{(m-1)!}    ,      \quad m=1,2,3,\ldots}
 #' The hyper-parameter \eqn{\Lambda} can either be fixed using \code{Lambda} 
 #' or assigned a \eqn{Gamma(a,b)} prior distribution with \code{a} and \code{b}.
+#' In AntMAN we assume the following parametrization of the Gamma density: 
+#' \deqn{p(x\mid a,b )= \frac{b^a x^{a-1}}{\Gamma(a)} \exp\{ -bx \}, \quad x>0  }
 #' 
 #' If no arguments are provided, the default is a prior distribution with \code{a = 1} and \code{b = 1}.
 #'
@@ -460,13 +467,20 @@ AM_mix_components_prior_pois <- function(a=NULL, b=NULL, Lambda=NULL, init=NULL)
 
 
 #' Generate a configuration object to specify a prior on the hyper-parameter \eqn{\gamma} for the Dirichlet prior on the 
-#' mixture weights. We assume \eqn{\gamma \sim  Gamma(a,b)}. ALternatively we can fix \eqn{\gamma} to a specific value.
+#' mixture weights. 
+#' 
+#' Generate a configuration object to specify a prior on the hyper-parameter \eqn{\gamma} for the Dirichlet prior on the 
+#' mixture weights. 
+#' We assume \eqn{\gamma \sim  Gamma(a,b)}. Alternatively we can fix \eqn{\gamma} to a specific value.
 #' Default is \eqn{\gamma=1/N}, where N is the number of observations. 
-#'
+#'In AntMAN we assume the following 
+#' parametrization of the Gamma density: 
+#' \deqn{p(x\mid a,b )= \frac{b^a x^{a-1}}{\Gamma(a)} \exp\{ -bx \}, \quad x>0  }
+#' 
 #'@param a      The shape parameter a of the Gamma prior
 #'@param b      The rate parameter b of the Gamma prior
-#'@param init   The init value for \eqn{gammma}, when we assume \eqn{gamma} random.
-#'@param gamma  It allows to fix \eqn{gamma}  to a specific value.
+#'@param init   The init value for \eqn{\gamma}, when we assume \eqn{\gamma} random.
+#'@param gamma  It allows to fix \eqn{\gamma}  to a specific value.
 #'@return A configuration list to be used as \code{mix_weight_prior} argument for \code{mcmc_fit}. 
 #'@examples 
 #' AM_mix_weights_prior_gamma (a=1, b=1)
@@ -512,13 +526,16 @@ AM_mix_weights_prior_gamma <- function(a = NULL, b = NULL, gamma = NULL, init = 
 #################################################################################
 
 
-#' Univariate Poisson Mixture Hyperparameters.
-#' 
-#'  Generate a configuration object that specifies a univariate 
-#'  Poisson mixture kernel and allows to specify the hyperparameters of the  conjugate Gamma prior, i.e. the kernel is a Poisson(\tau)} and \eqn{\tau\sim Gamma(\alpha_0,\beta_0)}. 
+#'Univariate Poisson Mixture Hyperparameters.
 #'
+#' Generate a configuration object that specifies a univariate Poisson mixture kernel and allows to 
+#' specify the hyperparameters of the  conjugate Gamma prior, i.e. the kernel is a \eqn{Poisson(\tau) }
+#' and \eqn{\tau\sim Gamma(\alpha_0,\beta_0)}. 
+#' In AntMAN we assume the following 
+#' parametrization of the Gamma density: 
+#' \deqn{p(x\mid a,b )= \frac{b^a x^{a-1}}{\Gamma(a)} \exp\{ -bx \}, \quad x>0  }
 #'
-#'  By default alpha0=1 and beta0=1.
+#' Note, by default alpha0=1 and beta0=1.
 #'
 #'
 #'
@@ -534,14 +551,19 @@ AM_unipois_mix_hyperparams <- function(alpha0, beta0) {
 
 #' Univariate Normal Mixture Hyperparameters
 #' 
-#' 
 #' Generate a configuration object that specifies univariate Normal mixture kernel and allows to set the hyperparameters of the Normal-InverseGamma conjugate prior. As such, the kernel is a Gaussian dsistribution 
-#' with mean \eqn{\mu} and variance \eqn{\sigma^2}. WRITE THE PRIOR
+#' with mean \eqn{\mu} and variance \eqn{\sigma^2}. The prior on \eqn{(\mu,\sigma^2)} the Normal-InverseGamma:
 #' \deqn{\pi(\mu,\sigma^2\mid m_0,\kappa_0,\nu_0,\sigma^2_0) = \pi_{\mu}(\mu|\sigma^2,m_0,\kappa_0)\pi_{\sigma^2}(\sigma^2\mid \nu_0,\sigma^2_0)}
-#' Where \eqn{m_0} is \code{m0}, 
-#'       \eqn{\kappa_0} is \code{k0}, 
-#'       \eqn{\nu_0} is \code{nu0}, 
-#'       \eqn{\sigma^2_0} is \code{sig02}. 
+#'  \deqn{\pi_{\mu}(\mu|\sigma^2,m_0,\kappa_0)  =\frac{\sqrt{\kappa_0}}{\sqrt{2\pi\sigma^2}} 
+#'  \exp^{-\frac{\kappa_0}{2\sigma^2}(\mu-m_0)^2 }, \qquad \mu\in\mathcal{R}}
+#'  \deqn{\pi_{\sigma^2}(\sigma^2\mid \nu_0,\sigma^2_0)= {\frac {\sigma_0^{2^{\nu_0 }}}{\Gamma (\nu_0 )}}(1/\sigma^2)^{\nu_0 +1}\exp \left(-\frac{\sigma_0^2}{\sigma^2}\right), \qquad \sigma^2>0}
+#' 
+#' 
+#' 
+#' where \eqn{m_0} corresponds \code{m0}, 
+#'       \eqn{\kappa_0} corresponds \code{k0}, 
+#'       \eqn{\nu_0} corresponds \code{nu0}, 
+#'       \eqn{\sigma^2_0} corresponds \code{sig02}. 
 #' 
 #'If hyperparameters are not specified, the default is \code{m0=0}, \code{k0=1}, \code{nu0=3}, \code{sig02=1}.
 #'
@@ -580,15 +602,17 @@ AM_uninorm_mix_hyperparams <- function(m0, k0, nu0, sig02) {
 
 #' Univariate Binomial Mixture Hyperparameters.
 #'  
-#' Generate a configuration object that define Univariate Binomial Mixture Hyperparameters such as :
-#' \deqn{ \pi(\theta\mid \alpha,\beta)=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)} \tau^{\alpha-1}\left( 1-\tau \right)^{\beta-1} , \qquad 0\le\tau\le1}
-#'with \eqn{\alpha} is \code{a0},\eqn{\beta} is \code{b0}, and N is ... oups I need to add more infos in those sections.
-#' a0=1 b0=1
+#' Generate a configuration object that specifies the prior hyperparameters for a mixture of  Univariate Binomial kernels wth probability of success \eqn{\tau} and size \eqn{N}. 
+#' The conjugate prior on \eqn{\tau} is a Beta distribution: 
+#' \deqn{ \pi(\tau\mid \alpha,\beta)=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)} \tau^{\alpha-1}\left( 1-\tau \right)^{\beta-1} , \qquad 0\le\tau\le1}
+#' \eqn{N} is fixed by the user and should always be specified. Here,  
+#'  \eqn{\alpha} corresponds to \code{a0},\eqn{\beta} to \code{b0}.
+#'  The default for the prior hyperparameters is \eqn{a0=1, b0=1}.
 #' 
 #' 
 #'@param a0        The a0 hyperparameter.
 #'@param b0        The b0 hyperparameter.
-#'@param N         size of binomial .
+#'@param N         size of the Binomial distribution.
 #'@return A list to be used as \code{mix_kernel_hyperparams} argument for \code{mcmc_fit}.
 #'@examples 
 #' AM_unibin_mix_hyperparams (a0=1,b0=1,N=100)
@@ -602,8 +626,8 @@ AM_unibin_mix_hyperparams <- function(a0, b0, N) {
 #' Multivariate Bernoulli Mixture Hyperparameters (Latent Class analysis)
 #' 
 #' Generate a configuration object that defines the prior hyperparameters for a mixture of multivariate Bernoulli.
-#' If the dimensio of the data is P, then the prior is a product of P independet Beta distributions, Beta(\eqn{a_{0i},a_{0i}}). Therefore,
-#' the vectors of hyperpaprameters, a0 and b0,  are P-dimensional. Default is (a0= c(1,....,1),b0= c(1,....,1))
+#' If the dimension of the data is P, then the prior is a product of P independent Beta distributions, Beta(\eqn{a_{0i},a_{0i}}). Therefore,
+#' the vectors of hyperparameters, a0 and b0,  are P-dimensional. Default is (a0= c(1,....,1),b0= c(1,....,1))
 #'
 #'@param a0        The a0 hyperparameters.
 #'@param b0        The b0 hyperparameters.
@@ -615,16 +639,25 @@ AM_multiber_mix_hyperparams <- function(a0, b0) {
   return ( list ( type = "AM_multiber_mix_hyperparams", a0 = a0 , b0 = b0  ) );
 }
 
+
+
+
 #' Multivariate Normal Mixture Hyperparameters.
 #' 
 #' 
-#' Speicifies the hyperparameter for the conjugate prior for a mixture of Multivariate Normals. I NEED TO NOW THE PARAMETRIZATION 
-#' \deqn{\pi(\boldsymbol \mu, \boldsymbol \Sigma\mid\boldsymbol m_0,\kappa_0,\nu_0,\boldsymbol \Lambda_0)= \pi_{\mu}(\boldsymbol \mu|\boldsymbol \Sigma,\boldsymbol m_0,\kappa_0)\pi_{\Sigma}(\boldsymbol \Sigma \mid \nu_0,\boldsymbol \Lambda_0)}
-#' with \code{mu0} is \eqn{\boldsymbol m_0}, \code{ka0} is \eqn{\kappa_0}, 
-#' \code{nu0} is \eqn{\nu_0}, \code{Lam0} is \eqn{\Lambda_0}.
-#' 
-#' Default is \code{(mu0=c(0,..,0),ka0=1,nu0=Dim+2,Lam0=diag(Dim))} with \code{Dim} is the dimension of the data \code{y|.
-#'
+#' This fnctions allows the user to specify the hyperparameters for the conjugate prior for a mixture of Multivariate Normals. We assume that the data are d-dimensional vectors \eqn{y_i}, where \eqn{y_i} are iid 
+#' Normal randm variables with mean \eqn{\boldsymbol{\mu}} and covariance matrix \eqn{\boldsymbol{\Sigma}}.
+#' The conjugate prior is 
+#' \deqn{\pi(\boldsymbol \mu, \boldsymbol \Sigma\mid\boldsymbol m_0,\kappa_0,\nu_0,\boldsymbol \Lambda_0)= 
+#' \pi_{\mu}(\boldsymbol \mu|\boldsymbol \Sigma,\boldsymbol m_0,\kappa_0)\pi_{\Sigma}(\boldsymbol \Sigma \mid \nu_0,\boldsymbol \Lambda_0)}
+#'  \deqn{ \pi_{\mu}(\boldsymbol \mu|\boldsymbol \Sigma,\boldsymbol m_0,\kappa_0)  = 
+#'  \frac{\sqrt{\kappa_0^d}}{\sqrt {(2\pi )^{d}|{\boldsymbol \Sigma }|}} \exp \left(-{\frac {\kappa_0}{2}}(\boldsymbol\mu -{\boldsymbol m_0 })^{\mathrm {T} }{\boldsymbol{\Sigma }}^{-1}(\boldsymbol\mu-{\boldsymbol m_0 })\right) \qquad \boldsymbol \mu\in\mathcal{R}^d}
+#' \deqn{\pi_{\Sigma}(\boldsymbol \Sigma\mid \nu_0,\boldsymbol \Lambda_0)= {\frac {\left|{\boldsymbol \Lambda_0 }\right|^{\nu_0 /2}}{2^{\nu_0 d/2}\Gamma _{d}({\frac {\nu_0 }{2}})}}\left|\boldsymbol \Sigma \right|^{-(\nu_0 +d+1)/2}e^{-{\frac {1}{2}}\mathrm {tr} (\boldsymbol \Lambda_0 \boldsymbol \Sigma^{-1})}
+#', \qquad \boldsymbol \Sigma^2>0}
+#' with \code{mu0} corresponds to \eqn{\boldsymbol m_0}, \code{ka0} corresponds to  \eqn{\kappa_0}, 
+#' \code{nu0} to \eqn{\nu_0}, \code{Lam0} to \eqn{\Lambda_0}.
+#' Default is \code{(mu0=c(0,..,0),ka0=1,nu0=Dim+2,Lam0=diag(Dim))} with \code{Dim} is the dimension of the data \code{y}.
+#' We advise the user to set \eqn{\nu_0} equal to at least the dimension of the data, \code{Dim}, plus 2 
 #'
 #'@param mu0    The hyperparameter \eqn{\boldsymbol m_0}.
 #'@param ka0    The hyperparameter \eqn{\kappa_0}.
@@ -638,3 +671,269 @@ AM_multinorm_mix_hyperparams <- function(mu0 = NULL, ka0 = NULL, nu0 = NULL, Lam
   return ( list ( type = "AM_multinorm_mix_hyperparams", mu0 = mu0 , ka0 = ka0 , nu0 = nu0 , Lam0 = Lam0 ) );
 }
 
+#################################################################################
+##### Raffaele Functions
+#################################################################################
+
+#' Compute the logarithm of the absolute value of the  generalized Sriling number of second Kind (mi pare) See charambeloides, using a recursive formula Devo vedere la formula
+#' 
+#' There are no default values.
+#'
+#' @param n      The sample size
+#' @param gamma    A positive real number \code{gamma} 
+#'
+#' @return A vector of length n, reporting the values \code{C(gamma,n,k)} for \code{k=1,...,n}
+#'
+#' @keywords prior number of cluster
+#'
+#' @export
+#' 
+#' @examples
+#' dd=calcola_stirling_ricor_abs(11,10)
+#' print(dd)
+AM_calcola_stirling_ricor_abs <- function (n,gamma) {
+	return(calcola_stirling_ricor_abs(n,gamma));
+}
+
+#' Compute the value V(n,k), needed to caclulate the eppf of a Finite Dirichlet process when the prior on the component-weigts of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights are distributed as Gamma(\gamma,1) ) when the prior on the number of componet is Shifted Poisson of parameter \code{Lambda}. See Section 9.1.1 of the Paper Argiento de Iorio 2019.
+#' 
+#' There are no default values.
+#'
+#' @param n        The sample size
+#' @param Lambda   The \code{Lambda} parameter of the Poisson
+#' @param gamma    The \code{gamma} parameter of the Dirichlet 
+#'
+#' @return A vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}
+#'
+#' @keywords prior number of cluster
+#'
+#' @export
+#' 
+#' @examples
+#' n=1000
+#' Lam=100
+#' gam=0.5
+#' vnk=VnkPoisson(n,Lam,gam)
+#' stir=calcola_stirling_ricor_log(gam, n)
+#' plot(exp(vnk+stir))
+#' sum(exp(vvv+stir ))
+
+AM_VnkPoisson <- function (n,Lambda,gamma) {
+	return(VnkPoisson(n,Lambda,gamma));
+}
+
+#' This function compute the prior on the number of cluster, i.e. occupied component of the mixutre for a Finite Dirichlet process when the prior on the component-weigts of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights are distributed as Gamma(\gamma,1) ) when the prior on the number of componet is Shifted Poisson of parameter \code{Lambda}. See Section 9.1.1 of Argiento de Iorio (2019) for more details.
+#' 
+#' There are no default values.
+#'
+#' @param n        The sample size
+#' @param Lambda   The \code{Lambda} parameter of the Poisson
+#' @param gamma    The \code{gamma} parameter of the Dirichlet 
+#'
+#' @return A vector of length n, reporting the values of the prior on the number of clusters induced by the prior on \code{M} and \code{w}, i.e. \code{p^*_k for \code{k=1,...,n}. See Section 9.1.1 of Argiento de Iorio (2019) for more details.
+#'
+#' @keywords prior number of clusters
+#'
+#' @export
+#' 
+#' @examples
+#' n <- 82
+#' Lambda <- 10
+#' gam_po <- 0.1550195
+#' prior_K_po <- prior_K_Pois(n,gam_po,Lambda)
+#' plot(1:n, prior_K_po, type = "n", bty = "l", xlab = "k", ylab = "P(K=k)",main="Prior on the number of clusters")
+
+ AM_prior_K_Pois <- function (n,gamma,Lambda) {
+  return(prior_K_Pois(n,gamma,Lambda));
+ }
+
+
+#' Compute the value V(n,k), needed to caclulate the eppf of a Finite Dirichlet process when the prior on the component-weigts of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights are distributed as Gamma(\gamma,1) ) when the prior on the number of componet is Negative Binomial with parameter \code{r} and \code{p}with  mean is mu =1+ r*p/(1-p) [CHECK THIS FORMULA!!!]. See Section 9.1.1 of the Paper Argiento de Iorio 2019 for more details
+#' 
+#' There are no default values.
+#'
+#' @param n      The sample size
+#' @param r      The dispersion parameter \code{r} of Negative Binomial
+#' @param p      The probability of failure parameter \code{p} of Negative Binomial
+#' @param gam    The \code{gamma} parameter of the Dirichlet 
+#'
+#' @return A vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}
+#'
+#' @keywords prior number of cluster
+#'
+#' @export
+#' 
+#' @examples
+#' n=1000
+#' r=1000
+#' p=0.5
+#' gam=0.5
+#' vnk=VnkNegBin(n,r,p,gam);
+#' stir=calcola_stirling_ricor_log(gam, n)
+#' plot(exp(vnk+stir+(1:n)*log(gam)))
+#' sum(exp(vnk+stir))
+
+AM_VnkNegBin <- function (n,r,p,gam) {
+	return(VnkNegBin(n,r,p,gam));
+}
+
+#' This function compute the prior on the number of cluster, i.e. occupied component of the mixutre for a Finite Dirichlet process when the prior on the component-weigts of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights are distributed as Gamma(\gamma,1) ) when the prior on the number of componet  is Negative Binomial with parameter \code{r>0} and \code{0<p<1}, with  mean is mu =1+ r*p/(1-p) [CHECK THIS FORMULA!!!]. See Section 9.1.1 of the Paper Argiento de Iorio 2019 for more details. 
+#' 
+#' There are no default values.
+#'
+#' @param n      The sample size
+#' @param r      The dispersion parameter \code{r} of Negative Binomial
+#' @param p      The probability of failure parameter \code{p} of Negative Binomial
+#' @param gamma  The \code{gamma} parameter of the Dirichlet 
+#'
+#' @return A vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}
+#'
+#' @keywords prior number of cluster
+#'
+#' @export
+#' 
+#' @examples
+#' n <- 50
+#' gamma <- 1
+#' r <- 0.1
+#' p <- 0.91
+#' gam_nb <- 0.2381641
+#' prior_K_nb <- prior_K_NegBin(n,gam_nb,r,p)
+#' plot(1:n,prior_K_nb, type = "n", bty = "l", xlab = "k", ylab = "P(K=k)",main="Prior on the number of clusters")
+#' lines(1:n,prior_K_de,type="h",lwd=2)
+
+AM_prior_K_NegBin <- function (n,gam_nb, r, p){
+	return(prior_K_NegBin(n,gam_nb, r, p));
+}
+
+
+#' Compute the value V(n,k), needed to caclulate the eppf of a Finite Dirichlet process when the prior on the component-weigts of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights are distributed as Gamma(\gamma,1) ) when the number of component are fixed to \code{M^*}, i.e. a Dirac prior assigning mass only to \code{M^*} is assumed. See Section 9.1.1 of the Paper Argiento de Iorio 2019 for more details.
+#' 
+#' There are no default values.
+#'
+#' @param n      The sample size
+#' @param Mstar  The number of component of the mixture 
+#' @param gamma    The \code{gamma} parameter of the Dirichlet 
+#'
+#' @return A vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}
+#'
+#' @keywords prior number of cluster
+#'
+#' @export
+#' 
+#' @examples
+#' n=200
+#' Mstar=100
+#' gam=0.5
+#' vvv=VnkDelta(n,Mstar,gam);
+#' stir=calcola_stirling_ricor_log(gam, n)
+#' stir
+#' plot(exp(vvv+stir) )
+#' sum(exp(vvv+stir ))
+
+AM_VnkDelta <- function (n,Mstar,gam) {
+	return(VnkDelta(n,Mstar,gam));
+}
+
+#' This function compute the prior on the number of cluster, i.e. occupied component of the mixutre for a Finite Dirichlet process when the prior on the component-weigts of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights are distributed as Gamma(\gamma,1) ) when the number of component are fixed to \code{M^*}, i.e. a Dirac prior assigning mass only to \code{M^*} is assumed. See Section 9.1.1 of the Paper Argiento de Iorio 2019 for more details.#' There are no default values.
+#'
+#' @param n        The sample size
+#' @param Mstar    The number of component of the mixture 
+#' @param gamma    The \code{gamma} parameter of the Dirichlet 
+#'
+#' @return A vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}
+#'
+#' @keywords prior number of cluster
+#'
+#' @export
+#' 
+#' @examples
+#' n <- 82
+#' gam_de <- 0.1743555
+#' Mstar <- 12
+#' prior_K_de <- prior_K_Delta(n,gam_de, Mstar)
+#' plot(1:n, prior_K_de, type = "n", bty = "l", xlab = "k", ylab = "P(K=k)",main="Prior on the number of clusters")
+
+ AM_prior_K_Delta <- function (n,gam_de,Mstar){
+ 	return( prior_K_Delta(n,gam_de,Mstar));
+  }
+
+
+#' Once specified a fixed value of components \code{M^*} this function  adopt a  \emph{bisection method} to find the value of \code{gamma} such that the induced distribution on the number of clusers is centered around a user specifed value \code{\K^*}, i.e. the function use a bisection method to solve Eq.~\eqref{eq:findgamma} of WE NEED TO CITE ANTMAN PAPER. The user can provide a lower \code{\gamma_{l}} and an upper \code{\gamma_{u}} bound for the possible values of $gamma$. The default values are \code{\gamma_l= 10^{-3}} and \code{\gamma_{u}=10}.  A defaault value for the tolerance is \code{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31), the function stops warning that convergence has not bee reached.
+#'
+#' @param n             The sample size
+#' @param Mstar         The number of component of the mixture 
+#' @param Kstar         The mean number of cluster the user want to specify
+#' @param gam_min=1e-4  The lower bound of the interval in which \code{gamma} should be lie
+#' @param gam_max=10    The upper bound of the interval in which \code{gamma} should lie
+#'
+#'
+#' @return A value of \code{gamma} such that \code{E(K)=K^*} 
+#'
+#' @keywords prior number of cluster
+#'
+#' @export
+#' 
+#' @examples
+#' n <- 82
+#' Mstar <- 12
+#' gam_de <- find_gamma_Delta(n,Mstar,Kstar=6, gam_min=1e-4,gam_max=10, tollerance=0.1)
+#' prior_K_de <- prior_K_Delta(n,gam_de,Mstar)
+#' prior_K_de\%*\%1:n
+
+AM_find_gamma_Delta <- function (n,Mstar,Kstar=6, gam_min=0.0001,gam_max=10, tollerance=0.1) {
+	return(find_gamma_Delta(n,Mstar,Kstar, gam_min,gam_max, tollerance));
+}
+
+
+#' Once the prior on the numbuer of mixture $M$ is assumed to be a Shifted Posson of parameter \code{Lambda}, this function  adopt a \emph{bisection method} to find the value of \code{gamma} such that the induced distribution on the number of clusers is centered around a user specifed value \code{\K^*}, i.e. the function use a bisection method to solve Eq.~\eqref{eq:findgamma} of WE NEED TO CITE ANTMAN PAPER. The user can provide a lower \code{\gamma_{l}} and an upper \code{\gamma_{u}} bound for the possible values of $gamma$. The default values are \code{\gamma_l= 10^{-3}} and \code{\gamma_{u}=10}.  A defaault value for the tolerance is \code{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31), the function stops warning that convergence has not bee reached.
+#'
+#' @param n             The sample size
+#' @param Lambda        The parameter of the Shifted Poisson for the number of components of the mixture
+#' @param Kstar         The mean number of cluster the user want to specify
+#' @param gam_min=1e-4  The lower bound of the interval in which \code{gamma} should be lie
+#' @param gam_max=10    The upper bound of the interval in which \code{gamma} should lie
+#'
+#'
+#' @return A value of \code{gamma} such that \code{E(K)=K^*} 
+#'
+#' @keywords prior number of cluster
+#'
+#' @export
+#' 
+#' @examples
+#' Lam  <- 11
+#' gam_po <- find_gamma_Pois(n,Lam,Kstar=6, gam_min=0.0001,gam_max=10, tollerance=0.1)
+#' prior_K_po <- prior_K_Pois(n,gam_po,Lam)
+#' prior_K_po\%*\%1:n
+
+ AM_find_gamma_Pois <- function (n,Lam,Kstar=6, gam_min=0.0001,gam_max=10, tollerance=0.1) {
+ 	return (find_gamma_Pois(n,Lam,Kstar, gam_min,gam_max, tollerance));
+ }
+
+#' Once the prior on the numbuer of mixture $M$ is assumed to be a Negative Binomial  Negative Binomial with parameter \code{r>0} and \code{0<p<1}, with  mean is 1+ r*p/(1-p), this function  adopt a \emph{bisection method} to find the value of \code{gamma} such that the induced distribution on the number of clusers is centered around a user specifed value \code{\K^*}, i.e. the function use a bisection method to solve Eq.~\eqref{eq:findgamma} of WE NEED TO CITE ANTMAN PAPER. The user can provide a lower \code{\gamma_{l}} and an upper \code{\gamma_{u}} bound for the possible values of $gamma$. The default values are \code{\gamma_l= 10^{-3}} and \code{\gamma_{u}=10}.  A defaault value for the tolerance is \code{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31), the function stops warning that convergence has not bee reached.
+#'
+#' @param n             The sample size
+#' @param r      The dispersion parameter \code{r} of Negative Binomial
+#' @param p      The probability of failure parameter \code{p} of Negative Binomial
+#' @param Kstar         The mean number of cluster the user want to specify
+#' @param gam_min=1e-4  The lower bound of the interval in which \code{gamma} should be lie
+#' @param gam_max=10    The upper bound of the interval in which \code{gamma} should lie
+#'
+#'
+#' @return A value of \code{gamma} such that \code{E(K)=K^*} 
+#'
+#' @keywords prior number of cluster
+#'
+#' @export
+#' 
+#' @examples
+#' r <- 1
+#' p <- 0.8571
+#' gam_nb=find_gamma_NegBin(n,r,p,Kstar=6, gam_min=0.001,gam_max=10000, tollerance=0.1)
+#' prior_K_nb=prior_K_NegBin(n,gam_nb, r, p)
+#' prior_K_nb\%*\%1:n
+
+AM_find_gamma_NegBin <- function (n,r,p,Kstar=6, gam_min=0.001,gam_max=10000, tollerance=0.1){
+	return (find_gamma_NegBin(n,r,p,Kstar, gam_min,gam_max, tollerance));
+}
