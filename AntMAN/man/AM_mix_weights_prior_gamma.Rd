@@ -18,7 +18,7 @@ AM_mix_weights_prior_gamma(a = NULL, b = NULL, gamma = NULL,
 \item{init}{The init value for \eqn{\gamma}, when we assume \eqn{\gamma} random.}
 }
 \value{
-A configuration list to be used as \code{mix_weight_prior} argument for \code{mcmc_fit}.
+A configuration list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_fit}}.
 }
 \description{
 Generate a configuration object to specify a prior on the hyper-parameter \eqn{\gamma} for the Dirichlet prior on the

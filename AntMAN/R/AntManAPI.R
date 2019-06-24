@@ -114,11 +114,14 @@ NULL
 
 #' carcinoma
 #'  
-#' carcinoma is .... 
+#' The carcinoma data from Agresti (2002, 542) consist of seven dichotomous variables that represent 
+#' the ratings by seven pathologists of 118 slides on the presence or absence of carcinoma.
+#' The purpose of studying these data is to model "interobserver agreement" by examining how
+#' subjects might be divided into groups depending upon the consistency of their diagnoses.
 #'  
-#'@format A data frame with X rows and Y variables.
+#'@format A data frame with 118 rows and 7 variables (from A to G).
 #'  
-#'@source URL?
+#'@references Agresti A (2002). Categorical Data Analysis. John Wiley & Sons, Hoboken.
 #'  
 #'@examples
 #'  data(carcinoma)
@@ -180,7 +183,7 @@ plot.AM_mcmc_output=function(x,...){
 #'  
 #'  Print some useful informations about the mcmc results
 #'  
-#'@param object a AM_mcmc_output object
+#'@param object a \code{\link{AM_mcmc_output}} object
 #'  
 #'  
 #'@method summary AM_mcmc_output 
@@ -225,7 +228,7 @@ summary.AM_mcmc_output=function(object,...){
 #'@param mix_components_prior is a configuration list defined by AM_mix_components_prior_* functions, where * denotes the chosen prior.
 #'@param mix_weight_prior is a configuration list defined by AM_weight_prior_* functions, where * denotes the chosen prior specification.
 #'@param mcmc_parameters is a configuration list defined by AM_mcmc_parameters. 
-#'@return The return value is a \code{AM_mcmc_output} object. MAYBE WE SHOULD SAY WHAT IT IS
+#'@return The return value is a \code{\link{AM_mcmc_output}} object.
 #'@examples
 #' AM_mcmc_fit( AM_sample_unipois()$y, 
 #'              AM_unipois_mix_hyperparams (alpha0=2, beta0=0.2), 
@@ -275,22 +278,22 @@ AM_mcmc_fit <- function(
 #'@param niter        Total number of MCMC iterations. 
 #'@param burnin       Number of iterations to discard as burn-in.
 #'@param thin         Thining rate.
-#'@param verbose      A value from 0 to 4, that specifies the desired level of verbosity (0:None,1:Warnings,2:Informtion WHICH INFORMATION,4:Debug)
+#'@param verbose      A value from 0 to 4, that specifies the desired level of verbosity (0:None, 1:Warnings, 2:Debug, 3:Extras)
 #'@param output       A list of parameters output to return
-#'@param file_output  A list of output to save into files. I THOUGH THIS WAS A DIRECOTRY
-#'@param parallel     Some of the algorithms can be run in parallel using OpenMP. This parameter triggers the parallelism. HOW
+#'@param output_dir   Path to an output dir, when to store all the outputs.
+#'@param parallel     Some of the algorithms can be run in parallel using OpenMP. When set to True, this parameter triggers the parallelism.
 #'@return list to be used as \code{mcmc_parameters} argument with \code{AM_mcmc_fit}. 
 #'@examples 
 #' AM_mcmc_parameters (niter=1000, burnin=10000, thin=50)
-#' AM_mcmc_parameters (niter=1000, burnin=10000, thin=50, output=c("CI","S","TAU"), file_output="")
+#' AM_mcmc_parameters (niter=1000, burnin=10000, thin=50, output=c("CI","S","TAU"))
 #'@export
 AM_mcmc_parameters <- function(  niter=5000,
                                  burnin=2500, ## niter / 2
                                  thin=1,
                                  verbose = 1,
                                  output=c("CI","K"),
-                                 parallel=0,
-                                 file_output="") {
+                                 parallel=T,
+                                 output_dir = NULL) {
   
   
   return (list(type="AM_MCMC_PARAMETERS", 
@@ -322,7 +325,6 @@ AM_mcmc_parameters <- function(  niter=5000,
 #' 
 #'@examples
 #' 
-#' ## See \code{\link{???}} example.
 #' AM_mix_components_prior_dirac (Mstar=3)
 AM_mix_components_prior_dirac <- function(Mstar) {
   
@@ -358,7 +360,9 @@ AM_mix_components_prior_dirac <- function(Mstar) {
 #'@param init_P   The inivial  value of \eqn{p}, when specifying \code{a_P} and \code{b_P}.
 #'@param R        It allows  to fix  \eqn{r} to a specific value.
 #'@param P        It allows  to fix  \eqn{p} to a specific value.
-#'@return         A configuration list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_fit}}. 
+#'
+#'@return A configuration list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_fit}}. 
+#'
 #'
 #'@keywords prior
 #'@seealso \code{\link{AM_mcmc_fit}}
@@ -366,7 +370,6 @@ AM_mix_components_prior_dirac <- function(Mstar) {
 #' 
 #'@examples
 #' 
-#' ## See \code{\link{???}} example.
 #' AM_mix_components_prior_negbin (R=1, P=1)
 #' AM_mix_components_prior_negbin ()
 
@@ -481,7 +484,9 @@ AM_mix_components_prior_pois <- function(a=NULL, b=NULL, Lambda=NULL, init=NULL)
 #'@param b      The rate parameter b of the Gamma prior
 #'@param init   The init value for \eqn{\gamma}, when we assume \eqn{\gamma} random.
 #'@param gamma  It allows to fix \eqn{\gamma}  to a specific value.
-#'@return A configuration list to be used as \code{mix_weight_prior} argument for \code{mcmc_fit}. 
+#'
+#'@return A configuration list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_fit}}. 
+#'
 #'@examples 
 #' AM_mix_weights_prior_gamma (a=1, b=1)
 #' AM_mix_weights_prior_gamma (a=1, b=1, init=1)
@@ -656,7 +661,8 @@ AM_multiber_mix_hyperparams <- function(a0, b0) {
 #', \qquad \boldsymbol \Sigma^2>0}
 #' with \code{mu0} corresponds to \eqn{\boldsymbol m_0}, \code{ka0} corresponds to  \eqn{\kappa_0}, 
 #' \code{nu0} to \eqn{\nu_0}, \code{Lam0} to \eqn{\Lambda_0}.
-#' Default is \code{(mu0=c(0,..,0),ka0=1,nu0=Dim+2,Lam0=diag(Dim))} with \code{Dim} is the dimension of the data \code{y}.
+#' 
+#' Default is \code{(mu0=c(0,..,0)}, \code{ka0=1}, \code{nu0=Dim+2}, \code{Lam0=diag(Dim))} with \code{Dim} is the dimension of the data \code{y}.
 #' We advise the user to set \eqn{\nu_0} equal to at least the dimension of the data, \code{Dim}, plus 2 
 #'
 #'@param mu0    The hyperparameter \eqn{\boldsymbol m_0}.
@@ -695,7 +701,7 @@ AM_calcola_stirling_ricor_abs <- function (n,gamma) {
 	return(calcola_stirling_ricor_abs(n,gamma));
 }
 
-#' Compute the value V(n,k), needed to caclulate the eppf of a Finite Dirichlet process when the prior on the component-weigts of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights are distributed as Gamma(\gamma,1) ) when the prior on the number of componet is Shifted Poisson of parameter \code{Lambda}. See Section 9.1.1 of the Paper Argiento de Iorio 2019.
+#' Compute the value V(n,k), needed to caclulate the eppf of a Finite Dirichlet process when the prior on the component-weigts of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights are distributed as Gamma(\eqn{\gamma},1) ) when the prior on the number of componet is Shifted Poisson of parameter \code{Lambda}. See Section 9.1.1 of the Paper Argiento de Iorio 2019.
 #' 
 #' There are no default values.
 #'
@@ -722,7 +728,7 @@ AM_VnkPoisson <- function (n,Lambda,gamma) {
 	return(VnkPoisson(n,Lambda,gamma));
 }
 
-#' This function compute the prior on the number of cluster, i.e. occupied component of the mixutre for a Finite Dirichlet process when the prior on the component-weigts of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights are distributed as Gamma(\gamma,1) ) when the prior on the number of componet is Shifted Poisson of parameter \code{Lambda}. See Section 9.1.1 of Argiento de Iorio (2019) for more details.
+#' This function compute the prior on the number of cluster, i.e. occupied component of the mixutre for a Finite Dirichlet process when the prior on the component-weigts of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights are distributed as Gamma(\eqn{\gamma},1) ) when the prior on the number of componet is Shifted Poisson of parameter \code{Lambda}. See Section 9.1.1 of Argiento de Iorio (2019) for more details.
 #' 
 #' There are no default values.
 #'
@@ -748,7 +754,7 @@ AM_VnkPoisson <- function (n,Lambda,gamma) {
  }
 
 
-#' Compute the value V(n,k), needed to caclulate the eppf of a Finite Dirichlet process when the prior on the component-weigts of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights are distributed as Gamma(\gamma,1) ) when the prior on the number of componet is Negative Binomial with parameter \code{r} and \code{p}with  mean is mu =1+ r*p/(1-p) [CHECK THIS FORMULA!!!]. See Section 9.1.1 of the Paper Argiento de Iorio 2019 for more details
+#' Compute the value V(n,k), needed to caclulate the eppf of a Finite Dirichlet process when the prior on the component-weigts of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights are distributed as Gamma(\eqn{\gamma},1) ) when the prior on the number of componet is Negative Binomial with parameter \code{r} and \code{p}with  mean is mu =1+ r*p/(1-p) [CHECK THIS FORMULA!!!]. See Section 9.1.1 of the Paper Argiento de Iorio 2019 for more details
 #' 
 #' There are no default values.
 #'
@@ -777,7 +783,7 @@ AM_VnkNegBin <- function (n,r,p,gam) {
 	return(VnkNegBin(n,r,p,gam));
 }
 
-#' This function compute the prior on the number of cluster, i.e. occupied component of the mixutre for a Finite Dirichlet process when the prior on the component-weigts of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights are distributed as Gamma(\gamma,1) ) when the prior on the number of componet  is Negative Binomial with parameter \code{r>0} and \code{0<p<1}, with  mean is mu =1+ r*p/(1-p) [CHECK THIS FORMULA!!!]. See Section 9.1.1 of the Paper Argiento de Iorio 2019 for more details. 
+#' This function compute the prior on the number of cluster, i.e. occupied component of the mixutre for a Finite Dirichlet process when the prior on the component-weigts of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights are distributed as Gamma(\eqn{\gamma},1) ) when the prior on the number of componet  is Negative Binomial with parameter \code{r>0} and \code{0<p<1}, with  mean is mu =1+ r*p/(1-p) [CHECK THIS FORMULA!!!]. See Section 9.1.1 of the Paper Argiento de Iorio 2019 for more details. 
 #' 
 #' There are no default values.
 #'
@@ -807,7 +813,10 @@ AM_prior_K_NegBin <- function (n,gam_nb, r, p){
 }
 
 
-#' Compute the value V(n,k), needed to caclulate the eppf of a Finite Dirichlet process when the prior on the component-weigts of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights are distributed as Gamma(\gamma,1) ) when the number of component are fixed to \code{M^*}, i.e. a Dirac prior assigning mass only to \code{M^*} is assumed. See Section 9.1.1 of the Paper Argiento de Iorio 2019 for more details.
+#' Compute the value V(n,k), needed to caclulate the eppf of a Finite Dirichlet process when the prior on the component-weigts
+#'  of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights are distributed as Gamma(\eqn{\gamma},1) )
+#'   when the number of component are fixed to \code{M^*}, i.e. a Dirac prior assigning mass only to \code{M^*} is assumed. 
+#'   See Section 9.1.1 of the Paper Argiento de Iorio 2019 for more details.
 #' 
 #' There are no default values.
 #'
@@ -835,7 +844,10 @@ AM_VnkDelta <- function (n,Mstar,gam) {
 	return(VnkDelta(n,Mstar,gam));
 }
 
-#' This function compute the prior on the number of cluster, i.e. occupied component of the mixutre for a Finite Dirichlet process when the prior on the component-weigts of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights are distributed as Gamma(\gamma,1) ) when the number of component are fixed to \code{M^*}, i.e. a Dirac prior assigning mass only to \code{M^*} is assumed. See Section 9.1.1 of the Paper Argiento de Iorio 2019 for more details.#' There are no default values.
+#' This function compute the prior on the number of cluster, i.e. occupied component of the mixutre for a Finite Dirichlet process 
+#' when the prior on the component-weigts of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights 
+#' are distributed as Gamma(\eqn{\gamma},1) ) when the number of component are fixed to \code{M^*}, i.e. a Dirac prior assigning mass
+#'  only to \code{M^*} is assumed. See Section 9.1.1 of the Paper Argiento de Iorio 2019 for more details.#' There are no default values.
 #'
 #' @param n        The sample size
 #' @param Mstar    The number of component of the mixture 
@@ -859,7 +871,12 @@ AM_VnkDelta <- function (n,Mstar,gam) {
   }
 
 
-#' Once specified a fixed value of components \code{M^*} this function  adopt a  \emph{bisection method} to find the value of \code{gamma} such that the induced distribution on the number of clusers is centered around a user specifed value \code{\K^*}, i.e. the function use a bisection method to solve Eq.~\eqref{eq:findgamma} of WE NEED TO CITE ANTMAN PAPER. The user can provide a lower \code{\gamma_{l}} and an upper \code{\gamma_{u}} bound for the possible values of $gamma$. The default values are \code{\gamma_l= 10^{-3}} and \code{\gamma_{u}=10}.  A defaault value for the tolerance is \code{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31), the function stops warning that convergence has not bee reached.
+#' Once specified a fixed value of components \code{M^*} this function  adopt a  \emph{bisection method} to find the value of \code{gamma} 
+#' such that the induced distribution on the number of clusers is centered around a user specifed value \eqn{K^*}, i.e. the function use
+#'  a bisection method to solve Eq.~\eqref{eq:findgamma} of WE NEED TO CITE ANTMAN PAPER. The user can provide a lower \eqn{\gamma_{l}} and
+#'  an upper \eqn{\gamma_{u}} bound for the possible values of $gamma$. The default values are \eqn{\gamma_l= 10^{-3}} and \eqn{\gamma_{u}=10}.
+#'  A defaault value for the tolerance is \eqn{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31), the function 
+#'  stops warning that convergence has not bee reached.
 #'
 #' @param n             The sample size
 #' @param Mstar         The number of component of the mixture 
@@ -886,7 +903,13 @@ AM_find_gamma_Delta <- function (n,Mstar,Kstar=6, gam_min=0.0001,gam_max=10, tol
 }
 
 
-#' Once the prior on the numbuer of mixture $M$ is assumed to be a Shifted Posson of parameter \code{Lambda}, this function  adopt a \emph{bisection method} to find the value of \code{gamma} such that the induced distribution on the number of clusers is centered around a user specifed value \code{\K^*}, i.e. the function use a bisection method to solve Eq.~\eqref{eq:findgamma} of WE NEED TO CITE ANTMAN PAPER. The user can provide a lower \code{\gamma_{l}} and an upper \code{\gamma_{u}} bound for the possible values of $gamma$. The default values are \code{\gamma_l= 10^{-3}} and \code{\gamma_{u}=10}.  A defaault value for the tolerance is \code{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31), the function stops warning that convergence has not bee reached.
+#' Once the prior on the numbuer of mixture $M$ is assumed to be a Shifted Posson of parameter \code{Lambda}, 
+#' this function  adopt a \emph{bisection method} to find the value of \code{gamma} such that the induced distribution
+#'  on the number of clusers is centered around a user specifed value \eqn{K^*}, i.e. the function use a bisection
+#'   method to solve Eq.~\eqref{eq:findgamma} of WE NEED TO CITE ANTMAN PAPER. The user can provide a lower \eqn{\gamma_{l}} 
+#'   and an upper \eqn{\gamma_{u}} bound for the possible values of $gamma$. The default values are \eqn{\gamma_l= 10^{-3}} and \eqn{\gamma_{u}=10}.
+#'     A defaault value for the tolerance is \eqn{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31),
+#'      the function stops warning that convergence has not bee reached.
 #'
 #' @param n             The sample size
 #' @param Lambda        The parameter of the Shifted Poisson for the number of components of the mixture
@@ -911,7 +934,7 @@ AM_find_gamma_Delta <- function (n,Mstar,Kstar=6, gam_min=0.0001,gam_max=10, tol
  	return (find_gamma_Pois(n,Lam,Kstar, gam_min,gam_max, tollerance));
  }
 
-#' Once the prior on the numbuer of mixture $M$ is assumed to be a Negative Binomial  Negative Binomial with parameter \code{r>0} and \code{0<p<1}, with  mean is 1+ r*p/(1-p), this function  adopt a \emph{bisection method} to find the value of \code{gamma} such that the induced distribution on the number of clusers is centered around a user specifed value \code{\K^*}, i.e. the function use a bisection method to solve Eq.~\eqref{eq:findgamma} of WE NEED TO CITE ANTMAN PAPER. The user can provide a lower \code{\gamma_{l}} and an upper \code{\gamma_{u}} bound for the possible values of $gamma$. The default values are \code{\gamma_l= 10^{-3}} and \code{\gamma_{u}=10}.  A defaault value for the tolerance is \code{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31), the function stops warning that convergence has not bee reached.
+#' Once the prior on the numbuer of mixture $M$ is assumed to be a Negative Binomial  Negative Binomial with parameter \code{r>0} and \code{0<p<1}, with  mean is 1+ r*p/(1-p), this function  adopt a \emph{bisection method} to find the value of \code{gamma} such that the induced distribution on the number of clusers is centered around a user specifed value \eqn{K^*}, i.e. the function use a bisection method to solve Eq.~\eqref{eq:findgamma} of WE NEED TO CITE ANTMAN PAPER. The user can provide a lower \eqn{\gamma_{l}} and an upper \eqn{\gamma_{u}} bound for the possible values of $gamma$. The default values are \eqn{\gamma_l= 10^{-3}} and \eqn{\gamma_{u}=10}.  A defaault value for the tolerance is \eqn{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31), the function stops warning that convergence has not bee reached.
 #'
 #' @param n             The sample size
 #' @param r      The dispersion parameter \code{r} of Negative Binomial

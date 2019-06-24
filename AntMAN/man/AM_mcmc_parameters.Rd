@@ -5,8 +5,8 @@
 \title{MCMC Parameters}
 \usage{
 AM_mcmc_parameters(niter = 5000, burnin = 2500, thin = 1,
-  verbose = 1, output = c("CI", "K"), parallel = 0,
-  file_output = "")
+  verbose = 1, output = c("CI", "K"), parallel = T,
+  output_dir = NULL)
 }
 \arguments{
 \item{niter}{Total number of MCMC iterations.}
@@ -15,13 +15,13 @@ AM_mcmc_parameters(niter = 5000, burnin = 2500, thin = 1,
 
 \item{thin}{Thining rate.}
 
-\item{verbose}{A value from 0 to 4, that specifies the desired level of verbosity (0:None,1:Warnings,2:Informtion WHICH INFORMATION,4:Debug)}
+\item{verbose}{A value from 0 to 4, that specifies the desired level of verbosity (0:None, 1:Warnings, 2:Debug, 3:Extras)}
 
 \item{output}{A list of parameters output to return}
 
-\item{parallel}{Some of the algorithms can be run in parallel using OpenMP. This parameter triggers the parallelism. HOW}
+\item{parallel}{Some of the algorithms can be run in parallel using OpenMP. When set to True, this parameter triggers the parallelism.}
 
-\item{file_output}{A list of output to save into files. I THOUGH THIS WAS A DIRECOTRY}
+\item{output_dir}{Path to an output dir, when to store all the outputs.}
 }
 \value{
 list to be used as \code{mcmc_parameters} argument with \code{AM_mcmc_fit}.
@@ -38,5 +38,5 @@ burnin, i.e. one every -th samples is saved. Therefore, the toral number of MCMC
 }
 \examples{
 AM_mcmc_parameters (niter=1000, burnin=10000, thin=50)
-AM_mcmc_parameters (niter=1000, burnin=10000, thin=50, output=c("CI","S","TAU"), file_output="")
+AM_mcmc_parameters (niter=1000, burnin=10000, thin=50, output=c("CI","S","TAU"))
 }

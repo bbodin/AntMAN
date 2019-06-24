@@ -9,7 +9,7 @@ Print some useful informations about the mcmc results}
 \method{summary}{AM_mcmc_output}(object, ...)
 }
 \arguments{
-\item{object}{a AM_mcmc_output object}
+\item{object}{a \code{\link{AM_mcmc_output}} object}
 }
 \description{
 summary AM_mcmc_output

@@ -25,7 +25,7 @@ AM_mcmc_fit(y, mix_kernel_hyperparams, initial_clustering = NULL,
 \item{mcmc_parameters}{is a configuration list defined by AM_mcmc_parameters.}
 }
 \value{
-The return value is a \code{AM_mcmc_output} object. MAYBE WE SHOULD SAY WHAT IT IS
+The return value is a \code{\link{AM_mcmc_output}} object.
 }
 \description{
 The \code{AM_mcmc_fit} function performs a Gibbs sampling in order to estimate

@@ -25,8 +25,7 @@ AM_mix_components_prior_negbin(a_R = NULL, b_R = NULL, a_P = NULL,
 \item{init_P}{The inivial  value of \eqn{p}, when specifying \code{a_P} and \code{b_P}.}
 }
 \value{
-\preformatted{    A configuration list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_fit}}. 
-}
+A configuration list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_fit}}.
 }
 \description{
 This generate a configuration object for a Shifted Negative Binomial prior on the number of mixture components such as
@@ -45,7 +44,6 @@ Additionnaly, when init_R and init_P are no specified, there is default values :
 }
 \examples{
 
-## See \\code{\\link{???}} example.
 AM_mix_components_prior_negbin (R=1, P=1)
 AM_mix_components_prior_negbin ()
 }

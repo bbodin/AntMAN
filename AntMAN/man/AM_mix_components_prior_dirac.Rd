@@ -19,7 +19,6 @@ such that \eqn{Pr(M=\widetilde{M}) =1}.
 }
 \examples{
 
-## See \\code{\\link{???}} example.
 AM_mix_components_prior_dirac (Mstar=3)
 }
 \seealso{

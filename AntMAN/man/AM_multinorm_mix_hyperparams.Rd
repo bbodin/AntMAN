@@ -31,7 +31,9 @@ The conjugate prior is
 , \qquad \boldsymbol \Sigma^2>0}
 with \code{mu0} corresponds to \eqn{\boldsymbol m_0}, \code{ka0} corresponds to  \eqn{\kappa_0},
 \code{nu0} to \eqn{\nu_0}, \code{Lam0} to \eqn{\Lambda_0}.
-Default is \code{(mu0=c(0,..,0),ka0=1,nu0=Dim+2,Lam0=diag(Dim))} with \code{Dim} is the dimension of the data \code{y}.
+}
+\details{
+Default is \code{(mu0=c(0,..,0)}, \code{ka0=1}, \code{nu0=Dim+2}, \code{Lam0=diag(Dim))} with \code{Dim} is the dimension of the data \code{y}.
 We advise the user to set \eqn{\nu_0} equal to at least the dimension of the data, \code{Dim}, plus 2
 }
 \examples{

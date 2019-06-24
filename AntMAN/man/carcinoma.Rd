@@ -5,21 +5,27 @@
 \alias{carcinoma}
 \title{carcinoma
 
-carcinoma is ....}
-\format{A data frame with X rows and Y variables.}
-\source{
-URL?
-}
+The carcinoma data from Agresti (2002, 542) consist of seven dichotomous variables that represent
+the ratings by seven pathologists of 118 slides on the presence or absence of carcinoma.
+The purpose of studying these data is to model "interobserver agreement" by examining how
+subjects might be divided into groups depending upon the consistency of their diagnoses.}
+\format{A data frame with 118 rows and 7 variables (from A to G).}
 \usage{
 carcinoma
 }
 \description{
 carcinoma
 
-carcinoma is ....
+The carcinoma data from Agresti (2002, 542) consist of seven dichotomous variables that represent
+the ratings by seven pathologists of 118 slides on the presence or absence of carcinoma.
+The purpose of studying these data is to model "interobserver agreement" by examining how
+subjects might be divided into groups depending upon the consistency of their diagnoses.
 }
 \examples{
  data(carcinoma)
  
+}
+\references{
+Agresti A (2002). Categorical Data Analysis. John Wiley & Sons, Hoboken.
 }
 \keyword{datasets}
