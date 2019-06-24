@@ -148,24 +148,28 @@ bool is_multivariate (Rcpp::List mix_kernel_hyperparams) {
 
 			negbin_component C;
 
-			std::string IC = "init" + suffix;
-			std::string MC = "M" + suffix;
-			std::string aC = "a" + suffix;
-			std::string bC = "b" + suffix;
+			std::string IC = "init"  + suffix;
+			std::string MC = "fixed" + suffix;
+			std::string aC = "a"     + suffix;
+			std::string bC = "b"     + suffix;
 
-			if (mix_components_prior.containsElementNamed(IC.c_str())
+			if (    mix_components_prior.containsElementNamed(IC.c_str())
 				and mix_components_prior.containsElementNamed(aC.c_str())
 				and mix_components_prior.containsElementNamed(bC.c_str())) {
-				C.M = Rcpp::as<double>(mix_components_prior[IC]);
+				C.value = Rcpp::as<double>(mix_components_prior[IC]);
 				C.a = Rcpp::as<double>(mix_components_prior[aC]);
 				C.b = Rcpp::as<double>(mix_components_prior[bC]);
-				C.LSD = 0;
-				C.LSD_g = 0;
 				C.fixed = false;
+			} else if (!mix_components_prior.containsElementNamed(IC.c_str())
+					and mix_components_prior.containsElementNamed(aC.c_str())
+					and mix_components_prior.containsElementNamed(bC.c_str())) {
+				C.value = default_init;
+				C.a     = Rcpp::as<double>(mix_components_prior[aC]);
+				C.b     = Rcpp::as<double>(mix_components_prior[bC]);
+				C.fixed = false;
+
 			} else if (mix_components_prior.containsElementNamed(MC.c_str())) {
-				C.M = Rcpp::as<double>(mix_components_prior[MC]);
-				C.LSD = 0;
-				C.LSD_g = 0;
+				C.value = Rcpp::as<double>(mix_components_prior[MC]);
 				C.fixed = true;
 			} else {
 				VERBOSE_ERROR("Missing value with " << suffix);
@@ -236,7 +240,7 @@ bool is_multivariate (Rcpp::List mix_kernel_hyperparams) {
 
 			VERBOSE_ASSERT(q, "Prior error : q is not set.");
 			VERBOSE_ASSERT(h, "Prior error : h is not set.");
-
+			VERBOSE_INFO(q);
 
 
 			Prior* 	prior = new  PriorNegativeBinomial (*h,*q);
@@ -366,6 +370,25 @@ Rcpp::List IAM_mcmc_fit (
 		Rcpp::List                           mcmc_parameters          //  = Rcpp::List::create()          /* (default niter=20000, ….)   */
 		) {
 
+	// ################## output arguments ##################
+
+	VERBOSE_INFO ("Start mcmc_fit");
+	VERBOSE_INFO ("- y = " << y);
+	VERBOSE_INFO ("- mix_kernel_hyperparams = " << mix_kernel_hyperparams.size());
+	VERBOSE_INFO ("- initial_clustering = " << initial_clustering.size());
+	VERBOSE_INFO ("- mix_components_prior = " << mix_components_prior.size());
+	VERBOSE_INFO ("- mix_weight_prior = " << mix_weight_prior.size());
+	VERBOSE_INFO ("- size(mcmc_parameters) = " << mcmc_parameters.size());
+
+    // ################## y                ##################
+
+
+	VERBOSE_INFO ("- Rcpp::is<Rcpp::NumericVector>(y) = " << Rcpp::is<Rcpp::NumericVector>(y));
+	VERBOSE_INFO ("- Rcpp::is<Rcpp::IntegerVector>(y) = " << Rcpp::is<Rcpp::IntegerVector>(y));
+	VERBOSE_INFO ("- Rcpp::is<Rcpp::NumericMatrix>(y) = " << Rcpp::is<Rcpp::NumericMatrix>(y));
+	VERBOSE_INFO ("- Rcpp::is<Rcpp::IntegerMatrix>(y) = " << Rcpp::is<Rcpp::IntegerMatrix>(y));
+
+    // ################## mcmc_parameters ##################
 
 	VERBOSE_ASSERT(mcmc_parameters.containsElementNamed("niter"), "mcmc_parameters does not contains niter field." );
 	VERBOSE_ASSERT(mcmc_parameters.containsElementNamed("burnin"), "mcmc_parameters does not contains burnin field." );
@@ -377,35 +400,25 @@ Rcpp::List IAM_mcmc_fit (
 	VERBOSE_LEVEL = mcmc_parameters["verbose"] ;
 
 	VERBOSE_DEBUG ("Debug mode is on.");
-	VERBOSE_INFO ("Start mcmc_fit");
-	VERBOSE_INFO ("- y = " << y);
-	VERBOSE_INFO ("- mix_kernel_hyperparams = " << mix_kernel_hyperparams.size());
-	VERBOSE_INFO ("- initial_clustering = " << initial_clustering.size());
-	VERBOSE_INFO ("- mix_components_prior = " << mix_components_prior.size());
-	VERBOSE_INFO ("- mix_weight_prior = " << mix_weight_prior.size());
-	VERBOSE_INFO ("- size(mcmc_parameters) = " << mcmc_parameters.size());
-
-	VERBOSE_INFO ("- Rcpp::is<Rcpp::NumericVector>(y) = " << Rcpp::is<Rcpp::NumericVector>(y));
-	VERBOSE_INFO ("- Rcpp::is<Rcpp::IntegerVector>(y) = " << Rcpp::is<Rcpp::IntegerVector>(y));
-	VERBOSE_INFO ("- Rcpp::is<Rcpp::NumericMatrix>(y) = " << Rcpp::is<Rcpp::NumericMatrix>(y));
-	VERBOSE_INFO ("- Rcpp::is<Rcpp::IntegerMatrix>(y) = " << Rcpp::is<Rcpp::IntegerMatrix>(y));
 
 
+    // ################## initial_clustering  ##################
+
+    // ################## mix_kernel_hyperparams  ##################
+
+	Mixture*              mixture  = gen_mix(mix_kernel_hyperparams);
+	VERBOSE_ASSERT(mixture, "gen_mix returned NULL");
+
+    // ################## mix_components_prior and mix_weight_prior  ##################
 
 
 
 	Prior*                prior    = gen_prior(mix_components_prior,mix_weight_prior, y);
-	Mixture*              mixture  = gen_mix(mix_kernel_hyperparams);
-
-
-	VERBOSE_ASSERT(mixture, "gen_mix returned NULL");
 	VERBOSE_ASSERT(prior, "gen_prior returned NULL");
 
 
 	std::vector<std::string> output_list = Rcpp::as<std::vector<std::string>>(mcmc_parameters["output"]);
-
 	int output_codes = AM_GENERATOR_OUTPUT_CODE(output_list);
-
 	VERBOSE_INFO ("- size(mcmc_parameters[output]) = " << output_list.size());
 	VERBOSE_INFO ("- output_codes = " << output_codes);
 

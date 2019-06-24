@@ -20,12 +20,19 @@ struct negbin_component {
 	 double a,b;
 	 double LSD;
 	 double LSD_g;
-	 double M;
+	 double value;
 	 bool   fixed;
-	 negbin_component() : a(0.0), b(0.0) ,  LSD(0.0), LSD_g(0.0) ,  M(0.0), fixed(true) {
+	 negbin_component() : a(0.0), b(0.0) ,  LSD(0.0), LSD_g(0.0) ,  value(0.0), fixed(true) {
 
 	 }
 };
+
+std::ostream & operator << (std::ostream &out, const negbin_component &c)
+{
+	if (c.fixed) {out << "(fixed=" << c.value << ")";}
+	else {out << "(a=" << c.a << ", b=" << c.b << ", v=" << c.value << ")";}
+    return out;
+}
 
 class negative_binomial_gamma_q_param_t  : public q_param_t  {
 public:
@@ -64,11 +71,11 @@ public:
 
 	inline double log_full_EPPF( const double h_param, const double K , const std::vector<int> & nj, const double U_current ) const {
 		// TODO[CHECK ME] : Take care this is proportionnal to U
-		double lPsi = compute_lPsi ( U_current , h_param, K ,  P.M , R.M) ;
+		double lPsi = compute_lPsi ( U_current , h_param, K ,  P.value , R.value) ;
 
 		double log_kappa_sum = 0 ;
 		for(int j=0;j<K;j++){
-			double log_kappa = compute_lkappa (U_current , h_param, K , nj[j] ,  P.M , R.M);
+			double log_kappa = compute_lkappa (U_current , h_param, K , nj[j] ,  P.value , R.value);
 			log_kappa_sum += log_kappa;
 		}
 
@@ -87,7 +94,7 @@ public:
 
 #ifdef HAS_RCPP
 	virtual const Rcpp::List get_Rcpp_list () const  {
-		return Rcpp::List::create(Rcpp::Named("R") = this->R.M , Rcpp::Named("P") = this->P.M ) ;
+		return Rcpp::List::create(Rcpp::Named("R") = this->R.value , Rcpp::Named("P") = this->P.value ) ;
 	};
 #endif
 	void update (const  double U, const  int K, const gamma_h_param_t <negative_binomial_gamma_q_param_t>& h_param) {
@@ -95,21 +102,21 @@ public:
 			// Metropolis-Hasting for R_M
 			if (not this->R.fixed) {
 
-				double R_vecchio = R.M;
+				double R_vecchio = R.value;
 				double R_lmedia = std::log(R_vecchio);
 
 				//Propose a new value
 				double R_lnuovo=am_rnorm(R_lmedia,R.LSD);
 				double R_nuovo=std::exp(R_lnuovo);
 
-				double log_full_r_m_new =  compute_lPsi ( U ,  h_param.gamma,  K ,   P.M ,  R_nuovo) + (R.a-1)*std::log(R_nuovo)-R.b*R_nuovo ;
-				double log_full_r_m_vec =  compute_lPsi ( U ,  h_param.gamma,  K ,   P.M ,  R_vecchio) + (R.a-1)*std::log(R_vecchio)-R.b*R_vecchio;
+				double log_full_r_m_new =  compute_lPsi ( U ,  h_param.gamma,  K ,   P.value ,  R_nuovo) + (R.a-1)*std::log(R_nuovo)-R.b*R_nuovo ;
+				double log_full_r_m_vec =  compute_lPsi ( U ,  h_param.gamma,  K ,   P.value ,  R_vecchio) + (R.a-1)*std::log(R_vecchio)-R.b*R_vecchio;
 
 				double R_ln_acp = (log_full_r_m_new - R_lmedia) - (log_full_r_m_vec - R_lnuovo);
 
 				double R_lnu=std::log(am_runif(0.0,1.0));
 
-				this->R.M = R_lnu < R_ln_acp ? R_nuovo : R_vecchio;
+				this->R.value = R_lnu < R_ln_acp ? R_nuovo : R_vecchio;
 
 				R.LSD = update_lsd (  R.LSD,  R_ln_acp,  R.LSD_g++) ;
 
@@ -119,21 +126,21 @@ public:
 			// TODO[CHECK ME] : (Raffa should check this ... at some point .. in time ... we are done ...)
 
 			if (not this->P.fixed) {
-				double P_vecchio = P.M;
+				double P_vecchio = P.value;
 				double P_lmedia = std::log(P_vecchio) - std::log(1 - P_vecchio);
 
 				//Propose a new value
 				double P_lnuovo=am_rnorm(P_lmedia,P.LSD);
 				double P_nuovo=std::exp(P_lnuovo) / (1 + std::exp (P_lnuovo));
 
-				double log_full_p_m_new =  compute_lPsi ( U ,  h_param.gamma,  K ,    P_nuovo,R.M)    + (P.a-1)*std::log(P_nuovo)  +(P.b - 1)* std::log(1 - P_nuovo) ;
-				double log_full_p_m_vec =  compute_lPsi ( U ,  h_param.gamma,  K ,    P_vecchio, R.M) + (P.a-1)*std::log(P_vecchio)-(P.b - 1 )*std::log(1 -P_vecchio);
+				double log_full_p_m_new =  compute_lPsi ( U ,  h_param.gamma,  K ,    P_nuovo,R.value)    + (P.a-1)*std::log(P_nuovo)  +(P.b - 1)* std::log(1 - P_nuovo) ;
+				double log_full_p_m_vec =  compute_lPsi ( U ,  h_param.gamma,  K ,    P_vecchio, R.value) + (P.a-1)*std::log(P_vecchio)-(P.b - 1 )*std::log(1 -P_vecchio);
 
 				double P_ln_acp = (log_full_p_m_new - P_lmedia - std::log(1 - P_vecchio ) ) - (log_full_p_m_vec - P_lnuovo - std::log(1 - P_nuovo ));
 
 				double P_lnu=std::log(am_runif(0.0,1.0));
 
-				this->P.M = P_lnu < P_ln_acp ? P_nuovo : P_vecchio;
+				this->P.value = P_lnu < P_ln_acp ? P_nuovo : P_vecchio;
 				P.LSD = update_lsd (  P.LSD,  P_ln_acp,  P.LSD_g++) ;
 			}
 
@@ -142,6 +149,14 @@ public:
 
 
 };
+
+
+std::ostream & operator << (std::ostream &out, const negative_binomial_gamma_q_param_t &c)
+{
+    out << "R:" << c.R << " P:" << c.P;
+    return out;
+}
+
 
 typedef gamma_h_param_t<negative_binomial_gamma_q_param_t> negative_binomial_gamma_h_param_t ;
 
@@ -162,8 +177,8 @@ int init_M_na(const int K) {
 	    VERBOSE_DEBUG("init_M_na (K = " << K << ")");
 
 
-		const double R_M     = this->q_param.R.M;
-		const double P_M     = this->q_param.P.M;
+		const double R_M     = this->q_param.R.value;
+		const double P_M     = this->q_param.P.value;
 		// TODO[CHECK ME]: According to Rafaelle what we call P is 1-1 in R. and what we call R_M is Size in R.
 
 	    VERBOSE_DEBUG("R_M = " << R_M);
@@ -181,8 +196,8 @@ int update_M_na(const double U ,  const int KasInt) {
 
     VERBOSE_DEBUG("update_M_na (U = " << U << ",K = " << K << ")");
 
-		const double R_M     = this->q_param.R.M; // TODO : fix that M makes no sense
-		const double P_M     = this->q_param.P.M;
+		const double R_M     = this->q_param.R.value; // TODO : fix that M makes no sense
+		const double P_M     = this->q_param.P.value;
 
 	    VERBOSE_DEBUG("R_M = " << R_M);
 	    VERBOSE_DEBUG("P_M = " << P_M);

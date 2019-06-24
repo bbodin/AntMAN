@@ -67,8 +67,8 @@
 #' ```
 #' 
 #'@importFrom Rcpp evalCpp
-#'@importFrom stats kmeans rbinom rnorm rpois runif sd
-#'@importFrom graphics plot hist rasterImage
+#'@importFrom stats kmeans rbinom rnorm rpois runif sd acf density quantile var
+#'@importFrom graphics plot hist rasterImage abline layout legend lines
 #'@importFrom sdols dlso
 #'
 #'
@@ -149,9 +149,10 @@ NULL
 #################################################################################
 
 #' S3 class AM_mcmc_output.
-#' @description test
+#' @description Output type of return values from  \code{\link{AM_mcmc_fit}}. See paper for the moment. 
 #' @exportClass AM_mcmc_output
-#'@nameAM_mcmc_output
+#' @seealso \code{\link{AM_mcmc_fit}}
+#' @name AM_mcmc_output
 NULL
 
 
@@ -342,6 +343,7 @@ AM_mix_components_prior_dirac <- function(Mstar) {
 #' In the latter case, we assume \eqn{p \sim Beta(a_P,b_P)} and \eqn{r \sim  Gamma(a_R,b_R)}.
 #' 
 #' If no arguments are provided, the default is \eqn{r = 1 , a_P = 1 and b_P = 1}.
+#' WHAT IS DEFAULT FOR init_R AND init_P ?
 #'
 #'@param a_R      The shape parameter \eqn{a}  of the \eqn{Gamma(a,b)} prior distribution for \eqn{r}.
 #'@param b_R      The  rate parameter \eqn{b} of the \eqn{Gamma(a,b)} prior distribution for \eqn{r}.
@@ -350,8 +352,8 @@ AM_mix_components_prior_dirac <- function(Mstar) {
 #'@param b_P      The parameter \eqn{b}  of the \eqn{Beta(a,b)} prior distribution for \eqn{p}.
 #'@param init_P   The inivial  value of \eqn{p}, when specifying \code{a_P} and \code{b_P}.
 #'@param R        It allows  to fix  \eqn{r} to a specific value.
-#'@param P        Ut allows  to fix  \eqn{p} to a specific value.
-#'@return A configuration list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_fit}}. 
+#'@param P        It allows  to fix  \eqn{p} to a specific value.
+#'@return         A configuration list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_fit}}. 
 #'
 #'@keywords prior
 #'@seealso \code{\link{AM_mcmc_fit}}
@@ -361,23 +363,27 @@ AM_mix_components_prior_dirac <- function(Mstar) {
 #' 
 #' ## See \code{\link{???}} example.
 #' AM_mix_components_prior_negbin (R=1, P=1)
+#' AM_mix_components_prior_negbin ()
 
 AM_mix_components_prior_negbin <- function(a_R = NULL, b_R = NULL, a_P = NULL, b_P = NULL, R = NULL, P = NULL, 
                                            init_R = NULL, init_P = NULL) {
   
-  paradox_error_R = "Please note that you cannot specify a_R,b_R and R_M. R_M specifies a fixed value.";
-  paradox_error_P = "Please note that you cannot specify a_P,b_P and P_M. P_M specifies a fixed value.";
+  paradox_error_R = "Please note that you cannot specify a_R,b_R and R. R specifies a fixed value.";
+  paradox_error_P = "Please note that you cannot specify a_P,b_P and P. P specifies a fixed value.";
   
   parameters = list(type = "AM_mix_components_prior_negbin");
-  if (!is.null(a_R)) parameters = append(parameters, list(a_R = a_R));
-  if (!is.null(b_R)) parameters = append(parameters, list(b_R = b_R));
-  if (!is.null(init_R)) parameters = append(parameters, list(init_R = init_R));
-  if (!is.null(R)) parameters = append(parameters, list(M_R = R));
-  if (!is.null(a_P)) parameters = append(parameters, list(a_P = a_P));
-  if (!is.null(b_P)) parameters = append(parameters, list(b_P = b_P));
-  if (!is.null(init_P)) parameters = append(parameters, list(init_P = init_P));
-  if (!is.null(P)) parameters = append(parameters, list(M_P = P));
   
+       if (!is.null(a_R) & !is.null(b_R) & !is.null(init_R) &  is.null(R)) {parameters = append(parameters, list(a_R = a_R, b_R = b_R, init_R = init_R));}
+  else if (!is.null(a_R) & !is.null(b_R) &  is.null(init_R) &  is.null(R)) {parameters = append(parameters, list(a_R = a_R, b_R = b_R,                ));}
+  else if ( is.null(a_R) &  is.null(b_R) &  is.null(init_R) & !is.null(R)) {parameters = append(parameters, list(fixed_R = R));}
+  else if ( is.null(a_R) &  is.null(b_R) &  is.null(init_R) &  is.null(R)) {parameters = append(parameters, list(fixed_R = 1));}
+  else {stop ( paradox_error_R );}
+  
+       if (!is.null(a_P) & !is.null(b_P) & !is.null(init_P) &  is.null(P)) {parameters = append(parameters, list(a_P = a_P, b_P = b_P, init_P = init_P));}
+  else if (!is.null(a_P) & !is.null(b_P) &  is.null(init_P) &  is.null(P)) {parameters = append(parameters, list(a_P = a_P, b_P = b_P,                ));}
+  else if ( is.null(a_P) &  is.null(b_P) &  is.null(init_P) & !is.null(P)) {parameters = append(parameters, list(fixed_P = P));}
+  else if ( is.null(a_P) &  is.null(b_P) &  is.null(init_P) &  is.null(P)) {parameters = append(parameters, list(a_P = 1, b_P = 1));}
+  else {stop ( paradox_error_P );}
   
   return (parameters);
 };
