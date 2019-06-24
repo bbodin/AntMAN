@@ -2,8 +2,59 @@
 ##############################################
 ### Load the AntMan package
 ##############################################
+setwd("/home/toky/yalenus/research/mixture/AntMan")
 library("AntMAN", lib.loc = "./AntMAN.Rinstall")
 
+rm(list=ls())
+set.seed(123)
+
+
+data(brain)
+imgDm <- brain$dim
+x = brain$pic
+bn <- imgDm[1] * imgDm[2]
+mat <- matrix(0,bn,3)
+mat[,1 ] <-x$R
+mat[,2 ] <-x$G
+mat[,3 ] <-x$B
+
+mixture_mvn_params = AM_multinorm_mix_hyperparams   (mu0=c(0,0,0),ka0=.1,nu0=5,Lam0=0.1*diag(3))
+
+
+fit <- AM_mcmc_fit(
+  init_K = 1,
+  y = mat, 
+  mix_kernel_hyperparams = mixture_mvn_params)
+
+
+
+
+rm(list=ls())
+set.seed(123)
+
+
+##############################################
+### GALAXY
+##############################################
+data(galaxy)
+y_uvn = galaxy
+mixture_uvn_params = AM_uninorm_mix_hyperparams  (m0=20.83146, k0=0.3333333,
+                                                  nu0=4.222222, sig02=3.661027)
+
+mcmc_params        = AM_mcmc_parameters(niter=20000, burnin=5000, thin=10, verbose=1)
+components_prior   = AM_mix_components_prior_negbin (R = 1 , P=1)
+weights_prior      = AM_mix_weights_prior_gamma(init=1, a=1, b=1)
+
+fit <- AM_mcmc_fit(
+  y = y_uvn,
+  mix_kernel_hyperparams = mixture_uvn_params,
+  mix_components_prior =components_prior,
+  mix_weight_prior = weights_prior,
+  mcmc_parameters = mcmc_params)
+
+summary (fit)
+plot (fit)
+#'      
 
 ##############################################
 ### BUILD THE UNIVARIATE POISSON DATA

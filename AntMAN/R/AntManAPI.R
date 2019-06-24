@@ -569,12 +569,13 @@ AM_uninorm_mix_hyperparams <- function(m0, k0, nu0, sig02) {
 #' 
 #'@param a0        The a0 hyperparameter.
 #'@param b0        The b0 hyperparameter.
-#'@param mb        size of binomial .
+#'@param N         size of binomial .
 #'@return A list to be used as \code{mix_kernel_hyperparams} argument for \code{mcmc_fit}.
 #'@examples 
-#' AM_unibin_mix_hyperparams (a0=1,b0=1,mb=100)
+#' AM_unibin_mix_hyperparams (a0=1,b0=1,N=100)
 #'@export
-AM_unibin_mix_hyperparams <- function(a0, b0, mb) {
+AM_unibin_mix_hyperparams <- function(a0, b0, N) {
+  ## TODO: Warning N > 1 an for small N almost not identifiable.			  
   return ( list ( type = "AM_unibin_mix_hyperparams",a0 = a0 , b0 = b0  , mb = mb ) );
 }
 
