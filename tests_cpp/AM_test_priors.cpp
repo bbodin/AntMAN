@@ -50,8 +50,8 @@ PriorNegativeBinomial prepare_negative_binomial () {
 
 	negbin_component R;
 	negbin_component P;
-	R.M = 1;
-	P.M = 0.9;
+	R.value = 1;
+	P.value = 0.9;
 	R.fixed = true;
 	P.fixed = true;
 
