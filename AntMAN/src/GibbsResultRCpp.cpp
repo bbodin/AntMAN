@@ -38,7 +38,7 @@
 		 if (AM_OUTPUT_HAS(output_codes,AM_OUTPUTS.at("MNA").code) ) {result.MNA.push_back(M_na);		}
 		 if (AM_OUTPUT_HAS(output_codes,AM_OUTPUTS.at("TAU").code)) {result.TAU.push_back(mixture->get_tau());		}
 		 if (AM_OUTPUT_HAS(output_codes,AM_OUTPUTS.at("H").code) ) {result.H.push_back(prior->get_h()->get_Rcpp_list());	}
-		 if (AM_OUTPUT_HAS(output_codes,AM_OUTPUTS.at("Q").code) ) {result.H.push_back(prior->get_q()->get_Rcpp_list());	}
+		 if (AM_OUTPUT_HAS(output_codes,AM_OUTPUTS.at("Q").code) ) {result.Q.push_back(prior->get_q()->get_Rcpp_list());	}
 
 		iteration++;
 	}
