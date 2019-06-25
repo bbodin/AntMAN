@@ -395,7 +395,7 @@ Rcpp::List IAM_mcmc_fit (
 	VERBOSE_ASSERT(mcmc_parameters.containsElementNamed("thin"), "mcmc_parameters does not contains thin field." );
 	VERBOSE_ASSERT(mcmc_parameters.containsElementNamed("verbose"), "mcmc_parameters does not contains verbose field." );
 	VERBOSE_ASSERT(mcmc_parameters.containsElementNamed("output"), "mcmc_parameters does not contains output field." );
-	VERBOSE_ASSERT(mcmc_parameters.containsElementNamed("file_output"), "mcmc_parameters does not contains file_output field." );
+	VERBOSE_ASSERT(mcmc_parameters.containsElementNamed("output_dir"), "mcmc_parameters does not contains output_dir field." );
 
 	VERBOSE_LEVEL = mcmc_parameters["verbose"] ;
 

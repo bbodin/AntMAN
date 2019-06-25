@@ -14,7 +14,32 @@ set.seed(123)
 ### Functions
 ##############################################
 
+### Load image and generate dataset
+LoadAndGenerate <- function(img_path) {
   
+  # Import the image in R
+  img <- readJPEG(img_path) # Read the image
+  
+  ## We can plot the image with the command rasterImage
+  plot(1:2, type='n')
+  rasterImage(img, 1.01, 1.01, 1.99, 1.99)
+  
+  # Obtain the dimension
+  imgDm <- dim(img)
+  
+  # Assign RGB channels to data frame
+  imgRGB <- data.frame(
+    x = rep(1:imgDm[2], each = imgDm[1]),
+    y = rep(imgDm[1]:1, imgDm[2]),
+    R = as.vector(img[,,1]),
+    G = as.vector(img[,,2]),
+    B = as.vector(img[,,3])
+  )
+  
+  x <- imgRGB[,c(3,4,5)]
+  
+  return (list(pic = x, dim = imgDm))
+}
 
 
 DrawResult <- function(mat,imgDm,clusters) {

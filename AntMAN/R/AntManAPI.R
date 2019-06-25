@@ -20,12 +20,12 @@
 #' 
 #'@section Package Philosophy:
 #' 
-#' The main function of the AntMAN package is \code{\link{AM_mcmc_fit}} that performs a Gibbs sampling in order to estimate 
-#' a mixture of a predifined type \code{mix_kernel_hyperparams} and that models a particular population given a sample \code{y}. 
-#' Additionnaly a particular component prior \code{mix_components_prior} and a weight prior \code{mix_weight_prior} can be specified 
-#' and \code{mcmc_parameters} will define the MCMC parameters for the Gibbs sampler (number of interation, burn-in, ...). 
-#' A prior on the number of cluster (\code{init_K}) or a specific allocation (\code{init_clustering}) can also be specify. 
-#' Otherwise, the default allocation we assign a different cluster for each element of the sample \code{y}.
+#' The main function of the AntMAN package is \code{\link{AM_mcmc_fit}}. AntMAN  performs a Gibbs sampling in order to fit, 
+#' in a Bayesian framework, a mixture model of a predifined type \code{mix_kernel_hyperparams}  given a sample \code{y}. 
+#' Additionally AntMAN allows the user to specify a prior on the number of components \code{mix_components_prior} and on the weights  \code{mix_weight_prior} of the mixture.
+#' MCMC parameters \code{mcmc_parameters} need to be given as argument for the Gibbs sampler (number of interation, burn-in, ...). 
+#' Initial values for the number of cluster (\code{init_K}) or a specific clustering allocation (\code{init_clustering}) can also be user-specify. 
+#' Otherwise, by the default allocation we assign a different cluster for each element of the sample \code{y} as initial allocation. This choice can be computetionally inefficient. 
 #' 
 #' 
 #' For example, in order to identify clusters over a population of patients given a set of medical assumptions:
@@ -299,7 +299,7 @@ AM_mcmc_parameters <- function(  niter=5000,
   return (list(type="AM_MCMC_PARAMETERS", 
                niter=niter, burnin=burnin, thin=thin,
                verbose=verbose, output=output, parallel=parallel,
-               file_output=file_output));
+               output_dir=output_dir));
   
   
 }
