@@ -7,6 +7,8 @@
 
 #include "GibbsResultRCpp.hpp"
 
+
+
 bool is_univariate (Rcpp::List mix_kernel_hyperparams) {
 	VERBOSE_ASSERT (mix_kernel_hyperparams.containsElementNamed("type"), "mix_kernel_hyperparams does not contain a type field.");
 	std::string mixture_type = mix_kernel_hyperparams["type"];
@@ -24,7 +26,7 @@ bool is_multivariate (Rcpp::List mix_kernel_hyperparams) {
 
 // ************************************************ AM_mcmc_fit ********************************************************************
 
-		Mixture* gen_mix (Rcpp::List          mixture_parameters) {
+		Mixture* gen_mix (Rcpp::List mixture_parameters) {
 
 			VERBOSE_ASSERT (mixture_parameters.containsElementNamed("type"), "In gen_mix mixture_parameters does not contain a type field.");
 

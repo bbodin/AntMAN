@@ -8,9 +8,15 @@
 #ifndef ANTMAN_SRC_GIBBSRESULTRCPP_HPP_
 #define ANTMAN_SRC_GIBBSRESULTRCPP_HPP_
 
-#undef NO_RCPP
+#ifndef HAS_RCPP
+#assert HAS_RCPP
+#undef  NO_RCPP
+#define HAS_RCPP
+#endif
+
 
 #include "GibbsResult.hpp"
+#include <RcppArmadillo.h>
 
 
 struct Output_Type {

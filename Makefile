@@ -53,6 +53,7 @@ check : AntMAN/src/RcppExports.cpp
 
 %.Rinstall/AntMAN/libs/AntMAN.so : %_1.0.tar.gz 
 	mkdir -p $*.Rinstall
+	rm $*.Rinstall/* -rf
 	R CMD INSTALL  -l $*.Rinstall $*_1.0.tar.gz
 
 %_1.0.pdf : %/NAMESPACE

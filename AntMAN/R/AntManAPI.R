@@ -695,7 +695,7 @@ AM_multinorm_mix_hyperparams <- function(mu0 = NULL, ka0 = NULL, nu0 = NULL, Lam
 #' @export
 #' 
 #' @examples
-#' dd=calcola_stirling_ricor_abs(11,10)
+#' dd= AM_calcola_stirling_ricor_abs(11,10)
 #' print(dd)
 AM_calcola_stirling_ricor_abs <- function (n,gamma) {
 	return(calcola_stirling_ricor_abs(n,gamma));
@@ -719,8 +719,8 @@ AM_calcola_stirling_ricor_abs <- function (n,gamma) {
 #' n=1000
 #' Lam=100
 #' gam=0.5
-#' vnk=VnkPoisson(n,Lam,gam)
-#' stir=calcola_stirling_ricor_log(gam, n)
+#' vnk= AM_VnkPoisson(n,Lam,gam)
+#' stir= AM_calcola_stirling_ricor_log(gam, n)
 #' plot(exp(vnk+stir))
 #' sum(exp(vvv+stir ))
 
@@ -736,7 +736,7 @@ AM_VnkPoisson <- function (n,Lambda,gamma) {
 #' @param Lambda   The \code{Lambda} parameter of the Poisson
 #' @param gamma    The \code{gamma} parameter of the Dirichlet 
 #'
-#' @return A vector of length n, reporting the values of the prior on the number of clusters induced by the prior on \code{M} and \code{w}, i.e. \code{p^*_k for \code{k=1,...,n}. See Section 9.1.1 of Argiento de Iorio (2019) for more details.
+#' @return A vector of length n, reporting the values of the prior on the number of clusters induced by the prior on \code{M} and \code{w}, i.e. \code{p^*_k} for \code{k=1,...,n}. See Section 9.1.1 of Argiento de Iorio (2019) for more details.
 #'
 #' @keywords prior number of clusters
 #'
@@ -746,7 +746,7 @@ AM_VnkPoisson <- function (n,Lambda,gamma) {
 #' n <- 82
 #' Lambda <- 10
 #' gam_po <- 0.1550195
-#' prior_K_po <- prior_K_Pois(n,gam_po,Lambda)
+#' prior_K_po <-  AM_prior_K_Pois(n,gam_po,Lambda)
 #' plot(1:n, prior_K_po, type = "n", bty = "l", xlab = "k", ylab = "P(K=k)",main="Prior on the number of clusters")
 
  AM_prior_K_Pois <- function (n,gamma,Lambda) {
@@ -754,7 +754,7 @@ AM_VnkPoisson <- function (n,Lambda,gamma) {
  }
 
 
-#' Compute the value V(n,k), needed to caclulate the eppf of a Finite Dirichlet process when the prior on the component-weigts of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights are distributed as Gamma(\eqn{\gamma},1) ) when the prior on the number of componet is Negative Binomial with parameter \code{r} and \code{p}with  mean is mu =1+ r*p/(1-p) [CHECK THIS FORMULA!!!]. See Section 9.1.1 of the Paper Argiento de Iorio 2019 for more details
+#' Compute the value V(n,k), needed to caclulate the eppf of a Finite Dirichlet process when the prior on the component-weigts of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights are distributed as Gamma(\eqn{\gamma},1) ) when the prior on the number of componet is Negative Binomial with parameter \code{r} and \code{p}with  mean is mu =1+ r*p/(1-p) TODO: CHECK THIS FORMULA!!!. See Section 9.1.1 of the Paper Argiento de Iorio 2019 for more details
 #' 
 #' There are no default values.
 #'
@@ -774,8 +774,8 @@ AM_VnkPoisson <- function (n,Lambda,gamma) {
 #' r=1000
 #' p=0.5
 #' gam=0.5
-#' vnk=VnkNegBin(n,r,p,gam);
-#' stir=calcola_stirling_ricor_log(gam, n)
+#' vnk= AM_VnkNegBin(n,r,p,gam);
+#' stir= AM_calcola_stirling_ricor_log(gam, n)
 #' plot(exp(vnk+stir+(1:n)*log(gam)))
 #' sum(exp(vnk+stir))
 
@@ -783,7 +783,7 @@ AM_VnkNegBin <- function (n,r,p,gam) {
 	return(VnkNegBin(n,r,p,gam));
 }
 
-#' This function compute the prior on the number of cluster, i.e. occupied component of the mixutre for a Finite Dirichlet process when the prior on the component-weigts of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights are distributed as Gamma(\eqn{\gamma},1) ) when the prior on the number of componet  is Negative Binomial with parameter \code{r>0} and \code{0<p<1}, with  mean is mu =1+ r*p/(1-p) [CHECK THIS FORMULA!!!]. See Section 9.1.1 of the Paper Argiento de Iorio 2019 for more details. 
+#' This function compute the prior on the number of cluster, i.e. occupied component of the mixutre for a Finite Dirichlet process when the prior on the component-weigts of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights are distributed as Gamma(\eqn{\gamma},1) ) when the prior on the number of componet  is Negative Binomial with parameter \code{r>0} and \code{0<p<1}, with  mean is mu =1+ r*p/(1-p) TODO: CHECK THIS FORMULA!!!. See Section 9.1.1 of the Paper Argiento de Iorio 2019 for more details. 
 #' 
 #' There are no default values.
 #'
@@ -804,7 +804,7 @@ AM_VnkNegBin <- function (n,r,p,gam) {
 #' r <- 0.1
 #' p <- 0.91
 #' gam_nb <- 0.2381641
-#' prior_K_nb <- prior_K_NegBin(n,gam_nb,r,p)
+#' prior_K_nb <-  AM_prior_K_NegBin(n,gam_nb,r,p)
 #' plot(1:n,prior_K_nb, type = "n", bty = "l", xlab = "k", ylab = "P(K=k)",main="Prior on the number of clusters")
 #' lines(1:n,prior_K_de,type="h",lwd=2)
 
@@ -834,8 +834,8 @@ AM_prior_K_NegBin <- function (n,gam_nb, r, p){
 #' n=200
 #' Mstar=100
 #' gam=0.5
-#' vvv=VnkDelta(n,Mstar,gam);
-#' stir=calcola_stirling_ricor_log(gam, n)
+#' vvv=AM_VnkDelta(n,Mstar,gam);
+#' stir= AM_calcola_stirling_ricor_log(gam, n)
 #' stir
 #' plot(exp(vvv+stir) )
 #' sum(exp(vvv+stir ))
@@ -863,7 +863,7 @@ AM_VnkDelta <- function (n,Mstar,gam) {
 #' n <- 82
 #' gam_de <- 0.1743555
 #' Mstar <- 12
-#' prior_K_de <- prior_K_Delta(n,gam_de, Mstar)
+#' prior_K_de <- AM_prior_K_Delta(n,gam_de, Mstar)
 #' plot(1:n, prior_K_de, type = "n", bty = "l", xlab = "k", ylab = "P(K=k)",main="Prior on the number of clusters")
 
  AM_prior_K_Delta <- function (n,gam_de,Mstar){
@@ -873,7 +873,7 @@ AM_VnkDelta <- function (n,Mstar,gam) {
 
 #' Once specified a fixed value of components \code{M^*} this function  adopt a  \emph{bisection method} to find the value of \code{gamma} 
 #' such that the induced distribution on the number of clusers is centered around a user specifed value \eqn{K^*}, i.e. the function use
-#'  a bisection method to solve Eq.~\eqref{eq:findgamma} of WE NEED TO CITE ANTMAN PAPER. The user can provide a lower \eqn{\gamma_{l}} and
+#'  a bisection method to solve Eq.~{eq:findgamma} of WE NEED TO CITE ANTMAN PAPER. The user can provide a lower \eqn{\gamma_{l}} and
 #'  an upper \eqn{\gamma_{u}} bound for the possible values of $gamma$. The default values are \eqn{\gamma_l= 10^{-3}} and \eqn{\gamma_{u}=10}.
 #'  A defaault value for the tolerance is \eqn{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31), the function 
 #'  stops warning that convergence has not bee reached.
@@ -894,8 +894,8 @@ AM_VnkDelta <- function (n,Mstar,gam) {
 #' @examples
 #' n <- 82
 #' Mstar <- 12
-#' gam_de <- find_gamma_Delta(n,Mstar,Kstar=6, gam_min=1e-4,gam_max=10, tollerance=0.1)
-#' prior_K_de <- prior_K_Delta(n,gam_de,Mstar)
+#' gam_de <- AM_find_gamma_Delta(n,Mstar,Kstar=6, gam_min=1e-4,gam_max=10, tollerance=0.1)
+#' prior_K_de <-  AM_prior_K_Delta(n,gam_de,Mstar)
 #' prior_K_de\%*\%1:n
 
 AM_find_gamma_Delta <- function (n,Mstar,Kstar=6, gam_min=0.0001,gam_max=10, tollerance=0.1) {
@@ -906,7 +906,7 @@ AM_find_gamma_Delta <- function (n,Mstar,Kstar=6, gam_min=0.0001,gam_max=10, tol
 #' Once the prior on the numbuer of mixture $M$ is assumed to be a Shifted Posson of parameter \code{Lambda}, 
 #' this function  adopt a \emph{bisection method} to find the value of \code{gamma} such that the induced distribution
 #'  on the number of clusers is centered around a user specifed value \eqn{K^*}, i.e. the function use a bisection
-#'   method to solve Eq.~\eqref{eq:findgamma} of WE NEED TO CITE ANTMAN PAPER. The user can provide a lower \eqn{\gamma_{l}} 
+#'   method to solve Eq.~{eq:findgamma} of WE NEED TO CITE ANTMAN PAPER. The user can provide a lower \eqn{\gamma_{l}} 
 #'   and an upper \eqn{\gamma_{u}} bound for the possible values of $gamma$. The default values are \eqn{\gamma_l= 10^{-3}} and \eqn{\gamma_{u}=10}.
 #'     A defaault value for the tolerance is \eqn{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31),
 #'      the function stops warning that convergence has not bee reached.
@@ -926,15 +926,15 @@ AM_find_gamma_Delta <- function (n,Mstar,Kstar=6, gam_min=0.0001,gam_max=10, tol
 #' 
 #' @examples
 #' Lam  <- 11
-#' gam_po <- find_gamma_Pois(n,Lam,Kstar=6, gam_min=0.0001,gam_max=10, tollerance=0.1)
-#' prior_K_po <- prior_K_Pois(n,gam_po,Lam)
+#' gam_po <-  AM_find_gamma_Pois(n,Lam,Kstar=6, gam_min=0.0001,gam_max=10, tollerance=0.1)
+#' prior_K_po <-  AM_prior_K_Pois(n,gam_po,Lam)
 #' prior_K_po\%*\%1:n
 
  AM_find_gamma_Pois <- function (n,Lam,Kstar=6, gam_min=0.0001,gam_max=10, tollerance=0.1) {
  	return (find_gamma_Pois(n,Lam,Kstar, gam_min,gam_max, tollerance));
  }
 
-#' Once the prior on the numbuer of mixture $M$ is assumed to be a Negative Binomial  Negative Binomial with parameter \code{r>0} and \code{0<p<1}, with  mean is 1+ r*p/(1-p), this function  adopt a \emph{bisection method} to find the value of \code{gamma} such that the induced distribution on the number of clusers is centered around a user specifed value \eqn{K^*}, i.e. the function use a bisection method to solve Eq.~\eqref{eq:findgamma} of WE NEED TO CITE ANTMAN PAPER. The user can provide a lower \eqn{\gamma_{l}} and an upper \eqn{\gamma_{u}} bound for the possible values of $gamma$. The default values are \eqn{\gamma_l= 10^{-3}} and \eqn{\gamma_{u}=10}.  A defaault value for the tolerance is \eqn{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31), the function stops warning that convergence has not bee reached.
+#' Once the prior on the numbuer of mixture $M$ is assumed to be a Negative Binomial  Negative Binomial with parameter \code{r>0} and \code{0<p<1}, with  mean is 1+ r*p/(1-p), this function  adopt a \emph{bisection method} to find the value of \code{gamma} such that the induced distribution on the number of clusers is centered around a user specifed value \eqn{K^*}, i.e. the function use a bisection method to solve Eq.~{eq:findgamma} of WE NEED TO CITE ANTMAN PAPER. The user can provide a lower \eqn{\gamma_{l}} and an upper \eqn{\gamma_{u}} bound for the possible values of $gamma$. The default values are \eqn{\gamma_l= 10^{-3}} and \eqn{\gamma_{u}=10}.  A defaault value for the tolerance is \eqn{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31), the function stops warning that convergence has not bee reached.
 #'
 #' @param n             The sample size
 #' @param r      The dispersion parameter \code{r} of Negative Binomial
@@ -953,8 +953,8 @@ AM_find_gamma_Delta <- function (n,Mstar,Kstar=6, gam_min=0.0001,gam_max=10, tol
 #' @examples
 #' r <- 1
 #' p <- 0.8571
-#' gam_nb=find_gamma_NegBin(n,r,p,Kstar=6, gam_min=0.001,gam_max=10000, tollerance=0.1)
-#' prior_K_nb=prior_K_NegBin(n,gam_nb, r, p)
+#' gam_nb= AM_find_gamma_NegBin(n,r,p,Kstar=6, gam_min=0.001,gam_max=10000, tollerance=0.1)
+#' prior_K_nb= AM_prior_K_NegBin(n,gam_nb, r, p)
 #' prior_K_nb\%*\%1:n
 
 AM_find_gamma_NegBin <- function (n,r,p,Kstar=6, gam_min=0.001,gam_max=10000, tollerance=0.1){

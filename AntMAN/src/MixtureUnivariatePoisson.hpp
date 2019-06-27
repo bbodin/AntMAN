@@ -119,7 +119,7 @@ public :
 		// Fill non-allocated
 
 		for(int l=K; l<M;l++){
-			theta_current[l] = (1.0 / beta0) * R::rgamma (alpha0 , 1) ;
+			theta_current[l] = (1.0 / beta0) * am_rgamma (alpha0 , 1) ;
 			// TODO[CHECK ME] : theta_current must be non-zero
 			S_current[l]=am_rgamma(gamma_current,1./(U_current+1.0));
 		}

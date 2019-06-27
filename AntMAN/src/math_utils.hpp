@@ -13,7 +13,7 @@
 
 #ifdef NO_RCPP
 
-#include "beta_distribution.hpp"
+#include "beta_distribution.h"
 #include <armadillo>
 
 #ifndef M_LN_2PI

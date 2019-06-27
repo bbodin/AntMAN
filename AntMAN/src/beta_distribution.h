@@ -5,17 +5,17 @@
  *      Author: toky
  */
 
-#ifndef ANTMAN_SRC_BETA_DISTRIBUTION_HPP_
-#define ANTMAN_SRC_BETA_DISTRIBUTION_HPP_
+#ifndef ANTMAN_SRC_BETA_DISTRIBUTION_H_
+#define ANTMAN_SRC_BETA_DISTRIBUTION_H_
 
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <random>
 
-// This implementation might not be correct, just copy/paste it from internet ...
+// This implementation might not be correct, just copy/paste it from Internet ...
 // Source : https://stackoverflow.com/questions/15165202/random-number-generator-with-beta-distribution
-// Comments tend to say it minght not be correct.
+// Comments tend to say it might not be correct.
 
   template <typename RealType = double>
   class beta_distribution
@@ -141,4 +141,4 @@
 
 
 
-#endif /* ANTMAN_SRC_BETA_DISTRIBUTION_HPP_ */
+#endif /* ANTMAN_SRC_BETA_DISTRIBUTION_H_ */
