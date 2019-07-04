@@ -149,17 +149,6 @@ NULL
 ##### AM_mcmc_output, Summary, Plot.
 #################################################################################
 
-coclustering = function (CI) {
-	n = length(fit$CI[[1]])
-	res = matrix(0,n,n)
-	for (i in (fit$CI)) {
-		n = length(i)
-		drow = matrix(rep(i,each=n),nrow=n)
-		dcol = matrix(rep(i,each=n), ncol=n, byrow=TRUE)	
-		res = res + !(drow-dcol)
-	}
-	return (res / max(res))
-}
 
 #' S3 class AM_mcmc_output.
 #' @description Output type of return values from  \code{\link{AM_mcmc_fit}}. See paper for the moment. 
@@ -183,12 +172,13 @@ plot.AM_mcmc_output=function(x,...){
   
   #### Co clustering probability : How many time two are in the same custer. 
   if (!is.null(x$CI)) {
-	  
-	  library(corrplot)
-	  res = coclustering(x$CI)
-	  col3 <- colorRampPalette(c("red", "white", "blue")) 
-	  corrplot(res, diag = FALSE, method = "color", type = "upper",col = col3(100), cl.lim = c(0, 1), tl.pos = "n")
-	  
+	  G <- length(x$K)
+	  n = length(x$CI[[1]])
+	  res = AM_coclustering(x)
+	  ## library(corrplot)
+	  ## col3 <- colorRampPalette(c("red", "white", "blue")) 
+	  ## corrplot(res, diag = FALSE, method = "color", type = "upper",col = col3(100), cl.lim = c(0, 1), tl.pos = "n")
+	  image(1:n,1:n,res,xaxt='n', yaxt="n",main="Similarity matrix")
 	  readline(prompt="Press [enter] to continue");
   }
 }
@@ -209,7 +199,7 @@ summary.AM_mcmc_output=function(object,...){
 	if (!is.null(object$Mna)) print(sprintf("%s\t%f\t%f","Mna" ,  mean(object$Mna) , sd(object$Mna))) ;
 }
 
-#'  Return maximum likelihood estimation
+#'  Return maximum likelihood estimation (squared_loss)
 #'  
 #'  Given a MCMC output, this function return maximum likelihood estimation.
 #'  
@@ -220,6 +210,69 @@ summary.AM_mcmc_output=function(object,...){
 AM_clustering_estimation_squared_loss = function (fit) {
 	library('sdols')
 	fres = dlso(t(do.call(cbind,fit$CI)))
+}
+
+#'  Return maximum likelihood estimation (average)
+#'  
+#'  Given a MCMC output, this function return maximum likelihood estimation.
+#'  
+#'@param fit a \code{\link{AM_mcmc_output}} object
+#'  
+#'@importFrom mcclust minbinder comp.psm
+#'@export
+AM_clustering_estimation_average = function (fit) {
+	library("mcclust")
+	mcinput = t(do.call(cbind,fit$CI))
+	psm2 <- comp.psm(mcinput+1)
+	mbind2 <- minbinder(psm2)
+	names(mbind2)
+	return (mbind2$cl)
+}
+
+
+
+
+#'  Return co-clustering
+#'  
+#'  Given a MCMC output, this function return co-clustering matrix
+#'  
+#'@param fit a \code{\link{AM_mcmc_output}} object
+#'  
+#'
+#'@export
+AM_coclustering = function (fit) {
+	
+	G <- length(fit$K)
+	n = length(fit$CI[[1]])
+	C <- matrix(0,ncol=n,nrow=n)
+	ci <- t(do.call(cbind,fit$CI))+1
+	for(g in 1:G){
+		ss <- ci[g,]
+		cij <- outer(ss,ss,'==')
+		C <- C+cij
+	} 
+	
+	return ( C/G )
+}
+
+#'  Return co-clustering slowly
+#'  
+#'  Given a MCMC output, this function return co-clustering matrix
+#'  
+#'@param fit a \code{\link{AM_mcmc_output}} object
+#'  
+#'
+#'@export
+AM_coclustering_slow = function (fit) {
+
+	n = length(fit$CI[[1]])
+	res = matrix(0,n,n)
+	for (i in (fit$CI)) {
+		drow = matrix(rep(i,each=n),nrow=n)
+		dcol = matrix(rep(i,each=n), ncol=n, byrow=TRUE)	
+		res = res + !(drow-dcol)
+	}
+	return (res / max(res))
 }
 
 #################################################################################
