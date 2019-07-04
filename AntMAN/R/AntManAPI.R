@@ -178,7 +178,7 @@ plot.AM_mcmc_output=function(x,...){
 	  ## library(corrplot)
 	  ## col3 <- colorRampPalette(c("red", "white", "blue")) 
 	  ## corrplot(res, diag = FALSE, method = "color", type = "upper",col = col3(100), cl.lim = c(0, 1), tl.pos = "n")
-	  image(1:n,1:n,res,xaxt='n', yaxt="n",main="Similarity matrix")
+	  image(1:n,1:n,res,xaxt='n', yaxt="n",main="Similarity matrix",col = gray.colors(30))
 	  readline(prompt="Press [enter] to continue");
   }
 }

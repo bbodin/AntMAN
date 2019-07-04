@@ -1,3 +1,4 @@
+pdf("Carcinoma.pdf")
 
 .libPaths(c("./AntMAN.Rinstall", .libPaths()))
 

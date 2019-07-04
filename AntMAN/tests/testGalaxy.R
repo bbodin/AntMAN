@@ -1,4 +1,4 @@
-
+pdf("Galaxy.pdf")
 
 .libPaths(c("./AntMAN.Rinstall", .libPaths()))
 library("AntMAN")

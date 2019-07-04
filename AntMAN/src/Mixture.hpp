@@ -210,7 +210,7 @@ public:
 				start_gibbs           = std::chrono::system_clock::now();
 				total_gibbs               += elapsed_gibbs.count() / 1000000.0;
 
-				VERBOSE_LOG("[" << iter / verbose_slice << "%]" <<
+				VERBOSE_LOG("[" << 100 * iter / (niter - 1) << "%]" <<
 						" iter="<<iter<<
 						" saved="<< total_saved <<
 						" K="<<K<<
