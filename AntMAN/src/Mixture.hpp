@@ -204,7 +204,7 @@ public:
 			}
 
 			// Logging
-			if((verbose!=0) and ((iter % verbose_slice)==0)) {
+			if((verbose!=0) and (((iter % verbose_slice)==0) or  ((iter + 1) == niter))) {
 				auto end_gibbs             = std::chrono::system_clock::now();
 				auto elapsed_gibbs         = end_gibbs - start_gibbs;
 				start_gibbs           = std::chrono::system_clock::now();

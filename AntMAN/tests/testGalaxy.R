@@ -20,3 +20,6 @@ fit <- AM_mcmc_fit(
 
 summary (fit)
 plot (fit)
+
+AM_clustering_estimation_squared_loss(fit)
+AM_clustering_estimation_average(fit)
