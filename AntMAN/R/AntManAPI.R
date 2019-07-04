@@ -198,6 +198,33 @@ summary.AM_mcmc_output=function(object,...){
 	if (!is.null(object$M)) print(sprintf("%s\t%f\t%f","M" ,  mean(object$M) , sd(object$M))) ;
 	if (!is.null(object$Mna)) print(sprintf("%s\t%f\t%f","Mna" ,  mean(object$Mna) , sd(object$Mna))) ;
 }
+#'  Return maximum likelihood estimation (laugreen)
+#'  
+#'  Given a MCMC output, this function return maximum likelihood estimation.
+#'  
+#'@param fit a \code{\link{AM_mcmc_output}} object
+#'  
+#'@export
+AM_clustering_estimation_laugreen = function (fit, C = NULL) {
+	FF <- vector("numeric")
+	K <- 0.5
+	G <- length(fit$K)
+	n = length(fit$CI[[1]])
+	if (C == NULL) C = AM_coclustering(fit) 
+	ci <- t(do.call(cbind,fit$CI))+1
+	for(g in 1:(G)){
+		ss <- ci[g,]
+		cij <- outer(ss,ss,'==')
+		pluto <- (C-K)*as.matrix(cij)
+		pluto <-  pluto[upper.tri(pluto)]
+		FF[g] <- sum(pluto)
+	}
+	ind.bind <- which.max(FF)[1]
+	
+	clust_bind <- ci[ind.bind,]
+	return (clust_bind)
+}
+
 
 #'  Return maximum likelihood estimation (squared_loss)
 #'  
@@ -249,10 +276,10 @@ AM_coclustering = function (fit) {
 	for(g in 1:G){
 		ss <- ci[g,]
 		cij <- outer(ss,ss,'==')
-		C <- C+cij
-	} 
+		C <- C + cij
+	}
 	
-	return ( C/G )
+	return ( C / G )
 }
 
 #'  Return co-clustering slowly
@@ -1039,3 +1066,50 @@ AM_find_gamma_Delta <- function (n,Mstar,Kstar=6, gam_min=0.0001,gam_max=10, tol
 AM_find_gamma_NegBin <- function (n,r,p,Kstar=6, gam_min=0.001,gam_max=10000, tollerance=0.1){
 	return (find_gamma_NegBin(n,r,p,Kstar, gam_min,gam_max, tollerance));
 }
+
+
+### This function takes as input the desired values of
+### the marginal mean of mu = Emu
+### the marginal variance of mu = Vmu
+### the marginal mean of sig2 = Esig2 
+### the marginal variance of sig2 = Vsig2
+###
+### The values returns a list with 
+### hyperparameters of a Normal-Inverse-Gamma
+### with the desired value of the marginal moments.
+from_statitstics2hyperparam <- function(Emu,Vmu,Esig2,Vsig2){
+	
+	m0    = Emu
+	nu0   = 2*(Esig2)^2/Vsig2+4
+	sig02 = Esig2*(nu0-2)/nu0
+	k0    = sig02/Vmu * nu0/(nu0-2)
+	
+	return(list(m0=m0,nu0=nu0,sig02=sig02,k0=k0))
+}
+
+
+#' this function compute the hyperparameters of an Normal-Inverse-Gamma 
+#' distribution using an empirical Bayes approach.
+#' @param  y       The data y
+#' @param  scEmu a positive value scEmu (default =1) such that marginally E(mu)=(sample variance)*scEmu
+#' @param  scEsig2 a positive value scEsig2 (default=3) such that marginally E(sig2)=(sample variance)*scEsig2
+#' @param  CVsig2  The coefficient of variation of sig2 (default =3), CVsig2
+#' @return Parameters of the normal inverse Gamma prior according to the empirical Bayes approach. 
+#' @export
+#' 
+
+AM_emp_bayes_uninorm <- function(y,scEmu=1,scEsig2=3,CVsig2=3){
+	n <- length(y)   ### sample size
+	bary <- mean(y)  ### sample mean
+	s2y <- var(y)    ### sample variance
+	
+	Emu <- bary
+	Vmu <- s2y*scEmu
+	Esig2 <- s2y/scEsig2
+	Vsig2 <- CVsig2^2*Esig2^2
+	
+	return(from_statitstics2hyperparam(Emu,Vmu,Esig2,Vsig2))
+	
+}
+
+
