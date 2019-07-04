@@ -5,6 +5,7 @@
 ## How to Install 
 
 ```
+install.packages("devtools")
 devtools::install_github("bbodin/AntMAN", subdir="AntMAN")
 ```
 
