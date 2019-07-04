@@ -70,9 +70,7 @@
 #'@importFrom stats kmeans rbinom rnorm rpois runif sd acf density quantile var
 #'@importFrom graphics plot hist rasterImage abline layout legend lines
 #'@importFrom sdols dlso
-#'
-#'
-#'
+#'@importFrom corrplot corrplot
 #'@docType package
 #'@name AntMAN
 NULL
@@ -151,6 +149,18 @@ NULL
 ##### AM_mcmc_output, Summary, Plot.
 #################################################################################
 
+coclustering = function (CI) {
+	n = length(fit$CI[[1]])
+	res = matrix(0,n,n)
+	for (i in (fit$CI)) {
+		n = length(i)
+		drow = matrix(rep(i,each=n),nrow=n)
+		dcol = matrix(rep(i,each=n), ncol=n, byrow=TRUE)	
+		res = res + !(drow-dcol)
+	}
+	return (res / max(res))
+}
+
 #' S3 class AM_mcmc_output.
 #' @description Output type of return values from  \code{\link{AM_mcmc_fit}}. See paper for the moment. 
 #' @exportClass AM_mcmc_output
@@ -168,15 +178,19 @@ NULL
 #'@method plot AM_mcmc_output 
 #'@export
 plot.AM_mcmc_output=function(x,...){
-  if (!is.null(x$K)) {
-   hist(x$K,main="K values") ; 
-   readline(prompt="Press [enter] to continue");
-   }
-  if (!is.null(x$M)) {hist(x$M,main="M values") ; readline(prompt="Press [enter] to continue");}
-  if (!is.null(x$K)) {hist(x$K,main="Clusters") ; readline(prompt="Press [enter] to continue");}
-  #### Histogram of  Gamma, ...
+  if (!is.null(x$M))  {hist(x$M,main="M values") ; readline(prompt="Press [enter] to continue");}
+  if (!is.null(x$K))  {hist(x$K,main="K Values") ; readline(prompt="Press [enter] to continue");}
+  
   #### Co clustering probability : How many time two are in the same custer. 
-  if (!is.null(x$CI) && !is.null(x$Y)) {plot(x$Y,col=x$CI[[length(x$CI)]]+1,main="Clusters") ; readline(prompt="Press [enter] to continue");}
+  if (!is.null(x$CI)) {
+	  
+	  library(corrplot)
+	  res = coclustering(x$CI)
+	  col3 <- colorRampPalette(c("red", "white", "blue")) 
+	  corrplot(res, diag = FALSE, method = "color", type = "upper",col = col3(100), cl.lim = c(0, 1), tl.pos = "n")
+	  
+	  readline(prompt="Press [enter] to continue");
+  }
 }
 
 #'  summary AM_mcmc_output 
@@ -195,6 +209,18 @@ summary.AM_mcmc_output=function(object,...){
 	if (!is.null(object$Mna)) print(sprintf("%s\t%f\t%f","Mna" ,  mean(object$Mna) , sd(object$Mna))) ;
 }
 
+#'  Return maximum likelihood estimation
+#'  
+#'  Given a MCMC output, this function return maximum likelihood estimation.
+#'  
+#'@param fit a \code{\link{AM_mcmc_output}} object
+#'  
+#'@importFrom sdols dlso
+#'@export
+AM_clustering_estimation_squared_loss = function (fit) {
+	library('sdols')
+	fres = dlso(t(do.call(cbind,fit$CI)))
+}
 
 #################################################################################
 ##### AM_mcmc_fit function

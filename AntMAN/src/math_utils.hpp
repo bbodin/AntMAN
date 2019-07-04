@@ -69,10 +69,6 @@ static inline double am_rchisq (double a)                   {
 }
 
 
-static inline double am_pnorm   (double,double, double,bool,bool) {VERBOSE_ERROR("Unsupported function: am_pnorm  "); return 0.0;}
-static inline double am_qnorm   (double,double, double,bool,bool) {VERBOSE_ERROR("Unsupported function: am_qnorm  "); return 0.0;}
-
-
 #elif HAS_RCPP
 #include <RcppArmadillo.h>
 
@@ -84,11 +80,6 @@ static inline double am_rgamma (double a ,double b)           {return R::rgamma(
 static inline double am_rbeta  (double a ,double b)           {return R::rbeta(a,b); }
 static inline double am_rnorm (double a ,double b)            {return R::rnorm(a,b); }
 static inline double am_rchisq (double a)                     {return R::rchisq(a); }
-
-
-static inline double am_pnorm   (double,double, double,bool,bool) {VERBOSE_ERROR("Unsupported function: am_pnorm  "); return 0.0;}
-static inline double am_qnorm   (double,double, double,bool,bool) {VERBOSE_ERROR("Unsupported function: am_qnorm  "); return 0.0;}
-
 
 #else
 #error "Unsupported Compilation flags, Need NO_RCPP or HAS_RCPP"
