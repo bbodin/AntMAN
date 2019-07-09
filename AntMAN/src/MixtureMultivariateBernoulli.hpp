@@ -36,7 +36,7 @@ public :
 				const arma::vec& b0 = _b0;
 				const arma::vec& a0 = _a0;
 
-				VERBOSE_DEBUG("b0=" << b0 << " a0=" << a0 << " mb=" << mb);
+				VERBOSE_DEBUG("b0=" << b0 << " a0=" << a0);
 
 				const int d = y.n_cols;
 				arma::mat theta(M,d);

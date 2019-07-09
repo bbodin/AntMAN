@@ -367,6 +367,7 @@ Rcpp::List IAM_mcmc_fit (
 		Rcpp::RObject                        y                      , /* Not optional */
 		Rcpp::List                           mix_kernel_hyperparams , /* Not optional */
 		Rcpp::IntegerVector                  initial_clustering     , //  = Rcpp::IntegerVector::create() /* default will be 1for1 */
+		bool                                 fixed_clustering       ,
 		Rcpp::List                           mix_components_prior   , //  = Rcpp::List::create()          /* default will be Poisson ()  */
 		Rcpp::List                           mix_weight_prior       , //  = Rcpp::List::create()          /* default will be Gamma ()    */
 		Rcpp::List                           mcmc_parameters          //  = Rcpp::List::create()          /* (default niter=20000, ….)   */
@@ -437,15 +438,16 @@ Rcpp::List IAM_mcmc_fit (
 
 	if (Rcpp::is<Rcpp::NumericMatrix>(y) || Rcpp::is<Rcpp::IntegerMatrix>(y)) {
 			VERBOSE_ASSERT (is_multivariate(mix_kernel_hyperparams), "y argument is a Matrix while the technique is not MultiVariate.") ;
-			dynamic_cast<MultivariateMixture*>(mixture)->fit(Rcpp::as<arma::mat>(y) , initial_clustering, prior ,
-					niter ,burnin ,thin ,mcmc_parameters["verbose"] , &res );
+			dynamic_cast<MultivariateMixture*>(mixture)->fit(Rcpp::as<arma::mat>(y) , initial_clustering, fixed_clustering,
+					prior ,
+					niter ,burnin ,thin , &res );
 			VERBOSE_INFO("End of Gibbs");
 			return res.getList();
 
 		}  else if(Rcpp::is<Rcpp::NumericVector>(y) || Rcpp::is<Rcpp::IntegerVector>(y)){
 			VERBOSE_ASSERT (is_univariate(mix_kernel_hyperparams), "y argument is a Vector while the technique is not Univariate.") ;
-			dynamic_cast<UnivariateMixture*>(mixture)->fit(Rcpp::as<arma::vec>(y) , initial_clustering, prior ,
-					niter ,burnin ,thin ,mcmc_parameters["verbose"] , &res );
+			dynamic_cast<UnivariateMixture*>(mixture)->fit(Rcpp::as<arma::vec>(y) , initial_clustering, fixed_clustering, prior ,
+					niter ,burnin ,thin , &res );
 
 			VERBOSE_INFO("End of Gibbs");
 			return res.getList();

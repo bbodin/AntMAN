@@ -17,7 +17,7 @@ AM_emp_bayes_uninorm(y, scEmu = 1, scEsig2 = 3, CVsig2 = 3)
 \item{CVsig2}{The coefficient of variation of sig2 (default =3), CVsig2}
 }
 \value{
-Parameters of the normal inverse Gamma prior.
+Parameters of the normal inverse Gamma prior according to the empirical Bayes approach.
 }
 \description{
 this function compute the hyperparameters of an Normal-Inverse-Gamma

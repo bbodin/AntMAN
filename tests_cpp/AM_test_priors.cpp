@@ -61,7 +61,7 @@ PriorNegativeBinomial prepare_negative_binomial () {
 
 void test_priors () {
 
-	VERBOSE_LEVEL = DEBUG_LEVEL ;
+	VERBOSE_LEVEL = LOG_LEVEL ;
 
 	PriorNegativeBinomial negbin  = prepare_negative_binomial ();
 	PriorPoissonGamma     pois    = prepare_poisson ();

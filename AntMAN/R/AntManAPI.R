@@ -149,6 +149,15 @@ NULL
 ##### AM_mcmc_output, Summary, Plot.
 #################################################################################
 
+AM_plot_coclustering=function(C){
+	#### Co clustering probability : How many time two are in the same custer. 
+
+		n = dim(C)[0]
+		## library(corrplot)
+		## col3 <- colorRampPalette(c("red", "white", "blue")) 
+		## corrplot(res, diag = FALSE, method = "color", type = "upper",col = col3(100), cl.lim = c(0, 1), tl.pos = "n")
+		image(1:n,1:n,C,xaxt='n', yaxt="n",main="Similarity matrix",col = gray.colors(30))
+}
 
 #' S3 class AM_mcmc_output.
 #' @description Output type of return values from  \code{\link{AM_mcmc_fit}}. See paper for the moment. 
@@ -237,6 +246,7 @@ AM_clustering_estimation_laugreen = function (fit, C = NULL) {
 AM_clustering_estimation_squared_loss = function (fit) {
 	library('sdols')
 	fres = dlso(t(do.call(cbind,fit$CI)))
+	return (fres);
 }
 
 #'  Return maximum likelihood estimation (average)
@@ -329,7 +339,8 @@ AM_coclustering_slow = function (fit) {
 #'
 #'@param y input data, can be a vector or a matrix.
 #'@param mix_kernel_hyperparams is a configuration list, defined by *_mix_hyperparams functions, where * denotes the chosen kernel.
-#'@param initial_clustering is a vector CI of initial cluster assignement. If no clustering is specified (either as \code{init_K} or \code{init_clustering}), then evry observation is assigned to its own cluster.
+#'@param initial_clustering is a vector CI of initial cluster assignement. If no clustering is specified (either as \code{init_K} or \code{init_clustering}), then every observation is assigned to its own cluster.
+#'@param fixed_clustering is a vector CI of cluster assignement that will remained unchanged for every iterations.
 #'@param init_K initial value for  the number of cluster. When this is specified, AntMAN intitialises the clustering assign usng K-means.
 #'@param mix_components_prior is a configuration list defined by AM_mix_components_prior_* functions, where * denotes the chosen prior.
 #'@param mix_weight_prior is a configuration list defined by AM_weight_prior_* functions, where * denotes the chosen prior specification.
@@ -347,20 +358,28 @@ AM_mcmc_fit <- function(
   mix_kernel_hyperparams, 
   initial_clustering = NULL, 
   init_K = NULL, 
+  fixed_clustering = NULL, 
   mix_components_prior = AM_mix_components_prior_pois() , 
   mix_weight_prior = AM_mix_weights_prior_gamma(), 
   mcmc_parameters = AM_mcmc_parameters() ) {
-  
-  if (is.null(init_K) & !is.null(initial_clustering)) {
-  } else if (!is.null(init_K) & is.null(initial_clustering)) {
+  fixed_cluster = FALSE
+  if (is.null(fixed_clustering) & is.null(init_K) & !is.null(initial_clustering)) {
+	  fixed_cluster = FALSE
+  } else if (!is.null(init_K) & is.null(initial_clustering)& is.null(fixed_clustering)) {
+	  fixed_cluster = FALSE
     initial_clustering <- kmeans(y, init_K)$cluster
-  } else if (is.null(init_K) & is.null(initial_clustering)) {
+  } else if (is.null(init_K) & is.null(initial_clustering)& is.null(fixed_clustering)) {
+	  fixed_cluster = FALSE
     initial_clustering <- 0:(length(y)-1)
-  } else {
-    stop("Please provide either K_init or initial_clustering.")
+  } else if (is.null(init_K) & is.null(initial_clustering)& !is.null(fixed_clustering)) { 
+	  fixed_cluster = TRUE
+	  initial_clustering = fixed_clustering
+  } 
+  else {
+    stop("Please provide only one of K_init or initial_clustering or fixed_clustering.")
   }
   
-  structure(IAM_mcmc_fit(y = y, mix_kernel_hyperparams = mix_kernel_hyperparams, initial_clustering = initial_clustering, mix_components_prior = mix_components_prior, mix_weight_prior = mix_weight_prior, mcmc_parameters = mcmc_parameters)
+  structure(IAM_mcmc_fit(y = y, mix_kernel_hyperparams = mix_kernel_hyperparams, initial_clustering = initial_clustering, fixed_clustering=  fixed_cluster , mix_components_prior = mix_components_prior, mix_weight_prior = mix_weight_prior, mcmc_parameters = mcmc_parameters)
             , class = "AM_mcmc_output") 
 }
 

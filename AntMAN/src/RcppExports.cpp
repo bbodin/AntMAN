@@ -7,18 +7,19 @@
 using namespace Rcpp;
 
 // IAM_mcmc_fit
-Rcpp::List IAM_mcmc_fit(Rcpp::RObject y, /* Not optional */ 		Rcpp::List mix_kernel_hyperparams, /* Not optional */ 		Rcpp::IntegerVector initial_clustering, Rcpp::List mix_components_prior, Rcpp::List mix_weight_prior, Rcpp::List mcmc_parameters);
-RcppExport SEXP _AntMAN_IAM_mcmc_fit(SEXP ySEXP, SEXP mix_kernel_hyperparamsSEXP, SEXP initial_clusteringSEXP, SEXP mix_components_priorSEXP, SEXP mix_weight_priorSEXP, SEXP mcmc_parametersSEXP) {
+Rcpp::List IAM_mcmc_fit(Rcpp::RObject y, /* Not optional */ 		Rcpp::List mix_kernel_hyperparams, /* Not optional */ 		Rcpp::IntegerVector initial_clustering, bool fixed_clustering, Rcpp::List mix_components_prior, Rcpp::List mix_weight_prior, Rcpp::List mcmc_parameters);
+RcppExport SEXP _AntMAN_IAM_mcmc_fit(SEXP ySEXP, SEXP mix_kernel_hyperparamsSEXP, SEXP initial_clusteringSEXP, SEXP fixed_clusteringSEXP, SEXP mix_components_priorSEXP, SEXP mix_weight_priorSEXP, SEXP mcmc_parametersSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::RObject >::type y(ySEXP);
     Rcpp::traits::input_parameter< /* Not optional */ 		Rcpp::List >::type mix_kernel_hyperparams(mix_kernel_hyperparamsSEXP);
     Rcpp::traits::input_parameter< /* Not optional */ 		Rcpp::IntegerVector >::type initial_clustering(initial_clusteringSEXP);
+    Rcpp::traits::input_parameter< bool >::type fixed_clustering(fixed_clusteringSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type mix_components_prior(mix_components_priorSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type mix_weight_prior(mix_weight_priorSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type mcmc_parameters(mcmc_parametersSEXP);
-    rcpp_result_gen = Rcpp::wrap(IAM_mcmc_fit(y, mix_kernel_hyperparams, initial_clustering, mix_components_prior, mix_weight_prior, mcmc_parameters));
+    rcpp_result_gen = Rcpp::wrap(IAM_mcmc_fit(y, mix_kernel_hyperparams, initial_clustering, fixed_clustering, mix_components_prior, mix_weight_prior, mcmc_parameters));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -204,7 +205,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_AntMAN_IAM_mcmc_fit", (DL_FUNC) &_AntMAN_IAM_mcmc_fit, 6},
+    {"_AntMAN_IAM_mcmc_fit", (DL_FUNC) &_AntMAN_IAM_mcmc_fit, 7},
     {"_AntMAN_calcola_stirling", (DL_FUNC) &_AntMAN_calcola_stirling, 2},
     {"_AntMAN_calcola_stirling_ricor", (DL_FUNC) &_AntMAN_calcola_stirling_ricor, 2},
     {"_AntMAN_calcola_stirling_ricor_abs", (DL_FUNC) &_AntMAN_calcola_stirling_ricor_abs, 2},

@@ -29,7 +29,7 @@ void test_Mixture_UnivariateNormal() {
 	GibbsResultPlain * GRP = new  GibbsResultPlain ();
 
 	auto start_gibbs           = std::chrono::system_clock::now();
-	mixture->fit(y_uvn , initial_clustering, prior , 20000 ,5000 ,10 , 0 , GRP);
+	mixture->fit(y_uvn , initial_clustering, false, prior , 20000 ,5000 ,10  , GRP);
 	auto end_gibbs             = std::chrono::system_clock::now();
 	auto elapsed_gibbs         = end_gibbs - start_gibbs;
 	auto total_gibbs           = elapsed_gibbs.count() / 1000000.0;
@@ -38,7 +38,7 @@ void test_Mixture_UnivariateNormal() {
 
 }
 
-void test_Mixture_MultivariateBernoulli () {
+void test_Mixture_MultivariateBernoulli (long niter, long burnin, long thin) {
 arma::mat carcinoma = {
 	     //A  B  C  D  E  F  G
 		 { 0, 0, 0, 0, 0, 0, 0 } ,
@@ -175,16 +175,17 @@ GibbsResultPlain * GRP = new  GibbsResultPlain ();
 cluster_indices_t initial_clusteringmvb (carcinoma.n_rows,1);
 
 auto start_gibbs           = std::chrono::system_clock::now();
-mixturemvb->fit(carcinoma , initial_clusteringmvb, priormvb , 5000 ,1000 ,10 , 0 , GRP);
+mixturemvb->fit(carcinoma , initial_clusteringmvb, false, priormvb , niter,  burnin,  thin, GRP);
+mixturemvb->fit(carcinoma , initial_clusteringmvb, true,  priormvb , niter,  burnin,  thin, GRP);
 auto end_gibbs             = std::chrono::system_clock::now();
 auto elapsed_gibbs         = end_gibbs - start_gibbs;
 auto total_gibbs           = elapsed_gibbs.count() / 1000000.0;
 std::cout << "Total time: " << total_gibbs << "ms" << std::endl ;
 
 }
-void test_mixtures () {
+void test_mixtures (long niter, long burnin, long thin) {
 
-	test_Mixture_MultivariateBernoulli();
+	test_Mixture_MultivariateBernoulli(niter,  burnin,  thin);
 
 
 

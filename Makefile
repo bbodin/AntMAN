@@ -71,5 +71,5 @@ deps :
 clean : 
 	rm -rf current *~ *.Rinstall *.pdf  *_1.0.tar.gz *.Rcheck ./AntMAN/NAMESPACE ./AntMAN/src/*.o ./AntMAN/src/*.so 	./AntMAN/src/*.rds ./AntMAN/src/RcppExports.cpp  ./AntMAN/R/RcppExports.R  ./AntMAN/man/AM*.Rd tests_cpp/testAntMAN
 
-.PHONY: clean
+.PHONY: clean tests_cpp/testAntMAN
 .SECONDARY:

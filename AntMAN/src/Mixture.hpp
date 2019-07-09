@@ -8,6 +8,7 @@
 #ifndef ANTMAN_SRC_MIXTURE_HPP_
 #define ANTMAN_SRC_MIXTURE_HPP_
 #include <map>
+#include<iomanip>
 #include "utils.hpp"
 #include "Prior.hpp"
 #include "GibbsResult.hpp"
@@ -66,12 +67,16 @@ public:
 
 	void fit(InputType y,
 			cluster_indices_t initial_clustering,
+			bool fixed_clustering,
 			Prior * prior,
 			const unsigned long  niter,
 			const unsigned long  burnin ,
 			const unsigned long  thin,
-			const unsigned int verbose,
 			GibbsResult * results) {
+
+		VERBOSE_ASSERT(niter > burnin, "Please use a total iteration number greater then burnin.");
+		VERBOSE_ASSERT(thin  > 0     , "Please make sure to have thin > 0.");
+
 
 
 		const int n = y.n_rows;
@@ -109,9 +114,9 @@ public:
 		/******* Start Gibbs                 **/
 		/**************************************/
 
-		VERBOSE_LOG ( "Let's start the Gibbs!");
+		VERBOSE_INFO ( "Let's start the Gibbs!");
 
-		int    total_saved          = 0;
+		unsigned long total_saved          = 0;
 		double total_iter           = 0;
 		double total_u              = 0;
 		double total_ci             = 0;
@@ -120,7 +125,6 @@ public:
 		double total_gibbs          = 0;
 		auto   start_gibbs          = std::chrono::system_clock::now();
 
-		int verbose_slice = niter / 100;
 
 		for (unsigned int iter = 0 ; iter < niter ; iter++)  {
 
@@ -148,7 +152,7 @@ public:
 			// Update CI and CI*
 			VERBOSE_DEBUG("Call up_ci\n");
 			auto start_ci = std::chrono::system_clock::now();
-			if (iter > 0) {//I need this if i want that my inizialization for ci works
+			if ((iter > 0) and (not fixed_clustering)) {//I need this if i want that my inizialization for ci works
 				ci_current = this->up_ci(y, M, S_current); // parametricPrior = k_x,,X   Tau = Beta_current, z_current
 			}
 			// TODO[OPTIMIZE ME]: This is computed twice, could be avoided.
@@ -183,6 +187,7 @@ public:
 			const std::vector <int> nj = up_allocated_res.nj();
 
 			ci_current   = up_allocated_res.ci();
+
 			S_current = up_allocated_res.S();
 			auto end_alloc = std::chrono::system_clock::now();
 			auto elapsed_alloc = end_alloc - start_alloc;
@@ -191,28 +196,40 @@ public:
 
 			prior->update(U_current, K, nj);
 
+			VERBOSE_DEBUG("prior->update(U_current, K, nj) is done\n");
 
 			auto end_iter = std::chrono::system_clock::now();
 			auto elapsed_iter = end_iter - start_iter;
 			total_iter = elapsed_iter.count()  / 1000000.0;
+			VERBOSE_DEBUG("total_iter = " << total_iter << "ms");
+
+			const unsigned long verbose_slice = niter / std::min((long unsigned int)100,niter);
+			const unsigned long total_to_save = ((niter - burnin) / thin) + ((((niter - burnin) % thin) == 0)?0:1) ;
 
 			// Save output after the burn-in and taking into account
 			// thinning
-			if( (iter >= burnin) and ((niter - iter) % thin == 0) ) {
+			if( (iter >= burnin) and ((iter - burnin) % thin == 0) ) {
 				total_saved++;
 				results->log_output (ci_current,  S_current,  M,  K,  M_na, this , prior) ;
+				VERBOSE_ASSERT(total_to_save >= total_saved, "Raffaele was right.");
+				VERBOSE_DEBUG("results->log_output() is done");
+			} else {
+				VERBOSE_DEBUG("results->log_output() is skiped");
 			}
 
 			// Logging
-			if((verbose!=0) and (((iter % verbose_slice)==0) or  ((iter + 1) == niter))) {
+
+			VERBOSE_DEBUG("verbose_slice = " << verbose_slice);
+			if((((iter % (verbose_slice))==0) or  ((iter + 1) == niter))) {
+				VERBOSE_DEBUG("Start the logging");
 				auto end_gibbs             = std::chrono::system_clock::now();
 				auto elapsed_gibbs         = end_gibbs - start_gibbs;
 				start_gibbs           = std::chrono::system_clock::now();
 				total_gibbs               += elapsed_gibbs.count() / 1000000.0;
 
-				VERBOSE_LOG("[" << 100 * iter / (niter - 1) << "%]" <<
-						" iter="<<iter<<
-						" saved="<< total_saved <<
+				VERBOSE_LOG("[" << std::setw(3) << 100 * iter / (niter - 1) << "%]" <<
+						" iter=["<< iter + 1 << "/" << niter << "]" <<
+						" saved=["<< total_saved << "/" << total_to_save << "]" <<
 						" K="<<K<<
 						//" M_na="<<M_na<<
 						" M="<<M<<
@@ -221,9 +238,9 @@ public:
 						" alloc=" <<total_alloc << "ms" <<
 						" iter=" <<total_iter << "ms" <<
 						" total_gibbs=" <<total_gibbs<< "ms" );
+			} else {
+				VERBOSE_DEBUG("Skip the logging");
 			}
-
-
 
 		}//I close the while
 

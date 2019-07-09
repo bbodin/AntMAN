@@ -5,7 +5,8 @@
 \title{Performs a Gibbs sampling}
 \usage{
 AM_mcmc_fit(y, mix_kernel_hyperparams, initial_clustering = NULL,
-  init_K = NULL, mix_components_prior = AM_mix_components_prior_pois(),
+  init_K = NULL, fixed_clustering = NULL,
+  mix_components_prior = AM_mix_components_prior_pois(),
   mix_weight_prior = AM_mix_weights_prior_gamma(),
   mcmc_parameters = AM_mcmc_parameters())
 }
@@ -14,9 +15,11 @@ AM_mcmc_fit(y, mix_kernel_hyperparams, initial_clustering = NULL,
 
 \item{mix_kernel_hyperparams}{is a configuration list, defined by *_mix_hyperparams functions, where * denotes the chosen kernel.}
 
-\item{initial_clustering}{is a vector CI of initial cluster assignement. If no clustering is specified (either as \code{init_K} or \code{init_clustering}), then evry observation is assigned to its own cluster.}
+\item{initial_clustering}{is a vector CI of initial cluster assignement. If no clustering is specified (either as \code{init_K} or \code{init_clustering}), then every observation is assigned to its own cluster.}
 
 \item{init_K}{initial value for  the number of cluster. When this is specified, AntMAN intitialises the clustering assign usng K-means.}
+
+\item{fixed_clustering}{is a vector CI of cluster assignement that will remained unchanged for every iterations.}
 
 \item{mix_components_prior}{is a configuration list defined by AM_mix_components_prior_* functions, where * denotes the chosen prior.}
 
