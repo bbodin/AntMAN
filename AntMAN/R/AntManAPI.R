@@ -210,10 +210,10 @@ plot.AM_mcmc_output=function(x,...){
 #'@method summary AM_mcmc_output 
 #'@export
 summary.AM_mcmc_output=function(object,...){
-	print("Name\tMean\tStdDev") ;
-	if (!is.null(object$K)) print(sprintf("%s\t%f\t%f","K" ,  mean(object$K) , sd(object$K))) ;
-	if (!is.null(object$M)) print(sprintf("%s\t%f\t%f","M" ,  mean(object$M) , sd(object$M))) ;
-	if (!is.null(object$Mna)) print(sprintf("%s\t%f\t%f","Mna" ,  mean(object$Mna) , sd(object$Mna))) ;
+	cat( "Name", "\t", "Mean","\t", "StdDev","\n");
+	if (!is.null(object$K)) cat( "K", "\t", mean(object$K),"\t", sd(object$K),"\n");
+	if (!is.null(object$M)) cat( "M", "\t", mean(object$M),"\t", sd(object$M),"\n");
+	if (!is.null(object$Mna)) cat( "Mna", "\t", mean(object$Mna),"\t", sd(object$Mna),"\n");
 }
 #'  Return maximum likelihood estimation (laugreen)
 #'  
