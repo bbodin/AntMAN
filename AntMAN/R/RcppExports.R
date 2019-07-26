@@ -45,15 +45,15 @@ prior_K_Delta <- function(n, gamma, Mstar) {
     .Call('_AntMAN_prior_K_Delta', PACKAGE = 'AntMAN', n, gamma, Mstar)
 }
 
-find_gamma_Pois <- function(n, Lambda, Kstar, gam_min, gam_max, tollerance, max_iter = 30L) {
-    .Call('_AntMAN_find_gamma_Pois', PACKAGE = 'AntMAN', n, Lambda, Kstar, gam_min, gam_max, tollerance, max_iter)
+find_gamma_Pois <- function(n, Lambda, Kstar, gam_min, gam_max, tolerance, max_iter = 30L) {
+    .Call('_AntMAN_find_gamma_Pois', PACKAGE = 'AntMAN', n, Lambda, Kstar, gam_min, gam_max, tolerance, max_iter)
 }
 
-find_gamma_NegBin <- function(n, r, p, Kstar, gam_min, gam_max, tollerance, max_iter = 30L) {
-    .Call('_AntMAN_find_gamma_NegBin', PACKAGE = 'AntMAN', n, r, p, Kstar, gam_min, gam_max, tollerance, max_iter)
+find_gamma_NegBin <- function(n, r, p, Kstar, gam_min, gam_max, tolerance, max_iter = 30L) {
+    .Call('_AntMAN_find_gamma_NegBin', PACKAGE = 'AntMAN', n, r, p, Kstar, gam_min, gam_max, tolerance, max_iter)
 }
 
-find_gamma_Delta <- function(n, Mstar, Kstar, gam_min, gam_max, tollerance, max_iter = 30L) {
-    .Call('_AntMAN_find_gamma_Delta', PACKAGE = 'AntMAN', n, Mstar, Kstar, gam_min, gam_max, tollerance, max_iter)
+find_gamma_Delta <- function(n, Mstar, Kstar, gam_min, gam_max, tolerance, max_iter = 30L) {
+    .Call('_AntMAN_find_gamma_Delta', PACKAGE = 'AntMAN', n, Mstar, Kstar, gam_min, gam_max, tolerance, max_iter)
 }
 

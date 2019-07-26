@@ -451,7 +451,7 @@ double calcola_media(const Rcpp::NumericVector prob,const unsigned n){
 
 
 // [[Rcpp::export]]
-double find_gamma_Pois(const unsigned int n,const double Lambda,const unsigned int Kstar, double gam_min,double gam_max,const double tollerance,const unsigned int max_iter=30){
+double find_gamma_Pois(const unsigned int n,const double Lambda,const unsigned int Kstar, double gam_min,double gam_max,const double tolerance,const unsigned int max_iter=30){
 
 	
 	//Rcpp::IntegerVector unoton=Rcpp:seq(1,n);
@@ -479,7 +479,7 @@ double find_gamma_Pois(const unsigned int n,const double Lambda,const unsigned i
 	double obs_tol=Kmax-Kmin;
 	unsigned niter=0;
 
-	while( (obs_tol>=tollerance) && (niter<max_iter) ){
+	while( (obs_tol>=tolerance) && (niter<max_iter) ){
 		//Compute the center
 		gam_mean=(gam_min+gam_max)/2;	
 		p_mean=prior_K_Pois(n,gam_mean,Lambda);
@@ -526,7 +526,7 @@ double find_gamma_Pois(const unsigned int n,const double Lambda,const unsigned i
 ///Metodo bisezione Negative binomial
 
 // [[Rcpp::export]]
-double find_gamma_NegBin(const unsigned int n,const double r, const double p,const unsigned int Kstar, double gam_min,double gam_max,const double tollerance,const unsigned int max_iter=30){
+double find_gamma_NegBin(const unsigned int n,const double r, const double p,const unsigned int Kstar, double gam_min,double gam_max,const double tolerance,const unsigned int max_iter=30){
 
 	
 	//Rcpp::IntegerVector unoton=Rcpp:seq(1,n);
@@ -554,7 +554,7 @@ double find_gamma_NegBin(const unsigned int n,const double r, const double p,con
 	double obs_tol=Kmax-Kmin;
 	unsigned niter=0;
 
-	while( (obs_tol>=tollerance) && (niter<max_iter) ){
+	while( (obs_tol>=tolerance) && (niter<max_iter) ){
 		//Compute the center
 		gam_mean=(gam_min+gam_max)/2;	
 		p_mean=prior_K_NegBin(n,gam_mean,r,p);
@@ -597,7 +597,7 @@ double find_gamma_NegBin(const unsigned int n,const double r, const double p,con
 ///Metodo bisezione Delta
 
 // [[Rcpp::export]]
-double find_gamma_Delta(const unsigned int n,const unsigned Mstar,const unsigned int Kstar, double gam_min,double gam_max,const double tollerance,const unsigned int max_iter=30){
+double find_gamma_Delta(const unsigned int n,const unsigned Mstar,const unsigned int Kstar, double gam_min,double gam_max,const double tolerance,const unsigned int max_iter=30){
 
 	//TODO: DFai il check di Kstar minore di M_star e n
 	
@@ -626,7 +626,7 @@ double find_gamma_Delta(const unsigned int n,const unsigned Mstar,const unsigned
 	double obs_tol=Kmax-Kmin;
 	unsigned niter=0;
 
-	while( (obs_tol>=tollerance) && (niter<max_iter) ){
+	while( (obs_tol>=tolerance) && (niter<max_iter) ){
 		//Compute the center
 		gam_mean=(gam_min+gam_max)/2;	
 		p_mean=prior_K_Delta(n,gam_mean,Mstar);
