@@ -1,7 +1,7 @@
 // [[Rcpp::depends(RcppArmadillo)]]
 
 #include <RcppArmadillo.h>
-#include <RcppArmadilloExtensions/sample.h>
+#include "verbose.hpp"
 #include <limits>
 
 // [[Rcpp::export]]
@@ -46,7 +46,7 @@ Rcpp::NumericVector calcola_stirling_ricor(double gamma, unsigned int n){
 	for(unsigned int j=1;j<n;j++){
 
 		std::copy(row_jp1.begin(),row_jp1.end(),row_j.begin()); // row j+1 becomes row j!
-		//Rcpp::Rcout<<"j="<<j<<" row_j="<<row_j<<"\n";
+
 
 
 		for(unsigned int k=1;k<=(j+1);k++){
@@ -78,7 +78,7 @@ Rcpp::NumericVector calcola_stirling_ricor_abs(double gamma, unsigned int n){
 	for(unsigned int j=1;j<n;j++){
 
 		std::copy(row_jp1.begin(),row_jp1.end(),row_j.begin()); // row j+1 becomes row j!
-		//Rcpp::Rcout<<"j="<<j<<" row_j="<<row_j<<"\n";
+
 
 		//row_jp1[0]=std::exp(std::lgamma(j-1+1)-std::lgamma(j-1-j+1));
 		for(unsigned int k=1;k<=(j+1);k++){
@@ -115,9 +115,7 @@ Rcpp::NumericVector calcola_stirling_ricor_log(double gamma, unsigned int n){
 	for(unsigned int j=1;j<n;j++){
 
 		std::copy(lrow_jp1.begin(),lrow_jp1.end(),lrow_j.begin()); // lrow j+1 becomes lrow j!
-		//Rcpp::Rcout<<"j="<<j<<" lrow_j="<<lrow_j<<"\n";
 
-		//Rcpp::Rcout<<"exp(-inf)="<< std::exp(lrow_j[0]-lrow_j[1])<<"\n";
 
 
 
@@ -170,31 +168,31 @@ Rcpp::NumericVector VnkPoisson(unsigned int n,double Lambda,double gamma){
 		controllo=1.;
 		m=0;
 		out[k-1]=0;
-		//Rcpp::Rcout<<"k="<<k<<"\n";
+
 
 		Rcpp::NumericVector appoggio(0);
 		while( (controllo>-1500) || (m<1500)  ){
 
 			double first= std::lgammaf(m+k+1)-std::lgammaf(m+1);
-			//Rcpp::Rcout<<"first= "<<first <<"\n";		
+
 
 			ldenspoi=-Lambda+(m+k-1)*std::log(Lambda)-std::lgammaf(m+k);
-			//Rcpp::Rcout<<"ldensita= "<<ldenspoi <<"\n";		
+
 
 			double third=std::lgamma((k+m)*gamma) -std::lgamma((k+m)*gamma+n);
-			//Rcpp::Rcout<<"third= "<<third <<"\n";		
+
 
 			controllo=first+ldenspoi+third;
-			//Rcpp::Rcout<<"m="<<m<<" controllo="<<controllo<<"\n";
+
 			appoggio.push_back(controllo);
 			m +=1;
 		}
 		double massimo=Rcpp::max(appoggio);
 		Rcpp::NumericVector sottraggo= appoggio-massimo;
-		//Rcpp::Rcout<<"sottraggo="<<Rcpp::sum(Rcpp::exp( sottraggo))<<"\n";
+
 
 		out[k-1]=massimo+std::log(Rcpp::sum(Rcpp::exp( sottraggo)));
-		//Rcpp::Rcout<<"out[k-1]="<<out[k-1]<<"\n";
+
 
 	}
 	return(out) ;
@@ -230,31 +228,31 @@ Rcpp::NumericVector VnkNegBin(unsigned int n,double r,double p,double gamma){
 		controllo=1.;
 		m=0;
 		out[k-1]=0;
-		Rcpp::Rcout<<"k="<<k<<"\n";
+	
 
 		Rcpp::NumericVector appoggio(0);
 		while( (controllo>-100) || (m<100)  ){
 
 			double first= std::lgammaf(m+k+1)-std::lgammaf(m+1);
-			//Rcpp::Rcout<<"first= "<<first <<"\n";		
+
 
 			ldensnegbin=std::lgamma(r+m+k-1)-std::lgamma(r)-std::lgammaf(m+k)+(m+k-1)*std::log(p)+r*std::log(1-p);
-			//Rcpp::Rcout<<"ldensita= "<<ldensgamma <<"\n";		
+
 
 			double third=std::lgamma((k+m)*gamma) -std::lgamma((k+m)*gamma+n);
-			//Rcpp::Rcout<<"third= "<<third <<"\n";		
+
 
 			controllo=first+ldensnegbin+third;
-			//Rcpp::Rcout<<"m="<<m<<" controllo="<<controllo<<"\n";
+
 			appoggio.push_back(controllo);
 			m +=1;
 		}
 		double massimo=Rcpp::max(appoggio);
 		Rcpp::NumericVector sottraggo= appoggio-massimo;
-		Rcpp::Rcout<<"sottraggo="<<Rcpp::sum(Rcpp::exp( sottraggo))<<"\n";
+
 
 		out[k-1]=massimo+std::log(Rcpp::sum(Rcpp::exp( sottraggo)));
-		Rcpp::Rcout<<"out[k-1]="<<out[k-1]<<"\n";
+
 
 	}
 	return(out) ;
@@ -282,13 +280,13 @@ Rcpp::NumericVector VnkDelta(unsigned int n,unsigned int Mstar,double gamma){
 
 		if(k<=Mstar){
 			//int lfactn=std::lgammaf(n);
-			Rcpp::Rcout<<"k="<<k<<"\n";
+
 			Rcpp::NumericVector appoggio(0);
 			out[k-1]=std::lgammaf(Mstar+1)-std::lgammaf(Mstar-k+1)+std::lgamma(gamma*Mstar)-std::lgamma(n+gamma*Mstar);
 		}else{
 			out[k-1]=-infinito;
 		}
-		Rcpp::Rcout<<"out[k-1]="<<out[k-1]<<"\n";
+
 
 	}
 	return(out) ;
@@ -337,10 +335,8 @@ Rcpp::NumericVector prior_K_Pois(unsigned int n,double gamma,double Lambda){
 	Rcpp::NumericVector pstrk = Rcpp::exp(vvv+stir);
 	
 	double sum=Rcpp::sum(pstrk);
-	if(std::abs(sum-1)>0.01){
-		Rcpp::Rcout<<" Sorry I was unable to compute the prior on the number of cluster"<<"\n"<<"for the parameters"<<" n="<<n<<" gamma="<<gamma<<" Lambda="<<Lambda<<"\n";
-		Rcpp::stop("Unexpected condition occurred");
-	}
+	VERBOSE_ASSERT(std::abs(sum-1)<=0.01, " Sorry I was unable to compute the prior on the number of cluster"<<"\n"<<"for the parameters"<<" n="<<n<<" gamma="<<gamma<<" Lambda="<<Lambda);
+
 	
 	for(unsigned int l=0;l<n;l++){
 			pstrk[l]=pstrk[l]/sum;
@@ -370,10 +366,7 @@ Rcpp::NumericVector prior_K_NegBin(unsigned int n,double gamma,double r, double 
 	Rcpp::NumericVector pstrk = Rcpp::exp(vvv+stir);
 	
 	double sum=Rcpp::sum(pstrk);
-	if(std::abs(sum-1)>0.1){
-		Rcpp::Rcout<<" Sorry I was unable to compute the prior on the number of cluster"<<"\n"<<"for the parameters"<<" n="<<n<<" gamma="<<gamma<<" r="<<r << " p="<<p<< "the mass is"<<sum<<"\n";
-		Rcpp::stop("Unexpected condition occurred");
-	}
+	VERBOSE_ASSERT(std::abs(sum-1)<=0.01, " Sorry I was unable to compute the prior on the number of cluster"<<"\n"<<"for the parameters"<<" n="<<n<<" gamma="<<gamma<<" r="<<r<<gamma<<" p="<<p);
 	
 	for(unsigned int l=0;l<n;l++){
 			pstrk[l]=pstrk[l]/sum;
@@ -402,10 +395,8 @@ Rcpp::NumericVector prior_K_Delta(const unsigned int n,const double gamma,const 
 	Rcpp::NumericVector pstrk = Rcpp::exp(vvv+stir);
 	
 	double sum=Rcpp::sum(pstrk);
-	if(std::abs(sum-1)>0.01){
-		Rcpp::Rcout<<" Sorry I was unable to compute the prior on the number of cluster"<<"\n"<<"for the parameters"<<" n="<<n<<" Mstar="<<Mstar<<"\n";
-		Rcpp::stop("Unexpected condition occurred");
-	}
+	VERBOSE_ASSERT(std::abs(sum-1)<=0.01, " Sorry I was unable to compute the prior on the number of cluster"<<"\n"<<"for the parameters"<<" n="<<n<<" Mstar="<<Mstar);
+	
 	
 	for(unsigned int l=0;l<n;l++){
 			pstrk[l]=pstrk[l]/sum;
@@ -458,20 +449,13 @@ double find_gamma_Pois(const unsigned int n,const double Lambda,const unsigned i
 	
 	Rcpp::NumericVector p_min=prior_K_Pois(n,gam_min,Lambda);
 	double Kmin=calcola_media(p_min,n);
-	Rcpp::Rcout<<"K_min="<<Kmin<<" gam_min="<<gam_min<<"\n";
 
 	Rcpp::NumericVector p_max=prior_K_Pois(n,gam_max,Lambda);
 	double Kmax=calcola_media(p_max,n);
-	Rcpp::Rcout<<"K_max="<<Kmax<<" gam_max="<<gam_max<<"\n";
 
-	if( (Kmin-Kstar)>0){
-		Rcpp::Rcout<<"K_min="<<Kmin<<" gam_min="<<gam_min<<"\n";
-		Rcpp::stop("Sorry (Kmin-Kstar)>0, you should try with a smaller value of gam_min");
-	} 
-	if( (Kmax-Kstar)<0){
-		Rcpp::Rcout<<"K_max="<<Kmax<<" gam_max="<<gam_max<<"\n";
-		Rcpp::stop("Sorry (Kmax-Kstar)<0, you should try with a larger value of gam_max");
-	}
+	VERBOSE_ASSERT( (Kmin-Kstar) <= 0 , "K_min="<<Kmin<<" gam_min="<<gam_min <<": Sorry (Kmin-Kstar)>0, you should try with a smaller value of gam_min");
+	VERBOSE_ASSERT( (Kmax-Kstar) >= 0 , "K_max="<<Kmax<<" gam_max="<<gam_max <<": Sorry (Kmax-Kstar)<0, you should try with a larger value of gam_max");
+	
 
 	double gam_mean;
 	Rcpp::NumericVector p_mean;
@@ -484,19 +468,20 @@ double find_gamma_Pois(const unsigned int n,const double Lambda,const unsigned i
 		gam_mean=(gam_min+gam_max)/2;	
 		p_mean=prior_K_Pois(n,gam_mean,Lambda);
 		Kmean=calcola_media(p_mean,n);
-		Rcpp::Rcout<<"K_mean="<<Kmean<<" gam_mean="<<gam_mean<<"\n";
 
+		
+        
 		//If the center leads a number of cluster larger than the target
 		if(Kmean-Kstar>0){
 			gam_max=gam_mean;
 			Kmax=Kmean;
-			Rcpp::Rcout<<"K_max="<<Kmax<<" gam_max="<<gam_max<<"\n";
+
 
 		}
 		else{//if the center leads a number of clusters samaller than the target
 			gam_min=gam_mean;
 			Kmin=Kmean;
-			Rcpp::Rcout<<"K_min="<<Kmin<<" gam_min="<<gam_min<<"\n";
+
 
 		}
 		obs_tol=Kmax-Kmin;
@@ -533,20 +518,15 @@ double find_gamma_NegBin(const unsigned int n,const double r, const double p,con
 	
 	Rcpp::NumericVector p_min=prior_K_NegBin(n,gam_min,r,p);
 	double Kmin=calcola_media(p_min,n);
-	Rcpp::Rcout<<"K_min="<<Kmin<<" gam_min="<<gam_min<<"\n";
+
 
 	Rcpp::NumericVector p_max=prior_K_NegBin(n,gam_max,r,p);
 	double Kmax=calcola_media(p_max,n);
-	Rcpp::Rcout<<"K_max="<<Kmax<<" gam_max="<<gam_max<<"\n";
 
-	if( (Kmin-Kstar)>0){
-		Rcpp::Rcout<<"K_min="<<Kmin<<" gam_min="<<gam_min<<"\n";
-		Rcpp::stop("Sorry (Kmin-Kstar)>0, you should try with a smaller value of gam_min");
-	} 
-	if( (Kmax-Kstar)<0){
-		Rcpp::Rcout<<"K_max="<<Kmax<<" gam_max="<<gam_max<<"\n";
-		Rcpp::stop("Sorry (Kmax-Kstar)<0, you should try with a larger value of gam_max");
-	}
+	VERBOSE_ASSERT( (Kmin-Kstar) <= 0 , "K_min="<<Kmin<<" gam_min="<<gam_min <<": Sorry (Kmin-Kstar)>0, you should try with a smaller value of gam_min");
+	VERBOSE_ASSERT( (Kmax-Kstar) >= 0 , "K_max="<<Kmax<<" gam_max="<<gam_max <<": Sorry (Kmax-Kstar)<0, you should try with a larger value of gam_max");
+	
+
 
 	double gam_mean;
 	Rcpp::NumericVector p_mean;
@@ -559,19 +539,17 @@ double find_gamma_NegBin(const unsigned int n,const double r, const double p,con
 		gam_mean=(gam_min+gam_max)/2;	
 		p_mean=prior_K_NegBin(n,gam_mean,r,p);
 		Kmean=calcola_media(p_mean,n);
-		Rcpp::Rcout<<"K_mean="<<Kmean<<" gam_mean="<<gam_mean<<"\n";
+
 
 		//If the center leads a number of cluster larger than the target
 		if(Kmean-Kstar>0){
 			gam_max=gam_mean;
 			Kmax=Kmean;
-			Rcpp::Rcout<<"K_max="<<Kmax<<" gam_max="<<gam_max<<"\n";
 
 		}
 		else{//if the center leads a number of clusters samaller than the target
 			gam_min=gam_mean;
 			Kmin=Kmean;
-			Rcpp::Rcout<<"K_min="<<Kmin<<" gam_min="<<gam_min<<"\n";
 
 		}
 		obs_tol=Kmax-Kmin;
@@ -605,20 +583,13 @@ double find_gamma_Delta(const unsigned int n,const unsigned Mstar,const unsigned
 	
 	Rcpp::NumericVector p_min= prior_K_Delta(n,gam_min,Mstar);
 	double Kmin=calcola_media(p_min,n);
-	Rcpp::Rcout<<"K_min="<<Kmin<<" gam_min="<<gam_min<<"\n";
 
 	Rcpp::NumericVector p_max=prior_K_Delta(n,gam_max,Mstar);
 	double Kmax=calcola_media(p_max,n);
-	Rcpp::Rcout<<"K_max="<<Kmax<<" gam_max="<<gam_max<<"\n";
+	VERBOSE_ASSERT( (Kmin-Kstar) <= 0 , "K_min="<<Kmin<<" gam_min="<<gam_min <<": Sorry (Kmin-Kstar)>0, you should try with a smaller value of gam_min");
+	VERBOSE_ASSERT( (Kmax-Kstar) >= 0 , "K_max="<<Kmax<<" gam_max="<<gam_max <<": Sorry (Kmax-Kstar)<0, you should try with a larger value of gam_max");
+	
 
-	if( (Kmin-Kstar)>0){
-		Rcpp::Rcout<<"K_min="<<Kmin<<" gam_min="<<gam_min<<"\n";
-		Rcpp::stop("Sorry (Kmin-Kstar)>0, you should try with a smaller value of gam_min");
-	} 
-	if( (Kmax-Kstar)<0){
-		Rcpp::Rcout<<"K_max="<<Kmax<<" gam_max="<<gam_max<<"\n";
-		Rcpp::stop("Sorry (Kmax-Kstar)<0, you should try with a larger value of gam_max");
-	}
 
 	double gam_mean;
 	Rcpp::NumericVector p_mean;
@@ -631,19 +602,18 @@ double find_gamma_Delta(const unsigned int n,const unsigned Mstar,const unsigned
 		gam_mean=(gam_min+gam_max)/2;	
 		p_mean=prior_K_Delta(n,gam_mean,Mstar);
 		Kmean=calcola_media(p_mean,n);
-		Rcpp::Rcout<<"K_mean="<<Kmean<<" gam_mean="<<gam_mean<<"\n";
+
 
 		//If the center leads a number of cluster larger than the target
 		if(Kmean-Kstar>0){
 			gam_max=gam_mean;
 			Kmax=Kmean;
-			Rcpp::Rcout<<"K_max="<<Kmax<<" gam_max="<<gam_max<<"\n";
 
 		}
 		else{//if the center leads a number of clusters samaller than the target
 			gam_min=gam_mean;
 			Kmin=Kmean;
-			Rcpp::Rcout<<"K_min="<<Kmin<<" gam_min="<<gam_min<<"\n";
+
 
 		}
 		obs_tol=Kmax-Kmin;
