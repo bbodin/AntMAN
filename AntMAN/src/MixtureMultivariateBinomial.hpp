@@ -12,7 +12,7 @@
 #include "math_utils.hpp"
 #include "Mixture.hpp"
 
-class Mixture_MultivariateBernoulli: public MultivariateMixture  {
+class MixtureMultivariateBinomial: public MultivariateMixture  {
 
 	// Parametric Prior
 	arma::vec      _mb;
@@ -22,11 +22,18 @@ class Mixture_MultivariateBernoulli: public MultivariateMixture  {
 	arma::mat _theta;
 
 public :
-	Mixture_MultivariateBernoulli (const arma::vec  a0, const arma::vec  b0) :  _mb(a0.size(), arma::fill::ones), _a0 (a0), _b0 (b0) {}
+	MixtureMultivariateBinomial (const arma::vec  a0, const arma::vec  b0) :  _mb(a0.size(), arma::fill::ones), _a0 (a0), _b0 (b0) {}
 	//Mixture_MultivariateBernoulli (const arma::vec  a0, const arma::vec  b0, const arma::vec  mb) :  _mb(mb), _a0 (a0), _b0 (b0) {}
 #ifdef HAS_RCPP
 	Rcpp::List get_tau () {
 		return Rcpp::List::create(Rcpp::Named("theta") = _theta ) ;
+	}
+#else
+	std::string get_tau () {
+		std::string res = "theta=[";
+		for (auto e : _theta) res += e;
+		res += "]";
+		return res;
 	}
 #endif
 	virtual void init_tau (const input_t & y, const int M) {

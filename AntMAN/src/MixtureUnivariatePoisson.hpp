@@ -12,7 +12,7 @@
 #include "math_utils.hpp"
 #include "Mixture.hpp"
 
-class Mixture_UnivariatePoisson : public UnivariateMixture {
+class MixtureUnivariatePoisson : public UnivariateMixture {
 
 	// ParametricPrior
 	double _alpha0, _beta0;
@@ -21,10 +21,17 @@ class Mixture_UnivariatePoisson : public UnivariateMixture {
 	std::vector <double> _theta;
 
 public :
-	Mixture_UnivariatePoisson (const double alpha0, const double beta0) : _alpha0 (alpha0), _beta0 (beta0) {}
+	MixtureUnivariatePoisson (const double alpha0, const double beta0) : _alpha0 (alpha0), _beta0 (beta0) {}
 #ifdef HAS_RCPP
 	Rcpp::List get_tau () {
-		return Rcpp::List::create(Rcpp::Named("Error") = "Unexpected error."  ) ;
+		return Rcpp::List::create(Rcpp::Named("theta") = _theta ) ;
+	}
+#else
+	std::string get_tau () {
+		std::string res = "theta=[";
+		for (auto e : _theta) res += e;
+		res += "]";
+		return res;
 	}
 #endif
 	void init_tau (const input_t & y, const int M) {

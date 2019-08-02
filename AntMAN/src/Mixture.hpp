@@ -32,6 +32,8 @@ public :
 	virtual             ~Mixture() {};
 #ifdef HAS_RCPP
 	virtual Rcpp::List  get_tau () = 0;
+#else
+	virtual std::string  get_tau() = 0;
 #endif
 private :
 	bool _parallel;

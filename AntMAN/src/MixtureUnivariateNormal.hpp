@@ -12,7 +12,7 @@
 #include "math_utils.hpp"
 #include "Mixture.hpp"
 
-class Mixture_UnivariateNormal: public UnivariateMixture  {
+class MixtureUnivariateNormal: public UnivariateMixture  {
 
 	// Parametric Prior
 	double _m0, _k0, _nu0, _sig02;
@@ -22,10 +22,21 @@ class Mixture_UnivariateNormal: public UnivariateMixture  {
 	std::vector <double> _sig2_current ;
 
 public :
-	Mixture_UnivariateNormal (const double m0, const double k0, const double nu0, const double sig02) : _m0 (m0), _k0 (k0), _nu0 (nu0), _sig02  (sig02){}
+	MixtureUnivariateNormal (const double m0, const double k0, const double nu0, const double sig02) : _m0 (m0), _k0 (k0), _nu0 (nu0), _sig02  (sig02){}
 #ifdef HAS_RCPP
 	Rcpp::List get_tau () {
 		return Rcpp::List::create(Rcpp::Named("mu") =  _mu_current, Rcpp::Named("sig2") =  _sig2_current  ) ;
+	}
+#else
+	std::string get_tau () {
+		std::string res = "mu=";
+		res += "mu=[";
+		for (auto e : _mu_current) {res+= std::to_string(e) + ",";}
+		res += "] ";
+		res += "sig2=[";
+		for (auto e : _sig2_current) {res+= std::to_string(e) + ",";}
+		res += "] ";
+		return res;
 	}
 #endif
 	virtual void init_tau (const input_t & y, const int M) {

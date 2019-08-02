@@ -31,18 +31,18 @@ Mixture* gen_mix (Rcpp::List mixture_parameters) {
 	VERBOSE_ASSERT (mixture_parameters.containsElementNamed("type"), "In gen_mix mixture_parameters does not contain a type field.");
 
 	if (mixture_parameters.containsElementNamed("alpha0") and mixture_parameters.containsElementNamed("beta0")) {
-		return new Mixture_UnivariatePoisson (mixture_parameters["alpha0"], mixture_parameters["beta0"]);
+		return new MixtureUnivariatePoisson (mixture_parameters["alpha0"], mixture_parameters["beta0"]);
 	}
 
 	if (mixture_parameters.containsElementNamed("m0") and mixture_parameters.containsElementNamed("k0")
 			and mixture_parameters.containsElementNamed("nu0")
 			and mixture_parameters.containsElementNamed("sig02")) {
-		return new Mixture_UnivariateNormal (mixture_parameters["m0"], mixture_parameters["k0"], mixture_parameters["nu0"], mixture_parameters["sig02"]);
+		return new MixtureUnivariateNormal (mixture_parameters["m0"], mixture_parameters["k0"], mixture_parameters["nu0"], mixture_parameters["sig02"]);
 	}
 
 	if (mixture_parameters.containsElementNamed("a0") and mixture_parameters.containsElementNamed("b0")
 			and mixture_parameters.containsElementNamed("mb")) {
-		return  new Mixture_UnivariateBernoulli (mixture_parameters["a0"], mixture_parameters["b0"], mixture_parameters["mb"]) ;
+		return  new MixtureUnivariateBernoulli (mixture_parameters["a0"], mixture_parameters["b0"], mixture_parameters["mb"]) ;
 	}
 
 
@@ -50,11 +50,11 @@ Mixture* gen_mix (Rcpp::List mixture_parameters) {
 	if (mixture_parameters.containsElementNamed("mu0") and mixture_parameters.containsElementNamed("ka0")
 			and mixture_parameters.containsElementNamed("nu0")
 			and mixture_parameters.containsElementNamed("Lam0")) {
-		return new Mixture_MultivariateNormal (mixture_parameters["mu0"], mixture_parameters["ka0"], mixture_parameters["nu0"], mixture_parameters["Lam0"]);
+		return new MixtureMultivariateNormal (mixture_parameters["mu0"], mixture_parameters["ka0"], mixture_parameters["nu0"], mixture_parameters["Lam0"]);
 	}
 
 	if (mixture_parameters.containsElementNamed("a0") and mixture_parameters.containsElementNamed("b0")) {
-		return  new Mixture_MultivariateBernoulli (mixture_parameters["a0"], mixture_parameters["b0"]);
+		return  new MixtureMultivariateBinomial (mixture_parameters["a0"], mixture_parameters["b0"]);
 	}
 
 	return NULL;

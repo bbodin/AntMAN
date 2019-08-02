@@ -14,7 +14,7 @@
 #include "Mixture.hpp"
 // [[Rcpp::depends(RcppArmadillo)]]
 
-class Mixture_MultivariateNormal: public MultivariateMixture  {
+class MixtureMultivariateNormal: public MultivariateMixture  {
 
 	// ParametricPrior
 	arma::vec    _mu0;
@@ -28,10 +28,21 @@ class Mixture_MultivariateNormal: public MultivariateMixture  {
 
 
 public :
-	Mixture_MultivariateNormal (const arma::vec & mu0, const double ka0, const unsigned int nu0, const arma::mat & Lam0) : _mu0 (mu0), _ka0 (ka0), _nu0 (nu0), _Lam0  (Lam0){}
+	MixtureMultivariateNormal (const arma::vec & mu0, const double ka0, const unsigned int nu0, const arma::mat & Lam0) : _mu0 (mu0), _ka0 (ka0), _nu0 (nu0), _Lam0  (Lam0){}
 #ifdef HAS_RCPP
 	Rcpp::List get_tau () {
-		return Rcpp::List::create(Rcpp::Named("Error") = "Unexpected error."  ) ;
+		return Rcpp::List::create(Rcpp::Named("mu") =  _mu_current, Rcpp::Named("Sig") =  _Sig_current  ) ;
+	}
+#else
+	std::string get_tau () {
+		std::string res = "mu=";
+		res += "mu=[";
+		for (auto e : _mu_current) {res+= std::to_string(e) + ",";}
+		res += "] ";
+		res += "Sig=[";
+		for (auto e : _Sig_current) {res+= std::to_string(e) + ",";}
+		res += "] ";
+		return res;
 	}
 #endif
 	virtual void init_tau (const input_t & y, const int M){
