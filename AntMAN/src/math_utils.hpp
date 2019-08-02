@@ -10,23 +10,21 @@
 
 #include "verbose.hpp"
 
-
 #ifdef NO_RCPP
 
 #include "beta_distribution.h"
 #include <armadillo>
 
 #ifndef M_LN_2PI
-#define M_LN_2PI	1.837877066409345483560659472811	/* log(2*pi) */
+	#define M_LN_2PI	1.837877066409345483560659472811	/* log(2*pi) */
 #endif
 
 #ifndef M_2PI
-#define M_2PI		6.283185307179586476925286766559	/* 2*pi */
+	#define M_2PI		6.283185307179586476925286766559	/* 2*pi */
 #endif
 
 #ifndef M_LN_SQRT_2PI
-#define M_LN_SQRT_2PI	0.918938533204672741780329736406	/* log(sqrt(2*pi))
-								 == log(2*pi)/2 */
+	#define M_LN_SQRT_2PI	0.918938533204672741780329736406	/* log(sqrt(2*pi)) == log(2*pi)/2 */
 #endif
 
 static inline double am_rpois   (double n)                        {
@@ -67,9 +65,8 @@ static inline double am_rchisq (double a)                   {
 	 std::chi_squared_distribution<double> distribution(a);
 	 return (distribution(generator));
 }
-
-
-#elif HAS_RCPP
+#else
+#ifdef HAS_RCPP
 #include <RcppArmadillo.h>
 
 
@@ -80,9 +77,10 @@ static inline double am_rgamma (double a ,double b)           {return R::rgamma(
 static inline double am_rbeta  (double a ,double b)           {return R::rbeta(a,b); }
 static inline double am_rnorm (double a ,double b)            {return R::rnorm(a,b); }
 static inline double am_rchisq (double a)                     {return R::rchisq(a); }
-
 #else
 #error "Unsupported Compilation flags, Need NO_RCPP or HAS_RCPP"
 #endif
+#endif
+
 
 #endif /* ANTMAN_MIXTURE_CPP_MATHS_HPP_ */
