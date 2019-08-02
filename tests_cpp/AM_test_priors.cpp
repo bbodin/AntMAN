@@ -41,8 +41,8 @@ void test_prior (Prior & to_test) {
 
 }
 
-PriorPoissonGamma prepare_poisson () {
-	PriorPoissonGamma to_test(poisson_gamma_h_param_t(2,1,1,0),poisson_gamma_q_param_t(1));
+PriorPoisson prepare_poisson () {
+	PriorPoisson to_test(poisson_gamma_h_param_t(2,1,1,0),poisson_gamma_q_param_t(1));
 	return to_test;
 }
 
@@ -64,7 +64,7 @@ void test_priors () {
 	VERBOSE_LEVEL = LOG_LEVEL ;
 
 	PriorNegativeBinomial negbin  = prepare_negative_binomial ();
-	PriorPoissonGamma     pois    = prepare_poisson ();
+	PriorPoisson     pois    = prepare_poisson ();
 
 	test_prior (pois);
 	test_prior (negbin);

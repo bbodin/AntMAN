@@ -139,7 +139,7 @@ Prior* gen_poisson_gamma (Rcpp::List mix_components_prior, Rcpp::List  mix_weigh
 
 
 
-	Prior* 	prior = new  PriorPoissonGamma (*h,*q);
+	Prior* 	prior = new  PriorPoisson (*h,*q);
 
 
 	return prior;

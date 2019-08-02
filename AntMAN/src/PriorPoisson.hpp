@@ -69,9 +69,9 @@ typedef gamma_h_param_t<poisson_gamma_q_param_t> poisson_gamma_h_param_t ;
 
 
 
-class PriorPoissonGamma : public TypedPrior <poisson_gamma_h_param_t, poisson_gamma_q_param_t> {
+class PriorPoisson : public TypedPrior <poisson_gamma_h_param_t, poisson_gamma_q_param_t> {
 public:
-	PriorPoissonGamma (poisson_gamma_h_param_t gamma_h_param, poisson_gamma_q_param_t poisson_q_param) :
+	PriorPoisson (poisson_gamma_h_param_t gamma_h_param, poisson_gamma_q_param_t poisson_q_param) :
 		TypedPrior <poisson_gamma_h_param_t, poisson_gamma_q_param_t> (gamma_h_param,poisson_q_param)  {
 		}
 

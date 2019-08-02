@@ -23,7 +23,7 @@ void test_Mixture_UnivariateNormal() {
 			23.263, 23.484, 23.538, 23.542, 23.666, 23.706, 23.711,24.129, 24.285, 24.289, 24.366, 24.717, 24.990, 25.633, 26.960,
 			26.995, 32.065,32.789, 34.279 };
 	// TODO : Need to go over variable and see what should be checked
-	PriorPoissonGamma *prior = new PriorPoissonGamma(poisson_gamma_h_param_t(2,1,1,0.00001),poisson_gamma_q_param_t(3,1,1));
+	PriorPoisson *prior = new PriorPoisson(poisson_gamma_h_param_t(2,1,1,0.00001),poisson_gamma_q_param_t(3,1,1));
 	Mixture_UnivariateNormal * mixture = new Mixture_UnivariateNormal (20.83146, 0.3333333, 4.222222, 3.661027);
 	cluster_indices_t initial_clustering (y_uvn.size());
 	GibbsResultPlain * GRP = new  GibbsResultPlain ();
@@ -168,7 +168,7 @@ arma::vec b0(d);
 a0.fill(1);
 b0.fill(1);
 
-PriorPoissonGamma *priormvb = new PriorPoissonGamma(poisson_gamma_h_param_t(2,1,1,0.00001),poisson_gamma_q_param_t(5,10,2));
+PriorPoisson *priormvb = new PriorPoisson(poisson_gamma_h_param_t(2,1,1,0.00001),poisson_gamma_q_param_t(5,10,2));
 Mixture_MultivariateBernoulli * mixturemvb = new Mixture_MultivariateBernoulli (a0,b0);
 GibbsResultPlain * GRP = new  GibbsResultPlain ();
 
