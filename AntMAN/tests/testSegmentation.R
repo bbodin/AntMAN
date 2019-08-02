@@ -79,7 +79,7 @@ DrawMat(mat,imgDm)
 
 mixture_mvn_params = AM_multinorm_mix_hyperparams   (mu0=c(0,0,0),ka0=.1,nu0=5,Lam0=0.1*diag(3))
 
-mcmc_params        = AM_mcmc_parameters(niter=10000, burnin=5000, thin=5, verbose=1, output = c("CI","K","M"))
+mcmc_params        = AM_mcmc_parameters(niter=10000, burnin=5000, thin=5, verbose=2, output = c("CI","K","M"))
 components_prior   = AM_mix_components_prior_pois (init=5,a=10,b=2) 
 weights_prior      = AM_mix_weights_prior_gamma(init=2, a=1, b=1)
 
@@ -94,6 +94,9 @@ fit <- AM_mcmc_fit(
   mcmc_parameters = mcmc_params)
 
 summary (fit)
-plot (fit)
-AM_clustering_estimation_laugreen(fit)
+
+##### These take too long, Raffa you are right (as always), 
+##### we need to implement these in C++/OpenMP, or even better to just precompute the stuff
+### plot (fit)
+### AM_clustering_estimation_laugreen(fit)
 

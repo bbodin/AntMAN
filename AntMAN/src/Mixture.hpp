@@ -33,6 +33,11 @@ public :
 #ifdef HAS_RCPP
 	virtual Rcpp::List  get_tau () = 0;
 #endif
+private :
+	bool _parallel;
+protected :
+	void set_parallel(bool parallel) {this->_parallel = parallel;};
+	bool get_parallel() {return this->_parallel;};
 };
 
 
@@ -72,12 +77,14 @@ public:
 			const unsigned long  niter,
 			const unsigned long  burnin ,
 			const unsigned long  thin,
+			bool parallel,
 			GibbsResult * results) {
 
 		VERBOSE_ASSERT(niter > burnin, "Please use a total iteration number greater then burnin.");
 		VERBOSE_ASSERT(thin  > 0     , "Please make sure to have thin > 0.");
 
 
+		this->set_parallel(parallel);
 
 		const int n = y.n_rows;
 

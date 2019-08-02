@@ -94,7 +94,7 @@ public :
 
 			omp_set_dynamic(0);
 
-			#pragma omp parallel for num_threads(8)
+			#pragma omp parallel for num_threads(8) if (this->get_parallel())
 			for (int i=0; i < n; i++) {
 
 				arma::vec pesi(M);
@@ -106,7 +106,7 @@ public :
 					const arma::mat dmvnorm1_Sig =Sig_current.slice(l);
 
 
-					double ldensi = dmvnorm(y.row(i), dmvnorm1_mu,dmvnorm1_Sig,true)[0];
+					double ldensi = dmvnormZero(y.row(i), dmvnorm1_mu,dmvnorm1_Sig,true);
 					 pesi[l]=Log_S_current[l]+ldensi;
 					 if(max_lpesi<pesi[l]) {
 						 max_lpesi=pesi[l];

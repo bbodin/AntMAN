@@ -65,6 +65,26 @@ inline arma::vec mvrnormArma(arma::colvec mu, arma::mat Sig) {
 	return mu +  arma::chol(Sig) * Y;
 }
 
+
+inline double dmvnormZero(const arma::mat& x, const arma::vec& mu, const arma::mat& S, const bool log_p = false) {
+
+    arma::uword m = x.n_cols;
+    double S_det = arma::det(S);
+    arma::mat S_inv = arma::inv(S);
+    arma::rowvec X(m);
+    arma::rowvec Mu = mu.t();
+    X = x.row(0) - Mu;
+    if ( log_p ) {
+        double P = -1.0 * (x.n_cols/2.0) * M_LN_2PI - 0.5 * log(S_det);
+        return arma::as_scalar(P - 0.5 * X * S_inv * X.t());
+    } else {
+    	double P = 1.0 / sqrt(pow(M_2PI, x.n_cols) * S_det);
+    	return arma::as_scalar(P * exp(-0.5 * X * S_inv * X.t()));
+    }
+
+}
+
+
 // TODO[LICENCE ISSUE !!] : We took that from Rcpp-dist, our code must be GPL !
 
 inline arma::vec dmvnorm(const arma::mat& x, const arma::vec& mu,
@@ -99,11 +119,6 @@ inline arma::vec dmvnorm(const arma::mat& x, const arma::vec& mu,
     return result;
 }
 
-inline double dmvnorm1(const arma::vec& x, const arma::vec& mu,
-        const arma::mat& S, const bool log_p = false) {
-
-	return dmvnorm(x.t(), mu,S,log_p)[0];
-}
 
 
 

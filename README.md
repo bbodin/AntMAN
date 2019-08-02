@@ -81,6 +81,5 @@ summary (fit)
 
   - Check all the comments in the code
   - File writing feature
-  - Correct Parallel arguments
   
 
