@@ -17,7 +17,9 @@ Imports:
     graphics,
     Rcpp (>= 0.12.3),
     sdols,
-    mvtnorm
+    mvtnorm,
+    corrplot,
+    mcclust
 LinkingTo: Rcpp, RcppArmadillo
 RoxygenNote: 6.1.1
 Encoding: UTF-8
