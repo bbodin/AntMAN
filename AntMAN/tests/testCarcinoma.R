@@ -1,7 +1,13 @@
-library("AntMAN", lib.loc = "./AntMAN.Rinstall")
-
-devtools::install_github("bbodin/AntMAN", subdir="AntMAN")
 library("AntMAN")
+
+library('sdols')  ### load the sdols library
+
+
+### We load the following libraries that provide nice graphical tools for dendograms representation
+library("ggplot2")
+library("ggdendro")
+
+suppressPackageStartupMessages(library('dendextend'))
 
 ### Load the data
 data(carcinoma)
@@ -81,7 +87,7 @@ ci <- t(do.call(cbind,fit$CI))+1
 dim(ci)
 
 
-library('sdols')  ### load the sdols library
+
 hatc <- dlso(ci)  ### that provides the fuction dlso to find the clustering
                   ### that minimizes the Binder loss function
 
@@ -148,10 +154,6 @@ for(j in 1:hatk){ ## for each cluster:
 #########################################################################
 
 
-### We load the following libraries that provide nice graphical tools for dendograms representation
-library("ggplot2")
-library("ggdendro")
-library('dendextend')
 
 ### Fix the color forrhe three clusters
 color <- c("black","red","green")

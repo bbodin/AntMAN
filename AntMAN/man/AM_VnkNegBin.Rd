@@ -27,7 +27,7 @@ r=1000
 p=0.5
 gam=0.5
 vnk= AM_VnkNegBin(n,r,p,gam);
-stir= AM_calcola_stirling_ricor_log(gam, n)
+stir= AM_compute_stirling_ricor_log(n, gam)
 plot(exp(vnk+stir+(1:n)*log(gam)))
 sum(exp(vnk+stir))
 }

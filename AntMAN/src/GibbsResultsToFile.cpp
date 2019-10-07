@@ -6,7 +6,7 @@
  */
 
 
-#include "GibbsResult.hpp"
+#include "GibbsResult.h"
 
 void GibbsResultIntoFile ::log_output (
 			 cluster_indices_t& ci_current,

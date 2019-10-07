@@ -9,8 +9,9 @@
 #define PROBITFMM_SRC_UTILS_HPP_
 
 #include <random>
-#include "math_utils.hpp"
-#include "verbose.hpp"
+
+#include "math_utils.h"
+#include "verbose.h"
 
 typedef arma::ivec cluster_indices_t;
 

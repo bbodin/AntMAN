@@ -9,7 +9,9 @@ Given a MCMC output, this function will produce an image of the Similarity Matri
 AM_plot_similarity_matrix(C, ...)
 }
 \arguments{
-\item{fit}{a \code{\link{AM_mcmc_output}} object}
+\item{C}{coclustering as returned from the command \code{\link{AM_coclustering}}.}
+
+\item{...}{All additional parameters wil lbe pass to the image command.}
 }
 \description{
 Plot the Similarity Matrix

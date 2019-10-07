@@ -1,27 +1,25 @@
 // [[Rcpp::depends(RcppArmadillo)]]
 
 #include <RcppArmadillo.h>
-#include "verbose.hpp"
 #include <limits>
+#include "verbose.h"
 
 // [[Rcpp::export]]
 
-Rcpp::NumericVector calcola_stirling(double gamma, int n){
+Rcpp::NumericVector compute_stirling(int n, double gamma){
 
 
 	Rcpp::NumericVector out(n); // The output vector
 
-	double app; //just for  my convenience in programming
-	double lgammak; // again just for my convenience
 	Rcpp::NumericVector Lgammamjg_over_Lgammajg(n); // again just for my convenience
 
 	for(int k=1;k<=n;k++){
 		Lgammamjg_over_Lgammajg[k-1]=std::lgamma(n+k*gamma)-std::lgamma(k*gamma);
-		lgammak=std::lgammaf(k+1);
+		double lgammak = std::lgammaf(k+1);
 
 		out[k-1]=0;
 		for(int j=1;j<=k;j++){
-			app = R::lchoose(k,j)+Lgammamjg_over_Lgammajg[j-1]-lgammak;
+			double app = R::lchoose(k,j)+Lgammamjg_over_Lgammajg[j-1]-lgammak;
 			out[k-1] += std::pow(-1,j-k)*std::exp(app);
 		}
 	}
@@ -33,7 +31,7 @@ Rcpp::NumericVector calcola_stirling(double gamma, int n){
 
 // [[Rcpp::export]]
 
-Rcpp::NumericVector calcola_stirling_ricor(double gamma, unsigned int n){
+Rcpp::NumericVector compute_stirling_ricor(int n, double gamma){
 	gamma=-gamma;
 	Rcpp::NumericVector row_j(n+1,0.0); // The output vector initialize all the element to zero
 	row_j[0]=1; /// Row j=0
@@ -63,7 +61,7 @@ Rcpp::NumericVector calcola_stirling_ricor(double gamma, unsigned int n){
 
 // [[Rcpp::export]]
 
-Rcpp::NumericVector calcola_stirling_ricor_abs(double gamma, unsigned int n){
+Rcpp::NumericVector compute_stirling_ricor_abs(int n, double gamma){
 
 	Rcpp::NumericVector row_j(n+1,0.0); // The output vector initialize all the element to zero
 	row_j[0]=1; /// Row j=0
@@ -100,7 +98,7 @@ Rcpp::NumericVector calcola_stirling_ricor_abs(double gamma, unsigned int n){
 
 // [[Rcpp::export]]
 
-Rcpp::NumericVector calcola_stirling_ricor_log(double gamma, unsigned int n){
+Rcpp::NumericVector compute_stirling_ricor_log(int n, double gamma){
 
 	double infinito = std::numeric_limits<double>::infinity();
 
@@ -329,7 +327,7 @@ Rcpp::NumericVector prior_K_Pois(unsigned int n,double gamma,double Lambda){
 	Rcpp::NumericVector vvv=VnkPoisson(n,Lambda,gamma);
 
 	// Compute the Stirling number in log scale
-	Rcpp::NumericVector stir=calcola_stirling_ricor_log(gamma, n);
+	Rcpp::NumericVector stir=compute_stirling_ricor_log(n, gamma);
 
 	// Compute the prior for K
 	Rcpp::NumericVector pstrk = Rcpp::exp(vvv+stir);
@@ -360,7 +358,7 @@ Rcpp::NumericVector prior_K_NegBin(unsigned int n,double gamma,double r, double 
 	Rcpp::NumericVector vvv= VnkNegBin(n,r,p,gamma);
 
 	// Compute the Stirling number in log scale
-	Rcpp::NumericVector stir=calcola_stirling_ricor_log(gamma, n);
+	Rcpp::NumericVector stir=compute_stirling_ricor_log(n, gamma);
 
 	// Compute the prior for K
 	Rcpp::NumericVector pstrk = Rcpp::exp(vvv+stir);
@@ -389,7 +387,7 @@ Rcpp::NumericVector prior_K_Delta(const unsigned int n,const double gamma,const 
 	Rcpp::NumericVector vvv= VnkDelta(n,Mstar,gamma);
 
 	// Compute the Stirling number in log scale
-	Rcpp::NumericVector stir=calcola_stirling_ricor_log(gamma, n);
+	Rcpp::NumericVector stir=compute_stirling_ricor_log(n, gamma);
 
 	// Compute the prior for K
 	Rcpp::NumericVector pstrk = Rcpp::exp(vvv+stir);
@@ -427,7 +425,7 @@ Rcpp::NumericVector prior_K_Delta(const unsigned int n,const double gamma,const 
 
 
 /// Utility function
-double calcola_media(const Rcpp::NumericVector prob,const unsigned n){
+double compute_media(const Rcpp::NumericVector prob,const unsigned n){
 	
 	double out=0;
 	for(unsigned int i =0;i<n;i++){
@@ -448,10 +446,10 @@ double find_gamma_Pois(const unsigned int n,const double Lambda,const unsigned i
 	//Rcpp::IntegerVector unoton=Rcpp:seq(1,n);
 	
 	Rcpp::NumericVector p_min=prior_K_Pois(n,gam_min,Lambda);
-	double Kmin=calcola_media(p_min,n);
+	double Kmin=compute_media(p_min,n);
 
 	Rcpp::NumericVector p_max=prior_K_Pois(n,gam_max,Lambda);
-	double Kmax=calcola_media(p_max,n);
+	double Kmax=compute_media(p_max,n);
 
 	VERBOSE_ASSERT( (Kmin-Kstar) <= 0 , "K_min="<<Kmin<<" gam_min="<<gam_min <<": Sorry (Kmin-Kstar)>0, you should try with a smaller value of gam_min");
 	VERBOSE_ASSERT( (Kmax-Kstar) >= 0 , "K_max="<<Kmax<<" gam_max="<<gam_max <<": Sorry (Kmax-Kstar)<0, you should try with a larger value of gam_max");
@@ -467,7 +465,7 @@ double find_gamma_Pois(const unsigned int n,const double Lambda,const unsigned i
 		//Compute the center
 		gam_mean=(gam_min+gam_max)/2;	
 		p_mean=prior_K_Pois(n,gam_mean,Lambda);
-		Kmean=calcola_media(p_mean,n);
+		Kmean=compute_media(p_mean,n);
 
 		
         
@@ -517,11 +515,11 @@ double find_gamma_NegBin(const unsigned int n,const double r, const double p,con
 	//Rcpp::IntegerVector unoton=Rcpp:seq(1,n);
 	
 	Rcpp::NumericVector p_min=prior_K_NegBin(n,gam_min,r,p);
-	double Kmin=calcola_media(p_min,n);
+	double Kmin=compute_media(p_min,n);
 
 
 	Rcpp::NumericVector p_max=prior_K_NegBin(n,gam_max,r,p);
-	double Kmax=calcola_media(p_max,n);
+	double Kmax=compute_media(p_max,n);
 
 	VERBOSE_ASSERT( (Kmin-Kstar) <= 0 , "K_min="<<Kmin<<" gam_min="<<gam_min <<": Sorry (Kmin-Kstar)>0, you should try with a smaller value of gam_min");
 	VERBOSE_ASSERT( (Kmax-Kstar) >= 0 , "K_max="<<Kmax<<" gam_max="<<gam_max <<": Sorry (Kmax-Kstar)<0, you should try with a larger value of gam_max");
@@ -538,7 +536,7 @@ double find_gamma_NegBin(const unsigned int n,const double r, const double p,con
 		//Compute the center
 		gam_mean=(gam_min+gam_max)/2;	
 		p_mean=prior_K_NegBin(n,gam_mean,r,p);
-		Kmean=calcola_media(p_mean,n);
+		Kmean=compute_media(p_mean,n);
 
 
 		//If the center leads a number of cluster larger than the target
@@ -582,10 +580,10 @@ double find_gamma_Delta(const unsigned int n,const unsigned Mstar,const unsigned
 	//Rcpp::IntegerVector unoton=Rcpp:seq(1,n);
 	
 	Rcpp::NumericVector p_min= prior_K_Delta(n,gam_min,Mstar);
-	double Kmin=calcola_media(p_min,n);
+	double Kmin=compute_media(p_min,n);
 
 	Rcpp::NumericVector p_max=prior_K_Delta(n,gam_max,Mstar);
-	double Kmax=calcola_media(p_max,n);
+	double Kmax=compute_media(p_max,n);
 	VERBOSE_ASSERT( (Kmin-Kstar) <= 0 , "K_min="<<Kmin<<" gam_min="<<gam_min <<": Sorry (Kmin-Kstar)>0, you should try with a smaller value of gam_min");
 	VERBOSE_ASSERT( (Kmax-Kstar) >= 0 , "K_max="<<Kmax<<" gam_max="<<gam_max <<": Sorry (Kmax-Kstar)<0, you should try with a larger value of gam_max");
 	
@@ -601,7 +599,7 @@ double find_gamma_Delta(const unsigned int n,const unsigned Mstar,const unsigned
 		//Compute the center
 		gam_mean=(gam_min+gam_max)/2;	
 		p_mean=prior_K_Delta(n,gam_mean,Mstar);
-		Kmean=calcola_media(p_mean,n);
+		Kmean=compute_media(p_mean,n);
 
 
 		//If the center leads a number of cluster larger than the target

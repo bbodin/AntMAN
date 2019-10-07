@@ -5,8 +5,8 @@
  *      Author: toky
  */
 
-#ifndef ANTMAN_SRC_GIBBSRESULTRCPP_HPP_
-#define ANTMAN_SRC_GIBBSRESULTRCPP_HPP_
+#ifndef ANTMAN_SRC_GIBBSRESULTRCPP_H_
+#define ANTMAN_SRC_GIBBSRESULTRCPP_H_
 
 #ifndef HAS_RCPP
 #assert HAS_RCPP
@@ -15,7 +15,7 @@
 #endif
 
 
-#include "GibbsResult.hpp"
+#include "GibbsResult.h"
 #include <RcppArmadillo.h>
 
 
@@ -93,4 +93,4 @@ public:
 };
 
 
-#endif /* ANTMAN_SRC_GIBBSRESULTRCPP_HPP_ */
+#endif /* ANTMAN_SRC_GIBBSRESULTRCPP_H_ */

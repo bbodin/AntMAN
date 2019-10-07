@@ -9,9 +9,9 @@
 #define SRC_PRIORS_HPP_
 
 
-#include "PriorPoisson.hpp"
-#include "PriorNegativeBinomial.hpp"
-#include "PriorDirac.hpp"
+#include "PriorDirac.h"
+#include "PriorNegativeBinomial.h"
+#include "PriorPoisson.h"
 
 
 

@@ -24,7 +24,7 @@ n <- 82
 Lambda <- 10
 gam_po <- 0.1550195
 prior_K_po <-  AM_prior_K_Pois(n,gam_po,Lambda)
-plot(1:n, prior_K_po, type = "n", bty = "l", xlab = "k", ylab = "P(K=k)",main="Prior on the number of clusters")
+plot(1:n, prior_K_po, type = "n", bty = "l", xlab = "k", ylab = "P(K=k)")
 }
 \keyword{clusters}
 \keyword{number}

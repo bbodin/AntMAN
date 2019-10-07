@@ -5,14 +5,13 @@
  *      Author: toky
  */
 
-#ifndef ANTMAN_SRC_PRIORNEGATIVEBINOMIAL_HPP_
-#define ANTMAN_SRC_PRIORNEGATIVEBINOMIAL_HPP_
+#ifndef ANTMAN_SRC_PRIORNEGATIVEBINOMIAL_H_
+#define ANTMAN_SRC_PRIORNEGATIVEBINOMIAL_H_
 
 
-#include <cassert>
-#include "math_utils.hpp"
-#include "Prior.hpp"
-#include "utils.hpp"
+#include "math_utils.h"
+#include "Prior.h"
+#include "utils.h"
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -232,4 +231,4 @@ int update_M_na(const double U ,  const int KasInt) {
 };
 // --------------------------------------------------------------------------------------------------------------------
 
-#endif /* ANTMAN_SRC_PRIORNEGATIVEBINOMIAL_HPP_ */
+#endif /* ANTMAN_SRC_PRIORNEGATIVEBINOMIAL_H_ */

@@ -7,7 +7,7 @@
 
 
 
-#include "Priors.hpp"
+#include "../AntMAN/src/Priors.h"
 
 void test_prior (Prior & to_test) {
 

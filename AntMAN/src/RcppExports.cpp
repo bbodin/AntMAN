@@ -23,51 +23,51 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// calcola_stirling
-Rcpp::NumericVector calcola_stirling(double gamma, int n);
-RcppExport SEXP _AntMAN_calcola_stirling(SEXP gammaSEXP, SEXP nSEXP) {
+// compute_stirling
+Rcpp::NumericVector compute_stirling(int n, double gamma);
+RcppExport SEXP _AntMAN_compute_stirling(SEXP nSEXP, SEXP gammaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< double >::type gamma(gammaSEXP);
     Rcpp::traits::input_parameter< int >::type n(nSEXP);
-    rcpp_result_gen = Rcpp::wrap(calcola_stirling(gamma, n));
+    Rcpp::traits::input_parameter< double >::type gamma(gammaSEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_stirling(n, gamma));
     return rcpp_result_gen;
 END_RCPP
 }
-// calcola_stirling_ricor
-Rcpp::NumericVector calcola_stirling_ricor(double gamma, unsigned int n);
-RcppExport SEXP _AntMAN_calcola_stirling_ricor(SEXP gammaSEXP, SEXP nSEXP) {
+// compute_stirling_ricor
+Rcpp::NumericVector compute_stirling_ricor(int n, double gamma);
+RcppExport SEXP _AntMAN_compute_stirling_ricor(SEXP nSEXP, SEXP gammaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
     Rcpp::traits::input_parameter< double >::type gamma(gammaSEXP);
-    Rcpp::traits::input_parameter< unsigned int >::type n(nSEXP);
-    rcpp_result_gen = Rcpp::wrap(calcola_stirling_ricor(gamma, n));
+    rcpp_result_gen = Rcpp::wrap(compute_stirling_ricor(n, gamma));
     return rcpp_result_gen;
 END_RCPP
 }
-// calcola_stirling_ricor_abs
-Rcpp::NumericVector calcola_stirling_ricor_abs(double gamma, unsigned int n);
-RcppExport SEXP _AntMAN_calcola_stirling_ricor_abs(SEXP gammaSEXP, SEXP nSEXP) {
+// compute_stirling_ricor_abs
+Rcpp::NumericVector compute_stirling_ricor_abs(int n, double gamma);
+RcppExport SEXP _AntMAN_compute_stirling_ricor_abs(SEXP nSEXP, SEXP gammaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
     Rcpp::traits::input_parameter< double >::type gamma(gammaSEXP);
-    Rcpp::traits::input_parameter< unsigned int >::type n(nSEXP);
-    rcpp_result_gen = Rcpp::wrap(calcola_stirling_ricor_abs(gamma, n));
+    rcpp_result_gen = Rcpp::wrap(compute_stirling_ricor_abs(n, gamma));
     return rcpp_result_gen;
 END_RCPP
 }
-// calcola_stirling_ricor_log
-Rcpp::NumericVector calcola_stirling_ricor_log(double gamma, unsigned int n);
-RcppExport SEXP _AntMAN_calcola_stirling_ricor_log(SEXP gammaSEXP, SEXP nSEXP) {
+// compute_stirling_ricor_log
+Rcpp::NumericVector compute_stirling_ricor_log(int n, double gamma);
+RcppExport SEXP _AntMAN_compute_stirling_ricor_log(SEXP nSEXP, SEXP gammaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
     Rcpp::traits::input_parameter< double >::type gamma(gammaSEXP);
-    Rcpp::traits::input_parameter< unsigned int >::type n(nSEXP);
-    rcpp_result_gen = Rcpp::wrap(calcola_stirling_ricor_log(gamma, n));
+    rcpp_result_gen = Rcpp::wrap(compute_stirling_ricor_log(n, gamma));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -206,10 +206,10 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_AntMAN_IAM_mcmc_fit", (DL_FUNC) &_AntMAN_IAM_mcmc_fit, 7},
-    {"_AntMAN_calcola_stirling", (DL_FUNC) &_AntMAN_calcola_stirling, 2},
-    {"_AntMAN_calcola_stirling_ricor", (DL_FUNC) &_AntMAN_calcola_stirling_ricor, 2},
-    {"_AntMAN_calcola_stirling_ricor_abs", (DL_FUNC) &_AntMAN_calcola_stirling_ricor_abs, 2},
-    {"_AntMAN_calcola_stirling_ricor_log", (DL_FUNC) &_AntMAN_calcola_stirling_ricor_log, 2},
+    {"_AntMAN_compute_stirling", (DL_FUNC) &_AntMAN_compute_stirling, 2},
+    {"_AntMAN_compute_stirling_ricor", (DL_FUNC) &_AntMAN_compute_stirling_ricor, 2},
+    {"_AntMAN_compute_stirling_ricor_abs", (DL_FUNC) &_AntMAN_compute_stirling_ricor_abs, 2},
+    {"_AntMAN_compute_stirling_ricor_log", (DL_FUNC) &_AntMAN_compute_stirling_ricor_log, 2},
     {"_AntMAN_VnkPoisson", (DL_FUNC) &_AntMAN_VnkPoisson, 3},
     {"_AntMAN_VnkNegBin", (DL_FUNC) &_AntMAN_VnkNegBin, 4},
     {"_AntMAN_VnkDelta", (DL_FUNC) &_AntMAN_VnkDelta, 3},

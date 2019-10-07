@@ -70,7 +70,7 @@ layout(matrix(c(1,2,3,3),2,2,byrow=T))
 #trace-plot of the posterior chain
 plot(chain,type="l",main=main_trace)
 # autocorrelation plot
-acf(chain,main=main_auto,lag=lag_acf)
+acf(chain,main=main_auto,lag.max=lag_acf)
 
 
 #Histogram

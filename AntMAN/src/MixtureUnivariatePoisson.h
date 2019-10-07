@@ -9,8 +9,8 @@
 #define PROBITFMMNEW_SRC_MIXTUREUNIVARIATEPOISSON_HPP_
 
 
-#include "math_utils.hpp"
-#include "Mixture.hpp"
+#include "math_utils.h"
+#include "Mixture.h"
 
 class MixtureUnivariatePoisson : public UnivariateMixture {
 

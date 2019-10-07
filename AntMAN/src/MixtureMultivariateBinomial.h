@@ -9,8 +9,8 @@
 #define PROBITFMMNEW_SRC_MIXTUREMULTIVARIATEBERNOULLI_HPP_
 
 
-#include "math_utils.hpp"
-#include "Mixture.hpp"
+#include "math_utils.h"
+#include "Mixture.h"
 
 class MixtureMultivariateBinomial: public MultivariateMixture  {
 

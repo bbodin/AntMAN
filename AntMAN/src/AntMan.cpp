@@ -1,11 +1,8 @@
 
-#include "Mixtures.hpp"
-#include "Priors.hpp"
-
-
-#include "utils.hpp"
-
-#include "GibbsResultRCpp.hpp"
+#include "GibbsResultRCpp.h"
+#include "Mixtures.h"
+#include "Priors.h"
+#include "utils.h"
 
 
 

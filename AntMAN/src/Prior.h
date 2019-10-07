@@ -5,12 +5,11 @@
  *      Author: toky
  */
 
-#ifndef ANTMAN_SRC_PRIOR_HPP_
-#define ANTMAN_SRC_PRIOR_HPP_
+#ifndef ANTMAN_SRC_PRIOR_H_
+#define ANTMAN_SRC_PRIOR_H_
 
-#include <cassert>
-#include "math_utils.hpp"
-#include "utils.hpp"
+#include "math_utils.h"
+#include "utils.h"
 // --------------------------------------------------------------------------------------------------------------------
 
 
@@ -123,4 +122,4 @@ public:
 };
 
 
-#endif /* ANTMAN_SRC_PRIOR_HPP_ */
+#endif /* ANTMAN_SRC_PRIOR_H_ */

@@ -5,13 +5,14 @@
  *      Author: toky
  */
 
-#ifndef ANTMAN_SRC_MIXTURE_HPP_
-#define ANTMAN_SRC_MIXTURE_HPP_
+#ifndef ANTMAN_SRC_MIXTURE_H_
+#define ANTMAN_SRC_MIXTURE_H_
 #include <map>
 #include<iomanip>
-#include "utils.hpp"
-#include "Prior.hpp"
-#include "GibbsResult.hpp"
+
+#include "GibbsResult.h"
+#include "Prior.h"
+#include "utils.h"
 
 
 class allocation_result {
@@ -263,4 +264,4 @@ public:
 class UnivariateMixture : public TypedMixture<arma::vec> {};
 class MultivariateMixture : public TypedMixture<arma::mat> {};
 
-#endif /* ANTMAN_SRC_MIXTURE_HPP_ */
+#endif /* ANTMAN_SRC_MIXTURE_H_ */

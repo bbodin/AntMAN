@@ -8,7 +8,7 @@
 #ifndef ANTMAN_MIXTURE_CPP_MATHS_HPP_
 #define ANTMAN_MIXTURE_CPP_MATHS_HPP_
 
-#include "verbose.hpp"
+#include "verbose.h"
 
 #ifdef NO_RCPP
 

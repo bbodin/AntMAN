@@ -5,12 +5,12 @@
  *      Author: toky
  */
 
+#include "GibbsResultRCpp.h"
+
 #include <RcppArmadillo.h>
-#include "GibbsResultRCpp.hpp"
+#include "Mixture.h"
 
-
-#include "Prior.hpp"
-#include "Mixture.hpp"
+#include "Prior.h"
 
 
 	GibbsResultRCpp::GibbsResultRCpp(int niter, int output_codes) : iteration(0),  niter(niter), output_codes (output_codes) {

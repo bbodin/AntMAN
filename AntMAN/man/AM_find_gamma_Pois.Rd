@@ -10,19 +10,21 @@ and an upper \eqn{\gamma_{u}} bound for the possible values of $gamma$. The defa
 A defaault value for the tolerance is \eqn{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31),
 the function stops warning that convergence has not bee reached.}
 \usage{
-AM_find_gamma_Pois(n, Lam, Kstar = 6, gam_min = 1e-04, gam_max = 10,
-  tolerance = 0.1)
+AM_find_gamma_Pois(n, Lambda, Kstar = 6, gam_min = 1e-04,
+  gam_max = 10, tolerance = 0.1)
 }
 \arguments{
 \item{n}{The sample size}
 
-\item{Kstar}{The mean number of cluster the user want to specify}
-
 \item{Lambda}{The parameter of the Shifted Poisson for the number of components of the mixture}
 
-\item{gam_min=1e-4}{The lower bound of the interval in which \code{gamma} should be lie}
+\item{Kstar}{The mean number of cluster the user want to specify}
 
-\item{gam_max=10}{The upper bound of the interval in which \code{gamma} should lie}
+\item{gam_min}{The lower bound of the interval in which \code{gamma} should be lie}
+
+\item{gam_max}{The upper bound of the interval in which \code{gamma} should lie}
+
+\item{tolerance}{Tolerance of the method}
 }
 \value{
 A value of \code{gamma} such that \code{E(K)=K^*}
@@ -37,6 +39,7 @@ A defaault value for the tolerance is \eqn{\epsilon=0.1}. Moreover, after a maxi
 the function stops warning that convergence has not bee reached.
 }
 \examples{
+n <- 82
 Lam  <- 11
 gam_po <-  AM_find_gamma_Pois(n,Lam,Kstar=6, gam_min=0.0001,gam_max=10, tolerance=0.1)
 prior_K_po <-  AM_prior_K_Pois(n,gam_po,Lam)

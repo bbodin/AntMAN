@@ -10,6 +10,8 @@ Print some useful informations about the mcmc results}
 }
 \arguments{
 \item{object}{a \code{\link{AM_mcmc_output}} object}
+
+\item{...}{all additionnal parameters are ignored}
 }
 \description{
 summary AM_mcmc_output

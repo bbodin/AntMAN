@@ -6,22 +6,24 @@
 such that the induced distribution on the number of clusers is centered around a user specifed value \eqn{K^*}, i.e. the function use
 a bisection method to solve Eq.~{eq:findgamma} of WE NEED TO CITE ANTMAN PAPER. The user can provide a lower \eqn{\gamma_{l}} and
 an upper \eqn{\gamma_{u}} bound for the possible values of $gamma$. The default values are \eqn{\gamma_l= 10^{-3}} and \eqn{\gamma_{u}=10}.
-A defaault value for the tolerance is \eqn{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31), the function
+A default value for the tolerance is \eqn{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31), the function
 stops warning that convergence has not bee reached.}
 \usage{
 AM_find_gamma_Delta(n, Mstar, Kstar = 6, gam_min = 1e-04,
   gam_max = 10, tolerance = 0.1)
 }
 \arguments{
-\item{n}{The sample size}
+\item{n}{sample size}
 
-\item{Mstar}{The number of component of the mixture}
+\item{Mstar}{number of component of the mixture}
 
-\item{Kstar}{The mean number of cluster the user want to specify}
+\item{Kstar}{mean number of cluster the user want to specify}
 
-\item{gam_min=1e-4}{The lower bound of the interval in which \code{gamma} should be lie}
+\item{gam_min}{lower bound of the interval in which \code{gamma} should be lie (default 1e-4)}
 
-\item{gam_max=10}{The upper bound of the interval in which \code{gamma} should lie}
+\item{gam_max}{upper bound of the interval in which \code{gamma} should lie (default 10)}
+
+\item{tolerance}{tolerance for the method}
 }
 \value{
 A value of \code{gamma} such that \code{E(K)=K^*}
@@ -31,7 +33,7 @@ Once specified a fixed value of components \code{M^*} this function  adopt a  \e
 such that the induced distribution on the number of clusers is centered around a user specifed value \eqn{K^*}, i.e. the function use
 a bisection method to solve Eq.~{eq:findgamma} of WE NEED TO CITE ANTMAN PAPER. The user can provide a lower \eqn{\gamma_{l}} and
 an upper \eqn{\gamma_{u}} bound for the possible values of $gamma$. The default values are \eqn{\gamma_l= 10^{-3}} and \eqn{\gamma_{u}=10}.
-A defaault value for the tolerance is \eqn{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31), the function
+A default value for the tolerance is \eqn{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31), the function
 stops warning that convergence has not bee reached.
 }
 \examples{

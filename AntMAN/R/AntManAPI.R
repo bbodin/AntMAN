@@ -154,7 +154,8 @@ NULL
 #'  
 #'  Given a MCMC output, this function will produce an image of the Similarity Matrix
 #'  
-#'@param fit a \code{\link{AM_mcmc_output}} object
+#'@param C coclustering as returned from the command \code{\link{AM_coclustering}}.
+#'@param ... All additional parameters wil lbe pass to the image command.
 #'  
 #'@export
 AM_plot_similarity_matrix=function(C, ...){
@@ -180,8 +181,11 @@ NULL
 #' plot some useful informations about the mcmc results
 #'  
 #'@param x a AM_mcmc_output object
+#'@param ... all additionnal parameters passed to image command.
 #'  
 #'@method plot AM_mcmc_output 
+#'@importFrom graphics image
+#'@importFrom grDevices gray.colors
 #'@export
 plot.AM_mcmc_output=function(x,...){
   if (!is.null(x$M))  {hist(x$M,main="M values") ; readline(prompt="Press [enter] to continue");}
@@ -205,6 +209,7 @@ plot.AM_mcmc_output=function(x,...){
 #'  Print some useful informations about the mcmc results
 #'  
 #'@param object a \code{\link{AM_mcmc_output}} object
+#'@param ... all additionnal parameters are ignored
 #'  
 #'  
 #'@method summary AM_mcmc_output 
@@ -220,6 +225,7 @@ summary.AM_mcmc_output=function(object,...){
 #'  Given a MCMC output, this function return maximum likelihood estimation.
 #'  
 #'@param fit a \code{\link{AM_mcmc_output}} object
+#'@param C used to speed up the function, can be the coclustering as returned from the command \code{\link{AM_coclustering}}.
 #'  
 #'@export
 AM_clustering_estimation_laugreen = function (fit, C = NULL) {
@@ -252,9 +258,12 @@ AM_clustering_estimation_laugreen = function (fit, C = NULL) {
 #'@importFrom sdols dlso
 #'@export
 AM_clustering_estimation_squared_loss = function (fit) {
-	library('sdols')
-	fres = dlso(t(do.call(cbind,fit$CI)))
-	return (fres);
+	if(requireNamespace("sdols")) {
+		fres = dlso(t(do.call(cbind,fit$CI)))
+		return (fres);
+	} else {
+		stop ( "The package sdols is required when using this command." );
+	}
 }
 
 #'  Return maximum likelihood estimation (average)
@@ -266,12 +275,15 @@ AM_clustering_estimation_squared_loss = function (fit) {
 #'@importFrom mcclust minbinder comp.psm
 #'@export
 AM_clustering_estimation_average = function (fit) {
-	library("mcclust")
-	mcinput = t(do.call(cbind,fit$CI))
-	psm2 <- comp.psm(mcinput+1)
-	mbind2 <- minbinder(psm2)
-	names(mbind2)
-	return (mbind2$cl)
+	if(requireNamespace("mcclust")) {
+		mcinput = t(do.call(cbind,fit$CI))
+		psm2 <- comp.psm(mcinput+1)
+		mbind2 <- minbinder(psm2)
+		names(mbind2)
+		return (mbind2$cl)
+	} else {
+		stop ( "The package mcclust is required when using this command." );
+	}
 }
 
 
@@ -514,16 +526,16 @@ AM_mix_components_prior_negbin <- function(a_R = NULL, b_R = NULL, a_P = NULL, b
   
   parameters = list(type = "AM_mix_components_prior_negbin");
   
-       if (!is.null(a_R) & !is.null(b_R) & !is.null(init_R) &  is.null(R)) {parameters = append(parameters, list(a_R = a_R, b_R = b_R, init_R = init_R));}
-  else if (!is.null(a_R) & !is.null(b_R) &  is.null(init_R) &  is.null(R)) {parameters = append(parameters, list(a_R = a_R, b_R = b_R,                ));}
-  else if ( is.null(a_R) &  is.null(b_R) &  is.null(init_R) & !is.null(R)) {parameters = append(parameters, list(fixed_R = R));}
-  else if ( is.null(a_R) &  is.null(b_R) &  is.null(init_R) &  is.null(R)) {parameters = append(parameters, list(fixed_R = 1));}
+       if (!is.null(a_R) & !is.null(b_R) & !is.null(init_R) &  is.null(R)) {parameters = c(parameters, list(a_R = a_R, b_R = b_R, init_R = init_R));}
+  else if (!is.null(a_R) & !is.null(b_R) &  is.null(init_R) &  is.null(R)) {parameters = c(parameters, list(a_R = a_R, b_R = b_R,                ));}
+  else if ( is.null(a_R) &  is.null(b_R) &  is.null(init_R) & !is.null(R)) {parameters = c(parameters, list(fixed_R = R));}
+  else if ( is.null(a_R) &  is.null(b_R) &  is.null(init_R) &  is.null(R)) {parameters = c(parameters, list(fixed_R = 1));}
   else {stop ( paradox_error_R );}
   
-       if (!is.null(a_P) & !is.null(b_P) & !is.null(init_P) &  is.null(P)) {parameters = append(parameters, list(a_P = a_P, b_P = b_P, init_P = init_P));}
-  else if (!is.null(a_P) & !is.null(b_P) &  is.null(init_P) &  is.null(P)) {parameters = append(parameters, list(a_P = a_P, b_P = b_P,                ));}
-  else if ( is.null(a_P) &  is.null(b_P) &  is.null(init_P) & !is.null(P)) {parameters = append(parameters, list(fixed_P = P));}
-  else if ( is.null(a_P) &  is.null(b_P) &  is.null(init_P) &  is.null(P)) {parameters = append(parameters, list(a_P = 1, b_P = 1));}
+       if (!is.null(a_P) & !is.null(b_P) & !is.null(init_P) &  is.null(P)) {parameters = c(parameters, list(a_P = a_P, b_P = b_P, init_P = init_P));}
+  else if (!is.null(a_P) & !is.null(b_P) &  is.null(init_P) &  is.null(P)) {parameters = c(parameters, list(a_P = a_P, b_P = b_P,                ));}
+  else if ( is.null(a_P) &  is.null(b_P) &  is.null(init_P) & !is.null(P)) {parameters = c(parameters, list(fixed_P = P));}
+  else if ( is.null(a_P) &  is.null(b_P) &  is.null(init_P) &  is.null(P)) {parameters = c(parameters, list(a_P = 1, b_P = 1));}
   else {stop ( paradox_error_P );}
   
   return (parameters);

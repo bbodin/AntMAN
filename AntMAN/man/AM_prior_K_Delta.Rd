@@ -7,14 +7,14 @@ when the prior on the component-weigts of the mixture is a Dirichlet with parame
 are distributed as Gamma(\eqn{\gamma},1) ) when the number of component are fixed to \code{M^*}, i.e. a Dirac prior assigning mass
 only to \code{M^*} is assumed. See Section 9.1.1 of the Paper Argiento de Iorio 2019 for more details.#' There are no default values.}
 \usage{
-AM_prior_K_Delta(n, gam_de, Mstar)
+AM_prior_K_Delta(n, gamma, Mstar)
 }
 \arguments{
 \item{n}{The sample size}
 
-\item{Mstar}{The number of component of the mixture}
-
 \item{gamma}{The \code{gamma} parameter of the Dirichlet}
+
+\item{Mstar}{The number of component of the mixture}
 }
 \value{
 A vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}
@@ -30,7 +30,7 @@ n <- 82
 gam_de <- 0.1743555
 Mstar <- 12
 prior_K_de <- AM_prior_K_Delta(n,gam_de, Mstar)
-plot(1:n, prior_K_de, type = "n", bty = "l", xlab = "k", ylab = "P(K=k)",main="Prior on the number of clusters")
+plot(1:n, prior_K_de, type = "n", bty = "l", xlab = "k", ylab = "P(K=k)")
 }
 \keyword{cluster}
 \keyword{number}

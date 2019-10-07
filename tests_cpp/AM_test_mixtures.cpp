@@ -6,11 +6,11 @@
  */
 
 
-#include "MixtureMultivariateBinomial.hpp"
-#include "verbose.hpp"
-#include "Mixture.hpp"
-#include "MixtureUnivariateNormal.hpp"
-#include "Priors.hpp"
+#include "../AntMAN/src/Mixture.h"
+#include "../AntMAN/src/MixtureMultivariateBinomial.h"
+#include "../AntMAN/src/MixtureUnivariateNormal.h"
+#include "../AntMAN/src/Priors.h"
+#include "../AntMAN/src/verbose.h"
 
 void test_Mixture_UnivariateNormal() {
 

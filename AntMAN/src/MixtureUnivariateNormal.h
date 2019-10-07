@@ -9,8 +9,9 @@
 #define PROBITFMMNEW_SRC_MIXTUREUNIVARIATENORMAL_HPP_
 
 #include <omp.h>
-#include "math_utils.hpp"
-#include "Mixture.hpp"
+
+#include "math_utils.h"
+#include "Mixture.h"
 
 class MixtureUnivariateNormal: public UnivariateMixture  {
 

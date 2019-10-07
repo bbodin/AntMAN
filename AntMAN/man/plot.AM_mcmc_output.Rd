@@ -8,6 +8,8 @@
 }
 \arguments{
 \item{x}{a AM_mcmc_output object}
+
+\item{...}{all additionnal parameters passed to image command.}
 }
 \description{
 plot some useful informations about the mcmc results

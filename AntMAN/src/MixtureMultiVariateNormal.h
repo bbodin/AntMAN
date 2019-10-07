@@ -9,9 +9,9 @@
 #define PROBITFMMNEW_SRC_MIXTUREMULTIVARIATENORMAL_HPP_
 
 
-#include "math_utils.hpp"
-#include "utils.hpp"
-#include "Mixture.hpp"
+#include "math_utils.h"
+#include "Mixture.h"
+#include "utils.h"
 // [[Rcpp::depends(RcppArmadillo)]]
 
 class MixtureMultivariateNormal: public MultivariateMixture  {

@@ -5,20 +5,20 @@ IAM_mcmc_fit <- function(y, mix_kernel_hyperparams, initial_clustering, fixed_cl
     .Call('_AntMAN_IAM_mcmc_fit', PACKAGE = 'AntMAN', y, mix_kernel_hyperparams, initial_clustering, fixed_clustering, mix_components_prior, mix_weight_prior, mcmc_parameters)
 }
 
-calcola_stirling <- function(gamma, n) {
-    .Call('_AntMAN_calcola_stirling', PACKAGE = 'AntMAN', gamma, n)
+compute_stirling <- function(n, gamma) {
+    .Call('_AntMAN_compute_stirling', PACKAGE = 'AntMAN', n, gamma)
 }
 
-calcola_stirling_ricor <- function(gamma, n) {
-    .Call('_AntMAN_calcola_stirling_ricor', PACKAGE = 'AntMAN', gamma, n)
+compute_stirling_ricor <- function(n, gamma) {
+    .Call('_AntMAN_compute_stirling_ricor', PACKAGE = 'AntMAN', n, gamma)
 }
 
-calcola_stirling_ricor_abs <- function(gamma, n) {
-    .Call('_AntMAN_calcola_stirling_ricor_abs', PACKAGE = 'AntMAN', gamma, n)
+compute_stirling_ricor_abs <- function(n, gamma) {
+    .Call('_AntMAN_compute_stirling_ricor_abs', PACKAGE = 'AntMAN', n, gamma)
 }
 
-calcola_stirling_ricor_log <- function(gamma, n) {
-    .Call('_AntMAN_calcola_stirling_ricor_log', PACKAGE = 'AntMAN', gamma, n)
+compute_stirling_ricor_log <- function(n, gamma) {
+    .Call('_AntMAN_compute_stirling_ricor_log', PACKAGE = 'AntMAN', n, gamma)
 }
 
 VnkPoisson <- function(n, Lambda, gamma) {

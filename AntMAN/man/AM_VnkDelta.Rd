@@ -7,7 +7,7 @@ of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailiz
 when the number of component are fixed to \code{M^*}, i.e. a Dirac prior assigning mass only to \code{M^*} is assumed.
 See Section 9.1.1 of the Paper Argiento de Iorio 2019 for more details.}
 \usage{
-AM_VnkDelta(n, Mstar, gam)
+AM_VnkDelta(n, Mstar, gamma)
 }
 \arguments{
 \item{n}{The sample size}
@@ -27,7 +27,7 @@ n=200
 Mstar=100
 gam=0.5
 vvv=AM_VnkDelta(n,Mstar,gam);
-stir= AM_calcola_stirling_ricor_log(gam, n)
+stir= AM_compute_stirling_ricor_log(n, gam)
 stir
 plot(exp(vvv+stir) )
 sum(exp(vvv+stir ))

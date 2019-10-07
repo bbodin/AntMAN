@@ -18,7 +18,7 @@ static inline void stop_cmd () {Rcpp::stop("Error inside the package.\n");}
 #include <cstdlib>
 #define COUT_STREAM std::cout
 #define CERR_STREAM std::cerr
-static inline void stop_cmd () {abort();}
+static inline void stop_cmd () {abort();} // Commented for R Package
 #endif
 
 #define VERBOSE_COLOR true

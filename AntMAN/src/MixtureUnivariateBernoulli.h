@@ -9,8 +9,8 @@
 #define PROBITFMMNEW_SRC_MIXTUREUNIVARIATEBERNOULLI_HPP_
 
 
-#include "math_utils.hpp"
-#include "Mixture.hpp"
+#include "math_utils.h"
+#include "Mixture.h"
 
 class MixtureUnivariateBernoulli : public UnivariateMixture  {
 

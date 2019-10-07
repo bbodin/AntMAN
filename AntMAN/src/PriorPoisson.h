@@ -5,14 +5,11 @@
  *      Author: toky
  */
 
-#ifndef ANTMAN_SRC_PRIORPOISSON_HPP_
-#define ANTMAN_SRC_PRIORPOISSON_HPP_
+#ifndef ANTMAN_SRC_PRIORPOISSON_H_
+#define ANTMAN_SRC_PRIORPOISSON_H_
 
-
-#include <cassert>
-
-#include "math_utils.hpp"
-#include "Prior.hpp"
+#include "math_utils.h"
+#include "Prior.h"
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -100,4 +97,4 @@ public:
 
 };
 
-#endif /* ANTMAN_SRC_PRIORPOISSON_HPP_ */
+#endif /* ANTMAN_SRC_PRIORPOISSON_H_ */

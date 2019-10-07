@@ -5,10 +5,10 @@
  *      Author: toky
  */
 
-#ifndef ANTMAN_SRC_GIBBSRESULT_HPP_
-#define ANTMAN_SRC_GIBBSRESULT_HPP_
+#ifndef ANTMAN_SRC_GIBBSRESULT_H_
+#define ANTMAN_SRC_GIBBSRESULT_H_
 
-#include "utils.hpp"
+#include "utils.h"
 
 class Mixture;
 class Prior;
@@ -62,4 +62,4 @@ public:
 };
 
 
-#endif /* ANTMAN_SRC_GIBBSRESULT_HPP_ */
+#endif /* ANTMAN_SRC_GIBBSRESULT_H_ */
