@@ -9,7 +9,7 @@ Authors@R: c(person("Raffaele", "Argiento", role = c("aut", "cre"), email= "raff
 Author:      Raffaele Argiento, Bruno Bodin, Maria de Ioro
 Maintainer:  Raffaele Argiento <raffaele.argiento@unito.it>
 Description: AntMAN: Anthology of Mixture ANalysis tools: AntMan is a R package to fit Finite Bayesian Mixture  model with random number of component. The MCMC algorithm beyond AntMan is based on point processes and offer a more computational efficeint  alternative to Reversible Jump. Different mixture kernels can be specified: Univariate Gaussian, Univariate Poisson, Univariate Binomial, Multivariate Gaussian, Multivariate Bernoulli (Latent Class Analysis). For the parameters characterising the mixture kernel, we specify conjugate priors, with possibly user specified hyper-parameters. We allow for different choices for the prior on the number of components: Shifted Poisson, Negative Binomial, and Point Masses (i.e. mixtures with fixed number of components).
-License: GPL
+License: MIT + file LICENSE
 LazyData: true
 URL: http://www.raffaeleargiento.it/
 Imports: 

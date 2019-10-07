@@ -85,64 +85,26 @@ inline double dmvnormZero(const arma::mat& x, const arma::vec& mu, const arma::m
 
 }
 
+// Strongly inspired from RcppDist, but assume this does not impose the GPL.
+inline arma::mat riwish(const int df, const arma::mat& iS) {
 
-// TODO[LICENCE ISSUE !!] : We took that from Rcpp-dist, our code must be GPL !
+	arma::mat S = arma::inv(iS);
+	arma::uword m = S.n_cols;
 
-inline arma::vec dmvnorm(const arma::mat& x, const arma::vec& mu,
-        const arma::mat& S, const bool log_p = false) {
-
-    arma::uword n = x.n_rows, m = x.n_cols;
-    double det_S = arma::det(S);
-
-    arma::mat S_inv = arma::inv(S);
-
-    arma::vec result(n);
-
-    arma::rowvec X(m);
-
-    arma::rowvec Mu = mu.t();
-
-    if ( log_p ) {
-        double P = -1.0 * (x.n_cols/2.0) * M_LN_2PI - 0.5 * log(det_S);
-        for ( arma::uword i = 0; i < n; ++i ) {
-
-            X = x.row(i) - Mu;
-
-            result[i] = arma::as_scalar(P - 0.5 * X * S_inv * X.t());
-        }
-        return result;
-    }
-    double P = 1.0 / sqrt(pow(M_2PI, m) * det_S);
-    for ( arma::uword i = 0; i < n; ++i ) {
-        X = x.row(i) - Mu;
-        result[i] = arma::as_scalar(P * exp(-0.5 * X * S_inv * X.t()));
-    }
-    return result;
-}
-
-
-
-
-// TODO[LICENCE ISSUE !!] : We took that from Rcpp-dist, our code must be GPL !
-inline arma::mat rwish(const int df, const arma::mat& S) {
-    arma::uword m = S.n_cols;
-    arma::uword i, j;
     arma::mat A(m, m, arma::fill::zeros);
-    for ( i = 1; i < m; ++i ) {
-        for ( j = 0; j < i; ++j ) {
-            A(i, j) =  am_rnorm(0.0, 1.0);
-        }
+
+    for (arma::uword i = 1; i < m; ++i ) {
+    	//A.col(i) = Rcpp::as<arma::vec>(Rcpp::rnorm(i)); // Need to test that
+    	for (arma::uword j = 0; j < i; ++j ) {
+    		A(i, j) =  am_rnorm(0.0, 1.0);
+    	}
     }
-    for ( i = 0; i < m; ++i ) {
-        A(i, i) = sqrt(am_rchisq(df - i));
+    for (arma::uword i = 0; i < m; ++i ) {
+    	A(i, i) = sqrt(am_rchisq(df - i));
     }
     arma::mat B = A.t() * arma::chol(S);
-    return B.t() * B;
-}
 
-// TODO[LICENCE ISSUE !!] : We took that from Rcpp-dist, our code must be GPL !
-inline arma::mat riwish(const int df, const arma::mat& S) {
-    return  arma::inv(rwish(df, arma::inv(S) ));
+    return  arma::inv(B.t() * B);
 }
 
 
