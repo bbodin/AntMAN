@@ -2,6 +2,9 @@ language: r
 sudo: false
 cache: packages
 
+before_install:
+  - cd AntMAN
+  
 warnings_are_errors: false
 
 notifications:
