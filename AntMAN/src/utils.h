@@ -59,6 +59,8 @@ inline double  update_lsd ( double lsd, double ln_acp, double iter) {
 
 inline arma::vec mvrnormArma(arma::colvec mu, arma::mat Sig) {
 
+	VERBOSE_ASSERT(Sig.is_sympd(), "mvrnormArma requires Sig to be symmetric. It is not S = " << Sig);
+
 	arma::vec Y = arma::randn<arma::vec>(Sig.n_cols);
 
 	return mu +  arma::chol(Sig) * Y;
@@ -87,6 +89,9 @@ inline double dmvnormZero(const arma::mat& x, const arma::vec& mu, const arma::m
 inline arma::mat riwish(const int df, const arma::mat& iS) {
 
 	arma::mat S = arma::inv(iS);
+
+	VERBOSE_ASSERT(S.is_sympd(), "riwish requires S to be symmetric. It is not S = " << S << " and iS = " << S);
+
 	arma::uword m = S.n_cols;
 
     arma::mat A(m, m, arma::fill::zeros);

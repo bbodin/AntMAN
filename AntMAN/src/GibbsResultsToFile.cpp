@@ -38,4 +38,4 @@ void GibbsResultIntoFile ::log_output (
 
 
 
-};
+}

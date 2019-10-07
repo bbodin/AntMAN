@@ -8,6 +8,7 @@
 #ifndef ANTMAN_SRC_MIXTURE_H_
 #define ANTMAN_SRC_MIXTURE_H_
 #include <map>
+#include <iomanip>
 
 #include "GibbsResult.h"
 #include "Prior.h"
@@ -236,7 +237,7 @@ public:
 				start_gibbs           = std::chrono::system_clock::now();
 				total_gibbs               += elapsed_gibbs.count() / 1000000.0;
 
-				VERBOSE_LOG("[" << 100 * iter / (niter - 1) << "%]" <<
+				VERBOSE_LOG("[" << std::setw(3) << 100 * iter / (niter - 1) << "%]" <<
 						" iter=["<< iter + 1 << "/" << niter << "]" <<
 						" saved=["<< total_saved << "/" << total_to_save << "]" <<
 						" K="<<K<<

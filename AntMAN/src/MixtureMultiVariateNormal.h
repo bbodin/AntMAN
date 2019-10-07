@@ -64,6 +64,7 @@ public :
 				const arma::mat    Lam0 = _Lam0;
 
 
+				VERBOSE_ASSERT(Lam0.is_sympd(), "In init_tau: rwish requires Lam0 to be symmetric. It is not Lam0 = " << Lam0);
 				for(int l=0;l<M;l++){
 
 					//  TODO[CHECK ME] : arma::mat rwish(const int df, const arma::mat& S)
@@ -226,7 +227,8 @@ public :
 					VERBOSE_DEBUG("++");
 					const double ka0nokon = (ka0 * njl ) / (ka0 + njl);
 
-					const arma::vec ybar =(ysum / (double) njl); // cast?
+
+					const arma::vec ybar =  y_l.size() ? (ysum / (double) njl) : (ysum / (double) 1) ; // cast?
 
 					VERBOSE_DEBUG("ybar =>" << ybar.n_rows << "x" << ybar.n_cols);
 					VERBOSE_DEBUG("mu0  =>" << mu0.n_rows << "x" << mu0.n_cols);
@@ -253,14 +255,29 @@ public :
 					const double kan = ka0  +  (double) njl; // maybe the cast at double in the sum is not needed
 					const unsigned int nun = nu0 + njl;  // maybe the cast at  double in the sum is not needed
 					const arma::vec mun = (ysum+mu0*ka0)/kan;
-					const arma::mat Lamn = Lam0 + S2 + ka0nokon * ybarmatmul;
+					const arma::mat ka0nokonybarmatmul = ka0nokon * ybarmatmul;
+					const arma::mat Lamn = Lam0 + S2 + ka0nokonybarmatmul;
 
-					const arma::mat Sig_l =  riwish (nun, Lamn) ;
-					const arma::vec mu_l   = mvrnormArma(mun, Sig_l/kan);
+					VERBOSE_DEBUG("In Alloc: ka0  = " << ka0);
+					VERBOSE_DEBUG("In Alloc: njl  = " << njl);
+					VERBOSE_DEBUG("In Alloc: ka0nokon  = " << ka0nokon);
+					VERBOSE_DEBUG("In Alloc: ybar  = " << (ybar));
+					VERBOSE_DEBUG("In Alloc: mu0  = " << (mu0));
+					VERBOSE_DEBUG("In Alloc: ybarminusmu0t  = " << ybarminusmu0t);
+					VERBOSE_DEBUG("In Alloc: ybarminusmu0  = " << ybarminusmu0);
+					VERBOSE_DEBUG("In Alloc: ybarmatmul  = " << ybarmatmul);
+					VERBOSE_DEBUG("In Alloc: ka0nokonybarmatmul  = " << ka0nokonybarmatmul);
+					VERBOSE_DEBUG("In Alloc: S2  = " << S2);
+					VERBOSE_DEBUG("In Alloc: Lam0  = " << Lam0);
+					VERBOSE_DEBUG("In Alloc: Lamn  = " << Lamn);
+					VERBOSE_ASSERT(Lam0.is_sympd(), "In Alloc: rwish requires Lamn to be symmetric. It is not Lamn = " << Lamn);
 
+						const arma::mat Sig_l =  riwish (nun, Lamn) ;
+						const arma::vec mu_l   = mvrnormArma(mun, Sig_l/kan);
 
-					Sig_current.slice(l) = Sig_l; // In case 4 we have to update a matrix
-					mu_current.row(l)  = mu_l.t();
+						Sig_current.slice(l) = Sig_l; // In case 4 we have to update a matrix
+						mu_current.row(l)  = mu_l.t();
+
 				}
 
 				for(int l=0; l<K;l++){
@@ -273,6 +290,7 @@ public :
 				VERBOSE_DEBUG("--");
 				// Fill non-allocated
 
+				VERBOSE_ASSERT(Lam0.is_sympd(), "In Alloc: rwish requires Lam0 to be symmetric. It is not Lam0 = " << Lam0);
 				for(int l=K; l<M;l++){
 
 							const arma::mat res = riwish (nu0, Lam0);
