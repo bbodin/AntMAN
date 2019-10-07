@@ -68,6 +68,7 @@ static inline double am_rchisq (double a)                   {
 #else
 #ifdef HAS_RCPP
 #include <RcppArmadillo.h>
+// [[Rcpp::depends(RcppArmadillo)]]
 
 
 static inline double am_rpois   (double n)                    {return R::rpois(n);  }

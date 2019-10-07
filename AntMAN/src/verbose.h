@@ -11,6 +11,7 @@
 
 #ifdef HAS_RCPP
 #include <RcppArmadillo.h>
+// [[Rcpp::depends(RcppArmadillo)]]
 #define COUT_STREAM Rcpp::Rcout
 #define CERR_STREAM Rcpp::Rcerr
 static inline void stop_cmd () {Rcpp::stop("Error inside the package.\n");}

@@ -6,10 +6,7 @@
  */
 
 #include "GibbsResultRCpp.h"
-
-#include <RcppArmadillo.h>
 #include "Mixture.h"
-
 #include "Prior.h"
 
 

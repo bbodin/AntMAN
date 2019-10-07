@@ -9,10 +9,13 @@
 #define ANTMAN_SRC_MIXTUREMULTIVARIATENORMAL_HPP_
 
 
+#include <omp.h>
+// [[Rcpp::plugins(openmp)]]]
+
+
 #include "math_utils.h"
 #include "Mixture.h"
 #include "utils.h"
-// [[Rcpp::depends(RcppArmadillo)]]
 
 class MixtureMultivariateNormal: public MultivariateMixture  {
 

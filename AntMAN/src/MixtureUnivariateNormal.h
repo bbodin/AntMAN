@@ -9,6 +9,7 @@
 #define ANTMAN_SRC_MIXTUREUNIVARIATENORMAL_HPP_
 
 #include <omp.h>
+// [[Rcpp::plugins(openmp)]]]
 
 #include "math_utils.h"
 #include "Mixture.h"

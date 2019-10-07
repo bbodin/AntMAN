@@ -16,7 +16,6 @@
 
 
 #include "GibbsResult.h"
-#include <RcppArmadillo.h>
 
 
 struct Output_Type {
