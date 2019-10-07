@@ -5,7 +5,7 @@ citEntry(entry = "Article",
   author       = personList(as.person("Raffaele Argiento"),
                    as.person("Bruno Bodin"),
                    as.person("Maria De Iorio")),
-  journal      = "Journal of Statistical Software",
-  year         = "2020",
+  journal      = "",
+  year         = "",
   textVersion = "R. Argiento, Anthology of Mixture ANalysis tools."
 )
