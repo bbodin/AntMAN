@@ -228,7 +228,7 @@ public :
 					const double ka0nokon = (ka0 * njl ) / (ka0 + njl);
 
 
-					const arma::vec ybar =  y_l.size() ? (ysum / (double) njl) : (ysum / (double) 1) ; // cast?
+					const arma::vec ybar =  y_l.size() ? (ysum / (double) njl) : (ysum / std::numeric_limits<double>::epsilon()) ; // cast?
 
 					VERBOSE_DEBUG("ybar =>" << ybar.n_rows << "x" << ybar.n_cols);
 					VERBOSE_DEBUG("mu0  =>" << mu0.n_rows << "x" << mu0.n_cols);
