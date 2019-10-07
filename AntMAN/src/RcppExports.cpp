@@ -36,36 +36,36 @@ BEGIN_RCPP
 END_RCPP
 }
 // compute_stirling_ricor
-Rcpp::NumericVector compute_stirling_ricor(int n, double gamma);
+Rcpp::NumericVector compute_stirling_ricor(unsigned int n, double gamma);
 RcppExport SEXP _AntMAN_compute_stirling_ricor(SEXP nSEXP, SEXP gammaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type n(nSEXP);
     Rcpp::traits::input_parameter< double >::type gamma(gammaSEXP);
     rcpp_result_gen = Rcpp::wrap(compute_stirling_ricor(n, gamma));
     return rcpp_result_gen;
 END_RCPP
 }
 // compute_stirling_ricor_abs
-Rcpp::NumericVector compute_stirling_ricor_abs(int n, double gamma);
+Rcpp::NumericVector compute_stirling_ricor_abs(unsigned int n, double gamma);
 RcppExport SEXP _AntMAN_compute_stirling_ricor_abs(SEXP nSEXP, SEXP gammaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type n(nSEXP);
     Rcpp::traits::input_parameter< double >::type gamma(gammaSEXP);
     rcpp_result_gen = Rcpp::wrap(compute_stirling_ricor_abs(n, gamma));
     return rcpp_result_gen;
 END_RCPP
 }
 // compute_stirling_ricor_log
-Rcpp::NumericVector compute_stirling_ricor_log(int n, double gamma);
+Rcpp::NumericVector compute_stirling_ricor_log(unsigned int n, double gamma);
 RcppExport SEXP _AntMAN_compute_stirling_ricor_log(SEXP nSEXP, SEXP gammaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type n(nSEXP);
     Rcpp::traits::input_parameter< double >::type gamma(gammaSEXP);
     rcpp_result_gen = Rcpp::wrap(compute_stirling_ricor_log(n, gamma));
     return rcpp_result_gen;

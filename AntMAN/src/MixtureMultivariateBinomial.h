@@ -5,8 +5,8 @@
  *      Author: toky
  */
 
-#ifndef PROBITFMMNEW_SRC_MIXTUREMULTIVARIATEBERNOULLI_HPP_
-#define PROBITFMMNEW_SRC_MIXTUREMULTIVARIATEBERNOULLI_HPP_
+#ifndef ANTMAN_SRC_MIXTUREMULTIVARIATEBERNOULLI_HPP_
+#define ANTMAN_SRC_MIXTUREMULTIVARIATEBERNOULLI_HPP_
 
 
 #include "math_utils.h"
@@ -167,7 +167,6 @@ public :
 				// Figure 1 in the paper
 				// const int njl = y_l.size(); // This is the number of data in the cluster. I hope so
 				const int njl =nj[l];
-				//std::cout<<__LINE__<<" njl="<<njl<<"Is it different? "<<nj[l]<<"\n";
 				arma::vec njvec (d);
 				njvec.fill (njl);
 
@@ -214,4 +213,4 @@ public :
 
 
 
-#endif /* PROBITFMMNEW_SRC_MIXTUREMULTIVARIATEBERNOULLI_HPP_ */
+#endif /* ANTMAN_SRC_MIXTUREMULTIVARIATEBERNOULLI_HPP_ */

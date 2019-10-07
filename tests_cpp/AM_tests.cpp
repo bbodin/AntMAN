@@ -34,7 +34,7 @@ int main (int ac, char** av) {
 	VERBOSE_LOG("VERBOSE_LEVEL=" << VERBOSE_LEVEL);
 
 	if (vm.count("help")) {
-	    std::cout << desc << "\n";
+		COUT_STREAM << desc << "\n";
 	    return 0;
 	}
 	long thin =  vm["thin"].as<long>();

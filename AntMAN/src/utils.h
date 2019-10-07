@@ -5,10 +5,8 @@
  *      Author: toky
  */
 
-#ifndef PROBITFMM_SRC_UTILS_HPP_
-#define PROBITFMM_SRC_UTILS_HPP_
-
-#include <random>
+#ifndef ANTMAN_SRC_UTILS_HPP_
+#define ANTMAN_SRC_UTILS_HPP_
 
 #include "math_utils.h"
 #include "verbose.h"
@@ -110,4 +108,4 @@ inline arma::mat riwish(const int df, const arma::mat& iS) {
 
 
 
-#endif /* PROBITFMM_SRC_UTILS_HPP_ */
+#endif /* ANTMAN_SRC_UTILS_HPP_ */

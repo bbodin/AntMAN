@@ -369,7 +369,7 @@ AM_coclustering_slow = function (fit) {
 #'@examples
 #' AM_mcmc_fit( AM_sample_unipois()$y, 
 #'              AM_unipois_mix_hyperparams (alpha0=2, beta0=0.2), 
-#'              mcmc_parameters = AM_mcmc_parameters(niter=2000, burnin=1000, thin=10))
+#'              mcmc_parameters = AM_mcmc_parameters(niter=200, burnin=100, thin=10))
 #'@useDynLib AntMAN
 #'@export
 

@@ -8,9 +8,6 @@
 #ifndef ANTMAN_SRC_BETA_DISTRIBUTION_H_
 #define ANTMAN_SRC_BETA_DISTRIBUTION_H_
 
-#include <iostream>
-#include <sstream>
-#include <string>
 #include <random>
 
 // This implementation might not be correct, just copy/paste it from Internet ...
@@ -113,29 +110,6 @@
         return x / (x + y_gamma(engine));
       }
   };
-
-  template <typename CharT, typename RealType>
-  std::basic_ostream<CharT>& operator<<(std::basic_ostream<CharT>& os,
-    const beta_distribution<RealType>& beta)
-  {
-    os << "~Beta(" << beta.a() << "," << beta.b() << ")";
-    return os;
-  }
-
-  template <typename CharT, typename RealType>
-  std::basic_istream<CharT>& operator>>(std::basic_istream<CharT>& is,
-    beta_distribution<RealType>& beta)
-  {
-    std::string str;
-    RealType a, b;
-    if (std::getline(is, str, '(') && str == "~Beta" &&
-        is >> a && is.get() == ',' && is >> b && is.get() == ')') {
-      beta = beta_distribution<RealType>(a, b);
-    } else {
-      is.setstate(std::ios::failbit);
-    }
-    return is;
-  }
 
 
 

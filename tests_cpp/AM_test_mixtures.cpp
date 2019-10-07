@@ -33,7 +33,7 @@ void test_Mixture_UnivariateNormal() {
 	auto end_gibbs             = std::chrono::system_clock::now();
 	auto elapsed_gibbs         = end_gibbs - start_gibbs;
 	auto total_gibbs           = elapsed_gibbs.count() / 1000000.0;
-	std::cout << "Total time: " << total_gibbs << "ms"  << std::endl ;
+	COUT_STREAM << "Total time: " << total_gibbs << "ms"  << std::endl ;
 
 
 }
@@ -180,7 +180,7 @@ mixturemvb->fit(carcinoma , initial_clusteringmvb, true,  priormvb , niter,  bur
 auto end_gibbs             = std::chrono::system_clock::now();
 auto elapsed_gibbs         = end_gibbs - start_gibbs;
 auto total_gibbs           = elapsed_gibbs.count() / 1000000.0;
-std::cout << "Total time: " << total_gibbs << "ms" << std::endl ;
+COUT_STREAM << "Total time: " << total_gibbs << "ms" << std::endl ;
 
 }
 void test_mixtures (long niter, long burnin, long thin) {

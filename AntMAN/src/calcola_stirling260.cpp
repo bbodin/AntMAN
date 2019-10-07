@@ -31,7 +31,7 @@ Rcpp::NumericVector compute_stirling(int n, double gamma){
 
 // [[Rcpp::export]]
 
-Rcpp::NumericVector compute_stirling_ricor(int n, double gamma){
+Rcpp::NumericVector compute_stirling_ricor(unsigned int n, double gamma){
 	gamma=-gamma;
 	Rcpp::NumericVector row_j(n+1,0.0); // The output vector initialize all the element to zero
 	row_j[0]=1; /// Row j=0
@@ -61,7 +61,7 @@ Rcpp::NumericVector compute_stirling_ricor(int n, double gamma){
 
 // [[Rcpp::export]]
 
-Rcpp::NumericVector compute_stirling_ricor_abs(int n, double gamma){
+Rcpp::NumericVector compute_stirling_ricor_abs(unsigned int n, double gamma){
 
 	Rcpp::NumericVector row_j(n+1,0.0); // The output vector initialize all the element to zero
 	row_j[0]=1; /// Row j=0
@@ -98,7 +98,7 @@ Rcpp::NumericVector compute_stirling_ricor_abs(int n, double gamma){
 
 // [[Rcpp::export]]
 
-Rcpp::NumericVector compute_stirling_ricor_log(int n, double gamma){
+Rcpp::NumericVector compute_stirling_ricor_log(unsigned int n, double gamma){
 
 	double infinito = std::numeric_limits<double>::infinity();
 

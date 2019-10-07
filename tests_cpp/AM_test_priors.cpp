@@ -11,13 +11,13 @@
 
 void test_prior (Prior & to_test) {
 
-	std::cout << "run init_M_na : " << std::endl;
+	COUT_STREAM << "run init_M_na : " << std::endl;
 	int Mna0 = to_test.init_M_na(1);
 
-	std::cout << " - init_M_na(K=1) = " << Mna0 << std::endl;
+	COUT_STREAM << " - init_M_na(K=1) = " << Mna0 << std::endl;
 
 
-	std::cout << "run update_M_na" << std::endl;
+	COUT_STREAM << "run update_M_na" << std::endl;
 	std::vector<double> values = {
 			335.185,
 			0.0325548,
@@ -33,7 +33,7 @@ void test_prior (Prior & to_test) {
 	};
 
 	for (auto U : values) {
-		std::cout << " - update_M_na(U= " << U  << ",    K=1) = "         << to_test.update_M_na(U,1) << std::endl;
+		COUT_STREAM << " - update_M_na(U= " << U  << ",    K=1) = "         << to_test.update_M_na(U,1) << std::endl;
 
 	}
 
