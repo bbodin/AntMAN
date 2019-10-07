@@ -1,13 +1,14 @@
 language: r
 sudo: false
 cache: packages
+dist: trusty
 r:
   - release
 
 before_install:
   - cd AntMAN
   
-warnings_are_errors: false
+warnings_are_errors: true
 
 notifications:
   email:
