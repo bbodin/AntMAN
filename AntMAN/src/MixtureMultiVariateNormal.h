@@ -165,8 +165,7 @@ public :
 
 				 arma::mat mu_current (M, d);
 				 arma::cube Sig_current (d , d, M);
-
-					arma::vec S_current  (M);
+				 arma::vec S_current  (M);
 
 				cluster_indices_t ci_reorder(y.n_rows);
 				ci_reorder.fill(-1);
@@ -177,11 +176,17 @@ public :
 					clusters_indices[ci_current[i]].push_back(i);
 				}
 
-				for(int local_index=0;local_index<K;local_index++){
-					const int key = ci_star[local_index];
-					nj[local_index] = clusters_indices[key].size();
-					for (auto v : clusters_indices[key]) {
-						ci_reorder[v]=local_index;
+				VERBOSE_DEBUG("clusters_indices is for every cluster the index of data in ci_current.");
+
+				VERBOSE_ASSERT(ci_star.n_rows == K, "ci_star are unique cluster allocation, must be equal to K");
+				VERBOSE_ASSERT(ci_current.n_rows == n, "ci_current allocate data, should be as big as n, but it is not, ci_current.n_rows = " << ci_current.n_rows << " and n = " << n);
+
+				for(int reorder_cluster_index=0; reorder_cluster_index < K; reorder_cluster_index++){
+					const int previous_cluster_index = ci_star[reorder_cluster_index];
+					nj[reorder_cluster_index] = clusters_indices[previous_cluster_index].size();
+					VERBOSE_ASSERT(nj[reorder_cluster_index] > 0, "It is not possible to have empty cluster, or it would not appear inside ci_star. but this happended reorder_cluster_index = " << reorder_cluster_index);
+					for (auto v : clusters_indices[previous_cluster_index]) {
+						ci_reorder[v]=reorder_cluster_index;
 					}
 				}
 
@@ -209,7 +214,7 @@ public :
 					// Figure 1 in the paper
 
 					VERBOSE_DEBUG("++");
-					const int njl = y_l.size(); // This is the number of data in the cluster. I hope so
+					const int njl = nj[l]; // This is the number of data in the cluster. I hope so
 
 					VERBOSE_DEBUG("++");
 
@@ -219,7 +224,6 @@ public :
 
 					//Firs compute the posterior parameters
 
-					VERBOSE_DEBUG("y_l is a std::vector of  =>" << y_l.size());
 
 					const arma::vec ysum = y_l.size() ? vectorsum(y_l) : arma::zeros(d);
 
@@ -228,7 +232,7 @@ public :
 					const double ka0nokon = (ka0 * njl ) / (ka0 + njl);
 
 
-					const arma::vec ybar =  y_l.size() ? (ysum / (double) njl) : (ysum / std::numeric_limits<double>::epsilon()) ; // cast?
+					const arma::vec ybar = (ysum / (double) njl) ; // cast?
 
 					VERBOSE_DEBUG("ybar =>" << ybar.n_rows << "x" << ybar.n_cols);
 					VERBOSE_DEBUG("mu0  =>" << mu0.n_rows << "x" << mu0.n_cols);

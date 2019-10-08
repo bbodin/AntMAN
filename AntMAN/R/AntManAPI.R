@@ -385,12 +385,15 @@ AM_mcmc_fit <- function(
   fixed_cluster = FALSE
   if (is.null(fixed_clustering) & is.null(init_K) & !is.null(initial_clustering)) {
 	  fixed_cluster = FALSE
+	  # initial_clustering is set
   } else if (!is.null(init_K) & is.null(initial_clustering)& is.null(fixed_clustering)) {
 	  fixed_cluster = FALSE
     initial_clustering <- kmeans(y, init_K)$cluster
+	# initial_clustering is set
   } else if (is.null(init_K) & is.null(initial_clustering)& is.null(fixed_clustering)) {
 	  fixed_cluster = FALSE
-    initial_clustering <- 0:(length(y)-1)
+    initial_clustering <- 0:(NROW(y)-1)
+	# initial_clustering is set
   } else if (is.null(init_K) & is.null(initial_clustering)& !is.null(fixed_clustering)) { 
 	  fixed_cluster = TRUE
 	  initial_clustering = fixed_clustering

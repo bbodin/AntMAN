@@ -369,6 +369,15 @@ Rcpp::List IAM_mcmc_fit (
 		Rcpp::List                           mix_weight_prior       , //  = Rcpp::List::create()          /* default will be Gamma ()    */
 		Rcpp::List                           mcmc_parameters          //  = Rcpp::List::create()          /* (default niter=20000, ….)   */
 ) {
+	// ################## mcmc_parameters ##################
+	std::vector<std::string> required_items = {"parallel", "niter", "burnin", "thin", "verbose", "output","output_dir"};
+	for (std::string item : required_items) {
+		VERBOSE_ASSERT(mcmc_parameters.containsElementNamed(item.c_str()), "mcmc_parameters does not contains : " << item );
+	}
+
+	VERBOSE_LEVEL = mcmc_parameters["verbose"] ;
+
+	VERBOSE_DEBUG ("Debug mode is on.");
 
 	// ################## output arguments ##################
 
@@ -388,16 +397,9 @@ Rcpp::List IAM_mcmc_fit (
 	VERBOSE_INFO ("- Rcpp::is<Rcpp::NumericMatrix>(y) = " << Rcpp::is<Rcpp::NumericMatrix>(y));
 	VERBOSE_INFO ("- Rcpp::is<Rcpp::IntegerMatrix>(y) = " << Rcpp::is<Rcpp::IntegerMatrix>(y));
 
-	// ################## mcmc_parameters ##################
-	std::vector<std::string> required_items = {"parallel", "niter", "burnin", "thin", "verbose", "output","output_dir"};
-	for (std::string item : required_items) {
-		VERBOSE_ASSERT(mcmc_parameters.containsElementNamed(item.c_str()), "mcmc_parameters does not contains : " << item );
-	}
 
 
-	VERBOSE_LEVEL = mcmc_parameters["verbose"] ;
 
-	VERBOSE_DEBUG ("Debug mode is on.");
 
 
 	// ################## initial_clustering  ##################
@@ -434,6 +436,8 @@ Rcpp::List IAM_mcmc_fit (
 
 	if (Rcpp::is<Rcpp::NumericMatrix>(y) || Rcpp::is<Rcpp::IntegerMatrix>(y)) {
 		VERBOSE_ASSERT (is_multivariate(mix_kernel_hyperparams), "y argument is a Matrix while the technique is not MultiVariate.") ;
+
+		VERBOSE_INFO ("-  Rcpp::as<arma::mat>(y).n_rows = " << Rcpp::as<arma::mat>(y).n_rows);
 		dynamic_cast<MultivariateMixture*>(mixture)->fit(Rcpp::as<arma::mat>(y) , initial_clustering, fixed_clustering,
 				prior ,
 				niter ,burnin ,thin , parallel, &res );
@@ -441,6 +445,7 @@ Rcpp::List IAM_mcmc_fit (
 		return res.getList();
 
 	}  else if(Rcpp::is<Rcpp::NumericVector>(y) || Rcpp::is<Rcpp::IntegerVector>(y)){
+		VERBOSE_INFO ("-  Rcpp::as<arma::vec>(y).n_rows = " << Rcpp::as<arma::vec>(y).n_rows);
 		VERBOSE_ASSERT (is_univariate(mix_kernel_hyperparams), "y argument is a Vector while the technique is not Univariate.") ;
 		dynamic_cast<UnivariateMixture*>(mixture)->fit(Rcpp::as<arma::vec>(y) , initial_clustering, fixed_clustering, prior ,
 				niter ,burnin ,thin, parallel, &res );
