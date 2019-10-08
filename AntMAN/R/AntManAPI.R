@@ -70,7 +70,6 @@
 #'@importFrom stats kmeans rbinom rnorm rpois runif sd acf density quantile var
 #'@importFrom graphics plot hist rasterImage abline layout legend lines
 #'@importFrom sdols dlso
-#'@importFrom corrplot corrplot
 #'@docType package
 #'@name AntMAN
 NULL
@@ -530,13 +529,13 @@ AM_mix_components_prior_negbin <- function(a_R = NULL, b_R = NULL, a_P = NULL, b
   parameters = list(type = "AM_mix_components_prior_negbin");
   
        if (!is.null(a_R) & !is.null(b_R) & !is.null(init_R) &  is.null(R)) {parameters = c(parameters, list(a_R = a_R, b_R = b_R, init_R = init_R));}
-  else if (!is.null(a_R) & !is.null(b_R) &  is.null(init_R) &  is.null(R)) {parameters = c(parameters, list(a_R = a_R, b_R = b_R,                ));}
+  else if (!is.null(a_R) & !is.null(b_R) &  is.null(init_R) &  is.null(R)) {parameters = c(parameters, list(a_R = a_R, b_R = b_R                 ));}
   else if ( is.null(a_R) &  is.null(b_R) &  is.null(init_R) & !is.null(R)) {parameters = c(parameters, list(fixed_R = R));}
   else if ( is.null(a_R) &  is.null(b_R) &  is.null(init_R) &  is.null(R)) {parameters = c(parameters, list(fixed_R = 1));}
   else {stop ( paradox_error_R );}
   
        if (!is.null(a_P) & !is.null(b_P) & !is.null(init_P) &  is.null(P)) {parameters = c(parameters, list(a_P = a_P, b_P = b_P, init_P = init_P));}
-  else if (!is.null(a_P) & !is.null(b_P) &  is.null(init_P) &  is.null(P)) {parameters = c(parameters, list(a_P = a_P, b_P = b_P,                ));}
+  else if (!is.null(a_P) & !is.null(b_P) &  is.null(init_P) &  is.null(P)) {parameters = c(parameters, list(a_P = a_P, b_P = b_P                 ));}
   else if ( is.null(a_P) &  is.null(b_P) &  is.null(init_P) & !is.null(P)) {parameters = c(parameters, list(fixed_P = P));}
   else if ( is.null(a_P) &  is.null(b_P) &  is.null(init_P) &  is.null(P)) {parameters = c(parameters, list(a_P = 1, b_P = 1));}
   else {stop ( paradox_error_P );}
