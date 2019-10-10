@@ -11,6 +11,9 @@ AM_coclustering(fit)
 \arguments{
 \item{fit}{a \code{\link{AM_mcmc_output}} object}
 }
+\value{
+co-clustering matrix
+}
 \description{
 Return co-clustering
 

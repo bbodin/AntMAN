@@ -11,6 +11,9 @@ AM_clustering_estimation_average(fit)
 \arguments{
 \item{fit}{a \code{\link{AM_mcmc_output}} object}
 }
+\value{
+maximum likelihood estimation (average)
+}
 \description{
 Return maximum likelihood estimation (average)
 

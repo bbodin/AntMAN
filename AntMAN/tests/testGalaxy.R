@@ -1,6 +1,4 @@
-pdf("Galaxy.pdf")
-
-.libPaths(c("./AntMAN.Rinstall", .libPaths()))
+pdf(file.path(tempdir(), "Galaxy.pdf"))
 library("AntMAN")
 
 data(galaxy)

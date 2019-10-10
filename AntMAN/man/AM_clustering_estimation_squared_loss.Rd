@@ -11,6 +11,9 @@ AM_clustering_estimation_squared_loss(fit)
 \arguments{
 \item{fit}{a \code{\link{AM_mcmc_output}} object}
 }
+\value{
+maximum likelihood estimation (squared_loss)
+}
 \description{
 Return maximum likelihood estimation (squared_loss)
 

@@ -1,4 +1,5 @@
-pdf("Segmentation.pdf")
+pdf(file.path(tempdir(), "segmentation.pdf"))
+
 ##############################################
 ### Load packages
 ##############################################
