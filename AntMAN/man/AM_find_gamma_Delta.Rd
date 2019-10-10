@@ -41,7 +41,7 @@ n <- 82
 Mstar <- 12
 gam_de <- AM_find_gamma_Delta(n,Mstar,Kstar=6, gam_min=1e-4,gam_max=10, tolerance=0.1)
 prior_K_de <-  AM_prior_K_Delta(n,gam_de,Mstar)
-prior_K_de\%*\%1:n
+prior_K_de\\\%*\\\%1:n
 }
 \keyword{cluster}
 \keyword{number}

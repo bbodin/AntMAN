@@ -43,7 +43,7 @@ n <- 82
 Lam  <- 11
 gam_po <-  AM_find_gamma_Pois(n,Lam,Kstar=6, gam_min=0.0001,gam_max=10, tolerance=0.1)
 prior_K_po <-  AM_prior_K_Pois(n,gam_po,Lam)
-prior_K_po\%*\%1:n
+prior_K_po\\\%*\\\%1:n
 }
 \keyword{cluster}
 \keyword{number}
