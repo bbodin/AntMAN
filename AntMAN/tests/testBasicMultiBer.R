@@ -3,8 +3,6 @@
 ### Load the AntMan package
 ##############################################
 
-
-.libPaths(c("./AntMAN.Rinstall", .libPaths()))
 library("AntMAN")
 
 rm(list=ls())

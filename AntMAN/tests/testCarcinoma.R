@@ -1,3 +1,4 @@
+quit() ## Skip this test - too long
 library("AntMAN")
 
 library('sdols')  ### load the sdols library

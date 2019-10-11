@@ -1,5 +1,4 @@
-
-.libPaths(c("./AntMAN.Rinstall", .libPaths()))
+quit() ## Skip this test - too long
 library("AntMAN")
 
 data(said)

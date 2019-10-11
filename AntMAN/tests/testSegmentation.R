@@ -1,9 +1,8 @@
+quit() ## Skip this test - too long
 pdf("Segmentation.pdf")
 ##############################################
 ### Load packages
 ##############################################
-.libPaths(c("./AntMAN.Rinstall", .libPaths()))
-
 library("AntMAN")
 
 
