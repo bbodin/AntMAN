@@ -13,6 +13,9 @@ AM_clustering_estimation_laugreen(fit, C = NULL)
 
 \item{C}{used to speed up the function, can be the coclustering as returned from the command \code{\link{AM_coclustering}}.}
 }
+\value{
+maximum likelihood estimation (laugreen)
+}
 \description{
 Return maximum likelihood estimation (laugreen)
 

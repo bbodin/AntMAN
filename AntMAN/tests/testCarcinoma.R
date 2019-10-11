@@ -217,7 +217,8 @@ y_mvb[idx,]                   ## give a look at these observation for which clus
 
 
 ##### PDF plots
-pdf("trestime.pdf",paper="special",height=4, width=12)
+pdf(file.path(tempdir(), "trestime.pdf"),paper="special",height=4, width=12)
+
 par(mar=c(3,3.5,1.5,0.5)+0.1)
 #'mar' A numerical vector of the form 'c(bottom, left, top, right)'
 #          which gives the number of lines of margin to be specified on

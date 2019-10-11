@@ -225,7 +225,7 @@ summary.AM_mcmc_output=function(object,...){
 #'  
 #'@param fit a \code{\link{AM_mcmc_output}} object
 #'@param C used to speed up the function, can be the coclustering as returned from the command \code{\link{AM_coclustering}}.
-#'  
+#'@return maximum likelihood estimation (laugreen)
 #'@export
 AM_clustering_estimation_laugreen = function (fit, C = NULL) {
 	FF <- vector("numeric")
@@ -255,6 +255,7 @@ AM_clustering_estimation_laugreen = function (fit, C = NULL) {
 #'@param fit a \code{\link{AM_mcmc_output}} object
 #'  
 #'@importFrom sdols dlso
+#'@return maximum likelihood estimation (squared_loss)
 #'@export
 AM_clustering_estimation_squared_loss = function (fit) {
 	if(requireNamespace("sdols")) {
@@ -270,6 +271,7 @@ AM_clustering_estimation_squared_loss = function (fit) {
 #'  Given a MCMC output, this function return maximum likelihood estimation.
 #'  
 #'@param fit a \code{\link{AM_mcmc_output}} object
+#'@return maximum likelihood estimation (average)
 #'  
 #'@importFrom mcclust minbinder comp.psm
 #'@export
@@ -293,7 +295,7 @@ AM_clustering_estimation_average = function (fit) {
 #'  Given a MCMC output, this function return co-clustering matrix
 #'  
 #'@param fit a \code{\link{AM_mcmc_output}} object
-#'  
+#'@return co-clustering matrix
 #'
 #'@export
 AM_coclustering = function (fit) {
@@ -316,6 +318,7 @@ AM_coclustering = function (fit) {
 #'  Given a MCMC output, this function return co-clustering matrix
 #'  
 #'@param fit a \code{\link{AM_mcmc_output}} object
+#'@return co-clustering matrix
 #'  
 #'
 #'@export
@@ -427,7 +430,7 @@ AM_mcmc_fit <- function(
 #'@param thin         Thining rate.
 #'@param verbose      A value from 0 to 4, that specifies the desired level of verbosity (0:None, 1:Warnings, 2:Debug, 3:Extras)
 #'@param output       A list of parameters output to return
-#'@param output_dir   Path to an output dir, when to store all the outputs.
+#'@param output_dir   Path to an output dir, where to store all the outputs.
 #'@param parallel     Some of the algorithms can be run in parallel using OpenMP. When set to True, this parameter triggers the parallelism.
 #'@return list to be used as \code{mcmc_parameters} argument with \code{AM_mcmc_fit}. 
 #'@examples 
@@ -693,7 +696,7 @@ AM_mix_weights_prior_gamma <- function(a = NULL, b = NULL, gamma = NULL, init = 
 #'
 #'@param alpha0       The shape  hyperparameter \eqn{\alpha_0}.
 #'@param beta0        The  rate hyperparameter \eqn{\beta_0}.
-#'@return A list to be used as \code{mix_kernel_hyperparams} argument for \code{mcmc_fit}.
+#'@return             A list to be used as \code{mix_kernel_hyperparams} argument for \code{mcmc_fit}.
 #'@examples 
 #' AM_unipois_mix_hyperparams (alpha0=2, beta0=0.2)
 #'@export

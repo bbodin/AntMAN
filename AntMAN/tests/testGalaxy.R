@@ -1,5 +1,5 @@
 quit() ## Skip this test - too long
-pdf("Galaxy.pdf")
+pdf(file.path(tempdir(), "Galaxy.pdf"))
 
 library("AntMAN")
 

@@ -21,7 +21,7 @@ AM_mcmc_parameters(niter = 5000, burnin = 2500, thin = 1,
 
 \item{parallel}{Some of the algorithms can be run in parallel using OpenMP. When set to True, this parameter triggers the parallelism.}
 
-\item{output_dir}{Path to an output dir, when to store all the outputs.}
+\item{output_dir}{Path to an output dir, where to store all the outputs.}
 }
 \value{
 list to be used as \code{mcmc_parameters} argument with \code{AM_mcmc_fit}.

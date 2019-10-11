@@ -1,5 +1,5 @@
 quit() ## Skip this test - too long
-pdf("Segmentation.pdf")
+pdf(file.path(tempdir(), "segmentation.pdf"))
 ##############################################
 ### Load packages
 ##############################################
