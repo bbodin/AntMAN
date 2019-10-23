@@ -2,7 +2,6 @@
  * Mixture.hpp
  *
  *  Created on: 14 Apr 2019
- *      Author: toky
  */
 
 #ifndef ANTMAN_SRC_MIXTURE_H_

@@ -2,7 +2,6 @@
  * beta_distribution.hpp
  *
  *  Created on: Jun 17, 2019
- *      Author: toky
  */
 
 #ifndef ANTMAN_SRC_BETA_DISTRIBUTION_H_

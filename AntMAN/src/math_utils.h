@@ -2,7 +2,6 @@
  * maths.hpp
  *
  *  Created on: Jun 14, 2019
- *      Author: toky
  */
 
 #ifndef ANTMAN_MIXTURE_CPP_MATHS_HPP_

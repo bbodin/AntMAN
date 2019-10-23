@@ -2,7 +2,6 @@
  * Prior.hpp
  *
  *  Created on: Apr 8, 2019
- *      Author: toky
  */
 
 #ifndef ANTMAN_SRC_PRIOR_H_

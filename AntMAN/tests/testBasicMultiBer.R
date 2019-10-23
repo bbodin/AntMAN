@@ -4,8 +4,6 @@
 ##############################################
 
 library("AntMAN")
-
-rm(list=ls())
 set.seed(123)
 
 ##############################################
@@ -26,7 +24,7 @@ demo_multivariate_binomial <- AM_sample_multibin(n,d,c(0.3,0.3,0.4),TH)
 y_mvb  <- demo_multivariate_binomial$y
 ci_mvb <- demo_multivariate_binomial$ci
 
-hist(y_mvb,freq=F,nclass=15,col=colors()[4])
+hist(y_mvb,freq=FALSE,nclass=15,col=colors()[4])
 plot(y_mvb,col=ci_mvb+1)
 
 

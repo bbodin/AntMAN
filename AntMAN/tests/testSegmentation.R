@@ -6,7 +6,6 @@ pdf(file.path(tempdir(), "segmentation.pdf"))
 library("AntMAN")
 
 
-rm(list=ls())
 set.seed(123)
 
 ##############################################

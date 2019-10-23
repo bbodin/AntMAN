@@ -2,7 +2,6 @@
  * test-PriorNegativeBinomial.cpp
  *
  *  Created on: 16 May 2019
- *      Author: toky
  */
 
 

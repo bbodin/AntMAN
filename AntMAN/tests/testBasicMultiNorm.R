@@ -5,15 +5,11 @@ quit() ## Skip this test - too long
 
 library("AntMAN")
 
-rm(list=ls())
-set.seed(123)
-
 
 ##############################################
 ### BUILD THE MULTIVARIATE NORMAL DATA
 ##############################################
 
-rm(list=ls())
 set.seed(123)
 
 
@@ -26,15 +22,15 @@ MU[3,] <- c(4,4)
 
 sig1 <- c(1,1)
 rho1 <- 0
-Sig1 <- matrix(c(sig1[1]^2,rho1*sig1[1]*sig1[2], rho1*sig1[1]*sig1[2],sig1[2]^2),byrow=T,nrow=2) 
+Sig1 <- matrix(c(sig1[1]^2,rho1*sig1[1]*sig1[2], rho1*sig1[1]*sig1[2],sig1[2]^2),byrow=TRUE,nrow=2) 
 
 sig2 <- c(1,1)
 rho2 <- -0.7
-Sig2 <- matrix(c(sig2[1]^2,rho2*sig2[1]*sig2[2], rho2*sig2[1]*sig2[2],sig2[2]^2),byrow=T,nrow=2) 
+Sig2 <- matrix(c(sig2[1]^2,rho2*sig2[1]*sig2[2], rho2*sig2[1]*sig2[2],sig2[2]^2),byrow=TRUE,nrow=2) 
 
 sig3 <- c(1,1)
 rho3 <- -0.3
-Sig3 <- matrix(c(sig3[1]^2,rho3*sig3[1]*sig3[2], rho3*sig3[1]*sig3[2],sig3[2]^2),byrow=T,nrow=2) 
+Sig3 <- matrix(c(sig3[1]^2,rho3*sig3[1]*sig3[2], rho3*sig3[1]*sig3[2],sig3[2]^2),byrow=TRUE,nrow=2) 
 
 
 SIG <- array(0,dim=c(3,2,2))
@@ -48,7 +44,7 @@ demo_multivariate_normal <-AM_sample_multinorm(n = 1000 ,d = 2,c(0.3,0.3,0.4),MU
 y_mvn  <- demo_multivariate_normal$y
 ci_mvn <- demo_multivariate_normal$ci
 
-hist(y_mvn,freq=F,nclass=15,col=colors()[4])
+hist(y_mvn,freq=FALSE,nclass=15,col=colors()[4])
 plot(y_mvn,col=ci_mvn+1)
 
 

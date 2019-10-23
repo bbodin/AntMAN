@@ -2,7 +2,6 @@
  * GibbsResultsToFile.cpp
  *
  *  Created on: Aug 2, 2019
- *      Author: toky
  */
 
 

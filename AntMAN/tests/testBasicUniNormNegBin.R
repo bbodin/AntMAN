@@ -6,7 +6,6 @@
 library("AntMAN")
 
 
-rm(list=ls())
 set.seed(123)
 
 
@@ -19,7 +18,7 @@ demo_univariate_normal <-AM_sample_uninorm(n=1000,pro=c(0.2,0.5,0.3),mmu=c(-2.1,
 y_uvn  <- demo_univariate_normal$y
 ci_uvn <- demo_univariate_normal$ci
 
-hist(y_uvn,freq=F,nclass=15,col=colors()[4])
+hist(y_uvn,freq=FALSE,nclass=15,col=colors()[4])
 plot(1:length(y_uvn),y_uvn,col=ci_uvn+1)
 
 

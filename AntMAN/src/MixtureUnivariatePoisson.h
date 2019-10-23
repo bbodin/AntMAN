@@ -2,7 +2,6 @@
  * MixtureUnivariatePoisson.hpp
  *
  *  Created on: Mar 8, 2019
- *      Author: toky
  */
 
 #ifndef ANTMAN_SRC_MIXTUREUNIVARIATEPOISSON_HPP_

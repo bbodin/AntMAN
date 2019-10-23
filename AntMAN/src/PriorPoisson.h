@@ -2,7 +2,6 @@
  * PoissonPrior.hpp
  *
  *  Created on: Apr 12, 2019
- *      Author: toky
  */
 
 #ifndef ANTMAN_SRC_PRIORPOISSON_H_

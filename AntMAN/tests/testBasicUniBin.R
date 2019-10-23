@@ -5,23 +5,17 @@
 
 library("AntMAN")
 
-
-rm(list=ls())
-set.seed(123)
-
-
 ##############################################
 ### BUILD THE UNIVARIATE BINOMIAL DATA
 ##############################################
 
 # I fix the random seed
-rm(list=ls())
 set.seed(123)              
 demo_univariate_binomial <-AM_sample_unibin(n=1000,mb=100, pro=c(0.2,0.5,0.3),mth=c(0.1,0.5,0.9)) 
 y_uvb  <- demo_univariate_binomial$y
 ci_uvb <- demo_univariate_binomial$ci
 
-hist(y_uvb,freq=F,nclass=15,col=colors()[4])
+hist(y_uvb,freq=FALSE,nclass=15,col=colors()[4])
 plot(1:length(y_uvb),y_uvb,col=ci_uvb+1)
 
 

@@ -1,4 +1,3 @@
-
 ##############################################
 ### Load the AntMan package
 ##############################################
@@ -6,20 +5,16 @@
 library("AntMAN")
 
 
-rm(list=ls())
-set.seed(123)
-
-
 ##############################################
 ### BUILD THE UNIVARIATE POISSON DATA
 ##############################################
-rm(list=ls())
+
 set.seed(123)
 demo_univariate_poisson <-AM_sample_unipois(n=1000,pro=c(0.2,0.5,0.3),mth=c(5,25,50)) 
 y_uvp  <- demo_univariate_poisson$y
 ci_uvp <- demo_univariate_poisson$ci
 
-hist(y_uvp,freq=F,nclass=15,col=colors()[4])
+hist(y_uvp,freq=FALSE,nclass=15,col=colors()[4])
 plot(1:length(y_uvp),y_uvp,col=ci_uvp+1)
 
 

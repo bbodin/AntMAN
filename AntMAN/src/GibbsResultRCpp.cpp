@@ -2,7 +2,6 @@
  * GibbsResult.cpp
  *
  *  Created on: Jun 13, 2019
- *      Author: toky
  */
 
 #include "GibbsResultRCpp.h"

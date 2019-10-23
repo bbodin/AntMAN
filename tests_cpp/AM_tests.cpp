@@ -2,7 +2,6 @@
  * AM_tests.cpp
  *
  *  Created on: Jun 14, 2019
- *      Author: toky
  */
 
 #include <iostream>

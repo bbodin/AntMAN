@@ -2,7 +2,6 @@
  * MixtureMultiVariateNormal.hpp
  *
  *  Created on: Mar 8, 2019
- *      Author: toky
  */
 
 #ifndef ANTMAN_SRC_MIXTUREMULTIVARIATENORMAL_HPP_

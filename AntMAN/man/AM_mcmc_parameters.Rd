@@ -5,7 +5,7 @@
 \title{MCMC Parameters}
 \usage{
 AM_mcmc_parameters(niter = 5000, burnin = 2500, thin = 1,
-  verbose = 1, output = c("CI", "K"), parallel = T,
+  verbose = 1, output = c("CI", "K"), parallel = TRUE,
   output_dir = NULL)
 }
 \arguments{

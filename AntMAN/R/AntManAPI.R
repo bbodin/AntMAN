@@ -442,7 +442,7 @@ AM_mcmc_parameters <- function(  niter=5000,
                                  thin=1,
                                  verbose = 1,
                                  output=c("CI","K"),
-                                 parallel=T,
+                                 parallel=TRUE,
                                  output_dir = NULL) {
   
   

@@ -66,7 +66,7 @@ univariate_plot <- function(chain,  main_trace="Trace plot", main_auto="Autocorr
 ## Representation of the posterior chain of  theta
 #Divide the plot device in three sub-graph regions
 #two square on the upper and a rectangle on the bottom
-layout(matrix(c(1,2,3,3),2,2,byrow=T))
+layout(matrix(c(1,2,3,3),2,2,byrow=TRUE))
 #trace-plot of the posterior chain
 plot(chain,type="l",main=main_trace)
 # autocorrelation plot
@@ -74,7 +74,7 @@ acf(chain,main=main_auto,lag.max=lag_acf)
 
 
 #Histogram
-hist(chain,nclass=nclass,freq=F,main=main_hist,col=col_hist) 
+hist(chain,nclass=nclass,freq=FALSE,main=main_hist,col=col_hist) 
 
 ## Overlap the kernel-density 
 lines(density(chain),col=col_dens,lwd=2)
@@ -92,7 +92,7 @@ abline(v=quantile(chain,prob=c(0.95)),col=col_quant,lty=2,lwd=2)
 legend("topright",legend=c("posterior median", "95% Credible bounds","kernel density smoother"),lwd=c(2,2,2), col=c(col_quant,col_quant,col_dens),lty=c(1,2,1))
 
 
-layout(matrix(c(1,1,1,1),1,1,byrow=T))
+layout(matrix(c(1,1,1,1),1,1,byrow=TRUE))
 }
 
 
