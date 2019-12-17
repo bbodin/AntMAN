@@ -254,12 +254,13 @@ AM_clustering_estimation_laugreen = function (fit, C = NULL) {
 #'  
 #'@param fit a \code{\link{AM_mcmc_output}} object
 #'  
-#'@importFrom salso dlso
+#'@importFrom salso dlso psm
 #'@return maximum likelihood estimation (squared_loss)
 #'@export
 AM_clustering_estimation_squared_loss = function (fit) {
 	if(requireNamespace("salso")) {
-		fres = dlso(t(do.call(cbind,fit$CI)),loss="binder")
+		draws = t(do.call(cbind,fit$CI))
+		fres = dlso(psm(draws),"binder",draws)
 		return (fres);
 	} else {
 		stop ( "The package salso is required when using this command." );
