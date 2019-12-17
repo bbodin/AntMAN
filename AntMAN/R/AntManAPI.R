@@ -69,7 +69,7 @@
 #'@importFrom Rcpp evalCpp
 #'@importFrom stats kmeans rbinom rnorm rpois runif sd acf density quantile var
 #'@importFrom graphics plot hist rasterImage abline layout legend lines
-#'@importFrom sdols dlso
+#'@importFrom salso dlso
 #'@docType package
 #'@name AntMAN
 NULL
@@ -254,15 +254,15 @@ AM_clustering_estimation_laugreen = function (fit, C = NULL) {
 #'  
 #'@param fit a \code{\link{AM_mcmc_output}} object
 #'  
-#'@importFrom sdols dlso
+#'@importFrom salso dlso
 #'@return maximum likelihood estimation (squared_loss)
 #'@export
 AM_clustering_estimation_squared_loss = function (fit) {
-	if(requireNamespace("sdols")) {
-		fres = dlso(t(do.call(cbind,fit$CI)))
+	if(requireNamespace("salso")) {
+		fres = dlso(t(do.call(cbind,fit$CI)),loss="binder")
 		return (fres);
 	} else {
-		stop ( "The package sdols is required when using this command." );
+		stop ( "The package salso is required when using this command." );
 	}
 }
 
