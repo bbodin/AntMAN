@@ -117,7 +117,7 @@ public :
 				for(int l=0;l<M;l++){
 
 					const arma::vec dmvnorm1_mu  = mu_current.row(l).t();
-					const arma::mat dmvnorm1_Sig =Sig_current.slice(l);
+					const arma::mat dmvnorm1_Sig = Sig_current.slice(l);
 
 
 					double ldensi = dmvnormZero(y.row(i), dmvnorm1_mu,dmvnorm1_Sig,true);
@@ -194,11 +194,9 @@ public :
 
 				for(int l=0; l<K;l++){
 
-					VERBOSE_DEBUG("++");
 					// Find the index of the data in the l-th cluster
 					std::vector<int> & which_ind=clusters_indices [ci_star[l]];
 
-					VERBOSE_DEBUG("++");
 					//Prepare the variable that will contain the data in the cluster
 					std::vector <arma::vec>  y_l (nj[l]);
 					//Separate the data in each cluster and rename the cluster
@@ -207,22 +205,13 @@ public :
 
 					}
 
-					// Call the parametric function that update the
-					// parameter in each cluster
-					// See the boxes 4.c.i and 4.b.i of
-					// Figure 1 in the paper
-
-					VERBOSE_DEBUG("++");
 					const int njl = nj[l]; // This is the number of data in the cluster. I hope so
-
-					VERBOSE_DEBUG("++");
 
 					//Since in our case the full conditionals are in closed form
 					//they are Normal-inverse-gamma
 
 
 					//Firs compute the posterior parameters
-
 
 					const arma::vec ysum = y_l.size() ? vectorsum(y_l) : arma::zeros(d);
 
@@ -239,7 +228,6 @@ public :
 					const arma::rowvec ybarminusmu0t = ybarminusmu0.t();
 					const arma::mat  ybarmatmul = ybarminusmu0 * ybarminusmu0t;
 
-					VERBOSE_DEBUG("++");
 					arma::mat S2  = arma::zeros(d, d);
 					VERBOSE_DEBUG("S2 = " << S2);
 					for (int i = 0 ; i < njl ; i ++) {
@@ -251,7 +239,7 @@ public :
 						const arma::mat matmul = ylmyb * ylmybt;
 						VERBOSE_DEBUG("matmul = " << matmul);
 						VERBOSE_DEBUG("S2 = " << S2);
-						S2 =  S2 + matmul; // TODO[CHECK ME] : he does not trust me :-(
+						S2 =  S2 + matmul;
 					}
 
 					// Then the parameters of the posteriorr  Normal-inverse-gamma a posteriori are

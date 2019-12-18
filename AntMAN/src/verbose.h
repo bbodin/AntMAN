@@ -7,6 +7,7 @@
 #ifndef ANTMAN_SRC_MIXTURE_CPP_VERBOSE_HPP_
 #define ANTMAN_SRC_MIXTURE_CPP_VERBOSE_HPP_
 
+#define VERBOSE_BINARY
 
 #ifdef HAS_RCPP
 #include <RcppArmadillo.h>

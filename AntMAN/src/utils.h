@@ -22,6 +22,7 @@ inline arma::vec vectorsum (std::vector <arma::vec> elems ) {
 
 inline double  update_lsd ( double lsd, double ln_acp, double iter) {
 
+	VERBOSE_DEBUG("lsd = " << lsd << " ln_acp = " << ln_acp << " iter = " << iter);
 
 	// This is a new parameter to adjust lsd (ADAPTIVE METROPOLIS; the user could be allowed to set a different value in (-1,0) different that -0.7; Even if it is dangerous to change it
 	double wg=std::pow(iter,-0.7);
@@ -38,7 +39,7 @@ inline double  update_lsd ( double lsd, double ln_acp, double iter) {
 	scrivi:
 	s2(new) = s2(old) * exp( wg*(alpha - tau) )
 	*/
-	lsd = lsd * std::exp(wg*(std::exp(std::min(0.0,ln_acp))-bartau));
+	lsd = lsd + (wg*(std::exp(std::min(0.0,ln_acp))-bartau));
 
 	if(lsd<std::pow(10,-50)){
 		lsd=std::pow(10,-50);
@@ -47,6 +48,7 @@ inline double  update_lsd ( double lsd, double ln_acp, double iter) {
 		lsd=std::pow(10,50);
 	}
 
+	VERBOSE_DEBUG("lsd = " << lsd);
 
 	return lsd;
 
@@ -84,8 +86,13 @@ inline double dmvnormZero(const arma::mat& x, const arma::vec& mu, const arma::m
 
 }
 
-// Strongly inspired from RcppDist, but assume this does not impose the GPL.
 inline arma::mat riwish(const int df, const arma::mat& iS) {
+	return arma::iwishrnd(iS, df);
+};
+
+
+// Strongly inspired from RcppDist, but assume this does not impose the GPL.
+inline arma::mat oldriwish(const int df, const arma::mat& iS) {
 
 	arma::mat S = arma::inv(iS);
 

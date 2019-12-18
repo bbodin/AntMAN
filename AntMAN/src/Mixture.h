@@ -102,17 +102,18 @@ public:
 		unsigned int K=ci_star.size();
 
 
+		// ******  init_M_na  ******
 		int M_na= prior->init_M_na(K);
 		int M=K+M_na;
 		VERBOSE_DEBUG("this->init_tau (y, M);");
+		// ******  init_tau  ******
 		this->init_tau (y, M);
 		VERBOSE_DEBUG("Done");
 
 		arma::vec  S_current (M);
 
-		// TODO[CHECK ME] : S current initialized with gamma_current !!! should not right ??
 		for(int it=0;it<M;it++){
-			S_current[it] =am_rgamma(2.0,1.0); // replace gamma current by 2.0 for now
+			S_current[it] =am_rgamma(prior->get_gamma() ,1.0);
 		}
 
 
@@ -125,7 +126,7 @@ public:
 
 		VERBOSE_INFO ( "Let's start the Gibbs!");
 
-		unsigned long total_saved          = 0;
+		unsigned long total_saved   = 0;
 		double total_iter           = 0;
 		double total_u              = 0;
 		double total_ci             = 0;
@@ -158,7 +159,8 @@ public:
 			total_u += elapsed_u.count() / 1000000.0;
 
 
-			// Update CI and CI*
+			// ******  Update CI and CI*  ******
+			//
 			VERBOSE_DEBUG("Call up_ci\n");
 			auto start_ci = std::chrono::system_clock::now();
 			if ((iter > 0) and (not fixed_clustering)) {//I need this if i want that my inizialization for ci works
@@ -174,6 +176,7 @@ public:
 
 
 			auto start_mna = std::chrono::system_clock::now();
+			// ******  update_M_na ******
 			M_na = prior->update_M_na(U_current, K);
 			M=K+M_na;
 			auto end_mna = std::chrono::system_clock::now();
@@ -192,6 +195,7 @@ public:
 
 			VERBOSE_DEBUG("Call up_allocated_nonallocated\n");
 			auto start_alloc = std::chrono::system_clock::now();
+			// ******  up_allocated_nonallocated ******
 			auto up_allocated_res = this->up_allocated_nonallocated (  K , M , ci_current ,  ci_star  , prior->get_gamma(),  U_current, y );
 			const std::vector <int> nj = up_allocated_res.nj();
 
@@ -203,6 +207,7 @@ public:
 			total_alloc += elapsed_alloc.count() / 1000000.0;
 			VERBOSE_DEBUG("End up_allocated_nonallocated\n");
 
+			// ****** 	prior->update(U_current, K, nj);  ******
 			prior->update(U_current, K, nj);
 
 			VERBOSE_DEBUG("prior->update(U_current, K, nj) is done\n");

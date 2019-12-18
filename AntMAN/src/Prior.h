@@ -52,14 +52,8 @@ public:
 		const double lmedia = std::log(vecchio);
 
 			//Propose a new value
-			const double lnuovo=am_rnorm(lmedia,lsd);
+			const double lnuovo=am_rnorm(lmedia, std::sqrt( lsd ) );
 			const double nuovo=std::exp(lnuovo);
-
-
-	//		const double log_full_gamma_new = log_full_EPPF (nuovo , K , nj,  U , this->q_param.lambda ) + (ah-1)*std::log(nuovo)-bh*nuovo;
-	//		const double log_full_gamma_vec = log_full_EPPF (vecchio , K , nj,  U , this->q_param.lambda ) + (ah-1)*std::log(vecchio)-bh*vecchio;
-	//		const double ln_acp = (log_full_gamma_new - lmedia) - (log_full_gamma_vec - lnuovo);
-
 
 			double ln_acp = (q_param.log_full_gamma(nuovo   , K , nj,   U , a, b) - lmedia)
 					      - (q_param.log_full_gamma(vecchio , K , nj,   U , a, b) - lnuovo);

@@ -21,7 +21,7 @@ public:
 	const double a,b; // hyper-prior parameters for q
 	poisson_gamma_q_param_t (double lambda, double a, double b) : lambda_is_fixed(false), lambda (lambda) ,a(a),b(b) {}
 	poisson_gamma_q_param_t (               double a, double b) : lambda_is_fixed(false), lambda (1.0)    ,a(a),b(b) {}
-	poisson_gamma_q_param_t (double lambda)                     :  lambda_is_fixed(true), lambda (lambda) ,a(0),b(0) {}
+	poisson_gamma_q_param_t (double lambda)                     : lambda_is_fixed(true),  lambda (lambda) ,a(0),b(0) {}
 #ifdef HAS_RCPP
 	virtual const Rcpp::List get_Rcpp_list () const  {
 		return Rcpp::List::create(Rcpp::Named("lambda") = this->lambda ) ;
@@ -30,8 +30,8 @@ public:
 	void update (const  double U, const  int K, const gamma_h_param_t <poisson_gamma_q_param_t>& h_param) {
 		if (lambda_is_fixed) return;
 		double lphi_u=-h_param.gamma*std::log(1+U);
-		double lpeso=lphi_u-std::log(1+b);
-		double lunif=std::log(am_runif(0.0,1.1));
+		double lpeso=lphi_u-std::log(1+b); // TODO peso to weight
+		double lunif=std::log(am_runif(0.0,1.0));
 		double astar=K+a ;// See the notation of Point 4 in 10.1
 		double rate=(1-std::exp(lphi_u)+b);
 		this->lambda = lunif<lpeso ? am_rgamma(astar+1,1.0/rate) : am_rgamma(astar,1.0/rate);
@@ -84,12 +84,12 @@ public:
 
 		const double unif=am_runif(0.0,1.0);
 
-		if(unif<(Lambda_u/(Lambda_u+K))){
-			M_na=am_rpois(Lambda_u)+1;
+		M_na=am_rpois(Lambda_u);
 
-		} else {
-			M_na=am_rpois(Lambda_u);
+		if(unif<(Lambda_u/(Lambda_u+K))){
+			M_na++;
 		}
+
 		return M_na;
 
 	}

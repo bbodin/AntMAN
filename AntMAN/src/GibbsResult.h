@@ -28,8 +28,12 @@ public :
 
 
 class GibbsResultPlain : public GibbsResult {
+private :
+	long int index;
+	arma::vec Ks;
 public:
-	GibbsResultPlain () {} ;
+	arma::vec& K () {return Ks;};
+	GibbsResultPlain (long int maxsize) : index (0) ,  Ks (maxsize){} ;
 
 	 void log_output (
 			 cluster_indices_t& ci_current,
@@ -38,7 +42,9 @@ public:
 			 unsigned int K,
 			 unsigned int M_na,
 			 Mixture * mixture,
-			 Prior * prior) {} ;
+			 Prior * prior) {
+		 Ks[index++] = K;
+	 } ;
 
 };
 

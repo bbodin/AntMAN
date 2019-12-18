@@ -31,6 +31,8 @@ int main (int ac, char** av) {
 	po::store(po::parse_command_line(ac, av, desc), vm);
 	po::notify(vm);
 	VERBOSE_LOG("VERBOSE_LEVEL=" << VERBOSE_LEVEL);
+	VERBOSE_INFO("INFO_LEVEL ACTIVATED");
+	VERBOSE_DEBUG("DEBUG_LEVEL ACTIVATED");
 
 	if (vm.count("help")) {
 		COUT_STREAM << desc << "\n";
