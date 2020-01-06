@@ -6,10 +6,29 @@
 
 ## How to Install 
 
+### With CRAN 
+
+```
+install.packages("AntMAN")
+```
+
+### With Github 
+
+First make sure the package is not already installed.
+
+```
+remove.packages("AntMAN")
+```
+
+Then you can use the following:
+
 ```
 install.packages("devtools")
 devtools::install_github("bbodin/AntMAN", subdir="AntMAN")
 ```
+
+
+
 
 ## How to test
 
@@ -78,6 +97,12 @@ prior_component = AM_mix_components_prior_dirac(10) # nothing more than 10 colou
 fit = AM_mcmc_fit (mix, prior_component, mcmc)
 summary (fit)
 ```
+
+## Acknowledgement 
+
+Thanks for your contributions:
+ - David B. Dahl (@dbdahl)
+ - Andrea Cremaschi (@AndCre87)
 
 ## TODOs
 
