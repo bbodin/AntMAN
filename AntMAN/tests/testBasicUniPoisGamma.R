@@ -24,7 +24,7 @@ plot(1:length(y_uvp),y_uvp,col=ci_uvp+1)
 ##############################################################################
 ### PREPARE THE GIBBS for Poisson mixture with poisson gamma priors
 ##############################################################################
-mcmc_params        = AM_mcmc_parameters(niter=2000, burnin=1000, thin=10, verbose=3, output=c("CI","K"))
+mcmc_params        = AM_mcmc_parameters(niter=2000, burnin=1000, thin=10, verbose=1, output=c("CI","K"))
 mixture_uvp_params = AM_unipois_mix_hyperparams (alpha0=2, beta0=0.2)
 components_prior   = AM_mix_components_prior_pois (init=3,  a=1, b=1) 
 weights_prior      = AM_mix_weights_prior_gamma(init=2, a=1, b=1)
