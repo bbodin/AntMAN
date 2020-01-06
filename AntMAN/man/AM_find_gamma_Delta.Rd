@@ -9,8 +9,14 @@ an upper \eqn{\gamma_{u}} bound for the possible values of $gamma$. The default 
 A default value for the tolerance is \eqn{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31), the function
 stops warning that convergence has not bee reached.}
 \usage{
-AM_find_gamma_Delta(n, Mstar, Kstar = 6, gam_min = 1e-04,
-  gam_max = 10, tolerance = 0.1)
+AM_find_gamma_Delta(
+  n,
+  Mstar,
+  Kstar = 6,
+  gam_min = 1e-04,
+  gam_max = 10,
+  tolerance = 0.1
+)
 }
 \arguments{
 \item{n}{sample size}
@@ -41,7 +47,7 @@ n <- 82
 Mstar <- 12
 gam_de <- AM_find_gamma_Delta(n,Mstar,Kstar=6, gam_min=1e-4,gam_max=10, tolerance=0.1)
 prior_K_de <-  AM_prior_K_Delta(n,gam_de,Mstar)
-prior_K_de\%*\%1:n
+prior_K_de\\%*\\%1:n
 }
 \keyword{cluster}
 \keyword{number}

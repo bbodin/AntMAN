@@ -4,8 +4,16 @@
 \alias{AM_mix_components_prior_negbin}
 \title{Negative Binomial Prior.}
 \usage{
-AM_mix_components_prior_negbin(a_R = NULL, b_R = NULL, a_P = NULL,
-  b_P = NULL, R = NULL, P = NULL, init_R = NULL, init_P = NULL)
+AM_mix_components_prior_negbin(
+  a_R = NULL,
+  b_R = NULL,
+  a_P = NULL,
+  b_P = NULL,
+  R = NULL,
+  P = NULL,
+  init_R = NULL,
+  init_P = NULL
+)
 }
 \arguments{
 \item{a_R}{The shape parameter \eqn{a}  of the \eqn{Gamma(a,b)} prior distribution for \eqn{r}.}

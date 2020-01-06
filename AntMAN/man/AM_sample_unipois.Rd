@@ -4,8 +4,7 @@
 \alias{AM_sample_unipois}
 \title{AM_sample_unipois}
 \usage{
-AM_sample_unipois(n = 1000, pro = c(0.2, 0.5, 0.3), mth = c(5, 25,
-  50))
+AM_sample_unipois(n = 1000, pro = c(0.2, 0.5, 0.3), mth = c(5, 25, 50))
 }
 \description{
 AM_sample_unipois

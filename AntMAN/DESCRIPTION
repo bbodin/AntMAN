@@ -6,8 +6,8 @@ Title: Anthology of Mixture Analysis Tools
 Authors@R: c(person("Raffaele", "Argiento", role = "aut", email= "raffaele.argiento@unito.it"), 
              person("Bruno", "Bodin", role = c("aut", "cre"), email = "bruno.bodin@yale-nus.edu.sg"),
              person("Maria", "De Iorio", role = "aut", email = "m.deiorio@ucl.ac.uk"))
-Author:      Raffaele Argiento [aut], Bruno Bodin [aut, cre], Maria De Iorio [aut]
-Maintainer:  Bruno Bodin <bruno.bodin@yale-nus.edu.sg>
+Author: Raffaele Argiento [aut], Bruno Bodin [aut, cre], Maria De Iorio [aut]
+Maintainer: Bruno Bodin <bruno.bodin@yale-nus.edu.sg>
 Description: Fits finite Bayesian mixture models with random number of component. The MCMC algorithm implemented is based on point processes as proposed by Argiento and De Iorio (2019) <arXiv:1904.09733> and offers a more computational efficient alternative to reversible jump. Different mixture kernels can be specified: univariate Gaussian, univariate Poisson, univariate binomial, multivariate Gaussian, multivariate Bernoulli (latent class analysis). For the parameters characterising the mixture kernel, we specify conjugate priors, with possibly user specified hyper-parameters. We allow for different choices for the prior on the number of components: shifted Poisson, negative binomial, and point masses (i.e. mixtures with fixed number of components).
 License: MIT + file LICENSE
 LazyData: true
@@ -26,6 +26,6 @@ Suggests:
 	ggplot2,
 	jpeg
 LinkingTo: Rcpp, RcppArmadillo
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

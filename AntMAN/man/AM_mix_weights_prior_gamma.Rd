@@ -5,8 +5,7 @@
 \title{Generate a configuration object to specify a prior on the hyper-parameter \eqn{\gamma} for the Dirichlet prior on the
 mixture weights.}
 \usage{
-AM_mix_weights_prior_gamma(a = NULL, b = NULL, gamma = NULL,
-  init = NULL)
+AM_mix_weights_prior_gamma(a = NULL, b = NULL, gamma = NULL, init = NULL)
 }
 \arguments{
 \item{a}{The shape parameter a of the Gamma prior}

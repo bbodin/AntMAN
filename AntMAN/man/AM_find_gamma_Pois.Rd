@@ -10,8 +10,14 @@ and an upper \eqn{\gamma_{u}} bound for the possible values of $gamma$. The defa
 A defaault value for the tolerance is \eqn{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31),
 the function stops warning that convergence has not bee reached.}
 \usage{
-AM_find_gamma_Pois(n, Lambda, Kstar = 6, gam_min = 1e-04,
-  gam_max = 10, tolerance = 0.1)
+AM_find_gamma_Pois(
+  n,
+  Lambda,
+  Kstar = 6,
+  gam_min = 1e-04,
+  gam_max = 10,
+  tolerance = 0.1
+)
 }
 \arguments{
 \item{n}{The sample size}
@@ -43,7 +49,7 @@ n <- 82
 Lam  <- 11
 gam_po <-  AM_find_gamma_Pois(n,Lam,Kstar=6, gam_min=0.0001,gam_max=10, tolerance=0.1)
 prior_K_po <-  AM_prior_K_Pois(n,gam_po,Lam)
-prior_K_po\%*\%1:n
+prior_K_po\\%*\\%1:n
 }
 \keyword{cluster}
 \keyword{number}

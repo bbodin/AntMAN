@@ -4,11 +4,16 @@
 \alias{AM_mcmc_fit}
 \title{Performs a Gibbs sampling}
 \usage{
-AM_mcmc_fit(y, mix_kernel_hyperparams, initial_clustering = NULL,
-  init_K = NULL, fixed_clustering = NULL,
+AM_mcmc_fit(
+  y,
+  mix_kernel_hyperparams,
+  initial_clustering = NULL,
+  init_K = NULL,
+  fixed_clustering = NULL,
   mix_components_prior = AM_mix_components_prior_pois(),
   mix_weight_prior = AM_mix_weights_prior_gamma(),
-  mcmc_parameters = AM_mcmc_parameters())
+  mcmc_parameters = AM_mcmc_parameters()
+)
 }
 \arguments{
 \item{y}{input data, can be a vector or a matrix.}

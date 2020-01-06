@@ -4,8 +4,7 @@
 \alias{AM_mix_components_prior_pois}
 \title{Generate a configuration object for a Poisson prior on the number of mixture components.}
 \usage{
-AM_mix_components_prior_pois(a = NULL, b = NULL, Lambda = NULL,
-  init = NULL)
+AM_mix_components_prior_pois(a = NULL, b = NULL, Lambda = NULL, init = NULL)
 }
 \arguments{
 \item{a}{The shape parameter \code{a} of  the \eqn{Gamma(a,b)} prior distribution.}
@@ -33,7 +32,7 @@ If no arguments are provided, the default is a prior distribution with \code{a =
 }
 \examples{
 
-## See \\code{\\link{AM_uninorm_mix_hyperparams}} example.
+## See \code{\link{AM_uninorm_mix_hyperparams}} example.
 components_prior   = AM_mix_components_prior_pois (init=3,  a=1, b=1) 
 
 }

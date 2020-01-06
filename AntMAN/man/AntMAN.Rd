@@ -3,7 +3,6 @@
 \docType{package}
 \name{AntMAN}
 \alias{AntMAN}
-\alias{AntMAN-package}
 \title{AntMAN: A package for fitting Finite Bayesian Mixture model with random number of component.}
 \description{
 AntMAN: Anthology of Mixture ANalysis tools

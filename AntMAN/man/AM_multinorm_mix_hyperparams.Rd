@@ -4,8 +4,7 @@
 \alias{AM_multinorm_mix_hyperparams}
 \title{Multivariate Normal Mixture Hyperparameters.}
 \usage{
-AM_multinorm_mix_hyperparams(mu0 = NULL, ka0 = NULL, nu0 = NULL,
-  Lam0 = NULL)
+AM_multinorm_mix_hyperparams(mu0 = NULL, ka0 = NULL, nu0 = NULL, Lam0 = NULL)
 }
 \arguments{
 \item{mu0}{The hyperparameter \eqn{\boldsymbol m_0}.}
