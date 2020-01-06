@@ -1,6 +1,6 @@
 Package: AntMAN
-Version: 1.0
-Date: 2019-10-07
+Version: 1.0.1
+Date: 2019-12-17
 Type: Package
 Title: Anthology of Mixture Analysis Tools
 Authors@R: c(person("Raffaele", "Argiento", role = "aut", email= "raffaele.argiento@unito.it"), 
@@ -17,7 +17,7 @@ Imports:
     graphics,
     grDevices,
     Rcpp (>= 0.12.3),
-    sdols,
+    salso,
     mvtnorm,
     mcclust
 Suggests:
