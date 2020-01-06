@@ -1,7 +1,7 @@
 quit() ## Skip this test - too long
 library("AntMAN")
 
-library('sdols')  ### load the sdols library
+library('salso')  ### load the salso library
 
 
 ### We load the following libraries that provide nice graphical tools for dendograms representation
