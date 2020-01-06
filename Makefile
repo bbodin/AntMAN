@@ -3,6 +3,7 @@ R_FILES := $(shell find ./AntMAN/R ./AntMAN/tests -name \*.R -not -name RcppExpo
 
 R_CMD := R -q
 
+PACKAGE_VERSION=1.0.1
 
 all : AntMAN.Rinstall/AntMAN/libs/AntMAN.so  tests_cpp/testAntMAN  AntMAN.pdf 
 
@@ -48,16 +49,16 @@ check : AntMAN/src/RcppExports.cpp
 	${R_CMD} -e  "Rcpp::compileAttributes(pkgdir = \"$*\" , verbose=TRUE);"
 
 
-%_1.0.tar.gz : ${C_FILES} ${R_FILES} %/src/RcppExports.cpp  %/R/RcppExports.R  
+%_${PACKAGE_VERSION}.tar.gz : ${C_FILES} ${R_FILES} %/src/RcppExports.cpp  %/R/RcppExports.R  
 	rm -rf AntMAN/src/*.o ./AntMAN/src/*.so 
 	R CMD build ./$*
 
-%.Rinstall/AntMAN/libs/AntMAN.so : %_1.0.tar.gz 
+%.Rinstall/AntMAN/libs/AntMAN.so : %_${PACKAGE_VERSION}.tar.gz 
 	mkdir -p $*.Rinstall
 	rm $*.Rinstall/* -rf
-	R CMD INSTALL  -l $*.Rinstall $*_1.0.tar.gz
+	R CMD INSTALL  -l $*.Rinstall $<
 
-%_1.0.pdf : %/NAMESPACE
+%_${PACKAGE_VERSION}.pdf : %/NAMESPACE
 	${R_CMD} -e  "library(devtools) ; devtools::build_manual(\"$*\"); " || ${R_CMD} -e  "library(devtools) ; devtools::check(\"$*\",manual=TRUE); " || touch $@
 
 %.pdf : %/NAMESPACE
@@ -70,7 +71,7 @@ deps :
 	echo "To be defined."
 
 clean : 
-	rm -rf current *~ *.Rinstall *.pdf  *_1.0.tar.gz *.Rcheck ./AntMAN/NAMESPACE ./AntMAN/src/*.o ./AntMAN/src/*.so 	./AntMAN/src/*.rds ./AntMAN/src/RcppExports.cpp  ./AntMAN/R/RcppExports.R  ./AntMAN/man/*.Rd tests_cpp/testAntMAN
+	rm -rf current *~ *.Rinstall *.pdf  *.tar.gz *.Rcheck ./AntMAN/NAMESPACE ./AntMAN/src/*.o ./AntMAN/src/*.so 	./AntMAN/src/*.rds ./AntMAN/src/RcppExports.cpp  ./AntMAN/R/RcppExports.R  ./AntMAN/man/*.Rd tests_cpp/testAntMAN
 
 .PHONY: clean tests_cpp/testAntMAN
 .SECONDARY:

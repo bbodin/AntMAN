@@ -240,7 +240,7 @@ AM_prior_K_Delta <- function (n,gamma,Mstar){
 #' Mstar <- 12
 #' gam_de <- AM_find_gamma_Delta(n,Mstar,Kstar=6, gam_min=1e-4,gam_max=10, tolerance=0.1)
 #' prior_K_de <-  AM_prior_K_Delta(n,gam_de,Mstar)
-#' prior_K_de\%*\%1:n
+#' prior_K_de\\%*\\%1:n
 
 AM_find_gamma_Delta <- function (n,Mstar,Kstar=6, gam_min=0.0001,gam_max=10, tolerance=0.1) {
 	return(find_gamma_Delta(n,Mstar,Kstar, gam_min,gam_max, tolerance));
@@ -274,7 +274,7 @@ AM_find_gamma_Delta <- function (n,Mstar,Kstar=6, gam_min=0.0001,gam_max=10, tol
 #' Lam  <- 11
 #' gam_po <-  AM_find_gamma_Pois(n,Lam,Kstar=6, gam_min=0.0001,gam_max=10, tolerance=0.1)
 #' prior_K_po <-  AM_prior_K_Pois(n,gam_po,Lam)
-#' prior_K_po\%*\%1:n
+#' prior_K_po\\%*\\%1:n
 
 AM_find_gamma_Pois <- function (n,Lambda,Kstar=6, gam_min=0.0001,gam_max=10, tolerance=0.1) {
 	return (find_gamma_Pois(n,Lambda,Kstar, gam_min,gam_max, tolerance));
@@ -303,7 +303,7 @@ AM_find_gamma_Pois <- function (n,Lambda,Kstar=6, gam_min=0.0001,gam_max=10, tol
 #' p <- 0.8571
 #' gam_nb= AM_find_gamma_NegBin(n,r,p,Kstar=6, gam_min=0.001,gam_max=10000, tolerance=0.1)
 #' prior_K_nb= AM_prior_K_NegBin(n,gam_nb, r, p)
-#' prior_K_nb\%*\%1:n
+#' prior_K_nb\\%*\\%1:n
 
 AM_find_gamma_NegBin <- function (n,r,p,Kstar=6, gam_min=0.001,gam_max=10000, tolerance=0.1){
 	return (find_gamma_NegBin(n,r,p,Kstar, gam_min,gam_max, tolerance));

@@ -60,7 +60,7 @@ inline double  update_lsd ( double lsd, double ln_acp, double iter) {
 
 inline arma::vec mvrnormArma(arma::colvec mu, arma::mat Sig) {
 
-	VERBOSE_ASSERT(Sig.is_sympd(), "mvrnormArma requires Sig to be symmetric. It is not S = " << Sig);
+	VERBOSE_ASSERT(Sig.is_sympd(), "mvrnormArma requires Sig to be symmetric. It is not S = " << std::endl << Sig);
 
 	arma::vec Y = arma::randn<arma::vec>(Sig.n_cols);
 
