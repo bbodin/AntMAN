@@ -430,6 +430,7 @@ Rcpp::List IAM_mcmc_fit (
 
 	VERBOSE_ASSERT(niter > burnin, "Please keep niter > burnin.");
 	VERBOSE_ASSERT(niter > thin, "Please keep niter > thin.");
+	VERBOSE_ASSERT(thin  > 0, "Please keep thin > 0.");
 
 	VERBOSE_INFO(" - Stored observations " << stored);
 	GibbsResultRCpp res (  (niter - burnin)  / thin ,output_codes);

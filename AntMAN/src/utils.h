@@ -14,7 +14,7 @@ typedef arma::ivec cluster_indices_t;
 
 inline arma::vec vectorsum (std::vector <arma::vec> elems ) {
 	arma::vec out = elems[0];
-	for (unsigned int i = 1 ; i < elems.size() ; i ++) {
+	for (auto i = 1 ; i < elems.size() ; i ++) {
 		out += elems[i] ;
 	}
 	return out;
@@ -60,7 +60,7 @@ inline double  update_lsd ( double lsd, double ln_acp, double iter) {
 
 inline arma::vec mvrnormArma(arma::colvec mu, arma::mat Sig) {
 
-	VERBOSE_ASSERT(Sig.is_sympd(), "mvrnormArma requires Sig to be symmetric. It is not S = " << std::endl << Sig);
+	// VERBOSE_ASSERT(Sig.is_sympd(), "mvrnormArma requires Sig to be symmetric. It is not S = " << std::endl << Sig);
 
 	arma::vec Y = arma::randn<arma::vec>(Sig.n_cols);
 
@@ -88,34 +88,7 @@ inline double dmvnormZero(const arma::mat& x, const arma::vec& mu, const arma::m
 
 inline arma::mat riwish(const int df, const arma::mat& iS) {
 	return arma::iwishrnd(iS, df);
-};
-
-
-// Strongly inspired from RcppDist, but assume this does not impose the GPL.
-inline arma::mat oldriwish(const int df, const arma::mat& iS) {
-
-	arma::mat S = arma::inv(iS);
-
-	VERBOSE_ASSERT(S.is_sympd(), "riwish requires S to be symmetric. It is not S = " << S << " and iS = " << S);
-
-	arma::uword m = S.n_cols;
-
-    arma::mat A(m, m, arma::fill::zeros);
-
-    for (arma::uword i = 1; i < m; ++i ) {
-    	//A.col(i) = Rcpp::as<arma::vec>(Rcpp::rnorm(i)); // Need to test that
-    	for (arma::uword j = 0; j < i; ++j ) {
-    		A(i, j) =  am_rnorm(0.0, 1.0);
-    	}
-    }
-    for (arma::uword i = 0; i < m; ++i ) {
-    	A(i, i) = sqrt(am_rchisq(df - i));
-    }
-    arma::mat B = A.t() * arma::chol(S);
-
-    return  arma::inv(B.t() * B);
 }
-
 
 
 
