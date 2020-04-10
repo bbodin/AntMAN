@@ -2,6 +2,7 @@
 
 S3method(plot,AM_mcmc_output)
 S3method(summary,AM_mcmc_output)
+export(AM_DIAG_loglikelihood)
 export(AM_VnkDelta)
 export(AM_VnkNegBin)
 export(AM_VnkPoisson)
