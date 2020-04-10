@@ -7,11 +7,10 @@
 #include <iostream>
 #include <boost/program_options.hpp>
 #include "../AntMAN/src/verbose.h"
+#include "AM_test_mixtures.h"
+#include "AM_test_priors.h"
 
 namespace po = boost::program_options;
-
-void test_priors   ();
-void test_mixtures (long,long,long);
 
 int main (int ac, char** av) {
 

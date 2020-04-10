@@ -5,7 +5,7 @@ R_CMD := R -q
 
 PACKAGE_VERSION=1.0.1
 
-all : AntMAN.Rinstall/AntMAN/libs/AntMAN.so  tests_cpp/testAntMAN  AntMAN.pdf 
+all : AntMAN.Rinstall/AntMAN/libs/AntMAN.so  tests_cpp/test_mixtures AntMAN.pdf 
 
 docker : Dockerfile
 	mkdir -p docker_share
@@ -64,8 +64,8 @@ check : AntMAN/src/RcppExports.cpp
 %.pdf : %/NAMESPACE
 	R CMD Rd2pdf $* --no-preview --force
 
-tests_cpp/testAntMAN :
-	make -C tests_cpp/ testAntMAN
+tests_cpp/% : tests_cpp/%.cpp
+	make -C tests_cpp/ $*
 
 deps :
 	echo "To be defined."

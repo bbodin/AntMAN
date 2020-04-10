@@ -1,9 +1,12 @@
 /*
- * test-PriorNegativeBinomial.cpp
+ * AM_test_priors.h
  *
- *  Created on: 16 May 2019
+ *  Created on: Mar 6, 2020
+ *      Author: toky
  */
 
+#ifndef TESTS_CPP_AM_TEST_PRIORS_H_
+#define TESTS_CPP_AM_TEST_PRIORS_H_
 
 
 #include "../AntMAN/src/Priors.h"
@@ -72,3 +75,7 @@ void test_priors () {
 
 }
 
+
+
+
+#endif /* TESTS_CPP_AM_TEST_PRIORS_H_ */
