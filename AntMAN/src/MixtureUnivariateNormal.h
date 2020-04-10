@@ -7,8 +7,6 @@
 #ifndef ANTMAN_SRC_MIXTUREUNIVARIATENORMAL_HPP_
 #define ANTMAN_SRC_MIXTUREUNIVARIATENORMAL_HPP_
 
-#include <omp.h>
-// [[Rcpp::plugins(openmp)]]]
 
 #include "math_utils.h"
 #include "Mixture.h"
@@ -80,8 +78,7 @@ public :
 		}
 
 
-		omp_set_dynamic(0);
-	    #pragma omp parallel for num_threads(4)
+#pragma omp parallel for num_threads(4) schedule(static, 8) if (this->get_parallel())
 		for (int i=0; i < n; i++) {
 
 			arma::vec pesi(M);

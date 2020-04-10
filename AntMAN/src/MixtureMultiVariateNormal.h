@@ -8,10 +8,6 @@
 #define ANTMAN_SRC_MIXTUREMULTIVARIATENORMAL_HPP_
 
 
-#include <omp.h>
-// [[Rcpp::plugins(openmp)]]]
-
-
 #include "math_utils.h"
 #include "Mixture.h"
 #include "utils.h"
@@ -19,10 +15,10 @@
 class MixtureMultivariateNormal: public MultivariateMixture  {
 
 	// ParametricPrior
-	arma::vec    _mu0;
-	double       _ka0;
-	unsigned int _nu0;
-	arma::mat    _Lam0;
+	const arma::vec    _mu0;
+	const double       _ka0;
+	const unsigned int _nu0;
+	const arma::mat    _Lam0;
 
 	// Tau
 	arma::mat  _mu_current;
@@ -66,9 +62,6 @@ public :
 				VERBOSE_ASSERT(Lam0.is_sympd(), "In init_tau: rwish requires Lam0 to be symmetric. It is not Lam0 = " << Lam0);
 				for(int l=0;l<M;l++){
 
-					//  TODO[CHECK ME] : arma::mat rwish(const int df, const arma::mat& S)
-					//  arma::vec mvrnormArma(arma::colvec mu, arma::mat Sig)
-					// TODO[CHECK ME] : Raffa study the lam0 - 1
 					const arma::mat res = riwish (nu0, Lam0);
 
 					_Sig_current.slice(l) = res;
@@ -106,9 +99,8 @@ public :
 			VERBOSE_DEBUG("Sig_current  :"  << Sig_current.n_rows << "x" << Sig_current.n_cols << "x" << Sig_current.n_slices );
 
 
-			omp_set_dynamic(0);
 
-			#pragma omp parallel for num_threads(8) if (this->get_parallel())
+			#pragma omp parallel for num_threads(8) schedule(static, 8) if (this->get_parallel())
 			for (int i=0; i < n; i++) {
 
 				arma::vec pesi(M);
