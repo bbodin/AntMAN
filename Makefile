@@ -3,7 +3,7 @@ R_FILES := $(shell find ./AntMAN/R ./AntMAN/tests -name \*.R -not -name RcppExpo
 
 R_CMD := R -q
 
-PACKAGE_VERSION=1.0.1
+PACKAGE_VERSION=1.0.2
 
 all : AntMAN.Rinstall/AntMAN/libs/AntMAN.so  tests_cpp/test_mixtures AntMAN.pdf 
 
