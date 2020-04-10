@@ -1,3 +1,4 @@
+quit() ## Skip this test - too long
 ###########################################################
 # Same, but with hihg-dimensional data #
 #*********************************************************#
@@ -57,7 +58,7 @@ n_save <- 1000
 thin <- 1
 niter <- n_burn1 + n_burn2 + n_save * thin
 
-mcmc_params        = AM_mcmc_parameters(niter=niter, burnin=n_burn1 + n_burn2, thin=thin, verbose=1, output = c("CI","K","M","H","Q"))
+mcmc_params        = AM_mcmc_parameters(niter=niter, burnin=n_burn1 + n_burn2, thin=thin, verbose=1, output = c("ALL"))
 components_prior   = AM_mix_components_prior_pois(Lambda = Lambda)
 weights_prior      = AM_mix_weights_prior_gamma(gamma = gamma_S)
 
@@ -89,3 +90,33 @@ MCMC_output_AntMAN <- AM_mcmc_fit(
 
 summary(MCMC_output_AntMAN)
 
+
+loglike_MCMC_iter = rep(0,niter)
+
+for (it in 1:niter) {
+  
+  loglike_MCMC = 0
+  c = MCMC_output_AntMAN$CI[[it]]
+  S_m = MCMC_output_AntMAN$S[[it]]
+  mu_star = MCMC_output_AntMAN$TAU[[it]]$mu
+  Sigma_star = MCMC_output_AntMAN$TAU[[it]]$Sig
+  M = MCMC_output_AntMAN$M[[it]]
+
+  
+  for (i in 1:N) {
+    loglike_MCMC = loglike_MCMC + log(S_m[c[i]+1]) + dmvnorm(y[i,], mu_star[c[i]+1,], Sigma_star[,,c[i]+1], TRUE);
+  }
+  for (j in 1:M) {
+    loglike_MCMC = loglike_MCMC + dmvnorm(mu_star[j,], mu0, Sigma_star[,,j]/k0, TRUE);
+    loglike_MCMC = loglike_MCMC + log(diwish( Sigma_star[,,j], nu0, Lam0));
+    loglike_MCMC = loglike_MCMC + dgamma(S_m[j], gamma_S, scale=1,log= TRUE);
+  }
+  
+  loglike_MCMC = loglike_MCMC + dgamma(Lambda, a2, scale=1/b2, log=TRUE);
+  loglike_MCMC = loglike_MCMC + dgamma(gamma_S, a1, scale=1/b1,log= TRUE);
+  #loglike_MCMC = loglike_MCMC + dgamma(u, N, , rate=sum(S_m));
+  
+  loglike_MCMC_iter[it] = loglike_MCMC
+  
+  print(loglike_MCMC)
+}
