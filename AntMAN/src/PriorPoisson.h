@@ -16,7 +16,7 @@
 
 class poisson_gamma_q_param_t : public q_param_t  {
 public:
-	bool lambda_is_fixed;
+	const bool lambda_is_fixed;
 	double lambda ;
 	const double a,b; // hyper-prior parameters for q
 	poisson_gamma_q_param_t (double lambda, double a, double b) : lambda_is_fixed(false), lambda (lambda) ,a(a),b(b) {}

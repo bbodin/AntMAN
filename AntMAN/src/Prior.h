@@ -31,9 +31,9 @@ public:
 template<typename Q_t>
 class gamma_h_param_t : public h_param_t {
 public:
-	bool gamma_is_fixed;
-	double gamma;
+	const bool gamma_is_fixed;
 	const double a,b; // hyper-prior parameters for h
+	double gamma;
 	double lsd, lsd_g;       // this is the standard deviation of the MH algorithm to update gamma.
 	gamma_h_param_t (double gamma, double a, double b, double lsd) : gamma_is_fixed (false), gamma (gamma) , a(a), b(b), lsd(lsd), lsd_g(1) {}
 	gamma_h_param_t (              double a, double b, double lsd) : gamma_is_fixed (false), gamma (am_rgamma(a,b)) , a(a), b(b), lsd(lsd), lsd_g(1) {}
