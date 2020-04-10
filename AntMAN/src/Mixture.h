@@ -224,7 +224,7 @@ public:
 			// thinning
 			if( (iter >= burnin) and ((iter - burnin) % thin == 0) ) {
 				total_saved++;
-				results->log_output (ci_current,  S_current,  M,  K,  M_na, this , prior) ;
+				results->log_output (ci_current,  S_current,  U_current, M,  K,  M_na, this , prior) ;
 				VERBOSE_ASSERT(total_to_save >= total_saved, "Raffaele was right.");
 				VERBOSE_DEBUG("results->log_output() is done");
 			} else {

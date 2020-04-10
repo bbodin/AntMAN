@@ -19,6 +19,7 @@ public :
 	virtual void log_output (
 				 cluster_indices_t& ci_current,
 				 arma::vec & S_current,
+				 double U,
 				 unsigned int M,
 				 unsigned int K,
 				 unsigned int M_na,
@@ -38,6 +39,7 @@ public:
 	 void log_output (
 			 cluster_indices_t& ci_current,
 			 arma::vec & S_current,
+			 double U,
 			 unsigned int M,
 			 unsigned int K,
 			 unsigned int M_na,
@@ -58,6 +60,7 @@ public:
 	 void log_output (
 			 cluster_indices_t& ci_current,
 			 arma::vec & S_current,
+			 double U,
 			 unsigned int M,
 			 unsigned int K,
 			 unsigned int M_na,

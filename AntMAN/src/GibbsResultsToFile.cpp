@@ -10,6 +10,7 @@
 void GibbsResultIntoFile ::log_output (
 			 cluster_indices_t& ci_current,
 			 arma::vec & S_current,
+			 double U,
 			 unsigned int M,
 			 unsigned int K,
 			 unsigned int M_na,
@@ -25,6 +26,7 @@ void GibbsResultIntoFile ::log_output (
 	//write each file
 	std::ofstream fdesc;
 	fdesc.open (header + "CI.txt");	for (auto idx : ci_current) {fdesc << idx;} fdesc << std::endl; fdesc.close();
+	fdesc.open (header + "U.txt");	fdesc << U; fdesc << std::endl; fdesc.close();
 	fdesc.open (header + "M.txt");	fdesc << M; fdesc << std::endl; fdesc.close();
 	fdesc.open (header + "K.txt");	fdesc << K; fdesc << std::endl; fdesc.close();
 	fdesc.open (header + "Mna.txt");	fdesc << M_na; fdesc << std::endl; fdesc.close();

@@ -26,12 +26,13 @@ static const std::map<std::string, Output_Type> AM_OUTPUTS = {
 		{"CI" ,  {"Clusters allocation", 1 << 0}},
 		{"TAU" , {"", 1 << 1}},
 		{"S" ,   {"", 1 << 2}},
-		{"M" ,   {"", 1 << 3}},
-		{"K" ,   {"Number of clusters", 1 << 4}},
-		{"MNA" , {"", 1 << 5}},
-		{"H" ,   {"", 1 << 6}},
-		{"Q" ,   {"", 1 << 7}},
-		{"ALL" , {"", (1 << 8) - 1}},
+		{"U" ,   {"", 1 << 3}},
+		{"M" ,   {"", 1 << 4}},
+		{"K" ,   {"Number of clusters", 1 << 5}},
+		{"MNA" , {"", 1 << 6}},
+		{"H" ,   {"", 1 << 7}},
+		{"Q" ,   {"", 1 << 8}},
+		{"ALL" , {"", (1 << 9) - 1}},
 };
 
 
@@ -66,6 +67,7 @@ public:
 	std::vector<arma::ivec>          CI;
 	std::vector<Rcpp::List>          H;
 	std::vector<long>                K;
+	std::vector<double>              U;
 	std::vector<long>                M;
 	std::vector<long>                MNA;
 	std::vector<Rcpp::List>          Q;
@@ -80,6 +82,7 @@ public:
 	 void log_output (
 			 cluster_indices_t& ci_current,
 			 arma::vec & S_current,
+			 double U,
 			 unsigned int M,
 			 unsigned int K,
 			 unsigned int M_na,

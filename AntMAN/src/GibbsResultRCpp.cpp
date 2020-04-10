@@ -19,6 +19,7 @@
 	 void GibbsResultRCpp::log_output (
 			 cluster_indices_t& ci_current,
 			 arma::vec & S_current,
+			 double U,
 			 unsigned int M,
 			 unsigned int K,
 			 unsigned int M_na,
@@ -29,6 +30,7 @@
 
 		 if (AM_OUTPUT_HAS(output_codes,AM_OUTPUTS.at("CI").code)) {result.CI.push_back(ci_current);}
 		 if (AM_OUTPUT_HAS(output_codes,AM_OUTPUTS.at("S").code)) {result.S.push_back(S_current);}
+		 if (AM_OUTPUT_HAS(output_codes,AM_OUTPUTS.at("U").code) ) {result.U.push_back(U);		 }
 		 if (AM_OUTPUT_HAS(output_codes,AM_OUTPUTS.at("M").code) ) {result.M.push_back(M);		 }
 		 if (AM_OUTPUT_HAS(output_codes,AM_OUTPUTS.at("K").code) ) {result.K.push_back(K);		}
 		 if (AM_OUTPUT_HAS(output_codes,AM_OUTPUTS.at("MNA").code) ) {result.MNA.push_back(M_na);		}
@@ -47,6 +49,7 @@
 			if (this->CI .size()) {total++;names.push_back("CI");}
 			if (this->TAU.size()) {total++;names.push_back("TAU");}
 			if (this->S  .size()) {total++;names.push_back("S");}
+			if (this->U  .size()) {total++;names.push_back("U");}
 			if (this->M  .size()) {total++;names.push_back("M");}
 			if (this->K  .size()) {total++;names.push_back("K");}
 			if (this->MNA.size()) {total++;names.push_back("MNA");}
@@ -60,6 +63,7 @@
 			if (this->CI .size()) {my_list[cnt++] =  this->CI ;}
 			if (this->TAU.size()) {my_list[cnt++] =  this->TAU;}
 			if (this->S  .size()) {my_list[cnt++] =  this->S  ;}
+			if (this->U  .size()) {my_list[cnt++] =  this->U  ;}
 			if (this->M  .size()) {my_list[cnt++] =  this->M  ;}
 			if (this->K  .size()) {my_list[cnt++] =  this->K  ;}
 			if (this->MNA.size()) {my_list[cnt++] =  this->MNA;}
