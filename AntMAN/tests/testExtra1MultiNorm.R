@@ -3,8 +3,6 @@ quit() ## Skip this test - too long
 # Same, but with hihg-dimensional data #
 #*********************************************************#
 
-rm(list=ls())
-
 library("mvtnorm")
 library("AntMAN")
 getNamespaceVersion("AntMAN")
