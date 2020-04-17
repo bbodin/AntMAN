@@ -1,3 +1,4 @@
+
 #######################################################################################
 ###############
 ############### AntMAN Package
@@ -134,7 +135,10 @@ AM_extract = function(object, targets, iterations = NULL){
 			nrows = length(object$CI)
 			ncols = length(object$CI[[1]])
 			tmp = data.frame(array(as.numeric(unlist(object$CI)), dim=c(nrows, ncols)))
-			names(tmp) <- generate_column_names(target,c(1:length(ncols)))
+			names(tmp) <- generate_column_names(target,c(1:ncols));
+			if (!is.null(iterations)) {
+				tmp = tmp[iterations,];
+			}
 		} else {
 			## Generic extractor (SLOW)
 			tmp = extract_target(object,target,iterations);
@@ -146,9 +150,15 @@ AM_extract = function(object, targets, iterations = NULL){
 			return (NULL);
 		}
 		
-		if(is.null(df)) {df = tmp;}
-		else {df = data.frame(df,tmp);}
+		if(is.null(df)) {
+			df = tmp;
+		} else {
+			if (nrow(df) != nrow(tmp)) {
+				cat("ERROR: Invalid extraction size, previously found ",nrow(df),"while with target '",target,"' we have ", nrow(tmp),"\n", sep="");
+				return (NULL);
+			}
+			df = data.frame(df,tmp);
+		}
 	}
 	return (df);
 }
-
