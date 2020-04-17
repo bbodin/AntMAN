@@ -38,7 +38,7 @@ mcmc_params        = AM_mcmc_parameters(niter=5000 + 50 * 5000, burnin=5000, thi
 ## We are going to use a Bayesian Latent Class analysis, i.e. a mixture of Multivariate Bernoulli
 ## for the first analysis I will define independent beta prior with (1,1) parameters (i.e. uniform)
 ## for each component
-mixture_mvb_params <- AM_multiber_mix_hyperparams(a0=rep(1,d),b0= rep(1,d))
+mixture_mvb_params <- AM_mix_hyperparams_multiber(a0=rep(1,d),b0= rep(1,d))
 ### WE USE THE DEFAULT PRIOR FOR NEG_BINIMIAL
 components_prior   <-  AM_mix_components_prior_negbin(R=1, init_P=0.1,a_P=1,b_P =1)
 weights_prior      <-  AM_mix_weights_prior_gamma(init=5, a=1, b=1)

@@ -169,8 +169,8 @@ public :
 
 				VERBOSE_DEBUG("clusters_indices is for every cluster the index of data in ci_current.");
 
-				VERBOSE_ASSERT(ci_star.n_rows == K, "ci_star are unique cluster allocation, must be equal to K");
-				VERBOSE_ASSERT(ci_current.n_rows == n, "ci_current allocate data, should be as big as n, but it is not, ci_current.n_rows = " << ci_current.n_rows << " and n = " << n);
+				VERBOSE_ASSERT(ci_star.n_rows == (unsigned int) K, "ci_star are unique cluster allocation, must be equal to K");
+				VERBOSE_ASSERT(ci_current.n_rows == (unsigned int) n, "ci_current allocate data, should be as big as n, but it is not, ci_current.n_rows = " << ci_current.n_rows << " and n = " << n);
 
 				for(int reorder_cluster_index=0; reorder_cluster_index < K; reorder_cluster_index++){
 					const int previous_cluster_index = ci_star[reorder_cluster_index];
@@ -182,7 +182,7 @@ public :
 				}
 
 				VERBOSE_DEBUG("I know but does it print ? ");
-				omp_set_dynamic(0);
+
 
 				for(int l=0; l<K;l++){
 

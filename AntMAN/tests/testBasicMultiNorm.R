@@ -53,7 +53,7 @@ plot(y_mvn,col=ci_mvn+1)
 ##############################################################################
 
 
-mixture_mvn_params = AM_multinorm_mix_hyperparams   (mu0=c(0,0),ka0=1,nu0=4,Lam0=diag(2))
+mixture_mvn_params = AM_mix_hyperparams_multinorm   (mu0=c(0,0),ka0=1,nu0=4,Lam0=diag(2))
 
 mcmc_params        = AM_mcmc_parameters(niter=4000, burnin=2000, thin=10, verbose=1, output=c("H"))
 components_prior   = AM_mix_components_prior_pois (init=3,  a=1, b=1) 

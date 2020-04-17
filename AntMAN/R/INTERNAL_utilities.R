@@ -1,4 +1,3 @@
-
 #################################################################################
 ##### Raffaele Functions
 #################################################################################
@@ -71,31 +70,6 @@ AM_VnkPoisson <- function (n,Lambda,gamma) {
 	return(VnkPoisson(n,Lambda,gamma));
 }
 
-#' This function compute the prior on the number of cluster, i.e. occupied component of the mixutre for a Finite Dirichlet process when the prior on the component-weigts of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights are distributed as Gamma(\eqn{\gamma},1) ) when the prior on the number of componet is Shifted Poisson of parameter \code{Lambda}. See Section 9.1.1 of Argiento de Iorio (2019) for more details.
-#' 
-#' There are no default values.
-#'
-#' @param n        The sample size
-#' @param Lambda   The \code{Lambda} parameter of the Poisson
-#' @param gamma    The \code{gamma} parameter of the Dirichlet 
-#'
-#' @return A vector of length n, reporting the values of the prior on the number of clusters induced by the prior on \code{M} and \code{w}, i.e. \code{p^*_k} for \code{k=1,...,n}. See Section 9.1.1 of Argiento de Iorio (2019) for more details.
-#'
-#' @keywords prior number of clusters
-#'
-#' @export
-#' 
-#' @examples
-#' n <- 82
-#' Lambda <- 10
-#' gam_po <- 0.1550195
-#' prior_K_po <-  AM_prior_K_Pois(n,gam_po,Lambda)
-#' plot(1:n, prior_K_po, type = "n", bty = "l", xlab = "k", ylab = "P(K=k)")
-
-AM_prior_K_Pois <- function (n,gamma,Lambda) {
-	return(prior_K_Pois(n,gamma,Lambda));
-}
-
 
 #' Compute the value V(n,k), needed to caclulate the eppf of a Finite Dirichlet process when the prior on the component-weigts of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights are distributed as Gamma(\eqn{\gamma},1) ) when the prior on the number of componet is Negative Binomial with parameter \code{r} and \code{p}with  mean is mu =1+ r*p/(1-p) TODO: CHECK THIS FORMULA!!!. See Section 9.1.1 of the Paper Argiento de Iorio 2019 for more details
 #' 
@@ -124,35 +98,6 @@ AM_prior_K_Pois <- function (n,gamma,Lambda) {
 
 AM_VnkNegBin <- function (n,r,p,gam) {
 	return(VnkNegBin(n,r,p,gam));
-}
-
-#' This function compute the prior on the number of cluster, i.e. occupied component of the mixutre for a Finite Dirichlet process when the prior on the component-weigts of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights are distributed as Gamma(\eqn{\gamma},1) ) when the prior on the number of componet  is Negative Binomial with parameter \code{r>0} and \code{0<p<1}, with  mean is mu =1+ r*p/(1-p) TODO: CHECK THIS FORMULA!!!. See Section 9.1.1 of the Paper Argiento de Iorio 2019 for more details. 
-#' 
-#' There are no default values.
-#'
-#' @param n      The sample size
-#' @param r      The dispersion parameter \code{r} of Negative Binomial
-#' @param p      The probability of failure parameter \code{p} of Negative Binomial
-#' @param gamma  The \code{gamma} parameter of the Dirichlet 
-#'
-#' @return A vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}
-#'
-#' @keywords prior number of cluster
-#'
-#' @export
-#' 
-#' @examples
-#' n <- 50
-#' gamma <- 1
-#' r <- 0.1
-#' p <- 0.91
-#' gam_nb <- 0.2381641
-#' prior_K_nb <-  AM_prior_K_NegBin(n,gam_nb,r,p)
-#' plot(1:n,prior_K_nb, type = "n", bty = "l", xlab = "k", ylab = "P(K=k)")
-#' lines(1:n,prior_K_nb,type="h",lwd=2)
-
-AM_prior_K_NegBin <- function (n,gamma, r, p){
-	return(prior_K_NegBin(n,gamma, r, p));
 }
 
 
@@ -186,33 +131,6 @@ AM_prior_K_NegBin <- function (n,gamma, r, p){
 AM_VnkDelta <- function (n,Mstar,gamma) {
 	return(VnkDelta(n,Mstar,gamma));
 }
-
-#' This function compute the prior on the number of cluster, i.e. occupied component of the mixutre for a Finite Dirichlet process 
-#' when the prior on the component-weigts of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights 
-#' are distributed as Gamma(\eqn{\gamma},1) ) when the number of component are fixed to \code{M^*}, i.e. a Dirac prior assigning mass
-#'  only to \code{M^*} is assumed. See Section 9.1.1 of the Paper Argiento de Iorio 2019 for more details.#' There are no default values.
-#'
-#' @param n        The sample size
-#' @param Mstar    The number of component of the mixture 
-#' @param gamma    The \code{gamma} parameter of the Dirichlet 
-#'
-#' @return A vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}
-#'
-#' @keywords prior number of cluster
-#'
-#' @export
-#' 
-#' @examples
-#' n <- 82
-#' gam_de <- 0.1743555
-#' Mstar <- 12
-#' prior_K_de <- AM_prior_K_Delta(n,gam_de, Mstar)
-#' plot(1:n, prior_K_de, type = "n", bty = "l", xlab = "k", ylab = "P(K=k)")
-
-AM_prior_K_Delta <- function (n,gamma,Mstar){
-	return( prior_K_Delta(n,gamma,Mstar));
-}
-
 
 #' Once specified a fixed value of components \code{M^*} this function  adopt a  \emph{bisection method} to find the value of \code{gamma} 
 #' such that the induced distribution on the number of clusers is centered around a user specifed value \eqn{K^*}, i.e. the function use
@@ -353,3 +271,7 @@ AM_emp_bayes_uninorm <- function(y,scEmu=1,scEsig2=3,CVsig2=3){
 	return(from_statitstics2hyperparam(Emu,Vmu,Esig2,Vsig2))
 	
 }
+
+
+
+

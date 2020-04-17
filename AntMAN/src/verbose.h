@@ -10,8 +10,8 @@
 #define VERBOSE_BINARY
 
 #ifdef HAS_RCPP
-#include <RcppArmadillo.h>
 // [[Rcpp::depends(RcppArmadillo)]]
+#include <RcppArmadillo.h>
 #define COUT_STREAM Rcpp::Rcout
 #define CERR_STREAM Rcpp::Rcerr
 static inline void stop_cmd () {Rcpp::stop("Error inside the package.\n");}
@@ -21,6 +21,22 @@ static inline void stop_cmd () {Rcpp::stop("Error inside the package.\n");}
 #define CERR_STREAM std::cerr
 static inline void stop_cmd () {abort();} // Commented for R Package
 #endif
+
+
+
+static inline void flush_output () {
+#ifdef HAS_RCPP
+	R_FlushConsole();
+	R_ProcessEvents();
+	R_CheckUserInterrupt();
+#else
+	COUT_STREAM << std::flush;
+	CERR_STREAM << std::flush;
+#endif
+
+}
+
+
 
 #define VERBOSE_COLOR true
 
@@ -57,6 +73,26 @@ extern int VERBOSE_LEVEL;
 #define VERBOSE_WARNING(msg)                         VERBOSE_GENERIC_MSG(WARNING_LEVEL, CERR_STREAM, YELLOW_COLOR, msg)
 #define VERBOSE_ERROR(msg)                           VERBOSE_GENERIC_END(ERROR_LEVEL,   CERR_STREAM, RED_COLOR,    msg)
 #define VERBOSE_ASSERT(test,msg)  {if (not (test)) { VERBOSE_GENERIC_END(ERROR_LEVEL,   CERR_STREAM, RED_COLOR,    msg) }};
+
+
+static int const VERBOSE_PROGRESS_BAR_SIZE =  51;
+
+static inline void VERBOSE_PROGRESS_START()    {
+	if (not (VERBOSE_LEVEL >= LOG_LEVEL)) {return;}
+	CERR_STREAM << "0%   10   20   30   40   50   60   70   80   90   100%" << std::endl;
+    CERR_STREAM << "[----|----|----|----|----|----|----|----|----|----|" << std::endl;
+}
+static inline void VERBOSE_PROGRESS_UPDATE(int v)  {
+	if (not (VERBOSE_LEVEL >= LOG_LEVEL)) {return;}
+	const int progress = (v * VERBOSE_PROGRESS_BAR_SIZE) / 100;
+	CERR_STREAM << std::string(progress, '\r')
+	            <<  std::string(progress, 'x') ;
+	flush_output ();
+}
+static inline void VERBOSE_PROGRESS_STOP()   {
+	if (not (VERBOSE_LEVEL >= LOG_LEVEL)) {return;}
+	CERR_STREAM << "" << std::endl;
+}
 
 
 

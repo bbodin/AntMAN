@@ -12,19 +12,21 @@
 	GibbsResultRCpp::GibbsResultRCpp(int niter, int output_codes) : iteration(0),  niter(niter), output_codes (output_codes) {
 
 		for (auto idx : AM_OUTPUTS){
-			if (AM_OUTPUT_HAS(output_codes,idx.second.code)) { VERBOSE_INFO("Record " << idx.second.name); }
+			if (AM_OUTPUT_HAS(output_codes,idx.second.code)) {
+				VERBOSE_INFO("Record " << idx.second.name);
+			}
 		}
 	}
 
 	 void GibbsResultRCpp::log_output (
 			 cluster_indices_t& ci_current,
-			 arma::vec & S_current,
-			 double U,
-			 unsigned int M,
-			 unsigned int K,
-			 unsigned int M_na,
-			 Mixture * mixture,
-			 Prior * prior) {
+			 arma::vec&         S_current,
+			 double             U,
+			 unsigned int       M,
+			 unsigned int       K,
+			 unsigned int       M_na,
+			 Mixture *          mixture,
+			 Prior *            prior) {
 
 		 GibbsResultRCpp & result = *this;
 

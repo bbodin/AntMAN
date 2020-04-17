@@ -24,7 +24,7 @@ plot(1:length(y_uvb),y_uvb,col=ci_uvb+1)
 ##############################################################################
 
 
-mixture_uvb_params = AM_unibin_mix_hyperparams  (a0=1,b0=1,N=100)
+mixture_uvb_params = AM_mix_hyperparams_unibin  (a0=1,b0=1,N=100)
 
 mcmc_params        = AM_mcmc_parameters(niter=2000, burnin=1000, thin=10, verbose=1)
 components_prior   = AM_mix_components_prior_pois (init=3,  a=1, b=1) 

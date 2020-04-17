@@ -75,7 +75,7 @@ nu0 <- 2*(p + 2)
 Lam0 <- diag(p)
 # Lam0 <- (nu0 - p - 1) * Sig
 
-mixture_mvn_params = AM_multinorm_mix_hyperparams(mu0=mu0,ka0=k0,nu0=nu0,Lam0=Lam0)
+mixture_mvn_params = AM_mix_hyperparams_multinorm(mu0=mu0,ka0=k0,nu0=nu0,Lam0=Lam0)
 
 
 #Fit AntMAN (different hyperparameters!!!)

@@ -1,3 +1,9 @@
+###
+### In this file :
+### from_statitstics2hyperparam -> emp_bayes_uninorm
+### univariate_plot
+### 
+
 ### This function takes as input the desired values of
 ### the marginal mean of mu = Emu
 ### the marginal variance of mu = Vmu
@@ -94,19 +100,5 @@ legend("topright",legend=c("posterior median", "95% Credible bounds","kernel den
 
 layout(matrix(c(1,1,1,1),1,1,byrow=TRUE))
 }
-
-
-
-
-
-
-
-
-###### Predictive:
-
-
-
-
-
 
 

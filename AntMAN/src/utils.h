@@ -14,7 +14,7 @@ typedef arma::ivec cluster_indices_t;
 
 inline arma::vec vectorsum (std::vector <arma::vec> elems ) {
 	arma::vec out = elems[0];
-	for (auto i = 1 ; i < elems.size() ; i ++) {
+	for (unsigned int i = 1 ; i < elems.size() ; i ++) {
 		out += elems[i] ;
 	}
 	return out;

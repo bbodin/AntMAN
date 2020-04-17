@@ -135,7 +135,7 @@ public:
 		double total_gibbs          = 0;
 		auto   start_gibbs          = std::chrono::system_clock::now();
 
-
+		VERBOSE_PROGRESS_START();
 		for (unsigned int iter = 0 ; iter < niter ; iter++)  {
 
 			total_iter           = 0;
@@ -241,7 +241,8 @@ public:
 				start_gibbs           = std::chrono::system_clock::now();
 				total_gibbs               += elapsed_gibbs.count() / 1000000.0;
 
-				VERBOSE_LOG("[" << std::setw(3) << 100 * iter / (niter - 1) << "%]" <<
+				VERBOSE_PROGRESS_UPDATE(100 * iter / (niter - 1));
+				if (false) VERBOSE_LOG("[" << std::setw(3) << 100 * iter / (niter - 1) << "%]" <<
 						" iter=["<< iter + 1 << "/" << niter << "]" <<
 						" saved=["<< total_saved << "/" << total_to_save << "]" <<
 						" K="<<K<<
@@ -252,12 +253,13 @@ public:
 						" alloc=" <<total_alloc << "ms" <<
 						" iter=" <<total_iter << "ms" <<
 						" total_gibbs=" <<total_gibbs<< "ms" );
+
 			} else {
 				VERBOSE_DEBUG("Skip the logging");
 			}
 
 		}//I close the while
-
+		VERBOSE_PROGRESS_STOP();
 		VERBOSE_LOG("End of Iterations." );
 
 

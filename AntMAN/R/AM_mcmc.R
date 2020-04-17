@@ -1,0 +1,256 @@
+# TODO: Add comment
+# 
+# Author: Bruno
+###############################################################################
+
+#' S3 class AM_mcmc_output.
+#' @description Output type of return values from  \code{\link{AM_mcmc_fit}}. 
+#' @exportClass AM_mcmc_output
+#' @seealso \code{\link{AM_mcmc_fit}}
+#' @name AM_mcmc_output
+NULL
+
+#' S3 class AM_mcmc_configuration.
+#' @description Output type of return values from  \code{\link{AM_mcmc_parameters}}. 
+#' @exportClass AM_mcmc_configuration
+#' @seealso \code{\link{AM_mcmc_fit}}
+#' @name AM_mcmc_configuration
+NULL
+
+#################################################################################
+##### AM_mcmc_configuration function
+#################################################################################
+
+#'  summary AM_mcmc_configuration 
+#'  
+#'  Print infos on AM_mcmc_configuration Object
+#'  
+#'@param object a \code{\link{AM_mcmc_configuration}} object
+#'@param ... all additionnal parameters are ignored
+#'  
+#'  
+#'@method summary AM_mcmc_configuration 
+#'@export
+summary.AM_mcmc_configuration = function(object, ...){
+	cat("\n", "AM_mcmc_configuration\n", sep = "")	
+	for (item in names(object)) {
+		cat(' -', item , ': ' , head(object[[item]]), "\n")
+	}
+}
+
+
+
+#################################################################################
+##### AM_mcmc_output function
+#################################################################################
+
+
+
+#' plot AM_mcmc_output  
+#' 
+#' plot some useful informations about the mcmc results
+#'  
+#'@param x a AM_mcmc_output object
+#'@param ... all additionnal parameters passed to image command.
+#'  
+#'@method plot AM_mcmc_output 
+#'@importFrom graphics image
+#'@importFrom grDevices gray.colors
+#'@export
+plot.AM_mcmc_output=function(x,...){
+	if (!is.null(x$M))  {hist(x$M,main="M values") ; readline(prompt="Press [enter] to continue");}
+	if (!is.null(x$K))  {hist(x$K,main="K Values") ; readline(prompt="Press [enter] to continue");}
+	
+	#### Co clustering probability : How many time two are in the same custer. 
+	if (!is.null(x$CI)) {
+		G <- length(x$K)
+		n = length(x$CI[[1]])
+		res = AM_coclustering(x)
+		## library(corrplot)
+		## col3 <- colorRampPalette(c("red", "white", "blue")) 
+		## corrplot(res, diag = FALSE, method = "color", type = "upper",col = col3(100), cl.lim = c(0, 1), tl.pos = "n")
+		image(1:n,1:n,res,xaxt='n', yaxt="n",main="Similarity matrix",col = gray.colors(30))
+		readline(prompt="Press [enter] to continue");
+	}
+}
+
+
+#' Internal function that produces a string fro ma list of values
+#'  
+#'@param x a list of values
+#'  
+#'@importFrom utils head
+list_values = function (x) {
+	arguments = vector();
+	for (item in names(x)) {
+		arguments = append(arguments,sprintf("%s = %s",item, head(x[[item]]) )) ;
+	}
+	return (paste(arguments, collapse=", "));
+}
+
+#'  summary AM_mcmc_output 
+#'  
+#'  Print some useful informations about the mcmc results
+#'  
+#'@param object a \code{\link{AM_mcmc_output}} object
+#'@param ... all additionnal parameters are ignored
+#'  
+#'  
+#'@method summary AM_mcmc_output 
+#'@export
+summary.AM_mcmc_output=function(object,...){
+	cat("\n","MCMC Output:","\n");
+	cat(" -mix_kernel_hyperparams(",list_values(attr(object,'mix_kernel_hyperparams')),")\n", sep = "");
+	cat(" -mix_components_prior(",list_values(attr(object,'mix_components_prior')),")\n", sep = "");
+	cat(" -mix_weight_prior(",list_values(attr(object,'mix_weight_prior')),")\n", sep = "");
+	cat(" -mcmc_parameters(",list_values(attr(object,'mcmc_parameters')),")\n", sep = "");
+	cat("\n - Output of the Gibbs sampler\n\n");
+	cat("    ", "Name", "Mean", "StdDev\n", sep = "\t" );
+
+	for (item in names(object)) {
+		cat("    ");
+		e = object[[item]]
+		if (is.vector(e)  & !is.list(e)) {
+			cat(item,mean(e),sd(e), sep = "\t");
+		} else {
+			cat(item,"NA","NA", sep = "\t");
+		}
+		cat("\n");
+	}
+	
+}
+
+
+
+
+
+
+
+
+#################################################################################
+##### AM_mcmc_fit function
+#################################################################################
+
+
+#' Performs a Gibbs sampling
+#' 
+#' The \code{AM_mcmc_fit} function performs a Gibbs sampling in order to estimate 
+#' a mixture of a predifined type \code{mix_kernel_hyperparams} (defined with \code{AM_mix_hyperparams_*} functions, where star 
+#' \code{*} denotes the chosen kernel) 
+#' sample data \code{y}. 
+#' Additionaly a prior distribution on the number of mixture components  
+#' must be specified  through  \code{mix_components_prior} 
+#' (generated with  \code{AM_mix_components_prior_*} functions, where \code{*}  denotes the chosen prior). Similarly,  
+#' a prior on the weights of  the mixture is specified through \code{mix_weight_prior} 
+#' (defined with  \code{AM_mix_weights_prior_*} functions). Finally, with \code{mcmc_parameters} the user sets
+#' the MCMC parameters for the Gibbs sampler (defined with  \code{AM_mcmc_parameters} functions). 
+#' 
+#' If no initial clustering is specified (either as \code{init_K} or \code{init_clustering}), 
+#' then every observation is allocated to a different cluster. 
+#' If \code{init_K} is specified then AntMAN initialises the clustering through K-means. 
+#' 
+#' **Warning**: if the user does not specify init_K or initial_cluster, the first steps can be be time-consuming because of default value for the initial clustering. 
+#' 
+#'
+#'@param y input data, can be a vector or a matrix.
+#'@param mix_kernel_hyperparams is a configuration list, defined by *_mix_hyperparams functions, where * denotes the chosen kernel.
+#'@param initial_clustering is a vector CI of initial cluster assignement. If no clustering is specified (either as \code{init_K} or \code{init_clustering}), then every observation is assigned to its own cluster.
+#'@param fixed_clustering is a vector CI of cluster assignement that will remained unchanged for every iterations.
+#'@param init_K initial value for  the number of cluster. When this is specified, AntMAN intitialises the clustering assign usng K-means.
+#'@param mix_components_prior is a configuration list defined by AM_mix_components_prior_* functions, where * denotes the chosen prior.
+#'@param mix_weight_prior is a configuration list defined by AM_weight_prior_* functions, where * denotes the chosen prior specification.
+#'@param mcmc_parameters is a configuration list defined by AM_mcmc_parameters. 
+#'@return The return value is a \code{\link{AM_mcmc_output}} object.
+#'@examples
+#' AM_mcmc_fit( AM_sample_unipois()$y, 
+#'              AM_mix_hyperparams_unipois (alpha0=2, beta0=0.2), 
+#'              mcmc_parameters = AM_mcmc_parameters(niter=200, burnin=100, thin=10))
+#'@useDynLib AntMAN
+#'@export
+
+AM_mcmc_fit <- function(
+		y, 
+		mix_kernel_hyperparams, 
+		initial_clustering = NULL, 
+		init_K = NULL, 
+		fixed_clustering = NULL, 
+		mix_components_prior = AM_mix_components_prior_pois() , 
+		mix_weight_prior = AM_mix_weights_prior_gamma(), 
+		mcmc_parameters = AM_mcmc_parameters() ) {
+	fixed_cluster = FALSE
+	if (is.null(fixed_clustering) & is.null(init_K) & !is.null(initial_clustering)) {
+		fixed_cluster = FALSE
+		# initial_clustering is set
+	} else if (!is.null(init_K) & is.null(initial_clustering)& is.null(fixed_clustering)) {
+		fixed_cluster = FALSE
+		initial_clustering <- kmeans(y, init_K)$cluster
+		# initial_clustering is set
+	} else if (is.null(init_K) & is.null(initial_clustering)& is.null(fixed_clustering)) {
+		fixed_cluster = FALSE
+		initial_clustering <- 0:(NROW(y)-1)
+		# initial_clustering is set
+	} else if (is.null(init_K) & is.null(initial_clustering)& !is.null(fixed_clustering)) { 
+		fixed_cluster = TRUE
+		initial_clustering = fixed_clustering
+	} 
+	else {
+		stop("Please provide only one of K_init or initial_clustering or fixed_clustering.")
+	}
+	
+	return (structure(
+			IAM_mcmc_fit(y = y, mix_kernel_hyperparams = mix_kernel_hyperparams, initial_clustering = initial_clustering, fixed_clustering=  fixed_cluster , mix_components_prior = mix_components_prior, mix_weight_prior = mix_weight_prior, mcmc_parameters = mcmc_parameters)
+			, class = "AM_mcmc_output",
+			mix_kernel_hyperparams = mix_kernel_hyperparams, 
+			initial_clustering = initial_clustering, 
+			init_K = init_K, 
+			fixed_clustering = fixed_clustering, 
+			mix_components_prior =mix_components_prior , 
+			mix_weight_prior = mix_weight_prior, 
+			mcmc_parameters =mcmc_parameters));
+}
+
+#################################################################################
+##### AM_mcmc_parameters function
+#################################################################################
+
+
+
+#' MCMC Parameters
+#' 
+#' This function generates an MCMC parameters list to be used as \code{mcmc_parameters} argument within \code{AM_mcmc_fit}. 
+#' 
+#' The \code{niter} argument specify the total number of iteration. 
+#' \code{burnin} is the number of initial iterations to discard.
+#' \code{thin} specifies how often a draw from teh posterior distribution is stored after 
+#' burnin, i.e. one every -th samples is saved. Therefore, the toral number of MCMC samples saved is 
+#' (\code{niter} -\code{burnin})/\code{thin}. If thin =1, then AntMAN stores every iteration.  
+#' 
+#' 
+#'@param niter        Total number of MCMC iterations. 
+#'@param burnin       Number of iterations to discard as burn-in.
+#'@param thin         Thining rate.
+#'@param verbose      A value from 0 to 4, that specifies the desired level of verbosity (0:None, 1:Warnings, 2:Debug, 3:Extras)
+#'@param output       A list of parameters output to return
+#'@param output_dir   Path to an output dir, where to store all the outputs.
+#'@param parallel     Some of the algorithms can be run in parallel using OpenMP. When set to True, this parameter triggers the parallelism.
+#'@return AM_mcmc_configuration Object, this is a list to be used as \code{mcmc_parameters} argument with \code{AM_mcmc_fit}. 
+#'@examples 
+#' AM_mcmc_parameters (niter=1000, burnin=10000, thin=50)
+#' AM_mcmc_parameters (niter=1000, burnin=10000, thin=50, output=c("CI","S","TAU"))
+#'@export
+AM_mcmc_parameters <- function(  niter=5000,
+		burnin=2500, ## niter / 2
+		thin=1,
+		verbose = 1,
+		output=c("CI","K"),
+		parallel=TRUE,
+		output_dir = NULL) {
+	
+	
+	return (structure(list(type="AM_MCMC_PARAMETERS", 
+					niter=niter, burnin=burnin, thin=thin,
+					verbose=verbose, output=output, parallel=parallel,
+					output_dir=output_dir), class = "AM_mcmc_configuration") );
+	
+}
+

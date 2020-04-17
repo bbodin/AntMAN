@@ -36,7 +36,7 @@ devtools::install_github("bbodin/AntMAN", subdir="AntMAN")
 library("AntMAN")
 data(galaxy, package = "AntMAN")
 y_uvn = galaxy
-mixture_uvn_params = AntMAN::AM_uninorm_mix_hyperparams  (m0=20.83146, k0=0.3333333, nu0=4.222222, sig02=3.661027)
+mixture_uvn_params = AntMAN::AM_mix_hyperparams_uninorm  (m0=20.83146, k0=0.3333333, nu0=4.222222, sig02=3.661027)
 
 mcmc_params        = AntMAN::AM_mcmc_parameters(niter=20000, burnin=5000, thin=10, verbose=1)
 components_prior   = AntMAN::AM_mix_components_prior_pois (init=3,  a=1, b=1) 
@@ -65,19 +65,19 @@ For example, in order to identify clusters over a population of patients given a
 
 ```
 mcmc = AM_mcmc_parameters(niter=20000)
-mix  = AM_multiber_mix_hyperparams ()
+mix  = AM_mix_hyperparams_multiber ()
 fit = AM_mcmc_fit (mix, mcmc)
 summary (fit)
 ```
 
-In this example ```AM_multiber_mix_hyperparams``` is one of the possible mixture to identify. AntMAN currently support five different mixtures :
+In this example ```AM_mix_hyperparams_multiber``` is one of the possible mixture to identify. AntMAN currently support five different mixtures :
 
 ```
-AM_unipois_mix_hyperparams(alpha0, beta0) 
-AM_uninorm_mix_hyperparams(m0, k0, nu0, sig02) 
-AM_unibin_mix_hyperparams(a0, b0, mb) 
-AM_multiber_mix_hyperparams(a0, b0) 
-AM_multinorm_mix_hyperparams(mu0, ka0, nu0, Lam0) 
+AM_mix_hyperparams_unipois(alpha0, beta0) 
+AM_mix_hyperparams_uninorm(m0, k0, nu0, sig02) 
+AM_mix_hyperparams_unibin(a0, b0, mb) 
+AM_mix_hyperparams_multiber(a0, b0) 
+AM_mix_hyperparams_multinorm(mu0, ka0, nu0, Lam0) 
 ```
 
 Additionnaly, there is three prior_component available :
@@ -92,7 +92,7 @@ For example, in the context of image segmentation, where a maximal number of col
 
 ```
 mcmc = AM_mcmc_parameters(niter=20000)
-mix  = AM_multinorn_mix_hyperparams ()
+mix  = AM_mix_hyperparams_multi_norm ()
 prior_component = AM_mix_components_prior_dirac(10) # nothing more than 10 colours
 fit = AM_mcmc_fit (mix, prior_component, mcmc)
 summary (fit)
@@ -108,5 +108,19 @@ Thanks for your contributions:
 
   - Check all the comments in the code
   - File writing feature
-  
+
+## To Remember before submit
+
+  - Please replace \\\% in your Rd-files by \%.
+  - Please add and explain the returned objects.
+  - Please ensure that your functions do not modify (save or delete) the
+user's home filespace in your examples/vignettes/tests. That is not
+allow by CRAN policies. Please only write/save files if the user has
+specified a directory.
+  - Please replace cat() by message() or warning() in your functions (except
+for print() and summary() functions). Messages and warnings can be
+suppressed if needed.
+  - Please always write TRUE and FALSE instead of T and F.
+  - Check every headers with wrong authors
+  - Please remove the command 'rm(list=ls())' from your files.
 

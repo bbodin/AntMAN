@@ -36,7 +36,9 @@ static const std::map<std::string, Output_Type> AM_OUTPUTS = {
 };
 
 
-static inline bool AM_OUTPUT_HAS (int CODE, int ITEM) {return CODE & ITEM;}
+static inline bool AM_OUTPUT_HAS (int CODE, int ITEM) {
+	return CODE & ITEM;
+}
 
 static inline int AM_GENERATOR_OUTPUT_CODE (std::vector <std::string> output) {
 		int res = 0 ;

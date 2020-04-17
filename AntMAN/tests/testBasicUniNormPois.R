@@ -27,7 +27,7 @@ plot(1:length(y_uvn),y_uvn,col=ci_uvn+1)
 ### PREPARE THE GIBBS for Normal mixture with poisson gamma priors
 ##############################################################################
 
-mixture_uvn_params = AM_uninorm_mix_hyperparams  (m0=0,k0=0.1,nu0=1,sig02=1.5)
+mixture_uvn_params = AM_mix_hyperparams_uninorm  (m0=0,k0=0.1,nu0=1,sig02=1.5)
 
 mcmc_params        = AM_mcmc_parameters(niter=2000, burnin=1000, thin=10, verbose=1)
 components_prior   = AM_mix_components_prior_pois (init=3,  a=1, b=1) 
