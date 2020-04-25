@@ -8,6 +8,7 @@
 #define ANTMAN_SRC_GIBBSRESULT_H_
 
 #include "utils.h"
+#include <string>
 
 class Mixture;
 class Prior;
@@ -17,14 +18,16 @@ public :
 	virtual ~GibbsResult() {} ;
 
 	virtual void log_output (
-				 cluster_indices_t& ci_current,
-				 arma::vec & S_current,
-				 double U,
-				 unsigned int M,
-				 unsigned int K,
-				 unsigned int M_na,
-				 Mixture * mixture,
-				 Prior * prior) = 0;
+				 cluster_indices_t& CI,
+				 arma::vec&         W,
+				 arma::vec&         PREDICTIVE,
+				 double             U,
+				 unsigned int       M,
+				 unsigned int       K,
+				 Mixture *          mixture,
+				 Prior *            prior) = 0;
+
+
 };
 
 
@@ -37,12 +40,12 @@ public:
 	GibbsResultPlain (long int maxsize) : index (0) ,  Ks (maxsize){} ;
 
 	 void log_output (
-			 cluster_indices_t& ci_current,
-			 arma::vec & S_current,
+			 cluster_indices_t& CI,
+			 arma::vec & W,
+			 arma::vec & PREDICTIVE,
 			 double U,
 			 unsigned int M,
 			 unsigned int K,
-			 unsigned int M_na,
 			 Mixture * mixture,
 			 Prior * prior) {
 		 Ks[index++] = K;
@@ -59,11 +62,11 @@ public:
 
 	 void log_output (
 			 cluster_indices_t& ci_current,
-			 arma::vec & S_current,
+			 arma::vec & W,
+			 arma::vec & PREDICTIVE,
 			 double U,
 			 unsigned int M,
 			 unsigned int K,
-			 unsigned int M_na,
 			 Mixture * mixture,
 			 Prior * prior) ;
 

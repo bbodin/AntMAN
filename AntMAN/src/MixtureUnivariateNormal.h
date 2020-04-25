@@ -227,6 +227,16 @@ public :
 
 	 }
 
+
+	 input_t sample(const arma::vec & W_current, unsigned long n) {
+
+		 long int selected_M = runif_component(W_current);
+		 double mu = _mu_current[selected_M];
+		 double powsig2 = pow(_sig2_current[selected_M],0.5) ;
+		 double value = am_rnorm (mu,powsig2);
+		 return input_t ({value});
+
+	 }
 };
 
 

@@ -116,15 +116,23 @@ extract_target = function(fit, target, iterations = NULL, debug = FALSE){
 			result = data.frame(t(values))
 			names(result) <- generate_column_names(target,c(1:length(values)))
 		} else {
+			
+			## We add missing column on the new row
 			if (ncol(result) > length(values)) {
 				values = c( values , rep(NA, ncol(result) - length(values))); 
 			}
 			
-			while (ncol(result) < length(values)) { ## TODO : Please find more efficient!
-				result = cbind(result,c(NA))
+			
+			##  We add missing column on the original dataframe
+			if ((ncol(result) < length(values))) {
+				while (ncol(result) < length(values)) { ## TODO : Please find more efficient!
+					result = cbind(result,c(NA))
+				}
+			
 				names(result) <- generate_column_names(target,c(1:length(values)))
 			}
-			if (ncol(result) != length(values)) {
+		
+			if (ncol(result) != length(values)) { ## SHOULD NEVER HAPPEND!
 				warning("ERROR: NUMBER of COLUMN CHANGED FROM " ,ncol(result) , " to ", length(values)," \n");
 				return (NULL);
 			} else {

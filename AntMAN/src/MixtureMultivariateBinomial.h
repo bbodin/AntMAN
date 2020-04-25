@@ -207,6 +207,11 @@ public :
 
 
 	 }
+
+	 input_t sample(const arma::vec & W_current, unsigned long n) {
+		 return input_t();
+	 }
+
 };
 
 

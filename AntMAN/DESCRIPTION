@@ -19,7 +19,9 @@ Imports:
     Rcpp (>= 0.12.3),
     salso,
     mvtnorm,
-    mcclust
+    mcclust,
+    GGally,
+    bayesplot
 Suggests:
 	dendextend,
 	ggdendro,

@@ -66,11 +66,21 @@ protected:
 			const double U,
 			const  InputType & y ) = 0;
 
-
-
+	virtual InputType sample(const arma::vec & W_current, unsigned long n = 1);
 
 
 public:
+
+	unsigned long runif_component(const arma::vec & W_current) {
+
+		// Step 1 - Select a component
+		int    M_index = 0;
+		double M_select = am_runif(0,1);
+		for (double msum = W_current[M_index] ; M_select > msum ; msum += W_current[M_index++]) {}
+		return M_index;
+
+
+	}
 
 	void fit(InputType y,
 			cluster_indices_t initial_clustering,
@@ -111,6 +121,8 @@ public:
 		VERBOSE_DEBUG("Done");
 
 		arma::vec  S_current (M);
+		arma::vec  W_current (M);
+
 
 		for(int it=0;it<M;it++){
 			S_current[it] =am_rgamma(prior->get_gamma() ,1.0);
@@ -127,6 +139,7 @@ public:
 		VERBOSE_INFO ( "Let's start the Gibbs!");
 
 		unsigned long total_saved   = 0;
+
 		double total_iter           = 0;
 		double total_u              = 0;
 		double total_ci             = 0;
@@ -202,6 +215,7 @@ public:
 			ci_current   = up_allocated_res.ci();
 
 			S_current = up_allocated_res.S();
+			W_current = S_current / sum(S_current);
 			auto end_alloc = std::chrono::system_clock::now();
 			auto elapsed_alloc = end_alloc - start_alloc;
 			total_alloc += elapsed_alloc.count() / 1000000.0;
@@ -224,7 +238,8 @@ public:
 			// thinning
 			if( (iter >= burnin) and ((iter - burnin) % thin == 0) ) {
 				total_saved++;
-				results->log_output (ci_current,  S_current,  U_current, M,  K,  M_na, this , prior) ;
+				arma::vec Predictive(1);// = this->sample(W_current,1);
+				results->log_output (ci_current,  W_current, Predictive,  U_current, M,  K, this , prior) ;
 				VERBOSE_ASSERT(total_to_save >= total_saved, "Raffaele was right.");
 				VERBOSE_DEBUG("results->log_output() is done");
 			} else {
@@ -238,7 +253,7 @@ public:
 				VERBOSE_DEBUG("Start the logging");
 				auto end_gibbs             = std::chrono::system_clock::now();
 				auto elapsed_gibbs         = end_gibbs - start_gibbs;
-				start_gibbs           = std::chrono::system_clock::now();
+				start_gibbs                = std::chrono::system_clock::now();
 				total_gibbs               += elapsed_gibbs.count() / 1000000.0;
 
 				VERBOSE_PROGRESS_UPDATE(100 * iter / (niter - 1));

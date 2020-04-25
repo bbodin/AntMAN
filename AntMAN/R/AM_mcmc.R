@@ -59,20 +59,13 @@ summary.AM_mcmc_configuration = function(object, ...){
 #'@importFrom grDevices gray.colors
 #'@export
 plot.AM_mcmc_output=function(x,...){
-	if (!is.null(x$M))  {hist(x$M,main="M values") ; readline(prompt="Press [enter] to continue");}
-	if (!is.null(x$K))  {hist(x$K,main="K Values") ; readline(prompt="Press [enter] to continue");}
 	
-	#### Co clustering probability : How many time two are in the same custer. 
-	if (!is.null(x$CI)) {
-		G <- length(x$K)
-		n = length(x$CI[[1]])
-		res = AM_coclustering(x)
-		## library(corrplot)
-		## col3 <- colorRampPalette(c("red", "white", "blue")) 
-		## corrplot(res, diag = FALSE, method = "color", type = "upper",col = col3(100), cl.lim = c(0, 1), tl.pos = "n")
-		image(1:n,1:n,res,xaxt='n', yaxt="n",main="Similarity matrix",col = gray.colors(30))
-		readline(prompt="Press [enter] to continue");
-	}
+	
+	AM_plot_pairs(x)
+	AM_plot_density(x)
+	AM_plot_traces(x)
+	AM_plot_values(x)
+	AM_plot_similarity_matrix(x)
 }
 
 
@@ -81,7 +74,7 @@ plot.AM_mcmc_output=function(x,...){
 #'@param x a list of values
 #'  
 #'@importFrom utils head
-list_values = function (x) {
+list_values = function (x) { ## TODO : can be a head + paste
 	arguments = vector();
 	for (item in names(x)) {
 		arguments = append(arguments,sprintf("%s = %s",item, head(x[[item]]) )) ;

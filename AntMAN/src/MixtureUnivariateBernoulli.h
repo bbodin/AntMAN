@@ -188,6 +188,11 @@ public :
 
 
 		 }
+		 input_t sample(const arma::vec & W_current, unsigned long n) {
+			 long int selected_M = runif_component(W_current);
+			 double value = am_rpois (this->_theta[selected_M] );
+			 return input_t ({value});
+		 }
 };
 
 

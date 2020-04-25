@@ -294,6 +294,30 @@ public :
 
 
 		 }
+		 input_t sample(const arma::vec & W_current, unsigned long n) {
+
+			 //
+			 //	arma::mat  _mu_current;
+			 //	arma::cube _Sig_current;
+			 //
+			 unsigned long n_vars = _mu_current.n_cols;
+
+			 long int selected_M = runif_component(W_current);
+
+			 input_t sampling (1,n_vars);
+
+			 for (auto current_var = 0 ; current_var < n_vars ; current_var ++ ) {
+				 double mu = _mu_current[selected_M,current_var];
+				 double powsig = pow(_Sig_current[selected_M,current_var],0.5) ;
+
+
+				 double value = am_rnorm (mu,powsig);
+				 sampling(1,current_var) = value;
+
+			 }
+
+			 return sampling;
+		 }
 };
 
 

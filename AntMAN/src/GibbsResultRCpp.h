@@ -23,16 +23,16 @@ struct Output_Type {
 };
 
 static const std::map<std::string, Output_Type> AM_OUTPUTS = {
-		{"CI" ,  {"Clusters allocation", 1 << 0}},
-		{"TAU" , {"", 1 << 1}},
-		{"S" ,   {"", 1 << 2}},
-		{"U" ,   {"", 1 << 3}},
-		{"M" ,   {"", 1 << 4}},
-		{"K" ,   {"Number of clusters", 1 << 5}},
-		{"MNA" , {"", 1 << 6}},
-		{"H" ,   {"", 1 << 7}},
-		{"Q" ,   {"", 1 << 8}},
-		{"ALL" , {"", (1 << 9) - 1}},
+		{"CI" ,           {"Clusters allocation", 1 << 0}},
+		{"TAU" ,          {"", 1 << 1}},
+		{"W" ,            {"", 1 << 2}},
+		{"U" ,            {"", 1 << 3}},
+		{"M" ,            {"", 1 << 4}},
+		{"K" ,            {"Number of clusters", 1 << 5}},
+		{"H" ,            {"", 1 << 7}},
+		{"Q" ,            {"", 1 << 8}},
+		{"PREDICTIVE" ,   {"", 1 << 9}},
+		{"ALL" ,          {"", (1 << 10) - 1}},
 };
 
 
@@ -71,9 +71,9 @@ public:
 	std::vector<long>                K;
 	std::vector<double>              U;
 	std::vector<long>                M;
-	std::vector<long>                MNA;
 	std::vector<Rcpp::List>          Q;
-	std::vector<arma::vec>           S;
+	std::vector<arma::vec>           W;
+	std::vector<arma::vec>           PREDICTIVE;
 	std::vector<Rcpp::List>          TAU;
 
 	int niter;
@@ -82,12 +82,12 @@ public:
 	GibbsResultRCpp (int niter, int output_codes)  ;
 
 	 void log_output (
-			 cluster_indices_t& ci_current,
-			 arma::vec & S_current,
+			 cluster_indices_t& CI,
+			 arma::vec & W,
+			 arma::vec & PREDICTIVE,
 			 double U,
 			 unsigned int M,
 			 unsigned int K,
-			 unsigned int M_na,
 			 Mixture * mixture,
 			 Prior * prior) ;
 

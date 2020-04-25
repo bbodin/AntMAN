@@ -86,7 +86,7 @@ static inline void VERBOSE_PROGRESS_UPDATE(int v)  {
 	if (not (VERBOSE_LEVEL >= LOG_LEVEL)) {return;}
 	const int progress = (v * VERBOSE_PROGRESS_BAR_SIZE) / 100;
 	CERR_STREAM << std::string(progress, '\r')
-	            <<  std::string(progress, 'x') ;
+	            <<  std::string(progress, '*') ;
 	flush_output ();
 }
 static inline void VERBOSE_PROGRESS_STOP()   {

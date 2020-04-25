@@ -87,7 +87,7 @@ AM_clustering_estimation_average = function (fit) {
 #'@export
 AM_coclustering = function (fit) {
 	
-	G <- length(fit$K)
+	G <- length(fit$CI)
 	n = length(fit$CI[[1]])
 	C <- matrix(0,ncol=n,nrow=n)
 	ci <- t(do.call(cbind,fit$CI))+1

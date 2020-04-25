@@ -82,27 +82,4 @@ NULL
 
 
 
-#################################################################################
-##### AM_mcmc_output, Summary, Plot.
-#################################################################################
-
-
-#'  Plot the Similarity Matrix
-#'  
-#'  Given a MCMC output, this function will produce an image of the Similarity Matrix
-#'  
-#'@param C coclustering as returned from the command \code{\link{AM_coclustering}}.
-#'@param ... All additional parameters wil lbe pass to the image command.
-#'  
-#'@export
-AM_plot_similarity_matrix=function(C, ...){
-	#### Co clustering probability : How many time two are in the same custer. 
-	
-	n = dim(C)[1]
-	## library(corrplot)
-	## col3 <- colorRampPalette(c("red", "white", "blue")) 
-	## corrplot(res, diag = FALSE, method = "color", type = "upper",col = col3(100), cl.lim = c(0, 1), tl.pos = "n")
-	image(1:n,1:n,C,xaxt='n', yaxt="n",main="Similarity matrix",col = gray.colors(30), ...)
-}
-
 

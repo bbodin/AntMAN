@@ -449,7 +449,7 @@ Rcpp::List IAM_mcmc_fit (
 		VERBOSE_INFO ("-  Rcpp::as<arma::vec>(y).n_rows = " << Rcpp::as<arma::vec>(y).n_rows);
 		VERBOSE_ASSERT (is_univariate(mix_kernel_hyperparams), "y argument is a Vector while the technique is not Univariate.") ;
 		dynamic_cast<UnivariateMixture*>(mixture)->fit(Rcpp::as<arma::vec>(y) , initial_clustering, fixed_clustering, prior ,
-				niter ,burnin ,thin, parallel, &res );
+				niter ,burnin ,thin,   parallel, &res );
 
 		VERBOSE_INFO("End of Gibbs");
 		return res.getList();
