@@ -33,7 +33,7 @@ d <- dim(y_mvb)[2] ## The dimension of the data
 
 ######
 ## Set the Gibbs Parameter
-mcmc_params        = AM_mcmc_parameters(niter=5000 + 50 * 5000, burnin=5000, thin=50, verbose=1, output = c("CI","K","M","Tau","H","Q","S"))
+mcmc_params        = AM_mcmc_parameters(niter=5000 + 50 * 5000, burnin=5000, thin=50, verbose=0, output = c("CI","K","M","Tau","H","Q","W"))
 
 ## We are going to use a Bayesian Latent Class analysis, i.e. a mixture of Multivariate Bernoulli
 ## for the first analysis I will define independent beta prior with (1,1) parameters (i.e. uniform)

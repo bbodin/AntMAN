@@ -37,11 +37,6 @@ Mixture* gen_mix (Rcpp::List mixture_parameters) {
 		return new MixtureUnivariateNormal (mixture_parameters["m0"], mixture_parameters["k0"], mixture_parameters["nu0"], mixture_parameters["sig02"]);
 	}
 
-	if (mixture_parameters.containsElementNamed("a0") and mixture_parameters.containsElementNamed("b0")
-			and mixture_parameters.containsElementNamed("mb")) {
-		return  new MixtureUnivariateBernoulli (mixture_parameters["a0"], mixture_parameters["b0"], mixture_parameters["mb"]) ;
-	}
-
 
 
 	if (mixture_parameters.containsElementNamed("mu0") and mixture_parameters.containsElementNamed("ka0")

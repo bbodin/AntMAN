@@ -44,5 +44,5 @@ burnin, i.e. one every -th samples is saved. Therefore, the toral number of MCMC
 }
 \examples{
 AM_mcmc_parameters (niter=1000, burnin=10000, thin=50)
-AM_mcmc_parameters (niter=1000, burnin=10000, thin=50, output=c("CI","S","TAU"))
+AM_mcmc_parameters (niter=1000, burnin=10000, thin=50, output=c("CI","W","TAU"))
 }

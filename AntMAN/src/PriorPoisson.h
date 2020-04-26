@@ -30,10 +30,12 @@ public:
 	void update (const  double U, const  int K, const gamma_h_param_t <poisson_gamma_q_param_t>& h_param) {
 		if (lambda_is_fixed) return;
 		double lphi_u=-h_param.gamma*std::log(1+U);
-		double lpeso=lphi_u-std::log(1+b); // TODO peso to weight
+		double phi_u = std::exp(lphi_u);
+		double lpeso = lphi_u + std::log(K+a-1)-std::log((a-1)*phi_u+(b+1) * K ) ;
+
 		double lunif=std::log(am_runif(0.0,1.0));
 		double astar=K+a ;// See the notation of Point 4 in 10.1
-		double rate=(1-std::exp(lphi_u)+b);
+		double rate = 1 - phi_u + b;
 		this->lambda = lunif<lpeso ? am_rgamma(astar+1,1.0/rate) : am_rgamma(astar,1.0/rate);
 	}
 

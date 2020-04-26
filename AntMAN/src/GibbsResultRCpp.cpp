@@ -19,14 +19,16 @@
 	}
 
 	 void GibbsResultRCpp::log_output (
-			 cluster_indices_t& CI,
-			 arma::vec&         W,
-			 arma::vec&         PREDICTIVE,
-			 double             U,
-			 unsigned int       M,
-			 unsigned int       K,
-			 Mixture *          mixture,
-			 Prior *            prior) {
+			 const cluster_indices_t& CI,
+			 const arma::vec&         W,
+			 const arma::vec&         PREDICTIVE,
+			 const double             U,
+			 const unsigned int       M,
+			 const unsigned int       K,
+			 const Mixture *          mixture,
+			 const Prior *            prior) {
+
+		 VERBOSE_INFO("log_output");
 
 		 GibbsResultRCpp & result = *this;
 
@@ -51,7 +53,7 @@
 			if (this->CI .size()) {total++;names.push_back("CI");}
 			if (this->TAU.size()) {total++;names.push_back("TAU");}
 			if (this->W  .size()) {total++;names.push_back("W");}
-			if (this->PREDICTIVE  .size()) {total++;names.push_back("PREDICTIVE");}
+			if (this->PREDICTIVE.size()) {total++;names.push_back("PREDICTIVE");}
 			if (this->U  .size()) {total++;names.push_back("U");}
 			if (this->M  .size()) {total++;names.push_back("M");}
 			if (this->K  .size()) {total++;names.push_back("K");}

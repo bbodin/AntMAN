@@ -24,11 +24,11 @@ public :
 	MixtureMultivariateBinomial (const arma::vec  a0, const arma::vec  b0) :  _mb(a0.size(), arma::fill::ones), _a0 (a0), _b0 (b0) {}
 	//Mixture_MultivariateBernoulli (const arma::vec  a0, const arma::vec  b0, const arma::vec  mb) :  _mb(mb), _a0 (a0), _b0 (b0) {}
 #ifdef HAS_RCPP
-	Rcpp::List get_tau () {
+	Rcpp::List get_tau () const {
 		return Rcpp::List::create(Rcpp::Named("theta") = _theta ) ;
 	}
 #else
-	std::string get_tau () {
+	std::string get_tau () const {
 		std::string res = "theta=[";
 		for (auto e : _theta) res += e;
 		res += "]";
@@ -209,7 +209,33 @@ public :
 	 }
 
 	 input_t sample(const arma::vec & W_current, unsigned long n) {
-		 return input_t();
+
+		 VERBOSE_DEBUG("Run sample");
+
+		 long int selected_M = runif_component(W_current);
+		 input_t res = input_t(1,_theta.n_cols);
+
+
+		 VERBOSE_EXTRA("selected_M = " << selected_M);
+
+
+		 auto theta0  = _theta.row(selected_M); // take row
+		 for (auto idx = 0 ; idx < _theta.n_cols ; idx++) {
+			 auto e = theta0[idx];
+			 VERBOSE_ASSERT((e <= 1) or (e >= 0), "Condition not checked e in (0,1): Invalid Theta");
+
+			 // sample a value between 0 and 1 , if smaller than e
+			 auto sample = am_runif(0,1);
+			 res[idx] = sample >= e ? 0 : 1;
+		 }
+
+
+		 // TODO: output is the result.
+
+		 VERBOSE_DEBUG("Return result");
+		 return res;
+
+
 	 }
 
 };

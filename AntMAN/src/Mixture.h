@@ -31,15 +31,15 @@ class Mixture {
 public :
 	virtual             ~Mixture() {};
 #ifdef HAS_RCPP
-	virtual Rcpp::List  get_tau () = 0;
+	virtual Rcpp::List  get_tau  () const = 0;
 #else
-	virtual std::string  get_tau() = 0;
+	virtual std::string  get_tau  () const = 0;
 #endif
 private :
 	bool _parallel;
 protected :
 	void set_parallel(bool parallel) {this->_parallel = parallel;};
-	bool get_parallel() {return this->_parallel;};
+	bool get_parallel() const {return this->_parallel;};
 };
 
 
@@ -71,12 +71,15 @@ protected:
 
 public:
 
-	unsigned long runif_component(const arma::vec & W_current) {
-
+	arma::uword  runif_component(const arma::vec & W_current) {
+		VERBOSE_EXTRA("runif_component from " << W_current);
+		//VERBOSE_ASSERT( 1.0 - arma::sum(W_current) <= arma::datum::eps , "sum (W_current) is not even close to 1. Sum(W) = " << arma::sum(W_current));
 		// Step 1 - Select a component
-		int    M_index = 0;
+		arma::uword M_index = 0;
 		double M_select = am_runif(0,1);
-		for (double msum = W_current[M_index] ; M_select > msum ; msum += W_current[M_index++]) {}
+		for (double msum = W_current[M_index] ; (M_select > msum and M_index + 1 < W_current.size()) ; msum += W_current[++M_index]) {
+			VERBOSE_EXTRA("  - Unsatisfied by " << M_index << "with msum = " << msum << " less than " <<  M_select );
+		}
 		return M_index;
 
 
@@ -190,7 +193,9 @@ public:
 
 			auto start_mna = std::chrono::system_clock::now();
 			// ******  update_M_na ******
-			M_na = prior->update_M_na(U_current, K);
+			if ((iter > 0) and (not fixed_clustering)) {//I need this if i want that my inizialization for ci works
+				M_na = prior->update_M_na(U_current, K);
+			}
 			M=K+M_na;
 			auto end_mna = std::chrono::system_clock::now();
 			auto elapsed_mna = end_mna - start_mna;
@@ -238,8 +243,12 @@ public:
 			// thinning
 			if( (iter >= burnin) and ((iter - burnin) % thin == 0) ) {
 				total_saved++;
-				arma::vec Predictive(1);// = this->sample(W_current,1);
-				results->log_output (ci_current,  W_current, Predictive,  U_current, M,  K, this , prior) ;
+
+				VERBOSE_DEBUG("Run the predictive.");
+				arma::vec predictive = this->sample(W_current,1).row(0).t();
+				VERBOSE_DEBUG("Predictive = " << predictive);
+
+				results->log_output (ci_current,  W_current, predictive,  U_current, M,  K, this , prior) ;
 				VERBOSE_ASSERT(total_to_save >= total_saved, "Raffaele was right.");
 				VERBOSE_DEBUG("results->log_output() is done");
 			} else {

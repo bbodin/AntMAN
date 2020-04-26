@@ -28,11 +28,11 @@ class MixtureMultivariateNormal: public MultivariateMixture  {
 public :
 	MixtureMultivariateNormal (const arma::vec & mu0, const double ka0, const unsigned int nu0, const arma::mat & Lam0) : _mu0 (mu0), _ka0 (ka0), _nu0 (nu0), _Lam0  (Lam0){}
 #ifdef HAS_RCPP
-	Rcpp::List get_tau () {
+	Rcpp::List get_tau () const {
 		return Rcpp::List::create(Rcpp::Named("mu") =  _mu_current, Rcpp::Named("Sig") =  _Sig_current  ) ;
 	}
 #else
-	std::string get_tau () {
+	std::string get_tau () const {
 		std::string res = "mu=";
 		res += "mu=[";
 		for (auto e : _mu_current) {res+= std::to_string(e) + ",";}
@@ -100,7 +100,7 @@ public :
 
 
 
-			#pragma omp parallel for num_threads(8) schedule(static, 8) if (this->get_parallel())
+			// #pragma omp parallel for  if (this->get_parallel())  num_threads(8) schedule(static, 8)
 			for (int i=0; i < n; i++) {
 
 				arma::vec pesi(M);
@@ -181,7 +181,6 @@ public :
 					}
 				}
 
-				VERBOSE_DEBUG("I know but does it print ? ");
 
 
 				for(int l=0; l<K;l++){
@@ -207,21 +206,21 @@ public :
 
 					const arma::vec ysum = y_l.size() ? vectorsum(y_l) : arma::zeros(d);
 
-					VERBOSE_DEBUG("ysum =>" << ysum.n_rows << "x" << ysum.n_cols);
-					VERBOSE_DEBUG("++");
+					VERBOSE_EXTRA("ysum =>" << ysum.n_rows << "x" << ysum.n_cols);
+					VERBOSE_EXTRA("++");
 					const double ka0nokon = (ka0 * njl ) / (ka0 + njl);
 
 
 					const arma::vec ybar = (ysum / (double) njl) ; // cast?
 
-					VERBOSE_DEBUG("ybar =>" << ybar.n_rows << "x" << ybar.n_cols);
-					VERBOSE_DEBUG("mu0  =>" << mu0.n_rows << "x" << mu0.n_cols);
+					VERBOSE_EXTRA("ybar =>" << ybar.n_rows << "x" << ybar.n_cols);
+					VERBOSE_EXTRA("mu0  =>" << mu0.n_rows << "x" << mu0.n_cols);
 					const arma::vec ybarminusmu0 = (ybar - mu0);
 					const arma::rowvec ybarminusmu0t = ybarminusmu0.t();
 					const arma::mat  ybarmatmul = ybarminusmu0 * ybarminusmu0t;
 
 					arma::mat S2  = arma::zeros(d, d);
-					VERBOSE_DEBUG("S2 = " << S2);
+					VERBOSE_EXTRA("S2 = " << S2);
 					for (int i = 0 ; i < njl ; i ++) {
 						const arma::vec ylmyb = (y_l[i] - ybar);
 
@@ -229,8 +228,8 @@ public :
 						const arma::rowvec ylmybt = ylmyb.t();
 
 						const arma::mat matmul = ylmyb * ylmybt;
-						VERBOSE_DEBUG("matmul = " << matmul);
-						VERBOSE_DEBUG("S2 = " << S2);
+						VERBOSE_EXTRA("matmul = " << matmul);
+						VERBOSE_EXTRA("S2 = " << S2);
 						S2 =  S2 + matmul;
 					}
 
@@ -241,18 +240,18 @@ public :
 					const arma::mat ka0nokonybarmatmul = ka0nokon * ybarmatmul;
 					const arma::mat Lamn = Lam0 + S2 + ka0nokonybarmatmul;
 
-					VERBOSE_DEBUG("In Alloc: ka0  = " << ka0);
-					VERBOSE_DEBUG("In Alloc: njl  = " << njl);
-					VERBOSE_DEBUG("In Alloc: ka0nokon  = " << ka0nokon);
-					VERBOSE_DEBUG("In Alloc: ybar  = " << (ybar));
-					VERBOSE_DEBUG("In Alloc: mu0  = " << (mu0));
-					VERBOSE_DEBUG("In Alloc: ybarminusmu0t  = " << ybarminusmu0t);
-					VERBOSE_DEBUG("In Alloc: ybarminusmu0  = " << ybarminusmu0);
-					VERBOSE_DEBUG("In Alloc: ybarmatmul  = " << ybarmatmul);
-					VERBOSE_DEBUG("In Alloc: ka0nokonybarmatmul  = " << ka0nokonybarmatmul);
-					VERBOSE_DEBUG("In Alloc: S2  = " << S2);
-					VERBOSE_DEBUG("In Alloc: Lam0  = " << Lam0);
-					VERBOSE_DEBUG("In Alloc: Lamn  = " << Lamn);
+					VERBOSE_EXTRA("In Alloc: ka0  = " << ka0);
+					VERBOSE_EXTRA("In Alloc: njl  = " << njl);
+					VERBOSE_EXTRA("In Alloc: ka0nokon  = " << ka0nokon);
+					VERBOSE_EXTRA("In Alloc: ybar  = " << (ybar));
+					VERBOSE_EXTRA("In Alloc: mu0  = " << (mu0));
+					VERBOSE_EXTRA("In Alloc: ybarminusmu0t  = " << ybarminusmu0t);
+					VERBOSE_EXTRA("In Alloc: ybarminusmu0  = " << ybarminusmu0);
+					VERBOSE_EXTRA("In Alloc: ybarmatmul  = " << ybarmatmul);
+					VERBOSE_EXTRA("In Alloc: ka0nokonybarmatmul  = " << ka0nokonybarmatmul);
+					VERBOSE_EXTRA("In Alloc: S2  = " << S2);
+					VERBOSE_EXTRA("In Alloc: Lam0  = " << Lam0);
+					VERBOSE_EXTRA("In Alloc: Lamn  = " << Lamn);
 					VERBOSE_ASSERT(Lam0.is_sympd(), "In Alloc: rwish requires Lamn to be symmetric. It is not Lamn = " << Lamn);
 
 						const arma::mat Sig_l =  riwish (nun, Lamn) ;
@@ -270,7 +269,7 @@ public :
 
 				}
 
-				VERBOSE_DEBUG("--");
+				VERBOSE_EXTRA("--");
 				// Fill non-allocated
 
 				VERBOSE_ASSERT(Lam0.is_sympd(), "In Alloc: rwish requires Lam0 to be symmetric. It is not Lam0 = " << Lam0);
@@ -300,23 +299,34 @@ public :
 			 //	arma::mat  _mu_current;
 			 //	arma::cube _Sig_current;
 			 //
+			 VERBOSE_EXTRA("sample mvn");
 			 unsigned long n_vars = _mu_current.n_cols;
 
-			 long int selected_M = runif_component(W_current);
+			 arma::uword selected_M = runif_component(W_current);
 
-			 input_t sampling (1,n_vars);
+			 VERBOSE_EXTRA("init res selected_M = " << selected_M << " selected from " << W_current.size() );
 
-			 for (auto current_var = 0 ; current_var < n_vars ; current_var ++ ) {
-				 double mu = _mu_current[selected_M,current_var];
-				 double powsig = pow(_Sig_current[selected_M,current_var],0.5) ;
+			 VERBOSE_EXTRA("init mu0 _mu_current dims = cols:" << _mu_current.n_cols  << " rows:" << _mu_current.n_cols  );
+			 VERBOSE_ASSERT(_mu_current.n_rows > selected_M,
+					 "_mu_current has less values than the number of component, _mu_current dims are cols:"
+					 << _mu_current.n_cols  << " rows:" << _mu_current.n_cols << " while component selected is " << selected_M << " over " << W_current.size() );
+			 arma::rowvec mu0  = _mu_current.row(selected_M); // take row
+			 VERBOSE_EXTRA("init sig0");
+
+			 VERBOSE_ASSERT(_Sig_current.n_slices > selected_M,
+					 "_Sig_current has less values than the number of component, _Sig_current dims are cols:"
+					 << _Sig_current.n_cols  << " rows:" << _Sig_current.n_cols  << " slices:" << _Sig_current.n_slices << " while component selected is " << selected_M << " over " << W_current.size() );
+
+			 arma::mat sig0 = _Sig_current.slice(selected_M);
 
 
-				 double value = am_rnorm (mu,powsig);
-				 sampling(1,current_var) = value;
-
-			 }
-
-			 return sampling;
+			 VERBOSE_EXTRA("run mvrnormArma");
+			 arma::vec res = mvrnormArma (mu0.t(), sig0) ;
+			 VERBOSE_EXTRA("res =  " << res);
+			 input_t output = input_t(1,n_vars);
+			 output.row(0) = res.t();
+			 VERBOSE_EXTRA("output =  " << res);
+			 return output;
 		 }
 };
 

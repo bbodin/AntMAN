@@ -35,7 +35,7 @@ plot(1:length(y_uvn),y_uvn,col=ci_uvn+1)
 ##############################################################################
 
 mixture_uvn_params = AM_mix_hyperparams_uninorm  (m0=0,k0=0.1,nu0=1,sig02=1.5)
-mcmc_params        = AM_mcmc_parameters(niter=20000, burnin=1000, thin=10, verbose=1, output = c("ALL"))
+mcmc_params        = AM_mcmc_parameters(niter=20000, burnin=1000, thin=10, verbose=0, output = c("ALL"))
 components_prior   = AM_mix_components_prior_pois (init=3,  a=1, b=1) 
 weights_prior      = AM_mix_weights_prior_gamma(init=2, a=1, b=1)
 
@@ -55,7 +55,7 @@ summary (uvn_fit)
 ##############################################################################
 
 
-df_uvn = AM_extract(uvn_fit,c("CI","TAU_mu","TAU_sig2","S","U","M","K","MNA","H_gamma","Q_lambda"))
+df_uvn = AM_extract(uvn_fit,c("CI","TAU_mu","TAU_sig2","W","PREDICTIVE","U","M","K","H_gamma","Q_lambda"))
 CI_uvn = AM_extract(uvn_fit,c("CI"))
 
 
@@ -111,7 +111,7 @@ plot(y_mvn,col=ci_mvn+1)
 
 mixture_mvn_params = AM_mix_hyperparams_multinorm   (mu0=c(0,0),ka0=1,nu0=4,Lam0=diag(2))
 
-mcmc_params        = AM_mcmc_parameters(niter=4000, burnin=2000, thin=10, verbose=1, output=c("ALL"))
+mcmc_params        = AM_mcmc_parameters(niter=4000, burnin=2000, thin=10, verbose=0, output=c("ALL"))
 components_prior   = AM_mix_components_prior_pois (init=3,  a=1, b=1) 
 weights_prior      = AM_mix_weights_prior_gamma(init=2, a=1, b=1)
 
@@ -133,7 +133,7 @@ summary (fit_mvn)
 
 
 CI_mvn = AM_extract(fit_mvn,c("CI"))
-df_mvn = AM_extract(fit_mvn,c("TAU_mu","TAU_Sig","S","U","M","K","MNA","H_gamma","Q_lambda"))
+df_mvn = AM_extract(fit_mvn,c("TAU_mu","TAU_Sig","W","U","M","K","H_gamma","Q_lambda"))
 
 
 
@@ -162,7 +162,7 @@ fit_poisson <- AM_mcmc_fit(
 		mix_kernel_hyperparams = AM_mix_hyperparams_unipois (alpha0=2, beta0=0.2),
 		mix_components_prior =AM_mix_components_prior_pois (init=3,  a=1, b=1) ,
 		mix_weight_prior =AM_mix_weights_prior_gamma(init=2, a=1, b=1),
-		mcmc_parameters = AM_mcmc_parameters(niter=2000, burnin=1000, thin=10, verbose=1, output=c("ALL"))
+		mcmc_parameters = AM_mcmc_parameters(niter=2000, burnin=1000, thin=10, verbose=0, output=c("ALL"))
 )
 
 
@@ -172,6 +172,6 @@ fit_poisson <- AM_mcmc_fit(
 ##############################################################################
 
 CI_poisson = AM_extract(fit_poisson,c("CI"))
-df_poisson = AM_extract(fit_poisson,c("TAU_theta","S","U","M","K","MNA","H_gamma","Q_lambda"))
+df_poisson = AM_extract(fit_poisson,c("TAU_theta","W","U","M","K","H_gamma","Q_lambda"))
 
 

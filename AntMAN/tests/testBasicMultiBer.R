@@ -35,7 +35,7 @@ plot(y_mvb,col=ci_mvb+1)
 
 mixture_mvb_params = AM_mix_hyperparams_multiber  (a0= c(1,1,1,1),b0= c(1,1,1,1))
 
-mcmc_params        = AM_mcmc_parameters(niter=2000, burnin=1000, thin=10, verbose=1)
+mcmc_params        = AM_mcmc_parameters(niter=2000, burnin=1000, thin=10, verbose=0, output=c("ALL"))
 components_prior   = AM_mix_components_prior_pois (init=3,  a=1, b=1) 
 weights_prior      = AM_mix_weights_prior_gamma(init=2, a=1, b=1)
 

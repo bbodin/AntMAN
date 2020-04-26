@@ -1,7 +1,6 @@
 ##############################################
 ### Load the AntMan package
 ##############################################
-
 library("AntMAN")
 
 
@@ -21,7 +20,7 @@ plot(1:length(y_uvp),y_uvp,col=ci_uvp+1)
 ##############################################################################
 ### [NEW INTERFACE] PREPARE THE GIBBS for Poisson mixture with poisson dirac priors
 ##############################################################################
-mcmc_params        = AM_mcmc_parameters(niter=2000, burnin=1000, thin=10, verbose=1)
+mcmc_params        = AM_mcmc_parameters(niter=2000, burnin=1000, thin=10, verbose=0, output=c("ALL"))
 mixture_uvp_params = AM_mix_hyperparams_unipois (alpha0=2, beta0=0.2)
 components_prior   = AM_mix_components_prior_dirac (Mstar=5) 
 weights_prior      = AM_mix_weights_prior_gamma(init=2, a=1, b=1)
@@ -37,3 +36,11 @@ fit_poisson_dirac <- AM_mcmc_fit(
 
 summary (fit_poisson_dirac)
 plot (fit_poisson_dirac)
+
+cluster = AM_binder(fit_poisson_dirac)$cluster 
+
+refit = AM_mcmc_refit(y = y_uvp , 
+              fit = fit_poisson_dirac , 
+              fixed_clustering = cluster, 
+              mcmc_parameters = mcmc_params )
+

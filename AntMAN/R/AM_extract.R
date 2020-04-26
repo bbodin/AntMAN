@@ -154,6 +154,7 @@ extract_target = function(fit, target, iterations = NULL, debug = FALSE){
 #'@param object a \code{\link{AM_mcmc_output}} object
 #'@param targets List of variables to extract (ie. K, M, Mna, Tau_mu).
 #'@param iterations Can specify particular iterations to extracts, NULL for all.
+#'@param debug Activate log to 
 #'  
 #'@export
 AM_extract = function(object, targets, iterations = NULL, debug = FALSE){

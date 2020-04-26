@@ -97,7 +97,7 @@ AM_mix_hyperparams_unipois <- function(alpha0, beta0) {
 #'      mixture_uvn_params = AM_mix_hyperparams_uninorm  (m0=20.83146, k0=0.3333333,
 #'                                                        nu0=4.222222, sig02=3.661027)
 #'      
-#'      mcmc_params        = AM_mcmc_parameters(niter=200, burnin=50, thin=10, verbose=1)
+#'      mcmc_params        = AM_mcmc_parameters(niter=200, burnin=50, thin=10, verbose=0)
 #'      components_prior   = AM_mix_components_prior_pois (init=3,  a=1, b=1) 
 #'      weights_prior      = AM_mix_weights_prior_gamma(init=2, a=1, b=1)
 #'      

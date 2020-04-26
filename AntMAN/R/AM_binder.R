@@ -7,14 +7,16 @@
 
 #'  Run the binder algorithm using R (TBD)
 #'  
-#'  TBD
+#'  TBD TODO : need the C version of that.
 #'  
-#'@param C fit CI
-#'@param Const_Binder Const_Binder
+#'@param fit                            Output from MCMC_fit
+#'@param weight                         Weight between bad and good pairs, default is 0.5.
+#'@param with_coclustering_probability  By default this function only return the index of the closest guess. 
+#'                                      When with_coclustering_probability, the function also return the coclustering probability matrix.
 #'  
 #'@export
-AM_binder=function (CI,  weight = 0.5) {
-	
+AM_binder = function (fit,  weight = 0.5, with_coclustering_probability = FALSE) {
+	CI = data.matrix(AM_extract(fit, c("CI")));
 	#Equal costs
 	Const_Binder <- weight
 	
@@ -60,7 +62,9 @@ AM_binder=function (CI,  weight = 0.5) {
 	
 	Binder_ind <- which.max(Binder_f)
 	
-	
-	
-	return (Binder_ind)
+	if (with_coclustering_probability) {
+		return (list(coclustering_probability = pij, clustering = CI[Binder_ind,]));
+	} else {
+		return (list(clustering = CI[Binder_ind,]));
+	}
 }

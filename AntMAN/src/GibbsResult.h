@@ -18,14 +18,14 @@ public :
 	virtual ~GibbsResult() {} ;
 
 	virtual void log_output (
-				 cluster_indices_t& CI,
-				 arma::vec&         W,
-				 arma::vec&         PREDICTIVE,
-				 double             U,
-				 unsigned int       M,
-				 unsigned int       K,
-				 Mixture *          mixture,
-				 Prior *            prior) = 0;
+				 const cluster_indices_t& CI,
+				 const arma::vec&         W,
+				 const arma::vec&         PREDICTIVE,
+				 const double             U,
+				 const unsigned int       M,
+				 const unsigned int       K,
+				 const Mixture *          mixture,
+				 const Prior *            prior) = 0;
 
 
 };
@@ -40,14 +40,14 @@ public:
 	GibbsResultPlain (long int maxsize) : index (0) ,  Ks (maxsize){} ;
 
 	 void log_output (
-			 cluster_indices_t& CI,
-			 arma::vec & W,
-			 arma::vec & PREDICTIVE,
-			 double U,
-			 unsigned int M,
-			 unsigned int K,
-			 Mixture * mixture,
-			 Prior * prior) {
+			 const cluster_indices_t& CI,
+			 const arma::vec & W,
+			 const arma::vec & PREDICTIVE,
+			 const double U,
+			 const unsigned int M,
+			 const unsigned int K,
+			 const Mixture * mixture,
+			 const Prior * prior) {
 		 Ks[index++] = K;
 	 } ;
 
@@ -61,14 +61,14 @@ public:
 	GibbsResultIntoFile (std::string dirname) : _dirname(dirname) {} ;
 
 	 void log_output (
-			 cluster_indices_t& ci_current,
-			 arma::vec & W,
-			 arma::vec & PREDICTIVE,
-			 double U,
-			 unsigned int M,
-			 unsigned int K,
-			 Mixture * mixture,
-			 Prior * prior) ;
+			 const cluster_indices_t& ci_current,
+			 const arma::vec & W,
+			 const arma::vec & PREDICTIVE,
+			 const double U,
+			 const unsigned int M,
+			 const unsigned int K,
+			 const Mixture * mixture,
+			 const Prior * prior) ;
 
 };
 

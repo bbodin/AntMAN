@@ -9,7 +9,6 @@
 
 #include "MixtureMultivariateBinomial.h"
 #include "MixtureMultiVariateNormal.h"
-#include "MixtureUnivariateBernoulli.h"
 #include "MixtureUnivariateNormal.h"
 #include "MixtureUnivariatePoisson.h"
 

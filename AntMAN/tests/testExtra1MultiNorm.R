@@ -56,7 +56,7 @@ n_save <- 1000
 thin <- 1
 niter <- n_burn1 + n_burn2 + n_save * thin
 
-mcmc_params        = AM_mcmc_parameters(niter=niter, burnin=n_burn1 + n_burn2, thin=thin, verbose=1, output = c("ALL"))
+mcmc_params        = AM_mcmc_parameters(niter=niter, burnin=n_burn1 + n_burn2, thin=thin, verbose=0, output = c("ALL"))
 components_prior   = AM_mix_components_prior_pois(Lambda = Lambda)
 weights_prior      = AM_mix_weights_prior_gamma(gamma = gamma_S)
 

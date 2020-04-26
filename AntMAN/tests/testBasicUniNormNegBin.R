@@ -25,7 +25,7 @@ plot(1:length(y_uvn),y_uvn,col=ci_uvn+1)
 
 mixture_uvn_params = AM_mix_hyperparams_uninorm  (m0=0,k0=0.1,nu0=1,sig02=1.5)
 
-mcmc_params        = AM_mcmc_parameters(niter=30000, burnin=5000, thin=100, verbose=1)
+mcmc_params        = AM_mcmc_parameters(niter=30000, burnin=5000, thin=100, verbose=0, output=c("ALL"))
 components_prior   = AM_mix_components_prior_negbin () 
 weights_prior      = AM_mix_weights_prior_gamma(init=2, a=1, b=1)
 

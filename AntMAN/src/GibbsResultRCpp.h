@@ -82,14 +82,14 @@ public:
 	GibbsResultRCpp (int niter, int output_codes)  ;
 
 	 void log_output (
-			 cluster_indices_t& CI,
-			 arma::vec & W,
-			 arma::vec & PREDICTIVE,
-			 double U,
-			 unsigned int M,
-			 unsigned int K,
-			 Mixture * mixture,
-			 Prior * prior) ;
+			 const cluster_indices_t& CI,
+			 const arma::vec & W,
+			 const arma::vec & PREDICTIVE,
+			 const double U,
+			 const unsigned int M,
+			 const unsigned int K,
+			 const Mixture * mixture,
+			 const Prior * prior) ;
 
 
 		Rcpp::List getList () ;

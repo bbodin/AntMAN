@@ -60,12 +60,13 @@ summary.AM_mcmc_configuration = function(object, ...){
 #'@export
 plot.AM_mcmc_output=function(x,...){
 	
+	AM_plot_pairs(x);readline(prompt="Press [enter] to continue")
+	AM_plot_density(x);readline(prompt="Press [enter] to continue")
+	AM_plot_traces(x);readline(prompt="Press [enter] to continue")
+	AM_plot_values(x);readline(prompt="Press [enter] to continue")
+	AM_plot_similarity_matrix(x);readline(prompt="Press [enter] to continue")
+	AM_plot_chaincor(x);
 	
-	AM_plot_pairs(x)
-	AM_plot_density(x)
-	AM_plot_traces(x)
-	AM_plot_values(x)
-	AM_plot_similarity_matrix(x)
 }
 
 
@@ -99,17 +100,16 @@ summary.AM_mcmc_output=function(object,...){
 	cat(" -mix_weight_prior(",list_values(attr(object,'mix_weight_prior')),")\n", sep = "");
 	cat(" -mcmc_parameters(",list_values(attr(object,'mcmc_parameters')),")\n", sep = "");
 	cat("\n - Output of the Gibbs sampler\n\n");
-	cat("    ", "Name", "Mean", "StdDev\n", sep = "\t" );
-
+	cat(sprintf("    %10s%10s%10s%10s\n", "Name", "Mean", "StdDev", "Count"));
+	visible = c("K","M","H","Q")
 	for (item in names(object)) {
-		cat("    ");
-		e = object[[item]]
-		if (is.vector(e)  & !is.list(e)) {
-			cat(item,mean(e),sd(e), sep = "\t");
-		} else {
-			cat(item,"NA","NA", sep = "\t");
+		if (item %in% visible) { 
+			e = unlist(object[[item]])
+			emean = mean(e)
+			esd = sd(e)
+			elen = length(e)
+			cat(sprintf("    %10s%10.2f%10.2f%10d\n", item, emean, esd, elen));
 		}
-		cat("\n");
 	}
 	
 }
@@ -158,7 +158,7 @@ summary.AM_mcmc_output=function(object,...){
 #'@examples
 #' AM_mcmc_fit( AM_sample_unipois()$y, 
 #'              AM_mix_hyperparams_unipois (alpha0=2, beta0=0.2), 
-#'              mcmc_parameters = AM_mcmc_parameters(niter=200, burnin=100, thin=10))
+#'              mcmc_parameters = AM_mcmc_parameters(niter=200, burnin=100, thin=10, verbose=0))
 #'@useDynLib AntMAN
 #'@export
 
@@ -203,6 +203,49 @@ AM_mcmc_fit <- function(
 			mcmc_parameters =mcmc_parameters));
 }
 
+
+#' Performs a Gibbs sampling with fixed clustering and reusing previous configuration
+#' 
+#' Similarly to \code{AM_mcmc_fit}, the \code{AM_mcmc_refit} function performs a Gibbs sampling in order to estimate 
+#' a mixture. However parameter will be reused from a previous result from \code{AM_mcmc_fit}.
+#' 
+#' In practice this function will call	AM_mcmc_fit(y, fixed_clustering = fixed_clustering, ...); with the same parameter as previously
+#' 
+#'
+#'@param y input data, can be a vector or a matrix.
+#'@param fit previous output from \code{AM_mcmc_fit} that is used to setup kernel and priors.
+#'@param fixed_clustering is a vector CI of cluster assignement that will remained unchanged for every iterations.
+#'@param mcmc_parameters is a configuration list defined by AM_mcmc_parameters. 
+#'@return The return value is a \code{\link{AM_mcmc_output}} object.
+#'@examples
+#' y = AM_sample_unipois()$y
+#' fit = AM_mcmc_fit( y , 
+#'              AM_mix_hyperparams_unipois (alpha0=2, beta0=0.2), 
+#'              mcmc_parameters = AM_mcmc_parameters(niter=200, burnin=100, thin=10, verbose=0))
+#' refit = AM_mcmc_refit(y , fit, AM_binder(fit)$cluster , 
+#'         mcmc_parameters = AM_mcmc_parameters(niter=200, burnin=100, thin=10, verbose=0));
+#'@export
+
+AM_mcmc_refit <- function(
+		y, fit,
+		fixed_clustering, 
+		mcmc_parameters = AM_mcmc_parameters() ) {
+	
+	mcp = attr(fit,'mix_components_prior')
+	mwp = attr(fit,'mix_weight_prior')
+	mkh = attr(fit,'mix_kernel_hyperparams')
+	
+	## TODO : check input data size 
+	
+	AM_mcmc_fit(y, 
+				mix_kernel_hyperparams = mkh, 
+				fixed_clustering = fixed_clustering, 
+				mix_components_prior = mcp , 
+				mix_weight_prior = mwp, 
+				mcmc_parameters = mcmc_parameters );
+	
+}
+
 #################################################################################
 ##### AM_mcmc_parameters function
 #################################################################################
@@ -230,7 +273,7 @@ AM_mcmc_fit <- function(
 #'@return AM_mcmc_configuration Object, this is a list to be used as \code{mcmc_parameters} argument with \code{AM_mcmc_fit}. 
 #'@examples 
 #' AM_mcmc_parameters (niter=1000, burnin=10000, thin=50)
-#' AM_mcmc_parameters (niter=1000, burnin=10000, thin=50, output=c("CI","S","TAU"))
+#' AM_mcmc_parameters (niter=1000, burnin=10000, thin=50, output=c("CI","W","TAU"))
 #'@export
 AM_mcmc_parameters <- function(  niter=5000,
 		burnin=2500, ## niter / 2
