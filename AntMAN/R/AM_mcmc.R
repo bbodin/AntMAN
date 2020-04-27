@@ -158,7 +158,7 @@ summary.AM_mcmc_output=function(object,...){
 #'@examples
 #' AM_mcmc_fit( AM_sample_unipois()$y, 
 #'              AM_mix_hyperparams_unipois (alpha0=2, beta0=0.2), 
-#'              mcmc_parameters = AM_mcmc_parameters(niter=200, burnin=100, thin=10, verbose=0))
+#'              mcmc_parameters = AM_mcmc_parameters(niter=50, burnin=0, thin=1, verbose=0))
 #'@useDynLib AntMAN
 #'@export
 
@@ -221,9 +221,9 @@ AM_mcmc_fit <- function(
 #' y = AM_sample_unipois()$y
 #' fit = AM_mcmc_fit( y , 
 #'              AM_mix_hyperparams_unipois (alpha0=2, beta0=0.2), 
-#'              mcmc_parameters = AM_mcmc_parameters(niter=200, burnin=100, thin=10, verbose=0))
+#'              mcmc_parameters = AM_mcmc_parameters(niter=20, burnin=0, thin=1, verbose=0))
 #' refit = AM_mcmc_refit(y , fit, AM_binder(fit)$cluster , 
-#'         mcmc_parameters = AM_mcmc_parameters(niter=200, burnin=100, thin=10, verbose=0));
+#'         mcmc_parameters = AM_mcmc_parameters(niter=20, burnin=0, thin=1, verbose=0));
 #'@export
 
 AM_mcmc_refit <- function(
@@ -290,4 +290,8 @@ AM_mcmc_parameters <- function(  niter=5000,
 					output_dir=output_dir), class = "AM_mcmc_configuration") );
 	
 }
+
+
+
+
 

@@ -1,5 +1,5 @@
 
-#include "GibbsResultRCpp.h"
+
 #include "Mixtures.h"
 #include "Priors.h"
 #include "utils.h"
@@ -351,6 +351,45 @@ Prior* gen_prior (Rcpp::List mix_components_prior, Rcpp::List  mix_weight_prior 
 
 
 
+Rcpp::List getList (AntMANLogger& logger) {
+
+	VERBOSE_INFO("Run getList");
+
+	std::vector<std::string> names = logger.getNames();
+
+	Rcpp::List my_list(names.size());
+	my_list.attr("names") = names;
+
+	int cnt = 0;
+	for (auto name : names) {
+		if (logger.haslog(name)) {
+			switch (logger.getlogtype(name)) {
+			case AntMANType::AM_INT : my_list[cnt++] = logger.getlog<int>(name) ; break;
+			case AntMANType::AM_UINT : my_list[cnt++] = logger.getlog<unsigned int>(name) ; break;
+			case AntMANType::AM_DOUBLE : my_list[cnt++] = logger.getlog<double>(name) ; break;
+			case AntMANType::AM_ARMA_VEC : my_list[cnt++] = logger.getlog<arma::vec>(name) ; break;
+			case AntMANType::AM_ARMA_MAT : my_list[cnt++] = logger.getlog<arma::mat>(name) ; break;
+			case AntMANType::AM_ARMA_CUBE : my_list[cnt++] = logger.getlog<arma::cube>(name) ; break;
+			case AntMANType::AM_ARMA_IVEC : my_list[cnt++] = logger.getlog<arma::ivec>(name) ; break;
+			case AntMANType::AM_ARMA_IMAT : my_list[cnt++] = logger.getlog<arma::imat>(name) ; break;
+			case AntMANType::AM_ARMA_ICUBE : my_list[cnt++] = logger.getlog<arma::icube>(name) ; break;
+			case AntMANType::AM_VEC_DOUBLE : my_list[cnt++] = logger.getlog<std::vector<double>>(name) ; break;
+			default :
+				VERBOSE_ERROR("Unsupported type!");
+			}
+
+
+
+		}
+	}
+
+	VERBOSE_INFO("Finish getList");
+
+	return my_list;
+
+
+
+}
 
 
 // INTERNAL FUNCTION - No DOCUMENTATION, Please only use AM_ refixed function.
@@ -413,9 +452,7 @@ Rcpp::List IAM_mcmc_fit (
 
 
 	std::vector<std::string> output_list = Rcpp::as<std::vector<std::string>>(mcmc_parameters["output"]);
-	int output_codes = AM_GENERATOR_OUTPUT_CODE(output_list);
-	VERBOSE_INFO ("- size(mcmc_parameters[output]) = " << output_list.size());
-	VERBOSE_INFO ("- output_codes = " << output_codes);
+
 
 	unsigned long niter  = mcmc_parameters["niter"];
 	unsigned long burnin = mcmc_parameters["burnin"];
@@ -428,8 +465,9 @@ Rcpp::List IAM_mcmc_fit (
 	VERBOSE_ASSERT(thin  > 0, "Please keep thin > 0.");
 
 	VERBOSE_INFO(" - Stored observations " << stored);
-	GibbsResultRCpp res (  (niter - burnin)  / thin ,output_codes);
+	//GibbsResultRCpp res (  (niter - burnin)  / thin ,output_codes);
 
+	AntMANLogger res(output_list, (niter - burnin)  / thin);
 	if (Rcpp::is<Rcpp::NumericMatrix>(y) || Rcpp::is<Rcpp::IntegerMatrix>(y)) {
 		VERBOSE_ASSERT (is_multivariate(mix_kernel_hyperparams), "y argument is a Matrix while the technique is not MultiVariate.") ;
 
@@ -438,7 +476,7 @@ Rcpp::List IAM_mcmc_fit (
 				prior ,
 				niter ,burnin ,thin , parallel, &res );
 		VERBOSE_INFO("End of Gibbs");
-		return res.getList();
+		return getList(res);
 
 	}  else if(Rcpp::is<Rcpp::NumericVector>(y) || Rcpp::is<Rcpp::IntegerVector>(y)){
 		VERBOSE_INFO ("-  Rcpp::as<arma::vec>(y).n_rows = " << Rcpp::as<arma::vec>(y).n_rows);
@@ -447,7 +485,7 @@ Rcpp::List IAM_mcmc_fit (
 				niter ,burnin ,thin,   parallel, &res );
 
 		VERBOSE_INFO("End of Gibbs");
-		return res.getList();
+		return getList(res);
 	} else {
 		VERBOSE_ERROR("The parameter y must be a Matrix or a Vector.");
 	}

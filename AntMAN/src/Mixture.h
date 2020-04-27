@@ -10,9 +10,9 @@
 #include <map>
 #include <iomanip>
 
-#include "GibbsResult.h"
 #include "Prior.h"
 #include "utils.h"
+#include "AntMANLogger.h"
 
 
 class allocation_result {
@@ -31,11 +31,11 @@ public :
 class Mixture {
 public :
 	virtual             ~Mixture() {};
-#ifdef HAS_RCPP
-	virtual Rcpp::List  get_tau  () const = 0;
-#else
-	virtual std::string  get_tau  () const = 0;
-#endif
+
+	virtual void  get_tau  (AntMANLogger& ) const = 0;
+
+
+
 private :
 	bool _parallel;
 protected :
@@ -94,7 +94,9 @@ public:
 			const unsigned long  burnin ,
 			const unsigned long  thin,
 			bool parallel,
-			GibbsResult * results) {
+			AntMANLogger* logger) {
+
+		//AntMANLogger logger(niter);
 
 		VERBOSE_ASSERT(niter > burnin, "Please use a total iteration number greater then burnin.");
 		VERBOSE_ASSERT(thin  > 0     , "Please make sure to have thin > 0.");
@@ -249,7 +251,17 @@ public:
 				input_t predictive = this->sample(W_current,1).row(0).t();
 				VERBOSE_DEBUG("Predictive = " << predictive);
 
-				results->log_output (ci_current,  W_current, predictive,  U_current, M,  K, this , prior) ;
+				//   this , prior
+				logger->addlog("K", K);
+				logger->addlog("M", M);
+				logger->addlog("U", U_current);
+				logger->addlog("CI", ci_current);
+				logger->addlog("W", W_current);
+				logger->addlog("YPRED", predictive);
+				this->get_tau(*logger);
+				prior->get_h()->get_values(*logger);
+				prior->get_q()->get_values(*logger);
+				//results->log_output (ci_current,  W_current, predictive,  U_current, M,  K, this , prior) ;
 				VERBOSE_ASSERT(total_to_save >= total_saved, "Raffaele was right.");
 				VERBOSE_DEBUG("results->log_output() is done");
 			} else {

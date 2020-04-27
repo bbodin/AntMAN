@@ -8,6 +8,7 @@
 #define ANTMAN_SRC_PRIORNEGATIVEBINOMIAL_H_
 
 
+#include "AntMANLogger.h"
 #include "math_utils.h"
 #include "Prior.h"
 #include "utils.h"
@@ -90,11 +91,13 @@ public:
 		return(out);
 	}
 
-#ifdef HAS_RCPP
-	virtual const Rcpp::List get_Rcpp_list () const  {
-		return Rcpp::List::create(Rcpp::Named("R") = this->R.value , Rcpp::Named("P") = this->P.value ) ;
-	};
-#endif
+
+	void get_values (AntMANLogger& logger) const {
+		logger.addlog("R", this->R.value);
+		logger.addlog("P", this->P.value);
+	}
+
+
 	void update (const  double U, const  int K, const gamma_h_param_t <negative_binomial_gamma_q_param_t>& h_param) {
 
 			// Metropolis-Hasting for R_M

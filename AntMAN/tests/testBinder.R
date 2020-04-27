@@ -1,6 +1,9 @@
-##############################################
-### Load the AntMan package
-##############################################
+# TODO: Add comment
+# 
+# Author: Bruno
+###############################################################################
+
+
 library("AntMAN")
 
 
@@ -13,8 +16,6 @@ demo_univariate_poisson <-AM_sample_unipois(n=1000,pro=c(0.2,0.5,0.3),mth=c(5,25
 y_uvp  <- demo_univariate_poisson$y
 ci_uvp <- demo_univariate_poisson$ci
 
-hist(y_uvp,freq=FALSE,nclass=15,col=colors()[4])
-plot(1:length(y_uvp),y_uvp,col=ci_uvp+1)
 
 
 ##############################################################################
@@ -27,19 +28,17 @@ weights_prior      = AM_mix_weights_prior_gamma(init=2, a=1, b=1)
 init_ci_uvp <- 0:(length(y_uvp)-1);
 
 fit_poisson_dirac <- AM_mcmc_fit(
-       			y = y_uvp, init_K=1,
-                        mix_kernel_hyperparams = mixture_uvp_params,
-                        mix_components_prior =components_prior,
-                        mix_weight_prior = weights_prior,
-                        mcmc_parameters = mcmc_params)
+		y = y_uvp, init_K=1,
+		mix_kernel_hyperparams = mixture_uvp_params,
+		mix_components_prior =components_prior,
+		mix_weight_prior = weights_prior,
+		mcmc_parameters = mcmc_params)
 
 
-summary (fit_poisson_dirac)
-plot (fit_poisson_dirac)
+binder_result = AM_binder(fit_poisson_dirac , with_coclustering_probability=TRUE)
 
-cluster = AM_binder(fit_poisson_dirac)$cluster 
+cluster                    = binder_result[["clustering"]]
+coclustering_probability   = binder_result[["coclustering_probability"]]
 
-refit = AM_mcmc_refit(y = y_uvp , 
-              fit = fit_poisson_dirac , 
-              fixed_clustering = cluster, 
-              mcmc_parameters = mcmc_params )
+stopifnot(is.vector(cluster))
+stopifnot(is.matrix(coclustering_probability))

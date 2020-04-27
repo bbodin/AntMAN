@@ -41,7 +41,7 @@ r <- 1
 p <- 0.8571
 gam_nb= AM_find_gamma_NegBin(n,r,p,Kstar=6, gam_min=0.001,gam_max=10000, tolerance=0.1)
 prior_K_nb= AM_prior_K_NegBin(n,gam_nb, r, p)
-prior_K_nb\%*\%1:n
+prior_K_nb\\\%*\\\%1:n
 }
 \keyword{cluster}
 \keyword{number}

@@ -282,3 +282,36 @@ AM_emp_bayes_uninorm <- function(y,scEmu=1,scEsig2=3,CVsig2=3){
 
 
 
+
+#' AM_mcmc_neff MCMC Parameters
+#' 
+#' TBD
+#' 
+#'@param  unichain  TBD
+#'@return TBD
+#'@export
+### Provo a calcolare l'effective sample size
+AM_mcmc_neff <- function(unichain){ # Using 11.5 of Bayesian Data Analysis
+	
+	## TODO: Compare with this : 
+	#library(coda)
+	#effectiveSize(mcmc(unichain))
+	
+	
+	# Dunson Ventari Rubin Section 11.5
+	# Whit rho estimated using the acf function of R
+	G <- length(unichain)
+	
+	rho=acf(unichain,lag.max=G)$acf
+	
+	differenza  <- rho[1:(G-1)]+rho[2:(G)]
+	wh_neg=which(differenza<0)
+	
+	TT=min(wh_neg)
+	
+	if( TT%%2!=1){TT= TT+1}
+	denom=1+2*sum(rho[2:(TT)])
+	
+	return(G/denom)
+}
+

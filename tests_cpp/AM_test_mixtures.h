@@ -21,6 +21,20 @@
 #include "../AntMAN/src/Priors.h"
 #include "../AntMAN/src/verbose.h"
 
+std::string getString (AntMANLogger& logger) {
+	 std::ostringstream outputstr;
+	std::vector<std::string> names = {};
+	int total = 0;
+
+	if (logger.haslog("CI")) {total++;names.push_back("CI");}
+	if (logger.haslog("CI")) {outputstr << "Size of CI vector = " << logger.getlog<cluster_indices_t>("CI").size() << std::endl ;}
+
+
+	return outputstr.str();
+
+
+
+}
 
 void test_Mixture_MultivariateNormal (long niter, long burnin, long thin) {
 	static const arma::mat y_mvn = {
@@ -88,16 +102,14 @@ void test_Mixture_MultivariateNormal (long niter, long burnin, long thin) {
 	MixtureMultivariateNormal * mixture = new MixtureMultivariateNormal ((arma::vec){0,0}, 1, 4, arma::eye(2,2));
 	cluster_indices_t initial_clustering  = arma::regspace<arma::ivec>(0,  y_mvn.n_rows -1);
 
-	GibbsResultPlain * GRP = new  GibbsResultPlain ((niter - burnin) / thin);
-
-		auto start_gibbs           = std::chrono::system_clock::now();
-		mixture->fit(y_mvn , initial_clustering, false, prior , niter ,burnin ,thin , false , GRP);
-		auto end_gibbs             = std::chrono::system_clock::now();
-		auto elapsed_gibbs         = end_gibbs - start_gibbs;
-		auto total_gibbs           = elapsed_gibbs.count() / 1000000.0;
-
-		COUT_STREAM << "Average K = " << arma::mean(GRP->K()) << std::endl;
-		COUT_STREAM << "Total time: " << total_gibbs << "ms"  << std::endl ;
+	AntMANLogger logger (std::vector<std::string>(), (niter - burnin) / thin );
+	auto start_gibbs           = std::chrono::system_clock::now();
+	mixture->fit(y_mvn , initial_clustering, false, prior , niter ,burnin ,thin , false , &logger);
+	auto end_gibbs             = std::chrono::system_clock::now();
+	auto elapsed_gibbs         = end_gibbs - start_gibbs;
+	auto total_gibbs           = elapsed_gibbs.count() / 1000000.0;
+	VERBOSE_INFO ( getString (logger)) ;
+	COUT_STREAM << "Total time: " << total_gibbs << "ms"  << std::endl ;
 }
 
 
@@ -115,10 +127,10 @@ void test_Mixture_UnivariateNormal(long niter, long burnin, long thin) {
 	PriorPoisson *prior = new PriorPoisson(poisson_gamma_h_param_t(2,1,1,0.00001),poisson_gamma_q_param_t(3,1,1));
 	MixtureUnivariateNormal * mixture = new MixtureUnivariateNormal (20.83146, 0.3333333, 4.222222, 3.661027);
 	cluster_indices_t initial_clustering (y_uvn.size());
-	GibbsResultPlain * GRP = new  GibbsResultPlain ((niter - burnin) / thin);
+	AntMANLogger * logger = new AntMANLogger(std::vector<std::string>(), (niter - burnin) / thin );
 
 	auto start_gibbs           = std::chrono::system_clock::now();
-	mixture->fit(y_uvn , initial_clustering, false, prior , niter ,burnin ,thin , false , GRP);
+	mixture->fit(y_uvn , initial_clustering, false, prior , niter ,burnin ,thin , false , logger);
 	auto end_gibbs             = std::chrono::system_clock::now();
 	auto elapsed_gibbs         = end_gibbs - start_gibbs;
 	auto total_gibbs           = elapsed_gibbs.count() / 1000000.0;
@@ -140,10 +152,10 @@ void test_Mixture_UnivariatePoisson(long niter, long burnin, long thin) {
 	PriorPoisson *prior = new PriorPoisson(poisson_gamma_h_param_t(2,1,1,0.00001),poisson_gamma_q_param_t(3,1,1));
 	MixtureUnivariatePoisson * mixture = new MixtureUnivariatePoisson (2, 0.2);
 	cluster_indices_t initial_clustering (y_uvn.size());
-	GibbsResultPlain * GRP = new  GibbsResultPlain ((niter - burnin) / thin);
+	AntMANLogger * logger = new AntMANLogger(std::vector<std::string>(), (niter - burnin) / thin );
 
 	auto start_gibbs           = std::chrono::system_clock::now();
-	mixture->fit(y_uvn , initial_clustering, false, prior , niter ,burnin ,thin , false , GRP);
+	mixture->fit(y_uvn , initial_clustering, false, prior , niter ,burnin ,thin , false , logger);
 	auto end_gibbs             = std::chrono::system_clock::now();
 	auto elapsed_gibbs         = end_gibbs - start_gibbs;
 	auto total_gibbs           = elapsed_gibbs.count() / 1000000.0;
@@ -284,12 +296,12 @@ b0.fill(1);
 
 PriorPoisson *priormvb = new PriorPoisson(poisson_gamma_h_param_t(2,1,1,0.00001),poisson_gamma_q_param_t(5,10,2));
 MixtureMultivariateBinomial * mixturemvb = new MixtureMultivariateBinomial (a0,b0);
-GibbsResultPlain * GRP = new  GibbsResultPlain ((niter - burnin) / thin);
+AntMANLogger * logger = new AntMANLogger(std::vector<std::string>(), (niter - burnin) / thin );
 
 cluster_indices_t initial_clusteringmvb (carcinoma.n_rows,1);
 
 auto start_gibbs           = std::chrono::system_clock::now();
-mixturemvb->fit(carcinoma , initial_clusteringmvb, false, priormvb , niter,  burnin,  thin, false, GRP);
+mixturemvb->fit(carcinoma , initial_clusteringmvb, false, priormvb , niter,  burnin,  thin, false, logger);
 auto end_gibbs             = std::chrono::system_clock::now();
 auto elapsed_gibbs         = end_gibbs - start_gibbs;
 auto total_gibbs           = elapsed_gibbs.count() / 1000000.0;

@@ -9,7 +9,7 @@ AM_extract(object, targets, iterations = NULL, debug = FALSE)
 \arguments{
 \item{object}{a \code{\link{AM_mcmc_output}} object}
 
-\item{targets}{List of variables to extract (ie. K, M, Mna, Tau_mu).}
+\item{targets}{List of variables to extract (ie. K, M, Mna, mu).}
 
 \item{iterations}{Can specify particular iterations to extracts, NULL for all.}
 

@@ -7,9 +7,9 @@
 #ifndef ANTMAN_SRC_MIXTUREMULTIVARIATEBERNOULLI_HPP_
 #define ANTMAN_SRC_MIXTUREMULTIVARIATEBERNOULLI_HPP_
 
-
 #include "math_utils.h"
 #include "Mixture.h"
+#include "AntMANLogger.h"
 
 class MixtureMultivariateBinomial: public MultivariateMixture  {
 
@@ -23,18 +23,11 @@ class MixtureMultivariateBinomial: public MultivariateMixture  {
 public :
 	MixtureMultivariateBinomial (const arma::vec  a0, const arma::vec  b0) :  _mb(a0.size(), arma::fill::ones), _a0 (a0), _b0 (b0) {}
 	//Mixture_MultivariateBernoulli (const arma::vec  a0, const arma::vec  b0, const arma::vec  mb) :  _mb(mb), _a0 (a0), _b0 (b0) {}
-#ifdef HAS_RCPP
-	Rcpp::List get_tau () const {
-		return Rcpp::List::create(Rcpp::Named("theta") = _theta ) ;
+
+	void get_tau (AntMANLogger& logger) const {
+			logger.addlog("theta", _theta);
 	}
-#else
-	std::string get_tau () const {
-		std::string res = "theta=[";
-		for (auto e : _theta) res += e;
-		res += "]";
-		return res;
-	}
-#endif
+
 	virtual void init_tau (const input_t & y, const int M) {
 
 		VERBOSE_DEBUG(" init_tau (const input_t & y, const int M)");

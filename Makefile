@@ -56,7 +56,7 @@ build_test/Makefile :  ${H_FILES} ${C_FILES} CMakeLists.txt
 	mkdir -p build_test
 	cmake -S . -B build_test
 test : build_test/Makefile
-	+make -C build_test all test
+	+make -C build_test CTEST_OUTPUT_ON_FAILURE=1 all test
 	
 deps :
 	echo "To be defined."

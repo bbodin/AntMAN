@@ -10,6 +10,7 @@
 
 #include "math_utils.h"
 #include "Prior.h"
+#include "AntMANLogger.h"
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -17,11 +18,11 @@ class dirac_gamma_q_param_t : public q_param_t {
 public:
 	int Mstar;
 	dirac_gamma_q_param_t (int Mstar) :  Mstar (Mstar){}
-#ifdef HAS_RCPP
-	virtual const Rcpp::List get_Rcpp_list () const  {
-		return Rcpp::List::create() ;
-	};
-#endif
+	void get_values(AntMANLogger& logger) const {
+	}
+
+
+
 	void update (const  double U, const  int K, const gamma_h_param_t <dirac_gamma_q_param_t>& h_param) {
 		return;
 	}

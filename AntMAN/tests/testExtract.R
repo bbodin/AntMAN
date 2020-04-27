@@ -55,7 +55,7 @@ summary (uvn_fit)
 ##############################################################################
 
 
-df_uvn = AM_extract(uvn_fit,c("CI","TAU_mu","TAU_sig2","W","PREDICTIVE","U","M","K","H_gamma","Q_lambda"))
+df_uvn = AM_extract(uvn_fit,c("CI","mu","sig2","W","PREDICTIVE","U","M","K","gamma","lambda"))
 CI_uvn = AM_extract(uvn_fit,c("CI"))
 
 
@@ -133,7 +133,7 @@ summary (fit_mvn)
 
 
 CI_mvn = AM_extract(fit_mvn,c("CI"))
-df_mvn = AM_extract(fit_mvn,c("TAU_mu","TAU_Sig","W","U","M","K","H_gamma","Q_lambda"))
+df_mvn = AM_extract(fit_mvn,c("mu","Sig","W","U","M","K","gamma","lambda"))
 
 
 
@@ -172,6 +172,6 @@ fit_poisson <- AM_mcmc_fit(
 ##############################################################################
 
 CI_poisson = AM_extract(fit_poisson,c("CI"))
-df_poisson = AM_extract(fit_poisson,c("TAU_theta","W","U","M","K","H_gamma","Q_lambda"))
+df_poisson = AM_extract(fit_poisson,c("theta","W","U","M","K","gamma","lambda"))
 
 

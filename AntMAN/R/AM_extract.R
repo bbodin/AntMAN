@@ -9,8 +9,16 @@
 generate_column_names = function(target, r) {
 	values = NULL;
 	
-	for (i in r) {
-		values = append( values ,  sprintf ( "%s_%d", target , i) );
+	if (length(r) == 1) {
+		
+		values = append( values ,  sprintf ( "%s", target ) );
+	
+	} else {
+	
+		for (i in r) {
+			values = append( values ,  sprintf ( "%s_%d", target , i) );
+		}	
+		
 	}
 	return (values);
 }
@@ -152,7 +160,7 @@ extract_target = function(fit, target, iterations = NULL, debug = FALSE){
 #'  AM_mcmc_output object.
 #'  
 #'@param object a \code{\link{AM_mcmc_output}} object
-#'@param targets List of variables to extract (ie. K, M, Mna, Tau_mu).
+#'@param targets List of variables to extract (ie. K, M, Mna, mu).
 #'@param iterations Can specify particular iterations to extracts, NULL for all.
 #'@param debug Activate log to 
 #'  

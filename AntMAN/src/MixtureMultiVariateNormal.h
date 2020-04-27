@@ -27,22 +27,12 @@ class MixtureMultivariateNormal: public MultivariateMixture  {
 
 public :
 	MixtureMultivariateNormal (const arma::vec & mu0, const double ka0, const unsigned int nu0, const arma::mat & Lam0) : _mu0 (mu0), _ka0 (ka0), _nu0 (nu0), _Lam0  (Lam0){}
-#ifdef HAS_RCPP
-	Rcpp::List get_tau () const {
-		return Rcpp::List::create(Rcpp::Named("mu") =  _mu_current, Rcpp::Named("Sig") =  _Sig_current  ) ;
+
+	void get_tau (AntMANLogger& logger) const {
+		logger.addlog("mu", _mu_current);
+		logger.addlog("Sig", _Sig_current);
 	}
-#else
-	std::string get_tau () const {
-		std::string res = "mu=";
-		res += "mu=[";
-		for (auto e : _mu_current) {res+= std::to_string(e) + ",";}
-		res += "] ";
-		res += "Sig=[";
-		for (auto e : _Sig_current) {res+= std::to_string(e) + ",";}
-		res += "] ";
-		return res;
-	}
-#endif
+
 	virtual void init_tau (const input_t & y, const int M){
 
 		VERBOSE_DEBUG(" init_tau (const input_t & y, const int M)");
@@ -100,7 +90,7 @@ public :
 
 
 
-			// #pragma omp parallel for  if (this->get_parallel())  num_threads(8) schedule(static, 8)
+			#pragma omp parallel for  if (this->get_parallel())  num_threads(8) schedule(static, 8)
 			for (int i=0; i < n; i++) {
 
 				arma::vec pesi(M);

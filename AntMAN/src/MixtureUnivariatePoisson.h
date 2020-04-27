@@ -21,18 +21,11 @@ class MixtureUnivariatePoisson : public UnivariateMixture {
 
 public :
 	MixtureUnivariatePoisson (const double alpha0, const double beta0) : _alpha0 (alpha0), _beta0 (beta0) {}
-#ifdef HAS_RCPP
-	Rcpp::List get_tau () const {
-		return Rcpp::List::create(Rcpp::Named("theta") = _theta ) ;
+
+	void get_tau (AntMANLogger& logger) const {
+			logger.addlog("theta", _theta);
 	}
-#else
-	std::string get_tau () const {
-		std::string res = "theta=[";
-		for (auto e : _theta) res += e;
-		res += "]";
-		return res;
-	}
-#endif
+
 	void init_tau (const input_t & y, const int M) {
 		const double beta0 = _alpha0;
 		const double alpha0 = _beta0;

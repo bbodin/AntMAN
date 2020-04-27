@@ -9,22 +9,19 @@
 
 #include "math_utils.h"
 #include "utils.h"
+#include "AntMANLogger.h"
 // --------------------------------------------------------------------------------------------------------------------
 
 
 class h_param_t {
 public:
-#ifdef HAS_RCPP
-	virtual const Rcpp::List get_Rcpp_list () const  = 0;
-#endif
+	virtual void get_values(AntMANLogger&) const = 0;
 	virtual ~h_param_t() {};
 };
 
 class q_param_t {
 public:
-#ifdef HAS_RCPP
-	virtual const Rcpp::List get_Rcpp_list () const  = 0;
-#endif
+	virtual void get_values(AntMANLogger&) const = 0;
 	virtual ~q_param_t() {};
 };
 
@@ -38,11 +35,11 @@ public:
 	gamma_h_param_t (double gamma, double a, double b, double lsd) : gamma_is_fixed (false), gamma (gamma) , a(a), b(b), lsd(lsd), lsd_g(1) {}
 	gamma_h_param_t (              double a, double b, double lsd) : gamma_is_fixed (false), gamma (am_rgamma(a,b)) , a(a), b(b), lsd(lsd), lsd_g(1) {}
 	gamma_h_param_t (double gamma) : gamma_is_fixed (true), gamma (gamma), a(0), b(0), lsd(0), lsd_g(1)  {}
-#ifdef HAS_RCPP
-	virtual const Rcpp::List get_Rcpp_list () const  {
-		return Rcpp::List::create(Rcpp::Named("gamma") = this->gamma ) ;
-	};
-#endif
+
+
+	void get_values(AntMANLogger& logger) const {
+		logger.addlog("gamma" , this->gamma);
+	}
 
 
 	void update (const  double U, const  int K, const std::vector<int> &nj , const  Q_t& q_param) {

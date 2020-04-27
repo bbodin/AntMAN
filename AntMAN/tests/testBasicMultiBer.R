@@ -48,5 +48,3 @@ fit <- AM_mcmc_fit(
 
 summary (fit)
 plot (fit)
-
-1
