@@ -175,7 +175,7 @@ AM_extract = function(object, targets, iterations = NULL, debug = FALSE){
 			## CI Extractor
 			nrows = length(object$CI)
 			ncols = length(object$CI[[1]])
-			tmp = data.frame(array(as.numeric(unlist(object$CI)), dim=c(nrows, ncols)))
+			tmp = data.frame(t(array(as.numeric(unlist(object$CI)), dim=c(ncols,nrows))))
 			names(tmp) <- generate_column_names(target,c(1:ncols));
 			if (!is.null(iterations)) {
 				tmp = tmp[iterations,];
