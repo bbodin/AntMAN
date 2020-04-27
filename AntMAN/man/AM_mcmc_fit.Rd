@@ -57,5 +57,5 @@ If \code{init_K} is specified then AntMAN initialises the clustering through K-m
 \examples{
 AM_mcmc_fit( AM_sample_unipois()$y, 
              AM_mix_hyperparams_unipois (alpha0=2, beta0=0.2), 
-             mcmc_parameters = AM_mcmc_parameters(niter=200, burnin=100, thin=10, verbose=0))
+             mcmc_parameters = AM_mcmc_parameters(niter=50, burnin=0, thin=1, verbose=0))
 }

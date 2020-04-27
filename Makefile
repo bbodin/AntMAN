@@ -6,7 +6,7 @@ R_CMD := R -q
 
 PACKAGE_VERSION=1.0.2
 
-all : AntMAN.Rinstall/AntMAN/libs/AntMAN.so  AntMAN.pdf 
+all : build_test/test_mixtures AntMAN.Rinstall/AntMAN/libs/AntMAN.so  AntMAN.pdf 
 
 docker : Dockerfile
 	mkdir -p docker_share
@@ -55,6 +55,8 @@ build_test/Makefile :  ${H_FILES} ${C_FILES} CMakeLists.txt
 	rm -rf build_test 
 	mkdir -p build_test
 	cmake -S . -B build_test
+build_test/test_mixtures : build_test/Makefile
+	+make -C build_test 
 test : build_test/Makefile
 	+make -C build_test CTEST_OUTPUT_ON_FAILURE=1 all test
 	

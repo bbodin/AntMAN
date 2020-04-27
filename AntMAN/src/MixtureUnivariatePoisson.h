@@ -11,7 +11,7 @@
 #include "math_utils.h"
 #include "Mixture.h"
 
-class MixtureUnivariatePoisson : public UnivariateMixture {
+class MixtureUnivariatePoisson : public UnivariateIntegerMixture {
 
 	// ParametricPrior
 	double _alpha0, _beta0;

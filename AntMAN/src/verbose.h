@@ -9,7 +9,6 @@
 
 #include <iostream>
 
-#define VERBOSE_BINARY
 
 inline int VERBOSE_LEVEL(int nv = -1) {
 	static int v = 0;

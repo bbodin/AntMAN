@@ -11,7 +11,7 @@
 #include "Mixture.h"
 #include "AntMANLogger.h"
 
-class MixtureMultivariateBinomial: public MultivariateMixture  {
+class MixtureMultivariateBinomial: public MultivariateIntegerMixture  {
 
 	// Parametric Prior
 	arma::vec      _mb;
@@ -145,7 +145,7 @@ public :
 				std::vector<int> & which_ind=clusters_indices [ci_star[l]];
 
 				//Prepare the variable that will contain the data in the cluster
-				std::vector <arma::vec>  y_l (nj[l]);
+				std::vector <arma::ivec>  y_l (nj[l]);
 				//Separate the data in each cluster and rename the cluster
 				for(int it=0;it<nj[l];it++){
 					y_l[it]=y.row(which_ind[it]).t();
@@ -168,7 +168,7 @@ public :
 
 
 				//First compute the posterior parameters
-				const arma::vec ysum = y_l.size() ? vectorsum(y_l) : arma::zeros(d);
+				const arma::ivec ysum = y_l.size() ? vectorsum<arma::ivec>(y_l) : arma::zeros<arma::ivec>(d);
 
 				const arma::vec an = a0 + ysum;
 				const arma::vec bn = njvec % mb  - ysum + b0; // remove mb

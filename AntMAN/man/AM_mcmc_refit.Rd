@@ -29,7 +29,7 @@ In practice this function will call	AM_mcmc_fit(y, fixed_clustering = fixed_clus
 y = AM_sample_unipois()$y
 fit = AM_mcmc_fit( y , 
              AM_mix_hyperparams_unipois (alpha0=2, beta0=0.2), 
-             mcmc_parameters = AM_mcmc_parameters(niter=200, burnin=100, thin=10, verbose=0))
+             mcmc_parameters = AM_mcmc_parameters(niter=20, burnin=0, thin=1, verbose=0))
 refit = AM_mcmc_refit(y , fit, AM_binder(fit)$cluster , 
-        mcmc_parameters = AM_mcmc_parameters(niter=200, burnin=100, thin=10, verbose=0));
+        mcmc_parameters = AM_mcmc_parameters(niter=20, burnin=0, thin=1, verbose=0));
 }
