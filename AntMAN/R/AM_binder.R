@@ -63,8 +63,8 @@ AM_binder = function (fit,  weight = 0.5, with_coclustering_probability = FALSE)
 	Binder_ind <- which.max(Binder_f)
 	
 	if (with_coclustering_probability) {
-		return (list(coclustering_probability = pij, clustering = CI[Binder_ind,]));
+		return (list(coclustering_probability = pij, clustering = CI[Binder_ind,], index = Binder_ind));
 	} else {
-		return (list(clustering = CI[Binder_ind,]));
+		return (list(clustering = CI[Binder_ind,], index = Binder_ind));
 	}
 }
