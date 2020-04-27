@@ -7,7 +7,15 @@
 #ifndef ANTMAN_SRC_MIXTURE_CPP_VERBOSE_HPP_
 #define ANTMAN_SRC_MIXTURE_CPP_VERBOSE_HPP_
 
+#include <iostream>
+
 #define VERBOSE_BINARY
+
+inline int VERBOSE_LEVEL(int nv = -1) {
+	static int v = 0;
+	if (nv >= 0) v = nv;
+	return v;
+}
 
 #ifdef HAS_RCPP
 // [[Rcpp::depends(RcppArmadillo)]]
@@ -54,10 +62,8 @@ static inline void flush_output () {
 #define WARNING_LEVEL 1
 #define ERROR_LEVEL   0
 
-extern int VERBOSE_LEVEL;
-
-#define VERBOSE_GENERIC_MSG(thr, out, color, msg)      {if (VERBOSE_LEVEL >= thr)    out  << "[" << thr << "] " << color  << msg << RESET_COLOR << std::endl;              };
-#define VERBOSE_GENERIC_END(thr, out, color, msg)      {if (VERBOSE_LEVEL >= thr)    out  << "[" << thr << "] " << color  << msg << RESET_COLOR << std::endl; stop_cmd () ;};
+#define VERBOSE_GENERIC_MSG(thr, out, color, msg)      {if (VERBOSE_LEVEL() >= thr)    out  << "[" << thr << "] " << color  << msg << RESET_COLOR << std::endl;              };
+#define VERBOSE_GENERIC_END(thr, out, color, msg)      {if (VERBOSE_LEVEL() >= thr)    out  << "[" << thr << "] " << color  << msg << RESET_COLOR << std::endl; stop_cmd () ;};
 
 
 #ifdef VERBOSE_BINARY
@@ -78,19 +84,19 @@ extern int VERBOSE_LEVEL;
 static int const VERBOSE_PROGRESS_BAR_SIZE =  51;
 
 static inline void VERBOSE_PROGRESS_START()    {
-	if (not (VERBOSE_LEVEL >= LOG_LEVEL)) {return;}
+	if (not (VERBOSE_LEVEL() >= LOG_LEVEL)) {return;}
 	CERR_STREAM << "0%   10   20   30   40   50   60   70   80   90   100%" << std::endl;
     CERR_STREAM << "[----|----|----|----|----|----|----|----|----|----|" << std::endl;
 }
 static inline void VERBOSE_PROGRESS_UPDATE(int v)  {
-	if (not (VERBOSE_LEVEL >= LOG_LEVEL)) {return;}
+	if (not (VERBOSE_LEVEL() >= LOG_LEVEL)) {return;}
 	const int progress = (v * VERBOSE_PROGRESS_BAR_SIZE) / 100;
 	CERR_STREAM << std::string(progress, '\r')
 	            <<  std::string(progress, '*') ;
 	flush_output ();
 }
 static inline void VERBOSE_PROGRESS_STOP()   {
-	if (not (VERBOSE_LEVEL >= LOG_LEVEL)) {return;}
+	if (not (VERBOSE_LEVEL() >= LOG_LEVEL)) {return;}
 	CERR_STREAM << "" << std::endl;
 }
 

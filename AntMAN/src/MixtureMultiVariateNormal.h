@@ -293,7 +293,7 @@ public :
 
 
 		 }
-		 input_t sample(const arma::vec & W_current, unsigned long n) {
+		 input_t sample(const arma::vec & W_current,arma::uword  n) {
 
 			 //
 			 //	arma::mat  _mu_current;

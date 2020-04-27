@@ -370,7 +370,7 @@ Rcpp::List IAM_mcmc_fit (
 		VERBOSE_ASSERT(mcmc_parameters.containsElementNamed(item.c_str()), "mcmc_parameters does not contains : " << item );
 	}
 
-	VERBOSE_LEVEL = mcmc_parameters["verbose"] ;
+	VERBOSE_LEVEL(mcmc_parameters["verbose"]) ;
 
 	VERBOSE_DEBUG ("Debug mode is on.");
 

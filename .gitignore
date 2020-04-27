@@ -67,3 +67,4 @@ tests_cpp/testAntMAN
 tests_cpp/testAntMANd
 AntMAN.pdf
 docker_share/
+build_test/

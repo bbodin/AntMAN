@@ -208,7 +208,7 @@ public :
 
 	 }
 
-	 input_t sample(const arma::vec & W_current, unsigned long n) {
+	 input_t sample(const arma::vec & W_current,arma::uword  n) {
 
 		 VERBOSE_DEBUG("Run sample");
 
@@ -220,7 +220,7 @@ public :
 
 
 		 auto theta0  = _theta.row(selected_M); // take row
-		 for (auto idx = 0 ; idx < _theta.n_cols ; idx++) {
+		 for (arma::uword idx = 0 ; idx < _theta.n_cols ; idx++) {
 			 auto e = theta0[idx];
 			 VERBOSE_ASSERT((e <= 1) or (e >= 0), "Condition not checked e in (0,1): Invalid Theta");
 

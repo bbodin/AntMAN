@@ -5,21 +5,26 @@
  *      Author: toky
  */
 
+
 #ifndef TESTS_CPP_AM_TEST_PRIORS_H_
 #define TESTS_CPP_AM_TEST_PRIORS_H_
 
+#ifndef NO_RCPP
+#define NO_RCPP
+#endif
 
 #include "../AntMAN/src/Priors.h"
 
 void test_prior (Prior & to_test) {
 
-	COUT_STREAM << "run init_M_na : " << std::endl;
+	VERBOSE_DEBUG("run init_M_na : ");
 	int Mna0 = to_test.init_M_na(1);
 
-	COUT_STREAM << " - init_M_na(K=1) = " << Mna0 << std::endl;
+	VERBOSE_DEBUG(" - init_M_na(K=1) = " << Mna0);
 
 
-	COUT_STREAM << "run update_M_na" << std::endl;
+	VERBOSE_DEBUG("run update_M_na");
+
 	std::vector<double> values = {
 			335.185,
 			0.0325548,
@@ -35,11 +40,8 @@ void test_prior (Prior & to_test) {
 	};
 
 	for (auto U : values) {
-		COUT_STREAM << " - update_M_na(U= " << U  << ",    K=1) = "         << to_test.update_M_na(U,1) << std::endl;
-
+		VERBOSE_DEBUG(" - update_M_na(U= " << U  << ",    K=1) = "         << to_test.update_M_na(U,1));
 	}
-
-
 
 }
 
@@ -63,7 +65,7 @@ PriorNegativeBinomial prepare_negative_binomial () {
 
 void test_priors () {
 
-	VERBOSE_LEVEL = LOG_LEVEL ;
+	VERBOSE_LEVEL ( LOG_LEVEL );
 
 	PriorNegativeBinomial negbin  = prepare_negative_binomial ();
 	PriorPoisson     pois    = prepare_poisson ();

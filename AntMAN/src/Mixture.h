@@ -6,6 +6,7 @@
 
 #ifndef ANTMAN_SRC_MIXTURE_H_
 #define ANTMAN_SRC_MIXTURE_H_
+#include <vector>
 #include <map>
 #include <iomanip>
 
@@ -66,7 +67,7 @@ protected:
 			const double U,
 			const  InputType & y ) = 0;
 
-	virtual InputType sample(const arma::vec & W_current, unsigned long n = 1);
+	virtual InputType sample(const arma::vec & W_current, arma::uword  n = 1) = 0;
 
 
 public:
@@ -245,7 +246,7 @@ public:
 				total_saved++;
 
 				VERBOSE_DEBUG("Run the predictive.");
-				arma::vec predictive = this->sample(W_current,1).row(0).t();
+				input_t predictive = this->sample(W_current,1).row(0).t();
 				VERBOSE_DEBUG("Predictive = " << predictive);
 
 				results->log_output (ci_current,  W_current, predictive,  U_current, M,  K, this , prior) ;
@@ -292,6 +293,8 @@ public:
 };
 
 class UnivariateMixture : public TypedMixture<arma::vec> {};
+class UnivariateIntegerMixture : public TypedMixture<arma::ivec> {};
 class MultivariateMixture : public TypedMixture<arma::mat> {};
+class MultivariateIntegerMixture : public TypedMixture<arma::imat> {};
 
 #endif /* ANTMAN_SRC_MIXTURE_H_ */

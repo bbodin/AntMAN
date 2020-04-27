@@ -48,7 +48,9 @@ public:
 			 const unsigned int K,
 			 const Mixture * mixture,
 			 const Prior * prior) {
+		 VERBOSE_ASSERT(Ks.size() > index, "Estimated maxsize is incorrect");
 		 Ks[index++] = K;
+
 	 } ;
 
 };

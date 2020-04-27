@@ -9,16 +9,21 @@
 #define TESTS_CPP_AM_TEST_MIXTURES_H_
 
 
+#ifndef NO_RCPP
+#define NO_RCPP
+#endif
+
 #include "../AntMAN/src/Mixture.h"
 #include "../AntMAN/src/MixtureMultivariateBinomial.h"
 #include "../AntMAN/src/MixtureUnivariateNormal.h"
+#include "../AntMAN/src/MixtureUnivariatePoisson.h"
 #include "../AntMAN/src/MixtureMultiVariateNormal.h"
 #include "../AntMAN/src/Priors.h"
 #include "../AntMAN/src/verbose.h"
 
 
 void test_Mixture_MultivariateNormal (long niter, long burnin, long thin) {
-	arma::mat y_mvn = {
+	static const arma::mat y_mvn = {
 			{ 0.8005543 , 1.190207 },{ 0.07050839 , 0.1292877 },{ 3.856332 , 4.198754 },{ 3.388735 , 3.663735 },
 			{ 4.114283 , 6.422595 },{ 4.193754 , 3.4338 },{ 5.154485 , 4.619488 },{ -2.171955 , -3.702855 },{ -0.2158654 , -0.3349128 },{ -0.7288912 , -0.6250393 },
 			{ -0.1453936 , -1.165545 },{ -1.138137 , 1.253815 },{ 2.794663 , 3.60637 },{ -2.497646 , -2.571382 },{ 4.815743 , 0.7600086 },{ -0.3059627 , -0.380471 },
@@ -55,7 +60,7 @@ void test_Mixture_MultivariateNormal (long niter, long burnin, long thin) {
 			{ -3.737404 , -2.285397 },{ 4.419201 , 3.004474 },{ 0.2187623 , -1.701851 },{ 4.839326 , 4.44409 },{ 4.52019 , 3.914424 },{ -2.409307 , -4.05049 },{ -0.7547637 , 1.409276 },{ -0.3213584 , -0.9964912 },{ -2.24487 , -0.8219112 },{ 0.5491609 , -1.545892 },{ -0.2468669 , 0.3177039 },{ -5.132027 , -1.524888 },{ 2.365553 , 4.630932 },{ -1.133973 , 0.3164269 },{ -2.211452 , -2.777915 },{ -1.062081 , 0.4363743 },{ 4.329588 , 5.279797 },{ -4.854305 , -1.833248 },{ -2.604186 , -4.692358 },{ 2.94322 , 5.266363 },{ -1.756529 , -4.610579 },{ 0.3900197 , -0.2072156 },{ -0.1881986 , -1.57826 },{ 3.428182 , 4.527856 },{ -1.439717 , -4.093562 },{ 4.538609 , 4.550465 },{ -0.3235996 , 1.64859 },{ 3.456364 , 4.520475 },{ -4.585252 , -1.60052 },{ -0.6482993 , 0.07196084 },{ -1.559017 , -4.139304 },{ 0.4113519 , -0.7761839 },{ 3.3658 , 4.686318 },{ 3.827483 , 2.267187 },
 			{ -3.677022 , -2.096562 },{ -3.717641 , -3.565616 },{ -2.759517 , -3.316775 },{ 4.953834 , 2.919342 },{ -1.581569 , 0.3915041 },{ 0.8281116 , 0.3358507 },{ -1.545991 , 1.022558 },{ -1.561462 , -3.162104 },{ 4.768404 , 2.90424 },{ -3.726247 , -3.134259 },{ -2.374225 , -4.218101 },{ -0.177972 , 0.1834855 },{ -5.332731 , -1.634401 },{ 4.829347 , 3.917961 },{ -4.021628 , -2.828853 },{ 3.085044 , 3.127784 },{ 0.8595508 , -0.8365439 },{ 2.719545 , 5.319787 },{ 1.168127 , 4.047759 },{ -0.422872 , -0.0980529 },{ 3.708828 , 3.754039 },{ 3.650946 , 3.073453 },{ -1.831035 , -3.370276 },{ 5.169304 , 3.585851 },{ -3.290806 , -2.493617 },{ 5.576961 , 4.049197 },{ 4.954236 , 4.999915 },{ -1.742414 , -4.614423 },{ 0.1415275 , 0.6327194 },{ 1.290734 , -0.4937239 },{ 4.164013 , 4.724962 },{ -0.1349676 , 0.3502562 },{ -3.04214 , -3.072948 },{ 0.5456355 , -0.2884493 },{ -0.05042814 , 0.04443762 },{ 1.380517 , 0.8726346 },{ -2.769514 , -3.999942 },{ -0.4116979 , 0.7091856 },{ 2.896633 , 3.302856 },{ 3.954676 , 4.151667 },{ -0.1704941 , 0.8643054 },{ -0.8857226 , -5.416118 },{ -0.6338556 , -1.023722 },{ 0.3308392 , -0.3206892 },{ 0.211517 , -0.9152734 },{ 3.55348 , 5.634832 },{ 0.6527591 , -1.096926 },{ -1.240228 , 0.6359479 },{ 0.9966081 , -2.065142 },{ 4.069654 , 3.925082 },{ 4.850794 , 1.738664 },{ -3.686937 , -3.520746 },{ 0.05690934 , 0.04170706 },{ -0.7571986 , 0.7920595 },{ 3.534738 , 3.586762 },{ 4.34202 , 3.942812 },{ 5.467728 , 5.070796 },{ -3.443384 , -2.44449 },{ -2.3567 , -3.318475 },{ -1.998209 , -4.61536 },{ -3.613591 , -3.39806 },{ 3.535262 , 4.430373 },{ -3.450127 , -1.886156 },{ -2.110347 , -3.613614 },{ -2.876622 , -1.000441 },{ -2.493468 , -4.469849 },{ 2.818603 , 4.552464 },{ 3.963538 , 5.327218 },{ 4.926921 , 3.656827 },{ -4.071035 , -3.124009 },{ 3.465099 , 4.929784 },{ 3.522951 , 2.754292 },{ 2.257503 , 4.702194 },{ -1.586237 , -4.425549 },{ 2.253868 , 4.727373 },{ 1.451281 , 0.6415514 }};
 
-	arma::vec ci_mvn = {0, 0, 2, 2, 2, 2, 2, 1, 0, 0, 0, 0, 2, 1, 2, 0, 0, 1, 0, 0, 1, 2, 2, 0, 2, 2, 2, 2, 1, 0, 2, 1, 1, 1, 2, 2, 2, 1, 0, 1, 0, 2, 1, 2, 0,
+	static const arma::vec ci_mvn = {0, 0, 2, 2, 2, 2, 2, 1, 0, 0, 0, 0, 2, 1, 2, 0, 0, 1, 0, 0, 1, 2, 2, 0, 2, 2, 2, 2, 1, 0, 2, 1, 1, 1, 2, 2, 2, 1, 0, 1, 0, 2, 1, 2, 0,
 			1, 2, 1, 1, 2, 0, 2, 2, 1, 2, 2, 2, 1, 0, 2, 2, 1, 1, 2, 2, 0, 2, 1, 1, 1, 0, 2, 0, 2, 1, 2, 1, 2, 2, 0, 2, 1, 1, 0, 1, 2, 2, 2, 0, 2, 1, 2, 2, 0,
 			0, 1, 0, 0, 2, 2, 1, 0, 1, 0, 1, 2, 2, 2, 2, 2, 1, 1, 0, 2, 1, 2, 2, 0, 1, 2, 0, 2, 2, 2, 2, 1, 2,
 			0, 1, 2, 2, 2, 2, 0, 0, 1, 2, 1, 0, 1, 2, 2, 2, 1, 1, 2, 1, 1, 2, 1, 0, 1, 1, 0, 2, 0, 0, 1, 2, 1, 1, 2, 0, 0, 2, 0, 0, 1, 2, 0, 1, 1, 1, 0, 0, 2,
@@ -99,7 +104,7 @@ void test_Mixture_MultivariateNormal (long niter, long burnin, long thin) {
 void test_Mixture_UnivariateNormal(long niter, long burnin, long thin) {
 
 
-	arma::vec y_uvn =  { 9.172,  9.350,  9.483,  9.558,  9.775, 10.227, 10.406, 16.084, 16.170, 18.419,18.552,
+	static const arma::vec y_uvn =  { 9.172,  9.350,  9.483,  9.558,  9.775, 10.227, 10.406, 16.084, 16.170, 18.419,18.552,
 			18.600, 18.927, 19.052, 19.070, 19.330, 19.343, 19.349, 19.440, 19.473,19.529, 19.541, 19.547, 19.663,
 			19.846, 19.856, 19.863, 19.914, 19.918, 19.973,19.989, 20.166, 20.175, 20.179, 20.196, 20.215, 20.221,
 			20.415, 20.629, 20.795,20.821, 20.846, 20.875, 20.986, 21.137, 21.492, 21.701, 21.814, 21.921, 21.960,
@@ -121,9 +126,34 @@ void test_Mixture_UnivariateNormal(long niter, long burnin, long thin) {
 
 
 }
+void test_Mixture_UnivariatePoisson(long niter, long burnin, long thin) {
+
+
+	static const arma::vec y_uvn =  { 9,  9,  9,  9,  9, 10, 10, 16, 16, 18,18,
+			18, 18, 19, 19, 19, 19, 19, 19, 19,19, 19, 19, 19,
+			19, 19, 19, 19, 19, 19,19, 20, 20, 20, 20, 20, 20,
+			20, 20, 20,20, 20, 20, 20, 21, 21, 21, 21, 21, 21,
+			22, 22, 22, 22, 22, 22, 22, 22, 22, 22,22, 23, 23,
+			23, 23, 23, 23, 23, 23, 23,24, 24, 24, 24, 24, 24, 25, 26,
+			26, 32,32, 34 };
+	// TODO : Need to go over variable and see what should be checked
+	PriorPoisson *prior = new PriorPoisson(poisson_gamma_h_param_t(2,1,1,0.00001),poisson_gamma_q_param_t(3,1,1));
+	MixtureUnivariatePoisson * mixture = new MixtureUnivariatePoisson (2, 0.2);
+	cluster_indices_t initial_clustering (y_uvn.size());
+	GibbsResultPlain * GRP = new  GibbsResultPlain ((niter - burnin) / thin);
+
+	auto start_gibbs           = std::chrono::system_clock::now();
+	mixture->fit(y_uvn , initial_clustering, false, prior , niter ,burnin ,thin , false , GRP);
+	auto end_gibbs             = std::chrono::system_clock::now();
+	auto elapsed_gibbs         = end_gibbs - start_gibbs;
+	auto total_gibbs           = elapsed_gibbs.count() / 1000000.0;
+	COUT_STREAM << "Total time: " << total_gibbs << "ms"  << std::endl ;
+
+
+}
 
 void test_Mixture_MultivariateBernoulli (long niter, long burnin, long thin) {
-arma::mat carcinoma = {
+	static const arma::mat carcinoma = {
 	     //A  B  C  D  E  F  G
 		 { 0, 0, 0, 0, 0, 0, 0 } ,
 		 { 0, 0, 0, 0, 0, 0, 0 } ,
@@ -260,7 +290,6 @@ cluster_indices_t initial_clusteringmvb (carcinoma.n_rows,1);
 
 auto start_gibbs           = std::chrono::system_clock::now();
 mixturemvb->fit(carcinoma , initial_clusteringmvb, false, priormvb , niter,  burnin,  thin, false, GRP);
-mixturemvb->fit(carcinoma , initial_clusteringmvb, true,  priormvb , niter,  burnin,  thin, false, GRP);
 auto end_gibbs             = std::chrono::system_clock::now();
 auto elapsed_gibbs         = end_gibbs - start_gibbs;
 auto total_gibbs           = elapsed_gibbs.count() / 1000000.0;
@@ -269,9 +298,17 @@ COUT_STREAM << "Total time: " << total_gibbs << "ms" << std::endl ;
 }
 void test_mixtures (long niter, long burnin, long thin) {
 
-	//test_Mixture_MultivariateBernoulli(niter,  burnin,  thin);
+	VERBOSE_INFO("RUN test_Mixture_UnivariateNormal");
+	test_Mixture_UnivariateNormal (niter,  burnin,  thin) ;
+
+	VERBOSE_INFO("RUN test_Mixture_MultivariateNormal");
 	test_Mixture_MultivariateNormal (niter,  burnin,  thin) ;
 
+	VERBOSE_INFO("RUN test_Mixture_UnivariatePoisson");
+	test_Mixture_UnivariatePoisson(niter,  burnin,  thin);
+
+	VERBOSE_INFO("RUN test_Mixture_MultivariateBernoulli");
+	test_Mixture_MultivariateBernoulli(niter,  burnin,  thin);
 
 }
 

@@ -28,12 +28,12 @@
 
 static inline double am_rpois   (double n)                        {
 	 static std::default_random_engine generator;
-	        std::poisson_distribution<int> distribution(n);
+	 std::poisson_distribution<int> distribution(n);
 	return (distribution(generator));
 }
 static inline double am_runif   (double a ,double b)                   {
 	 static std::default_random_engine generator;
-	        std::uniform_real_distribution<double> distribution(a,b);
+	 std::uniform_real_distribution<double> distribution(a,b);
 	 return (distribution(generator));
 }
 

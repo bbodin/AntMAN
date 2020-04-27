@@ -51,14 +51,17 @@ check : AntMAN/src/RcppExports.cpp
 %.pdf : %/NAMESPACE
 	R CMD Rd2pdf $* --no-preview --force
 
-test : 
-	+make -C tests_cpp
+build_test/Makefile :  ${H_FILES} ${C_FILES} CMakeLists.txt
+	rm -rf build_test 
+	mkdir -p build_test
+	cmake -S . -B build_test
+test : build_test/Makefile
+	+make -C build_test all test
 	
 deps :
 	echo "To be defined."
 
 clean : 
-	rm -rf current *~ *.Rinstall *.pdf  *.tar.gz *.Rcheck ./AntMAN/NAMESPACE ./AntMAN/src/*.o ./AntMAN/src/*.so 	./AntMAN/src/*.rds ./AntMAN/src/RcppExports.cpp  ./AntMAN/R/RcppExports.R  ./AntMAN/man/*.Rd .Rd2pdf*
-	make -C tests_cpp clean
+	rm -rf build_test/ current *~ *.Rinstall *.pdf  *.tar.gz *.Rcheck ./AntMAN/NAMESPACE ./AntMAN/src/*.o ./AntMAN/src/*.so 	./AntMAN/src/*.rds ./AntMAN/src/RcppExports.cpp  ./AntMAN/R/RcppExports.R  ./AntMAN/man/*.Rd .Rd2pdf*
 .PHONY: clean test
 .SECONDARY:

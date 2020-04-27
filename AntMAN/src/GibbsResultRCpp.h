@@ -8,9 +8,7 @@
 #define ANTMAN_SRC_GIBBSRESULTRCPP_H_
 
 #ifndef HAS_RCPP
-#assert HAS_RCPP
-#undef  NO_RCPP
-#define HAS_RCPP
+#error "HAS_RCPP is not defined"
 #endif
 
 

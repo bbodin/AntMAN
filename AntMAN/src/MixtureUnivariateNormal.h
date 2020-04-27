@@ -228,7 +228,7 @@ public :
 	 }
 
 
-	 input_t sample(const arma::vec & W_current, unsigned long n) {
+	 input_t sample(const arma::vec & W_current, arma::uword  n) {
 
 		 long int selected_M = runif_component(W_current);
 		 double mu = _mu_current[selected_M];
