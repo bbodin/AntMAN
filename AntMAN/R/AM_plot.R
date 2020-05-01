@@ -5,6 +5,36 @@
 ###############
 #######################################################################################
 
+density_discrete_variables <- function(Par, color=rgb(0.4, 0.8, 1, alpha=0.7), single_maxy=TRUE, ...){
+	rows <- dim(Par)[2]
+	fun <- function(xx){
+		return(table(xx)/length(xx))
+	}
+	
+	tables <- lapply(Par,fun)
+	#cat("maxy is",maxy,"\n")
+	if(single_maxy){
+		maxy=zeroes(rows)
+		for(r in 1:rows){
+			maxy[r]=as.numeric(max(tables[[r]]))
+		}
+		#	print("ciao")
+	}else{
+		maxy <- rep(max(unlist(tables)),rows)
+		#	print("CIAO")
+	}
+	#print(maxy)
+	### Allow the user to set a 
+	
+	par(mfrow=c(rows,1))
+	for(r in 1:rows){
+		plot(tables[[r]],lwd=8,col=color,ylim=c(0,maxy[r]),xlab=names(tables)[r],ylab="p.m.f.",...)
+	}
+	
+	
+	
+}
+
 
 #' plot AM_mcmc_output  
 #' 
@@ -23,10 +53,7 @@ AM_plot_pairs=function(x,tags = NULL,title = "MCMC Results"){
 	targets = tags
 	if (is.null(targets)) {
 		if (!is.null(x$M)) {targets = c(targets,"M")}
-		if (!is.null(x$M)) {targets = c(targets,"K")}
-		if (!is.null(x$MNA)) {targets = c(targets,"MNA")}
-		if (!is.null(x$H) && (length(x$H) > 0) && (length(x$H[[1]]) > 0)) {targets = c(targets,paste0("H_",names(x$H[[1]])))}
-		if (!is.null(x$Q) && (length(x$Q) > 0) && (length(x$Q[[1]]) > 0)) {targets = c(targets,paste0("Q_",names(x$Q[[1]])))}
+		if (!is.null(x$K)) {targets = c(targets,"K")}
 	}
 	message("Plotting pairs from ",paste(targets,collapse=","));
 	
@@ -54,10 +81,7 @@ AM_plot_density=function(x,tags = NULL,title = "MCMC Results"){
 	targets = tags
 	if (is.null(targets)) {
 		if (!is.null(x$M)) {targets = c(targets,"M")}
-		if (!is.null(x$M)) {targets = c(targets,"K")}
-		if (!is.null(x$MNA)) {targets = c(targets,"MNA")}
-		if (!is.null(x$H) && (length(x$H) > 0) && (length(x$H[[1]]) > 0)) {targets = c(targets,paste0("H_",names(x$H[[1]])))}
-		if (!is.null(x$Q) && (length(x$Q) > 0) && (length(x$Q[[1]]) > 0)) {targets = c(targets,paste0("Q_",names(x$Q[[1]])))}
+		if (!is.null(x$K)) {targets = c(targets,"K")}
 	}
 	message("Plotting density from ",paste(targets,collapse=","));
 	
@@ -78,6 +102,7 @@ AM_plot_density=function(x,tags = NULL,title = "MCMC Results"){
 #'@param tags A list of variables to consider
 #'@param title Title for the plot
 #'@return TBD
+#'@importFrom grDevices rgb
 #'@export
 AM_plot_bars=function(x,tags = NULL,title = "MCMC Results"){
 	## TODO / Need raffa script for integer values
@@ -85,17 +110,13 @@ AM_plot_bars=function(x,tags = NULL,title = "MCMC Results"){
 	targets = tags
 	if (is.null(targets)) {
 		if (!is.null(x$M)) {targets = c(targets,"M")}
-		if (!is.null(x$M)) {targets = c(targets,"K")}
-		if (!is.null(x$MNA)) {targets = c(targets,"MNA")}
-		if (!is.null(x$H) && (length(x$H) > 0) && (length(x$H[[1]]) > 0)) {targets = c(targets,paste0("H_",names(x$H[[1]])))}
-		if (!is.null(x$Q) && (length(x$Q) > 0) && (length(x$Q[[1]]) > 0)) {targets = c(targets,paste0("Q_",names(x$Q[[1]])))}
+		if (!is.null(x$K)) {targets = c(targets,"K")}
 	}
 	message("Plotting density from ",paste(targets,collapse=","));
 	
 	if (length(targets) > 0) {
 		df = AM_extract(x,targets)
-		colore <- rgb(0.4, 0.8, 1, alpha=0.7)
-		plot(table(out$k_post)/length(out$k_post),lwd=8,col=colore,xlab="discrete variable",ylab="p.m.f.") 
+		density_discrete_variables(df, single_maxy=TRUE)
 	}
 	
 }
@@ -115,10 +136,7 @@ AM_plot_traces=function(x,tags = NULL,title = "MCMC Results"){
 	targets = tags
 	if (is.null(targets)) {
 		if (!is.null(x$M)) {targets = c(targets,"M")}
-		if (!is.null(x$M)) {targets = c(targets,"K")}
-		if (!is.null(x$MNA)) {targets = c(targets,"MNA")}
-		if (!is.null(x$H) && (length(x$H) > 0) && (length(x$H[[1]]) > 0)) {targets = c(targets,paste0("H_",names(x$H[[1]])))}
-		if (!is.null(x$Q) && (length(x$Q) > 0) && (length(x$Q[[1]]) > 0)) {targets = c(targets,paste0("Q_",names(x$Q[[1]])))}
+		if (!is.null(x$K)) {targets = c(targets,"K")}
 	}
 	message("Plotting traces from ",paste(targets,collapse=","));
 	
@@ -145,10 +163,7 @@ AM_plot_values=function(x,tags = NULL,title = "MCMC Results"){
 	targets = tags
 	if (is.null(targets)) {
 		if (!is.null(x$M)) {targets = c(targets,"M")}
-		if (!is.null(x$M)) {targets = c(targets,"K")}
-		if (!is.null(x$MNA)) {targets = c(targets,"MNA")}
-		if (!is.null(x$H) && (length(x$H) > 0) && (length(x$H[[1]]) > 0)) {targets = c(targets,paste0("H_",names(x$H[[1]])))}
-		if (!is.null(x$Q) && (length(x$Q) > 0) && (length(x$Q[[1]]) > 0)) {targets = c(targets,paste0("Q_",names(x$Q[[1]])))}
+		if (!is.null(x$K)) {targets = c(targets,"K")}
 	}
 	message("Plotting values from ",paste(targets,collapse=","));
 	
