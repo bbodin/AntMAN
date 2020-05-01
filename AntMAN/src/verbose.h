@@ -1,8 +1,8 @@
 /*
- * verbose.hpp
+ *  AntMAN Package
  *
- *  Created on: Jun 14, 2019
  */
+
 
 #ifndef ANTMAN_SRC_MIXTURE_CPP_VERBOSE_HPP_
 #define ANTMAN_SRC_MIXTURE_CPP_VERBOSE_HPP_

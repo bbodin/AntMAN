@@ -1,8 +1,8 @@
 /*
- * MixtureMultivariateBernoulli.hpp
+ *  AntMAN Package
  *
- *  Created on: Mar 8, 2019
  */
+
 
 #ifndef ANTMAN_SRC_MIXTUREMULTIVARIATEBERNOULLI_HPP_
 #define ANTMAN_SRC_MIXTUREMULTIVARIATEBERNOULLI_HPP_

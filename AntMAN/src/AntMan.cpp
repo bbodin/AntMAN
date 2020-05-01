@@ -1,4 +1,7 @@
-
+/*
+ *  AntMAN Package
+ *
+ */
 
 #include "Mixtures.h"
 #include "Priors.h"

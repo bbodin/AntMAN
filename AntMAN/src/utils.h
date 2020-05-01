@@ -1,7 +1,6 @@
 /*
- * utils.hpp
+ *  AntMAN Package
  *
- *  Created on: Jan 30, 2019
  */
 
 #ifndef ANTMAN_SRC_UTILS_HPP_

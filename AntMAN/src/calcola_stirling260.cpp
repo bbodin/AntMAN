@@ -1,3 +1,8 @@
+/*
+ *  AntMAN Package
+ *
+ */
+
 // [[Rcpp::depends(RcppArmadillo)]]
 
 #include <RcppArmadillo.h>

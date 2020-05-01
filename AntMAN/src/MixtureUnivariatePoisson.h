@@ -1,8 +1,8 @@
 /*
- * MixtureUnivariatePoisson.hpp
+ *  AntMAN Package
  *
- *  Created on: Mar 8, 2019
  */
+
 
 #ifndef ANTMAN_SRC_MIXTUREUNIVARIATEPOISSON_HPP_
 #define ANTMAN_SRC_MIXTUREUNIVARIATEPOISSON_HPP_

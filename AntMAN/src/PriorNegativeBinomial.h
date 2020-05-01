@@ -1,8 +1,8 @@
 /*
- * MixturePrior.hpp
+ *  AntMAN Package
  *
- *  Created on: Apr 8, 2019
  */
+
 
 #ifndef ANTMAN_SRC_PRIORNEGATIVEBINOMIAL_H_
 #define ANTMAN_SRC_PRIORNEGATIVEBINOMIAL_H_

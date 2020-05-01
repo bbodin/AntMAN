@@ -1,8 +1,8 @@
 /*
- * maths.hpp
+ *  AntMAN Package
  *
- *  Created on: Jun 14, 2019
  */
+
 
 #ifndef ANTMAN_MIXTURE_CPP_MATHS_HPP_
 #define ANTMAN_MIXTURE_CPP_MATHS_HPP_

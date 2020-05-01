@@ -1,8 +1,6 @@
 /*
- * AM_test_mixtures.hpp
+ *  AntMAN Package
  *
- *  Created on: Mar 6, 2020
- *      Author: toky
  */
 
 #ifndef TESTS_CPP_AM_TEST_MIXTURES_H_

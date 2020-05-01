@@ -1,8 +1,6 @@
 /*
- * AntMANLogger.h
+ *  AntMAN Package
  *
- *  Created on: Apr 27, 2020
- *      Author: toky
  */
 
 #ifndef ANTMAN_SRC_ANTMANLOGGER_H_

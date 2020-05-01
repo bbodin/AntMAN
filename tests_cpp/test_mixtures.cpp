@@ -1,7 +1,6 @@
 /*
- * AM_tests.cpp
+ *  AntMAN Package
  *
- *  Created on: Jun 14, 2019
  */
 
 #define NO_RCPP

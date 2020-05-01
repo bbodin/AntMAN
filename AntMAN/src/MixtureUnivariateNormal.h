@@ -1,8 +1,8 @@
 /*
- * MixtureUnivariateNormal.hpp
+ *  AntMAN Package
  *
- *  Created on: Mar 8, 2019
  */
+
 
 #ifndef ANTMAN_SRC_MIXTUREUNIVARIATENORMAL_HPP_
 #define ANTMAN_SRC_MIXTUREUNIVARIATENORMAL_HPP_

@@ -1,8 +1,8 @@
 /*
- * beta_distribution.hpp
+ *  AntMAN Package
  *
- *  Created on: Jun 17, 2019
  */
+
 
 #ifndef ANTMAN_SRC_BETA_DISTRIBUTION_H_
 #define ANTMAN_SRC_BETA_DISTRIBUTION_H_

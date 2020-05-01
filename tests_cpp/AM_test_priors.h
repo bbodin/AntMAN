@@ -1,8 +1,6 @@
 /*
- * AM_test_priors.h
+ *  AntMAN Package
  *
- *  Created on: Mar 6, 2020
- *      Author: toky
  */
 
 

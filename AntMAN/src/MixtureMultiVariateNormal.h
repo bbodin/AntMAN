@@ -1,8 +1,8 @@
 /*
- * MixtureMultiVariateNormal.hpp
+ *  AntMAN Package
  *
- *  Created on: Mar 8, 2019
  */
+
 
 #ifndef ANTMAN_SRC_MIXTUREMULTIVARIATENORMAL_HPP_
 #define ANTMAN_SRC_MIXTUREMULTIVARIATENORMAL_HPP_

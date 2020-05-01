@@ -1,8 +1,8 @@
 /*
- * PriorDirac.hpp
+ *  AntMAN Package
  *
- *  Created on: Apr 12, 2019
  */
+
 
 #ifndef ANTMAN_SRC_PRIORDIRAC_H_
 #define ANTMAN_SRC_PRIORDIRAC_H_

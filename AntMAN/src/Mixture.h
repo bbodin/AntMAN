@@ -1,8 +1,8 @@
 /*
- * Mixture.hpp
+ *  AntMAN Package
  *
- *  Created on: 14 Apr 2019
  */
+
 
 #ifndef ANTMAN_SRC_MIXTURE_H_
 #define ANTMAN_SRC_MIXTURE_H_
