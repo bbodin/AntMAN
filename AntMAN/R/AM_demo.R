@@ -13,7 +13,7 @@
 #' @param  mcmc_params AM_mcmc_parameters object to fit with
 #' @keywords demo
 #' @export
-AM_demo_mvb_poi = function (n = 1000 , mcmc_params = AM_mcmc_parameters(niter=2000, burnin=1000, thin=10, verbose=0, output=c("ALL"))) {
+AM_demo_mvb_poi = function (n = 500 , mcmc_params = AM_mcmc_parameters(niter=2000, burnin=1000, thin=10, verbose=0, output=c("ALL"))) {
 	
 	set.seed(123) # TODO : discuss if this make sense
 	
@@ -53,7 +53,7 @@ AM_demo_mvb_poi = function (n = 1000 , mcmc_params = AM_mcmc_parameters(niter=20
 #' @param  mcmc_params AM_mcmc_parameters object to fit with
 #' @keywords demo
 #' @export
-AM_demo_mvn_poi = function (n = 1000 , mcmc_params        = AM_mcmc_parameters(niter=4000, burnin=2000, thin=10, verbose=0, output=c("ALL"))) {
+AM_demo_mvn_poi = function (n = 500 , mcmc_params        = AM_mcmc_parameters(niter=2000, burnin=1000, thin=10, verbose=0, output=c("ALL"))) {
 	
 	set.seed(123) 
 	
@@ -88,7 +88,7 @@ AM_demo_mvn_poi = function (n = 1000 , mcmc_params        = AM_mcmc_parameters(n
 	demo_multivariate_normal <-AM_sample_multinorm(n = n ,d = 2,c(0.3,0.3,0.4),MU,SIG)
 	y_mvn  <- demo_multivariate_normal$y
 	ci_mvn <- demo_multivariate_normal$ci
-
+	
 	mixture_mvn_params = AM_mix_hyperparams_multinorm   (mu0=c(0,0),ka0=1,nu0=4,Lam0=diag(2))
 	
 	
@@ -105,4 +105,44 @@ AM_demo_mvn_poi = function (n = 1000 , mcmc_params        = AM_mcmc_parameters(n
 	
 	
 	return (list(input = y_mvn, clusters = ci_mvn, fit = fit))
+}
+
+
+#' AM_demo_uvn_poi
+#'  
+#' Returns AM_MCMC_OUTPUT Object from a running demo of Univariate Poisson Gamma.
+#'  
+#' @param  n           Number of sample
+#' @param  mcmc_params AM_mcmc_parameters object to fit with
+#' @keywords demo
+#' @export
+AM_demo_uvn_poi = function (n = 500 , mcmc_params        = AM_mcmc_parameters(niter=2000, burnin=1000, thin=10, verbose=0, output=c("ALL"))) {
+	
+	set.seed(123) 
+	
+	demo_univariate_normal <-AM_sample_uninorm(n=1000,pro=c(0.2,0.5,0.3),mmu=c(-2.1,0,2.3),ssd=c(0.5,0.5,0.5))
+	y_uvn  <- demo_univariate_normal$y
+	ci_uvn <- demo_univariate_normal$ci
+	
+	##############################################################################
+	### PREPARE THE GIBBS for Normal mixture with poisson gamma priors
+	##############################################################################
+	
+	mixture_uvn_params = AM_mix_hyperparams_uninorm  (m0=0,k0=0.1,nu0=1,sig02=1.5)
+	
+	mcmc_params        = AM_mcmc_parameters(niter=2000, burnin=1000, thin=10, verbose=0, output=c("ALL"))
+	components_prior   = AM_mix_components_prior_pois (init=3,  a=1, b=1) 
+	weights_prior      = AM_mix_weights_prior_gamma(init=2, a=1, b=1)
+	
+	fit <- AM_mcmc_fit(
+			y = y_uvn, 
+			mix_kernel_hyperparams = mixture_uvn_params,
+			mix_components_prior =components_prior,
+			mix_weight_prior = weights_prior,
+			mcmc_parameters = mcmc_params)
+	
+	
+	
+	
+	return (list(input = y_uvn, clusters = ci_uvn, fit = fit))
 }

@@ -7,8 +7,8 @@
 Returns AM_MCMC_OUTPUT Object from a running demo of MVN.}
 \usage{
 AM_demo_mvn_poi(
-  n = 1000,
-  mcmc_params = AM_mcmc_parameters(niter = 4000, burnin = 2000, thin = 10, verbose = 0,
+  n = 500,
+  mcmc_params = AM_mcmc_parameters(niter = 2000, burnin = 1000, thin = 10, verbose = 0,
     output = c("ALL"))
 )
 }

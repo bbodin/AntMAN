@@ -69,6 +69,37 @@ AM_plot_density=function(x,tags = NULL,title = "MCMC Results"){
 	
 }
 
+
+#' TBD
+#' 
+#' TBD
+#'  
+#'@param x a AM_mcmc_output object
+#'@param tags A list of variables to consider
+#'@param title Title for the plot
+#'@return TBD
+#'@export
+AM_plot_bars=function(x,tags = NULL,title = "MCMC Results"){
+	## TODO / Need raffa script for integer values
+	## skip integer
+	targets = tags
+	if (is.null(targets)) {
+		if (!is.null(x$M)) {targets = c(targets,"M")}
+		if (!is.null(x$M)) {targets = c(targets,"K")}
+		if (!is.null(x$MNA)) {targets = c(targets,"MNA")}
+		if (!is.null(x$H) && (length(x$H) > 0) && (length(x$H[[1]]) > 0)) {targets = c(targets,paste0("H_",names(x$H[[1]])))}
+		if (!is.null(x$Q) && (length(x$Q) > 0) && (length(x$Q[[1]]) > 0)) {targets = c(targets,paste0("Q_",names(x$Q[[1]])))}
+	}
+	message("Plotting density from ",paste(targets,collapse=","));
+	
+	if (length(targets) > 0) {
+		df = AM_extract(x,targets)
+		colore <- rgb(0.4, 0.8, 1, alpha=0.7)
+		plot(table(out$k_post)/length(out$k_post),lwd=8,col=colore,xlab="discrete variable",ylab="p.m.f.") 
+	}
+	
+}
+
 #' plot traces of variables from AM_mcmc_output object  
 #' 
 #' TBD

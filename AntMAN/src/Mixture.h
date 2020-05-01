@@ -252,8 +252,8 @@ public:
 				VERBOSE_DEBUG("Predictive = " << predictive);
 
 				//   this , prior
-				logger->addlog("K", K);
-				logger->addlog("M", M);
+				logger->addlog<int>("K", K);
+				logger->addlog<int>("M", M);
 				logger->addlog("U", U_current);
 				logger->addlog("CI", ci_current);
 				logger->addlog("W", W_current);

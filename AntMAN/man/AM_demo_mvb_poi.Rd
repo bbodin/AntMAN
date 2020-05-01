@@ -7,7 +7,7 @@
 Returns AM_MCMC_OUTPUT Object from a running demo of MVB.}
 \usage{
 AM_demo_mvb_poi(
-  n = 1000,
+  n = 500,
   mcmc_params = AM_mcmc_parameters(niter = 2000, burnin = 1000, thin = 10, verbose = 0,
     output = c("ALL"))
 )

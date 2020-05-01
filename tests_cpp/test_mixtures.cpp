@@ -3,7 +3,9 @@
  *
  */
 
+#ifndef NO_RCPP
 #define NO_RCPP
+#endif
 
 #include <iostream>
 #include <boost/program_options.hpp>
