@@ -5,6 +5,9 @@
 ###############
 #######################################################################################
 
+
+#' density_discrete_variables is internal
+#' 
 density_discrete_variables <- function(Par, color=rgb(0.4, 0.8, 1, alpha=0.7), single_maxy=TRUE, ...){
 	rows <- dim(Par)[2]
 	fun <- function(xx){
@@ -14,7 +17,7 @@ density_discrete_variables <- function(Par, color=rgb(0.4, 0.8, 1, alpha=0.7), s
 	tables <- lapply(Par,fun)
 	#cat("maxy is",maxy,"\n")
 	if(single_maxy){
-		maxy=zeroes(rows)
+		maxy=rep(0,rows)
 		for(r in 1:rows){
 			maxy[r]=as.numeric(max(tables[[r]]))
 		}
