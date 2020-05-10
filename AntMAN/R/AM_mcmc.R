@@ -111,10 +111,8 @@ summary.AM_mcmc_output=function(object,...){
 			elen = length(e)
 			neff = IAM_mcmc_neff(e)
 			mcmcerror = IAM_mcmc_error(e)
-			q05 = quantile(chain,prob=c(0.05))
-			q50 = quantile(chain,prob=c(0.5))
-			q95 = quantile(chain,prob=c(0.95))
-			cat(sprintf("    %10s%10.2f%10.2f%10d%10.2f%10.2f%10.2f%10.2f%10.2f\n", item, emean, esd, elen, q05, q50, q95, neff, mcmcerror));
+			q = quantile(e,prob=c(0.05,0.5,0.95), names=FALSE)
+			cat(sprintf("    %10s%10.2f%10.2f%10d%10.2f%10.2f%10.2f%10.2f%10.2f\n", item, emean, esd, elen, q[1], q[2], q[3], neff, mcmcerror));
 		}
 	}
 	
