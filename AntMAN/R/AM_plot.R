@@ -6,8 +6,8 @@
 #######################################################################################
 
 
-#' density_discrete_variables is internal
-#' 
+# density_discrete_variables is internal
+# 
 density_discrete_variables <- function(Par, color=rgb(0.4, 0.8, 1, alpha=0.7), single_maxy=TRUE, ...){
 	rows <- dim(Par)[2]
 	fun <- function(xx){

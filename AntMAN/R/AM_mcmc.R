@@ -100,15 +100,21 @@ summary.AM_mcmc_output=function(object,...){
 	cat(" -mix_weight_prior(",list_values(attr(object,'mix_weight_prior')),")\n", sep = "");
 	cat(" -mcmc_parameters(",list_values(attr(object,'mcmc_parameters')),")\n", sep = "");
 	cat("\n - Output of the Gibbs sampler\n\n");
-	cat(sprintf("    %10s%10s%10s%10s\n", "Name", "Mean", "StdDev", "Count"));
-	visible = c("K","M","H","Q")
+	cat(sprintf("    %10s%10s%10s%10s%10s%10s\n", "Name", "Mean", "StdDev", "Count","5%","50%","95%", "Eff.", "MCMC Error"));
+	invisible = c("CI")
+	# If fixed clustering 
 	for (item in names(object)) {
-		if (item %in% visible) { 
+		if (!item %in% invisible) { 
 			e = unlist(object[[item]])
 			emean = mean(e)
 			esd = sd(e)
 			elen = length(e)
-			cat(sprintf("    %10s%10.2f%10.2f%10d\n", item, emean, esd, elen));
+			neff = IAM_mcmc_neff(e)
+			mcmcerror = IAM_mcmc_error(e)
+			q05 = quantile(chain,prob=c(0.05))
+			q50 = quantile(chain,prob=c(0.5))
+			q95 = quantile(chain,prob=c(0.95))
+			cat(sprintf("    %10s%10.2f%10.2f%10d%10.2f%10.2f%10.2f%10.2f%10.2f\n", item, emean, esd, elen, q05, q50, q95, neff, mcmcerror));
 		}
 	}
 	

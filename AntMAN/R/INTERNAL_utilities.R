@@ -21,11 +21,10 @@
 #' @keywords prior number of cluster
 #'
 #' @export
-#' 
 #' @examples
-#' dd= AM_compute_stirling_ricor_abs(11,10)
+#' dd= IAM_compute_stirling_ricor_abs(11,10)
 #' print(dd)
-AM_compute_stirling_ricor_abs <- function (n,gamma) {
+IAM_compute_stirling_ricor_abs <- function (n,gamma) {
 	return(compute_stirling_ricor_abs(n,gamma));
 }
 
@@ -42,11 +41,10 @@ AM_compute_stirling_ricor_abs <- function (n,gamma) {
 #' @keywords prior number of cluster
 #'
 #' @export
-#' 
 #' @examples
-#' dd= AM_compute_stirling_ricor_log(11,10)
+#' dd= IAM_compute_stirling_ricor_log(11,10)
 #' print(dd)
-AM_compute_stirling_ricor_log<- function (n,gamma) {
+IAM_compute_stirling_ricor_log<- function (n,gamma) {
 	return(compute_stirling_ricor_log(n,gamma));
 }
 
@@ -63,17 +61,16 @@ AM_compute_stirling_ricor_log<- function (n,gamma) {
 #' @keywords prior number of cluster
 #'
 #' @export
-#' 
 #' @examples
 #' n=1000
 #' Lam=100
 #' gam=0.5
-#' vnk= AM_VnkPoisson(n,Lam,gam)
-#' stir= AM_compute_stirling_ricor_log(n, gam)
+#' vnk= IAM_VnkPoisson(n,Lam,gam)
+#' stir= IAM_compute_stirling_ricor_log(n, gam)
 #' plot(exp(vnk+stir))
 #' sum(exp(vnk+stir ))
 
-AM_VnkPoisson <- function (n,Lambda,gamma) {
+IAM_VnkPoisson <- function (n,Lambda,gamma) {
 	return(VnkPoisson(n,Lambda,gamma));
 }
 
@@ -92,18 +89,17 @@ AM_VnkPoisson <- function (n,Lambda,gamma) {
 #' @keywords prior number of cluster
 #'
 #' @export
-#' 
 #' @examples
 #' n=1000
 #' r=1000
 #' p=0.5
 #' gam=0.5
-#' vnk= AM_VnkNegBin(n,r,p,gam);
-#' stir= AM_compute_stirling_ricor_log(n, gam)
+#' vnk= IAM_VnkNegBin(n,r,p,gam);
+#' stir= IAM_compute_stirling_ricor_log(n, gam)
 #' plot(exp(vnk+stir+(1:n)*log(gam)))
 #' sum(exp(vnk+stir))
 
-AM_VnkNegBin <- function (n,r,p,gam) {
+IAM_VnkNegBin <- function (n,r,p,gam) {
 	return(VnkNegBin(n,r,p,gam));
 }
 
@@ -124,127 +120,31 @@ AM_VnkNegBin <- function (n,r,p,gam) {
 #' @keywords prior number of cluster
 #'
 #' @export
-#' 
 #' @examples
 #' n=200
 #' Mstar=100
 #' gam=0.5
-#' vvv=AM_VnkDelta(n,Mstar,gam);
-#' stir= AM_compute_stirling_ricor_log(n, gam)
+#' vvv=IAM_VnkDelta(n,Mstar,gam);
+#' stir= IAM_compute_stirling_ricor_log(n, gam)
 #' stir
 #' plot(exp(vvv+stir) )
 #' sum(exp(vvv+stir ))
 
-AM_VnkDelta <- function (n,Mstar,gamma) {
+IAM_VnkDelta <- function (n,Mstar,gamma) {
 	return(VnkDelta(n,Mstar,gamma));
 }
 
-#' Once specified a fixed value of components \code{M^*} this function  adopt a  \emph{bisection method} to find the value of \code{gamma} 
-#' such that the induced distribution on the number of clusers is centered around a user specifed value \eqn{K^*}, i.e. the function use
-#'  a bisection method to solve Eq.~{eq:findgamma} of WE NEED TO CITE ANTMAN PAPER. The user can provide a lower \eqn{\gamma_{l}} and
-#'  an upper \eqn{\gamma_{u}} bound for the possible values of $gamma$. The default values are \eqn{\gamma_l= 10^{-3}} and \eqn{\gamma_{u}=10}.
-#'  A default value for the tolerance is \eqn{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31), the function 
-#'  stops warning that convergence has not bee reached.
-#'
-#' @param n             sample size
-#' @param Mstar         number of component of the mixture 
-#' @param Kstar         mean number of cluster the user want to specify
-#' @param gam_min       lower bound of the interval in which \code{gamma} should be lie (default 1e-4)
-#' @param gam_max       upper bound of the interval in which \code{gamma} should lie (default 10)
-#' @param tolerance     tolerance for the method
-#'
-#'
-#' @return A value of \code{gamma} such that \code{E(K)=K^*} 
-#'
-#' @keywords prior number of cluster
-#'
-#' @export
-#' 
-#' @examples
-#' n <- 82
-#' Mstar <- 12
-#' gam_de <- AM_find_gamma_Delta(n,Mstar,Kstar=6, gam_min=1e-4,gam_max=10, tolerance=0.1)
-#' prior_K_de <-  AM_prior_K_Delta(n,gam_de,Mstar)
-#' prior_K_de\\%*\\%1:n
-
-AM_find_gamma_Delta <- function (n,Mstar,Kstar=6, gam_min=0.0001,gam_max=10, tolerance=0.1) {
-	return(find_gamma_Delta(n,Mstar,Kstar, gam_min,gam_max, tolerance));
-}
 
 
-#' Once the prior on the numbuer of mixture $M$ is assumed to be a Shifted Posson of parameter \code{Lambda}, 
-#' this function  adopt a \emph{bisection method} to find the value of \code{gamma} such that the induced distribution
-#'  on the number of clusers is centered around a user specifed value \eqn{K^*}, i.e. the function use a bisection
-#'   method to solve Eq.~{eq:findgamma} of WE NEED TO CITE ANTMAN PAPER. The user can provide a lower \eqn{\gamma_{l}} 
-#'   and an upper \eqn{\gamma_{u}} bound for the possible values of $gamma$. The default values are \eqn{\gamma_l= 10^{-3}} and \eqn{\gamma_{u}=10}.
-#'     A defaault value for the tolerance is \eqn{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31),
-#'      the function stops warning that convergence has not bee reached.
-#'
-#' @param n             The sample size
-#' @param Lambda        The parameter of the Shifted Poisson for the number of components of the mixture
-#' @param Kstar         The mean number of cluster the user want to specify
-#' @param gam_min       The lower bound of the interval in which \code{gamma} should be lie
-#' @param gam_max       The upper bound of the interval in which \code{gamma} should lie
-#' @param tolerance     Tolerance of the method
-#'
-#'
-#' @return A value of \code{gamma} such that \code{E(K)=K^*} 
-#'
-#' @keywords prior number of cluster
-#'
-#' @export
-#' 
-#' @examples
-#' n <- 82
-#' Lam  <- 11
-#' gam_po <-  AM_find_gamma_Pois(n,Lam,Kstar=6, gam_min=0.0001,gam_max=10, tolerance=0.1)
-#' prior_K_po <-  AM_prior_K_Pois(n,gam_po,Lam)
-#' prior_K_po\\%*\\%1:n
-
-AM_find_gamma_Pois <- function (n,Lambda,Kstar=6, gam_min=0.0001,gam_max=10, tolerance=0.1) {
-	return (find_gamma_Pois(n,Lambda,Kstar, gam_min,gam_max, tolerance));
-}
-
-#' Once the prior on the numbuer of mixture $M$ is assumed to be a Negative Binomial  Negative Binomial with parameter \code{r>0} and \code{0<p<1}, with  mean is 1+ r*p/(1-p), this function  adopt a \emph{bisection method} to find the value of \code{gamma} such that the induced distribution on the number of clusers is centered around a user specifed value \eqn{K^*}, i.e. the function use a bisection method to solve Eq.~{eq:findgamma} of WE NEED TO CITE ANTMAN PAPER. The user can provide a lower \eqn{\gamma_{l}} and an upper \eqn{\gamma_{u}} bound for the possible values of $gamma$. The default values are \eqn{\gamma_l= 10^{-3}} and \eqn{\gamma_{u}=10}.  A defaault value for the tolerance is \eqn{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31), the function stops warning that convergence has not bee reached.
-#'
-#' @param n             The sample size
-#' @param r      The dispersion parameter \code{r} of Negative Binomial
-#' @param p      The probability of failure parameter \code{p} of Negative Binomial
-#' @param Kstar         The mean number of cluster the user want to specify
-#' @param gam_min  The lower bound of the interval in which \code{gamma} should be lie
-#' @param gam_max   The upper bound of the interval in which \code{gamma} should lie
-#' @param tolerance   tolerance of the method
-#'
-#'
-#' @return A value of \code{gamma} such that \code{E(K)=K^*} 
-#'
-#' @keywords prior number of cluster
-#'
-#' @export
-#' 
-#' @examples
-#' n <- 82
-#' r <- 1
-#' p <- 0.8571
-#' gam_nb= AM_find_gamma_NegBin(n,r,p,Kstar=6, gam_min=0.001,gam_max=10000, tolerance=0.1)
-#' prior_K_nb= AM_prior_K_NegBin(n,gam_nb, r, p)
-#' prior_K_nb\\%*\\%1:n
-
-AM_find_gamma_NegBin <- function (n,r,p,Kstar=6, gam_min=0.001,gam_max=10000, tolerance=0.1){
-	return (find_gamma_NegBin(n,r,p,Kstar, gam_min,gam_max, tolerance));
-}
-
-
-
-#' AM_mcmc_neff MCMC Parameters
+#' IAM_mcmc_neff MCMC Parameters
 #' 
 #' TBD
 #' 
+#'@export
 #'@param  unichain  TBD
 #'@return TBD
-#'@export
 ### Provo a calcolare l'effective sample size
-AM_mcmc_neff <- function(unichain){ # Using 11.5 of Bayesian Data Analysis
+IAM_mcmc_neff <- function(unichain){ # Using 11.5 of Bayesian Data Analysis
 	
 	## TODO: Compare with this : 
 	#library(coda)
@@ -255,11 +155,13 @@ AM_mcmc_neff <- function(unichain){ # Using 11.5 of Bayesian Data Analysis
 	# Whit rho estimated using the acf function of R
 	G <- length(unichain)
 	
-	rho=acf(unichain,lag.max=G)$acf
+	rho=acf(unichain,lag.max=G, plot=FALSE)$acf
 	
 	differenza  <- rho[1:(G-1)]+rho[2:(G)]
 	wh_neg=which(differenza<0)
-	
+	if (length(wh_neg) == 0) {
+		return (NaN);
+	}
 	TT=min(wh_neg)
 	
 	if( TT%%2!=1){TT= TT+1}
@@ -268,3 +170,20 @@ AM_mcmc_neff <- function(unichain){ # Using 11.5 of Bayesian Data Analysis
 	return(G/denom)
 }
 
+#' IAM_mcmc_error MCMC Error
+#' 
+#' TBD
+#' 
+#'@export
+#'@param  X  TBD
+#'@return TBD
+IAM_mcmc_error <- function(X){
+	N <- length(X)
+	b   = max(1, round(sqrt(N)))
+	a   = ceiling(N/b)
+	m   = matrix(X[1:(a*b)], nrow = a, ncol=b) 
+	Yks = rowSums(m) / b
+	mu = mean(X)
+	sigma = (b / (a - 1)) * sum((Yks * mu)**2)
+	return ( sigma) ;
+}

@@ -49,7 +49,7 @@ check : AntMAN/src/RcppExports.cpp
 	${R_CMD} -e  "library(devtools) ; devtools::build_manual(\"$*\"); " || ${R_CMD} -e  "library(devtools) ; devtools::check(\"$*\",manual=TRUE); " || touch $@
 
 %.pdf : %/NAMESPACE
-	R CMD Rd2pdf $* --no-preview --force
+	R CMD Rd2pdf $* --no-preview --force --no-clean
 
 build_test/Makefile :  ${H_FILES} ${C_FILES} CMakeLists.txt
 	rm -rf build_test 
@@ -59,7 +59,7 @@ build_test/test_mixtures : build_test/Makefile
 	+make -C build_test 
 test : build_test/Makefile
 	+make -C build_test CTEST_OUTPUT_ON_FAILURE=1 all test
-	
+
 deps :
 	echo "To be defined."
 
