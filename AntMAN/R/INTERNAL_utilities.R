@@ -184,6 +184,6 @@ IAM_mcmc_error <- function(X){
 	m   = matrix(X[1:(a*b)], nrow = a, ncol=b) 
 	Yks = rowSums(m) / b
 	mu = mean(X)
-	sigma = (b / (a - 1)) * sum((Yks * mu)**2)
-	return ( sigma) ;
+	sigma2 = (b / (a - 1)) * sum((Yks * mu)**2)
+	return ( sqrt(sigma2) / sqrt(N) ) ;
 }

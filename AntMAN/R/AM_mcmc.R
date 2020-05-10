@@ -100,7 +100,7 @@ summary.AM_mcmc_output=function(object,...){
 	cat(" -mix_weight_prior(",list_values(attr(object,'mix_weight_prior')),")\n", sep = "");
 	cat(" -mcmc_parameters(",list_values(attr(object,'mcmc_parameters')),")\n", sep = "");
 	cat("\n - Output of the Gibbs sampler\n\n");
-	cat(sprintf("    %10s%10s%10s%10s%10s%10s\n", "Name", "Mean", "StdDev", "Count","5%","50%","95%", "Eff.", "MCMC Error"));
+	cat(sprintf("    %10s%10s%10s%10s%10s%10s%10s%10s%10s\n", "Name", "Mean", "StdDev", "Count","5%","50%","95%", "Eff.", "MCMC Err."));
 	invisible = c("CI")
 	# If fixed clustering 
 	for (item in names(object)) {
