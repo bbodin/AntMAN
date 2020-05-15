@@ -170,20 +170,20 @@ IAM_mcmc_neff <- function(unichain){ # Using 11.5 of Bayesian Data Analysis
 	return(G/denom)
 }
 
-#' IAM_mcmc_error MCMC Error
-#' 
-#' TBD
+#' Internal function used to compute the MCMC Error as a batch mean.
 #' 
 #'@export
-#'@param  X  TBD
-#'@return TBD
+#'@param  X is a chain
+#'@return the MCMC Error (sqrt(sigma2) / sqrt(N))
 IAM_mcmc_error <- function(X){
 	N <- length(X)
 	b   = max(1, round(sqrt(N)))
 	a   = ceiling(N/b)
-	m   = matrix(X[1:(a*b)], nrow = a, ncol=b) 
-	Yks = rowSums(m) / b
-	mu = mean(X)
-	sigma2 = (b / (a - 1)) * sum((Yks * mu)**2)
-	return ( sqrt(sigma2) / sqrt(N) ) ;
+	m   = matrix(c(X,rep(0,a*b - N)) , nrow = a, ncol=b) 
+	count_matrix =  matrix(c(rep(1,N),rep(0,a*b - N)), nrow = a, ncol=b)
+	count_row = rowSums(count_matrix)
+	Yks = rowSums(m) / count_row # NA
+	mu = mean(X) 
+	sigma2 = (b / (a - 1)) * sum((Yks - mu)**2) # NA
+	return ( sqrt(sigma2) / sqrt(N) ) ; # NA
 }

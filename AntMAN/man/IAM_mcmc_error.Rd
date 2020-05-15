@@ -2,16 +2,16 @@
 % Please edit documentation in R/INTERNAL_utilities.R
 \name{IAM_mcmc_error}
 \alias{IAM_mcmc_error}
-\title{IAM_mcmc_error MCMC Error}
+\title{Internal function used to compute the MCMC Error as a batch mean.}
 \usage{
 IAM_mcmc_error(X)
 }
 \arguments{
-\item{X}{TBD}
+\item{X}{is a chain}
 }
 \value{
-TBD
+the MCMC Error (sqrt(sigma2) / sqrt(N))
 }
 \description{
-TBD
+Internal function used to compute the MCMC Error as a batch mean.
 }

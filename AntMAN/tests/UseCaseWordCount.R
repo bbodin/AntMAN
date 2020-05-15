@@ -5,12 +5,12 @@
 ###############
 #######################################################################################
 
-quit() ## Skip this test - too long
+#quit() ## Skip this test - too long
 library("AntMAN")
 
 data(said)
 
-y_uvp = said$Frequency
+y_uvp = as.integer(said$Frequency) # Univariate Poisson needs integer, we round frequencies.
   
 mcmc_params        = AM_mcmc_parameters(niter=2000, burnin=1000, thin=10, verbose=0, output=c("CI","K"))
 mixture_uvp_params = AM_mix_hyperparams_unipois (alpha0=2, beta0=0.2)

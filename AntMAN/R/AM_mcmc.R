@@ -94,25 +94,33 @@ list_values = function (x) { ## TODO : can be a head + paste
 #'@method summary AM_mcmc_output 
 #'@export
 summary.AM_mcmc_output=function(object,...){
-	cat("\n","MCMC Output:","\n");
+	cat("\n","Fitted model:","\n");
 	cat(" -mix_kernel_hyperparams(",list_values(attr(object,'mix_kernel_hyperparams')),")\n", sep = "");
 	cat(" -mix_components_prior(",list_values(attr(object,'mix_components_prior')),")\n", sep = "");
 	cat(" -mix_weight_prior(",list_values(attr(object,'mix_weight_prior')),")\n", sep = "");
 	cat(" -mcmc_parameters(",list_values(attr(object,'mcmc_parameters')),")\n", sep = "");
-	cat("\n - Output of the Gibbs sampler\n\n");
-	cat(sprintf("    %10s%10s%10s%10s%10s%10s%10s%10s%10s\n", "Name", "Mean", "StdDev", "Count","5%","50%","95%", "Eff.", "MCMC Err."));
-	invisible = c("CI")
+	cat("\n - Summary of the MCMC output:\n\n");
+	cat(sprintf("    %10s%10s%10s%10s%10s%10s%10s%10s\n", "Name", "Mean", "StdDev", "2.5%","50%","97.5%", "ESS", "MCMC Err."));
+	invisible = c("CI","W","mu","sig","sig2","theta","R","P")
+	
+	
+	
 	# If fixed clustering 
 	for (item in names(object)) {
 		if (!item %in% invisible) { 
-			e = unlist(object[[item]])
-			emean = mean(e)
-			esd = sd(e)
-			elen = length(e)
-			neff = IAM_mcmc_neff(e)
-			mcmcerror = IAM_mcmc_error(e)
-			q = quantile(e,prob=c(0.05,0.5,0.95), names=FALSE)
-			cat(sprintf("    %10s%10.2f%10.2f%10d%10.2f%10.2f%10.2f%10.2f%10.2f\n", item, emean, esd, elen, q[1], q[2], q[3], neff, mcmcerror));
+			allcols = AM_extract(object,c(item))
+			for (subitem in names(allcols)) {
+				e = allcols[,subitem] 
+				emean = mean(e)
+				esd = sd(e)
+				elen = length(e)
+				neff = NA 
+				if (anyNA(e) == FALSE) neff = IAM_mcmc_neff(e)
+				mcmcerror = NA 
+				if (anyNA(e) == FALSE) mcmcerror = IAM_mcmc_error(e)
+				q = quantile(e,prob=c(0.025, 0.5,0.975), names=FALSE, na.rm=TRUE)
+				cat(sprintf("    %10s%10.2f%10.2f%10.2f%10.2f%10.2f%10.2f%10.2f\n", subitem, emean, esd, q[1], q[2], q[3], neff, mcmcerror));
+			}
 		}
 	}
 	

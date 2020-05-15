@@ -475,7 +475,9 @@ Rcpp::List IAM_mcmc_fit (
 			VERBOSE_ASSERT (is_multivariate(mix_kernel_hyperparams), "y argument is a Matrix while the technique is not MultiVariate.") ;
 
 			VERBOSE_INFO ("-  Rcpp::as<arma::mat>(y).n_rows = " << Rcpp::as<arma::mat>(y).n_rows);
-			dynamic_cast<MultivariateMixture*>(mixture)->fit(Rcpp::as<arma::mat>(y) , initial_clustering, fixed_clustering,
+			MultivariateMixture* identifiedMixture = dynamic_cast<MultivariateMixture*>(mixture);
+			VERBOSE_ASSERT (identifiedMixture, "The input data type does not match the selected mixture. Need MultivariateMixture.");
+			identifiedMixture->fit(Rcpp::as<arma::mat>(y) , initial_clustering, fixed_clustering,
 					prior ,
 					niter ,burnin ,thin , parallel, &res );
 			VERBOSE_INFO("End of Gibbs");
@@ -485,7 +487,9 @@ Rcpp::List IAM_mcmc_fit (
 			VERBOSE_ASSERT (is_multivariate(mix_kernel_hyperparams), "y argument is a Matrix while the technique is not MultiVariate.") ;
 
 			VERBOSE_INFO ("-  Rcpp::as<arma::imat>(y).n_rows = " << Rcpp::as<arma::imat>(y).n_rows);
-			dynamic_cast<MultivariateIntegerMixture*>(mixture)->fit(Rcpp::as<arma::imat>(y) , initial_clustering, fixed_clustering,
+			MultivariateIntegerMixture* identifiedMixture = dynamic_cast<MultivariateIntegerMixture*>(mixture);
+			VERBOSE_ASSERT (identifiedMixture, "The input data type does not match the selected mixture. Need MultivariateIntegerMixture.");
+			identifiedMixture->fit(Rcpp::as<arma::imat>(y) , initial_clustering, fixed_clustering,
 					prior ,
 					niter ,burnin ,thin , parallel, &res );
 			VERBOSE_INFO("End of Gibbs");
@@ -494,7 +498,9 @@ Rcpp::List IAM_mcmc_fit (
 		}  else if(Rcpp::is<Rcpp::NumericVector>(y) ){
 			VERBOSE_INFO ("-  Rcpp::as<arma::vec>(y).n_rows = " << Rcpp::as<arma::vec>(y).n_rows);
 			VERBOSE_ASSERT (is_univariate(mix_kernel_hyperparams), "y argument is a Vector while the technique is not Univariate.") ;
-			dynamic_cast<UnivariateMixture*>(mixture)->fit(Rcpp::as<arma::vec>(y) , initial_clustering, fixed_clustering, prior ,
+			UnivariateMixture* identifiedMixture = dynamic_cast<UnivariateMixture*>(mixture);
+			VERBOSE_ASSERT (identifiedMixture, "The input data type does not match the selected mixture. Need UnivariateMixture.");
+			identifiedMixture->fit(Rcpp::as<arma::vec>(y) , initial_clustering, fixed_clustering, prior ,
 					niter ,burnin ,thin,   parallel, &res );
 
 			VERBOSE_INFO("End of Gibbs");
@@ -502,7 +508,9 @@ Rcpp::List IAM_mcmc_fit (
 		} else if(Rcpp::is<Rcpp::IntegerVector>(y)){
 			VERBOSE_INFO ("-  Rcpp::as<arma::ivec>(y).n_rows = " << Rcpp::as<arma::ivec>(y).n_rows);
 			VERBOSE_ASSERT (is_univariate(mix_kernel_hyperparams), "y argument is a Vector while the technique is not Univariate.") ;
-			dynamic_cast<UnivariateIntegerMixture*>(mixture)->fit(Rcpp::as<arma::ivec>(y) , initial_clustering, fixed_clustering, prior ,
+			UnivariateIntegerMixture* identifiedMixture = dynamic_cast<UnivariateIntegerMixture*>(mixture);
+			VERBOSE_ASSERT (identifiedMixture, "The input data type does not match the selected mixture. Need UnivariateIntegerMixture.");
+			identifiedMixture->fit(Rcpp::as<arma::ivec>(y) , initial_clustering, fixed_clustering, prior ,
 					niter ,burnin ,thin,   parallel, &res );
 
 			VERBOSE_INFO("End of Gibbs");

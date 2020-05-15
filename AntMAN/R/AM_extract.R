@@ -6,6 +6,7 @@
 #######################################################################################
 
 
+## INTERNAL
 generate_column_names = function(target, r) {
 	values = NULL;
 	
@@ -25,6 +26,8 @@ generate_column_names = function(target, r) {
 
 
 
+
+## INTERNAL
 extract_target = function(fit, target, iterations = NULL, debug = FALSE){
 	
 	result = NULL

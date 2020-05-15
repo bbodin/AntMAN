@@ -108,6 +108,7 @@ Thanks for your contributions:
 
   - Check all the comments in the code
   - File writing feature
+  - Arrange layout of summary
 
 ## To Remember before submit
 
