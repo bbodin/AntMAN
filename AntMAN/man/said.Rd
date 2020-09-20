@@ -4,7 +4,9 @@
 \name{said}
 \alias{said}
 \title{Usage frequency of the word said in the Brown corpus.}
-\format{A list with 500 observations on the frequency of said in different texts.}
+\format{
+A list with 500 observations on the frequency of said in different texts.
+}
 \source{
 https://www.kaggle.com/nltkdata/brown-corpus
 }

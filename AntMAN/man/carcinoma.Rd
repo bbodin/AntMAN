@@ -9,7 +9,9 @@ The carcinoma data from Agresti (2002, 542) consist of seven dichotomous variabl
 the ratings by seven pathologists of 118 slides on the presence or absence of carcinoma.
 The purpose of studying these data is to model "interobserver agreement" by examining how
 subjects might be divided into groups depending upon the consistency of their diagnoses.}
-\format{A data frame with 118 rows and 7 variables (from A to G).}
+\format{
+A data frame with 118 rows and 7 variables (from A to G).
+}
 \usage{
 carcinoma
 }
