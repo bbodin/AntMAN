@@ -49,14 +49,23 @@ public :
 				const arma::mat    Lam0 = _Lam0;
 
 
+				VERBOSE_EXTRA("In Alloc: mu0  = " << mu0);
+				VERBOSE_EXTRA("In Alloc: ka0  = " << ka0);
+				VERBOSE_EXTRA("In Alloc: nu0  = " << nu0);
+				VERBOSE_EXTRA("In Alloc: Lam0  = " << Lam0);
+
 				VERBOSE_ASSERT(Lam0.is_sympd(), "In init_tau: rwish requires Lam0 to be symmetric. It is not Lam0 = " << Lam0);
 				for(int l=0;l<M;l++){
 
 					const arma::mat res = riwish (nu0, Lam0);
+					VERBOSE_EXTRA("In Alloc: riwish (nu0, Lam0) = " << res);
 
 					_Sig_current.slice(l) = res;
 
-					const arma::colvec tmp = mvrnormArma (mu0, res / ka0) ;
+					auto tmp1 = res / ka0 ;
+					VERBOSE_EXTRA("In Alloc: tmp1 = " << tmp1);
+					const arma::colvec tmp = mvrnormArma (mu0, tmp1) ;
+					VERBOSE_EXTRA("In Alloc: tmp = " << tmp);
 
 					_mu_current.row(l)   =  tmp.t();
 
@@ -231,6 +240,7 @@ public :
 					const arma::mat Lamn = Lam0 + S2 + ka0nokonybarmatmul;
 
 					VERBOSE_EXTRA("In Alloc: ka0  = " << ka0);
+					VERBOSE_EXTRA("In Alloc: nun  = " << nun);
 					VERBOSE_EXTRA("In Alloc: njl  = " << njl);
 					VERBOSE_EXTRA("In Alloc: ka0nokon  = " << ka0nokon);
 					VERBOSE_EXTRA("In Alloc: ybar  = " << (ybar));
@@ -244,11 +254,13 @@ public :
 					VERBOSE_EXTRA("In Alloc: Lamn  = " << Lamn);
 					VERBOSE_ASSERT(Lam0.is_sympd(), "In Alloc: rwish requires Lamn to be symmetric. It is not Lamn = " << Lamn);
 
-						const arma::mat Sig_l =  riwish (nun, Lamn) ;
-						const arma::vec mu_l   = mvrnormArma(mun, Sig_l/kan);
+					const arma::mat Sig_l =  riwish (nun, Lamn) ;
+					VERBOSE_EXTRA("In Alloc: Sig_l  = " << Sig_l);
+					const arma::vec mu_l   = mvrnormArma(mun, Sig_l/kan);
+					VERBOSE_EXTRA("In Alloc: mu_l  = " << mu_l);
 
-						Sig_current.slice(l) = Sig_l; // In case 4 we have to update a matrix
-						mu_current.row(l)  = mu_l.t();
+					Sig_current.slice(l) = Sig_l; // In case 4 we have to update a matrix
+					mu_current.row(l)  = mu_l.t();
 
 				}
 
@@ -271,6 +283,7 @@ public :
 							S_current[l]=am_rgamma(gamma_current,1./(U_current+1.0));
 						}
 
+				VERBOSE_EXTRA("End of internal loop ");
 
 			 // TODO[OPTIMIZE ME] : same as initializatrion but initialization can be anything philosophical problem !!!
 

@@ -152,14 +152,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // find_gamma_Pois
-double find_gamma_Pois(const unsigned int n, const double Lambda, const unsigned int Kstar, double gam_min, double gam_max, const double tolerance, const unsigned int max_iter);
+double find_gamma_Pois(const unsigned int n, const double Lambda, const double Kstar, double gam_min, double gam_max, const double tolerance, const unsigned int max_iter);
 RcppExport SEXP _AntMAN_find_gamma_Pois(SEXP nSEXP, SEXP LambdaSEXP, SEXP KstarSEXP, SEXP gam_minSEXP, SEXP gam_maxSEXP, SEXP toleranceSEXP, SEXP max_iterSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const unsigned int >::type n(nSEXP);
     Rcpp::traits::input_parameter< const double >::type Lambda(LambdaSEXP);
-    Rcpp::traits::input_parameter< const unsigned int >::type Kstar(KstarSEXP);
+    Rcpp::traits::input_parameter< const double >::type Kstar(KstarSEXP);
     Rcpp::traits::input_parameter< double >::type gam_min(gam_minSEXP);
     Rcpp::traits::input_parameter< double >::type gam_max(gam_maxSEXP);
     Rcpp::traits::input_parameter< const double >::type tolerance(toleranceSEXP);
@@ -169,7 +169,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // find_gamma_NegBin
-double find_gamma_NegBin(const unsigned int n, const double r, const double p, const unsigned int Kstar, double gam_min, double gam_max, const double tolerance, const unsigned int max_iter);
+double find_gamma_NegBin(const unsigned int n, const double r, const double p, const double Kstar, double gam_min, double gam_max, const double tolerance, const unsigned int max_iter);
 RcppExport SEXP _AntMAN_find_gamma_NegBin(SEXP nSEXP, SEXP rSEXP, SEXP pSEXP, SEXP KstarSEXP, SEXP gam_minSEXP, SEXP gam_maxSEXP, SEXP toleranceSEXP, SEXP max_iterSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -177,7 +177,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const unsigned int >::type n(nSEXP);
     Rcpp::traits::input_parameter< const double >::type r(rSEXP);
     Rcpp::traits::input_parameter< const double >::type p(pSEXP);
-    Rcpp::traits::input_parameter< const unsigned int >::type Kstar(KstarSEXP);
+    Rcpp::traits::input_parameter< const double >::type Kstar(KstarSEXP);
     Rcpp::traits::input_parameter< double >::type gam_min(gam_minSEXP);
     Rcpp::traits::input_parameter< double >::type gam_max(gam_maxSEXP);
     Rcpp::traits::input_parameter< const double >::type tolerance(toleranceSEXP);
@@ -187,14 +187,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // find_gamma_Delta
-double find_gamma_Delta(const unsigned int n, const unsigned Mstar, const unsigned int Kstar, double gam_min, double gam_max, const double tolerance, const unsigned int max_iter);
+double find_gamma_Delta(const unsigned int n, const unsigned Mstar, const double Kstar, double gam_min, double gam_max, const double tolerance, const unsigned int max_iter);
 RcppExport SEXP _AntMAN_find_gamma_Delta(SEXP nSEXP, SEXP MstarSEXP, SEXP KstarSEXP, SEXP gam_minSEXP, SEXP gam_maxSEXP, SEXP toleranceSEXP, SEXP max_iterSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const unsigned int >::type n(nSEXP);
     Rcpp::traits::input_parameter< const unsigned >::type Mstar(MstarSEXP);
-    Rcpp::traits::input_parameter< const unsigned int >::type Kstar(KstarSEXP);
+    Rcpp::traits::input_parameter< const double >::type Kstar(KstarSEXP);
     Rcpp::traits::input_parameter< double >::type gam_min(gam_minSEXP);
     Rcpp::traits::input_parameter< double >::type gam_max(gam_maxSEXP);
     Rcpp::traits::input_parameter< const double >::type tolerance(toleranceSEXP);

@@ -61,8 +61,8 @@ static inline void flush_output () {
 #define WARNING_LEVEL 1
 #define ERROR_LEVEL   0
 
-#define VERBOSE_GENERIC_MSG(thr, out, color, msg)      {if (VERBOSE_LEVEL() >= thr)    out  << "[" << thr << "] " << color  << msg << RESET_COLOR << std::endl;              };
-#define VERBOSE_GENERIC_END(thr, out, color, msg)      {if (VERBOSE_LEVEL() >= thr)    out  << "[" << thr << "] " << color  << msg << RESET_COLOR << std::endl; stop_cmd () ;};
+#define VERBOSE_GENERIC_MSG(thr, out, color, msg)      {if (VERBOSE_LEVEL() >= thr)    out  << "[" << thr << "] " << "[" << __FILE__ << ":" << __LINE__ << "] " << color  << msg << RESET_COLOR << std::endl;              };
+#define VERBOSE_GENERIC_END(thr, out, color, msg)      {VERBOSE_GENERIC_MSG(thr, out, color, msg); stop_cmd () ;};
 
 
 #ifdef VERBOSE_BINARY
