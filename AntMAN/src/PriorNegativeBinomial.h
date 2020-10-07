@@ -21,7 +21,7 @@ struct negbin_component {
 	 double LSD_g;
 	 double value;
 	 bool   fixed;
-	 negbin_component() : a(0.0), b(0.0) ,  LSD(0.0), LSD_g(0.0) ,  value(0.0), fixed(true) {
+	 negbin_component() : a(0.0), b(0.0) ,  LSD(1.0), LSD_g(1.0) ,  value(0.0), fixed(true) {
 
 	 }
 };
@@ -124,21 +124,23 @@ public:
 			}
 
 			// Metropolis-Hasting for P_M
-			// TODO[CHECK ME] : (Raffa should check this ... at some point .. in time ... we are done ...)
+		
 
 			if (not this->P.fixed) {
 				double P_vecchio = P.value;
-				double P_lmedia = std::log(P_vecchio) - std::log(1 - P_vecchio);
+				double Z_vecchio = std::log(P_vecchio) - std::log(1 - P_vecchio);
 
 				//Propose a new value
-				double P_lnuovo=am_rnorm(P_lmedia,P.LSD);
-				double P_nuovo=std::exp(P_lnuovo) / (1 + std::exp (P_lnuovo));
+				double Z_nuovo=am_rnorm(Z_vecchio,P.LSD);
+				double P_nuovo=std::exp(Z_nuovo) / (1 + std::exp (Z_nuovo));
 
-				double log_full_p_m_new =  compute_lPsi ( U ,  h_param.gamma,  K ,    P_nuovo,R.value)    + (P.a-1)*std::log(P_nuovo)  +(P.b - 1)* std::log(1 - P_nuovo) ;
-				double log_full_p_m_vec =  compute_lPsi ( U ,  h_param.gamma,  K ,    P_vecchio, R.value) + (P.a-1)*std::log(P_vecchio)-(P.b - 1 )*std::log(1 -P_vecchio);
+				double log_full_p_m_new = compute_lPsi (U,h_param.gamma,K,P_nuovo,R.value)    + (P.a)*std::log(P_nuovo)  +(P.b )*std::log(1 - P_nuovo) ;
+				double log_full_p_m_vec = compute_lPsi (U,h_param.gamma,K,P_vecchio, R.value) + (P.a)*std::log(P_vecchio)+(P.b )*std::log(1 -P_vecchio);
 
-				double P_ln_acp = (log_full_p_m_new - P_lmedia - std::log(1 - P_vecchio ) ) - (log_full_p_m_vec - P_lnuovo - std::log(1 - P_nuovo ));
+				double P_ln_acp = std::min(0.0, (log_full_p_m_new) - (log_full_p_m_vec));
 
+	   			VERBOSE_DEBUG("P_ln_acp= "<< P_ln_acp<<"P.LSD="<< P.LSD);
+				
 				double P_lnu=std::log(am_runif(0.0,1.0));
 
 				this->P.value = P_lnu < P_ln_acp ? P_nuovo : P_vecchio;

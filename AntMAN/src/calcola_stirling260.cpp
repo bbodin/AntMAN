@@ -445,9 +445,10 @@ double compute_media(const Rcpp::NumericVector prob,const unsigned n){
 
 
 // [[Rcpp::export]]
-double find_gamma_Pois(const unsigned int n,const double Lambda,const unsigned int Kstar, double gam_min,double gam_max,const double tolerance,const unsigned int max_iter=30){
+double find_gamma_Pois(const unsigned int n,const double Lambda,const double Kstar, double gam_min,double gam_max,const double tolerance,const unsigned int max_iter=30){
 
 	
+	VERBOSE_DEBUG("Kstar="<<Kstar);
 	//Rcpp::IntegerVector unoton=Rcpp:seq(1,n);
 	
 	Rcpp::NumericVector p_min=prior_K_Pois(n,gam_min,Lambda);
@@ -456,6 +457,9 @@ double find_gamma_Pois(const unsigned int n,const double Lambda,const unsigned i
 	Rcpp::NumericVector p_max=prior_K_Pois(n,gam_max,Lambda);
 	double Kmax=compute_media(p_max,n);
 
+	VERBOSE_DEBUG("Kmin-Kstar="<< (Kmin-Kstar));
+	
+	
 	VERBOSE_ASSERT( (Kmin-Kstar) <= 0 , "K_min="<<Kmin<<" gam_min="<<gam_min <<": Sorry (Kmin-Kstar)>0, you should try with a smaller value of gam_min");
 	VERBOSE_ASSERT( (Kmax-Kstar) >= 0 , "K_max="<<Kmax<<" gam_max="<<gam_max <<": Sorry (Kmax-Kstar)<0, you should try with a larger value of gam_max");
 	
@@ -514,7 +518,7 @@ double find_gamma_Pois(const unsigned int n,const double Lambda,const unsigned i
 ///Metodo bisezione Negative binomial
 
 // [[Rcpp::export]]
-double find_gamma_NegBin(const unsigned int n,const double r, const double p,const unsigned int Kstar, double gam_min,double gam_max,const double tolerance,const unsigned int max_iter=30){
+double find_gamma_NegBin(const unsigned int n,const double r, const double p,const double Kstar, double gam_min,double gam_max,const double tolerance,const unsigned int max_iter=30){
 
 	
 	//Rcpp::IntegerVector unoton=Rcpp:seq(1,n);
@@ -526,7 +530,7 @@ double find_gamma_NegBin(const unsigned int n,const double r, const double p,con
 	Rcpp::NumericVector p_max=prior_K_NegBin(n,gam_max,r,p);
 	double Kmax=compute_media(p_max,n);
 
-	VERBOSE_ASSERT( (Kmin-Kstar) <= 0 , "K_min="<<Kmin<<" gam_min="<<gam_min <<": Sorry (Kmin-Kstar)>0, you should try with a smaller value of gam_min");
+	VERBOSE_ASSERT( (Kmin-Kstar) <= 0 , "K_min="<<Kmin<<" gam_min="<<gam_min <<": PIPPO Sorry (Kmin-Kstar)>0, you should try with a smaller value of gam_min");
 	VERBOSE_ASSERT( (Kmax-Kstar) >= 0 , "K_max="<<Kmax<<" gam_max="<<gam_max <<": Sorry (Kmax-Kstar)<0, you should try with a larger value of gam_max");
 	
 
@@ -578,7 +582,7 @@ double find_gamma_NegBin(const unsigned int n,const double r, const double p,con
 ///Metodo bisezione Delta
 
 // [[Rcpp::export]]
-double find_gamma_Delta(const unsigned int n,const unsigned Mstar,const unsigned int Kstar, double gam_min,double gam_max,const double tolerance,const unsigned int max_iter=30){
+double find_gamma_Delta(const unsigned int n,const unsigned Mstar,const double Kstar, double gam_min,double gam_max,const double tolerance,const unsigned int max_iter=30){
 
 	//TODO: DFai il check di Kstar minore di M_star e n
 	
