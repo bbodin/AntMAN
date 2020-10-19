@@ -203,26 +203,3 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-
-static const R_CallMethodDef CallEntries[] = {
-    {"_AntMAN_IAM_mcmc_fit", (DL_FUNC) &_AntMAN_IAM_mcmc_fit, 7},
-    {"_AntMAN_compute_stirling", (DL_FUNC) &_AntMAN_compute_stirling, 2},
-    {"_AntMAN_compute_stirling_ricor", (DL_FUNC) &_AntMAN_compute_stirling_ricor, 2},
-    {"_AntMAN_compute_stirling_ricor_abs", (DL_FUNC) &_AntMAN_compute_stirling_ricor_abs, 2},
-    {"_AntMAN_compute_stirling_ricor_log", (DL_FUNC) &_AntMAN_compute_stirling_ricor_log, 2},
-    {"_AntMAN_VnkPoisson", (DL_FUNC) &_AntMAN_VnkPoisson, 3},
-    {"_AntMAN_VnkNegBin", (DL_FUNC) &_AntMAN_VnkNegBin, 4},
-    {"_AntMAN_VnkDelta", (DL_FUNC) &_AntMAN_VnkDelta, 3},
-    {"_AntMAN_prior_K_Pois", (DL_FUNC) &_AntMAN_prior_K_Pois, 3},
-    {"_AntMAN_prior_K_NegBin", (DL_FUNC) &_AntMAN_prior_K_NegBin, 4},
-    {"_AntMAN_prior_K_Delta", (DL_FUNC) &_AntMAN_prior_K_Delta, 3},
-    {"_AntMAN_find_gamma_Pois", (DL_FUNC) &_AntMAN_find_gamma_Pois, 7},
-    {"_AntMAN_find_gamma_NegBin", (DL_FUNC) &_AntMAN_find_gamma_NegBin, 8},
-    {"_AntMAN_find_gamma_Delta", (DL_FUNC) &_AntMAN_find_gamma_Delta, 7},
-    {NULL, NULL, 0}
-};
-
-RcppExport void R_init_AntMAN(DllInfo *dll) {
-    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
-    R_useDynamicSymbols(dll, FALSE);
-}
