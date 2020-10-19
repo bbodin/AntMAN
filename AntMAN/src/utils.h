@@ -58,13 +58,31 @@ inline double  update_lsd ( double lsd, double ln_acp, double iter) {
 /// This is a function to sample one observation from a multivariate
 //  Normal with mean vector mu and varcov Sig
 
-inline arma::vec mvrnormArma(arma::colvec mu, arma::mat Sig) {
+inline arma::vec mvrnormArma(arma::colvec mu, arma::mat SigUnchecked) {  // TODO : What to do in case of error ?
 
-	VERBOSE_ASSERT(Sig.is_sympd(), "mvrnormArma requires Sig to be symmetric. It is not Sig = " << std::endl << Sig);
+	arma::mat Sig = SigUnchecked;
+
+	if (not Sig.is_sympd()) {
+		VERBOSE_WARNING("mvrnormArma requires Sig to be symmetric. Sig auto-corrected.");
+		Sig  =  arma::symmatu(Sig);
+	}
+
+
+	//VERBOSE_ASSERT(Sig.is_sympd(), "mvrnormArma requires Sig to be symmetric. It is not Sig = " << std::endl << Sig);
+
 
 	arma::vec Y = arma::randn<arma::vec>(Sig.n_cols);
+	arma::mat cholres = Sig;
+	try {
+		cholres =  arma::chol(Sig) ;
+	} catch (std::runtime_error& e) {
+		VERBOSE_WARNING("cholesky failed....");
+		cholres = Sig;
 
-	return mu +  arma::chol(Sig) * Y;
+	}
+
+
+	return mu +  cholres * Y;
 }
 
 
@@ -86,8 +104,27 @@ inline double dmvnormZero(const arma::mat& x, const arma::vec& mu, const arma::m
 
 }
 
-inline arma::mat riwish(const int df, const arma::mat& iS) {
-	return arma::iwishrnd(iS, df);
+inline arma::mat riwish(const int df, const arma::mat& iSUnchecked) {  // TODO : What to do in case of error ?
+
+	arma::mat iS = iSUnchecked;
+
+		if (not iS.is_sympd()) {
+			VERBOSE_WARNING("riwish requires iS to be symmetric. iS auto-corrected.");
+			iS  =  arma::symmatu(iS);
+		}
+
+
+		arma::mat iwishrndres = iS;
+			try {
+				iwishrndres =  arma::iwishrnd(iS, df) ;
+			} catch (std::runtime_error& e) {
+				VERBOSE_WARNING("cholesky failed....");
+				iwishrndres = iS;
+
+			}
+
+
+	return iwishrndres;
 }
 
 
