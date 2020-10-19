@@ -10,9 +10,9 @@ all : build_test/test_mixtures AntMAN.Rinstall/AntMAN/libs/AntMAN.so  AntMAN.pdf
 
 docker : Dockerfile
 	mkdir -p docker_share
-	sudo rm docker_share/* -rf
+	sudo rm -rf docker_share/* 
 	chcon -Rt svirt_sandbox_file_t  docker_share/
-	cp AntMAN Makefile new_tutorial.R tests_cpp/ docker_share/ -rf
+	cp -rf AntMAN Makefile new_tutorial.R tests_cpp/ docker_share/
 	sudo docker build -f Dockerfile.3.4.4 -t bbodin/antman344 .
 	sudo docker run -v `pwd`/docker_share:/tmp/mixture bbodin/antman344 
 
@@ -54,7 +54,7 @@ check : AntMAN/src/RcppExports.cpp
 build_test/Makefile :  ${H_FILES} ${C_FILES} CMakeLists.txt
 	rm -rf build_test 
 	mkdir -p build_test
-	cmake -S . -B build_test
+	cd build_test && cmake .. 
 build_test/test_mixtures : build_test/Makefile
 	+make -C build_test 
 test : build_test/Makefile
