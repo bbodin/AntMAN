@@ -4,11 +4,7 @@
 \name{galaxy}
 \alias{galaxy}
 \title{Galaxy velocities dataset}
-\format{
-A data frame with X rows and Y variables.
-
-A numeric vector giving the speed of galaxies (1000*(km/second))
-}
+\format{A data frame with X rows and Y variables.}
 \source{
 Roeder, K. (1990) Density estimation with confidence sets exemplified by superclusters and voids in the galaxies, Journal of the American Statistical Association, 85: 617-624.
 }
