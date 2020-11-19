@@ -17,18 +17,14 @@ salso_result_t salsoCpp(const arma::mat &eam, ind_t maxClusts,
 	} else {
 		maxClusts = std::min(maxClusts, N); // never need more than N clusters
 	}
-	if (maxThreads > 0) {
-		omp_set_num_threads(maxThreads);
-	} else {
-		omp_set_num_threads(omp_get_max_threads());
-	}
+
 	int numThreads;
 #pragma omp parallel
 	{
 #pragma omp single
 		{
 			VERBOSE_DEBUG ( "Begin clustering " );
-			numThreads = omp_get_num_threads();
+			numThreads = 1;
 			result.numThreads = numThreads;
 			if (numThreads == 1) {
 				VERBOSE_DEBUG ( "using 1 thread.\n");

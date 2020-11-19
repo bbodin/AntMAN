@@ -5,7 +5,6 @@
 #include <random>
 #include <limits>
 #include <chrono>
-#include <omp.h>
 
 #include "utils.h"
 #ifndef HAS_RCPP
