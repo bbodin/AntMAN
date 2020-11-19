@@ -57,3 +57,11 @@ find_gamma_Delta <- function(n, Mstar, Kstar, gam_min, gam_max, tolerance, max_i
     .Call('_AntMAN_find_gamma_Delta', PACKAGE = 'AntMAN', n, Mstar, Kstar, gam_min, gam_max, tolerance, max_iter)
 }
 
+.salso <- function(eam, maxClusts, Const_Binder, batchSize, nScans, maxThreads, timeLimit) {
+    .Call('_AntMAN_salsoRcpp', PACKAGE = 'AntMAN', eam, maxClusts, Const_Binder, batchSize, nScans, maxThreads, timeLimit)
+}
+
+.computeBinderLoss <- function(eam, partitionLabels, Const_Binder) {
+    .Call('_AntMAN_computeBinderLossRcpp', PACKAGE = 'AntMAN', eam, partitionLabels, Const_Binder)
+}
+

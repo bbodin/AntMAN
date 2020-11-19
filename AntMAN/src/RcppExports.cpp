@@ -203,6 +203,36 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// salsoRcpp
+Rcpp::List salsoRcpp(const Rcpp::NumericMatrix& eam, int maxClusts, double Const_Binder, int batchSize, int nScans, int maxThreads, int timeLimit);
+RcppExport SEXP _AntMAN_salsoRcpp(SEXP eamSEXP, SEXP maxClustsSEXP, SEXP Const_BinderSEXP, SEXP batchSizeSEXP, SEXP nScansSEXP, SEXP maxThreadsSEXP, SEXP timeLimitSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type eam(eamSEXP);
+    Rcpp::traits::input_parameter< int >::type maxClusts(maxClustsSEXP);
+    Rcpp::traits::input_parameter< double >::type Const_Binder(Const_BinderSEXP);
+    Rcpp::traits::input_parameter< int >::type batchSize(batchSizeSEXP);
+    Rcpp::traits::input_parameter< int >::type nScans(nScansSEXP);
+    Rcpp::traits::input_parameter< int >::type maxThreads(maxThreadsSEXP);
+    Rcpp::traits::input_parameter< int >::type timeLimit(timeLimitSEXP);
+    rcpp_result_gen = Rcpp::wrap(salsoRcpp(eam, maxClusts, Const_Binder, batchSize, nScans, maxThreads, timeLimit));
+    return rcpp_result_gen;
+END_RCPP
+}
+// computeBinderLossRcpp
+double computeBinderLossRcpp(const Rcpp::NumericMatrix& eam, const Rcpp::IntegerVector& partitionLabels, double Const_Binder);
+RcppExport SEXP _AntMAN_computeBinderLossRcpp(SEXP eamSEXP, SEXP partitionLabelsSEXP, SEXP Const_BinderSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type eam(eamSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type partitionLabels(partitionLabelsSEXP);
+    Rcpp::traits::input_parameter< double >::type Const_Binder(Const_BinderSEXP);
+    rcpp_result_gen = Rcpp::wrap(computeBinderLossRcpp(eam, partitionLabels, Const_Binder));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_AntMAN_IAM_mcmc_fit", (DL_FUNC) &_AntMAN_IAM_mcmc_fit, 7},
@@ -219,6 +249,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_AntMAN_find_gamma_Pois", (DL_FUNC) &_AntMAN_find_gamma_Pois, 7},
     {"_AntMAN_find_gamma_NegBin", (DL_FUNC) &_AntMAN_find_gamma_NegBin, 8},
     {"_AntMAN_find_gamma_Delta", (DL_FUNC) &_AntMAN_find_gamma_Delta, 7},
+    {"_AntMAN_salsoRcpp", (DL_FUNC) &_AntMAN_salsoRcpp, 7},
+    {"_AntMAN_computeBinderLossRcpp", (DL_FUNC) &_AntMAN_computeBinderLossRcpp, 3},
     {NULL, NULL, 0}
 };
 

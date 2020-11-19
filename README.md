@@ -103,6 +103,7 @@ summary (fit)
 Thanks for your contributions:
  - David B. Dahl (@dbdahl)
  - Andrea Cremaschi (@AndCre87)
+ - Abhinav V. Natarajan (@abhi01nat)
 
 ## TODOs
 

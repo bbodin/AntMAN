@@ -76,7 +76,7 @@ inline arma::vec mvrnormArma(arma::colvec mu, arma::mat SigUnchecked) {  // TODO
 	try {
 		cholres =  arma::chol(Sig) ;
 	} catch (std::runtime_error& e) {
-		VERBOSE_WARNING("cholesky failed....");
+		VERBOSE_ERROR("cholesky failed....");
 		cholres = Sig;
 
 	}
@@ -118,7 +118,7 @@ inline arma::mat riwish(const int df, const arma::mat& iSUnchecked) {  // TODO :
 			try {
 				iwishrndres =  arma::iwishrnd(iS, df) ;
 			} catch (std::runtime_error& e) {
-				VERBOSE_WARNING("cholesky failed....");
+				VERBOSE_ERROR("cholesky failed....");
 				iwishrndres = iS;
 
 			}
