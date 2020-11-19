@@ -5,8 +5,8 @@ PROJECT(TestAntMAN)
 include(CTest)
 
 
-set(CMAKE_CXX_FLAGS "-O3 -Wall -Wextra -Wno-unused-parameter")
-set(CMAKE_CXX_FLAGS_DEBUG "-g -Wall -Wextra -Wno-unused-parameter")
+set(CMAKE_CXX_FLAGS "--std=c++11 -O3 -Wall -Wextra -Wno-unused-parameter")
+set(CMAKE_CXX_FLAGS_DEBUG "--std=c++11 -g -Wall -Wextra -Wno-unused-parameter")
 
 find_package(Armadillo REQUIRED)
 find_package(Boost REQUIRED COMPONENTS program_options)
