@@ -216,9 +216,9 @@ AM_mcmc_fit <- function(
 
 	# cast the vector of thetas into a matrix if mixture type is multibernoulli
 	y_dim = dim(y)[2]
-	if (attr(fit,'mix_kernel_hyperparams')$type == ("AM_mix_hyperparams_multiber")){
+	if (attr(fit_result,'mix_kernel_hyperparams')$type == ("AM_mix_hyperparams_multiber")){
 		fit_result$theta <- apply(theta_mat, 1, function(x){
-			x_vec <- as.numeric(unlist(x))
+			x_vec = as.numeric(unlist(x))
 			matrix(x_vec, ncol=y_dim, nrow=length(x_vec)/y_dim, byrow=F)})
 		}
 
