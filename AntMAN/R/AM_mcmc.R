@@ -202,8 +202,8 @@ AM_mcmc_fit <- function(
 	else {
 		stop("Please provide only one of K_init or initial_clustering or fixed_clustering.")
 	}
-	
-	return (structure(
+
+	fit_result = (structure(
 			IAM_mcmc_fit(y = y, mix_kernel_hyperparams = mix_kernel_hyperparams, initial_clustering = initial_clustering, fixed_clustering=  fixed_cluster , mix_components_prior = mix_components_prior, mix_weight_prior = mix_weight_prior, mcmc_parameters = mcmc_parameters)
 			, class = "AM_mcmc_output",
 			mix_kernel_hyperparams = mix_kernel_hyperparams, 
@@ -213,6 +213,29 @@ AM_mcmc_fit <- function(
 			mix_components_prior =mix_components_prior , 
 			mix_weight_prior = mix_weight_prior, 
 			mcmc_parameters =mcmc_parameters));
+
+	# cast the vector of thetas into a matrix if mixture type is multibernoulli
+	y_dim = dim(y)[2]
+	if (attr(fit,'mix_kernel_hyperparams')$type == ("AM_mix_hyperparams_multiber")){
+		fit_result$theta <- apply(theta_mat, 1, function(x){
+			x_vec <- as.numeric(unlist(x))
+			matrix(x_vec, ncol=y_dim, nrow=length(x_vec)/y_dim, byrow=F)})
+		}
+
+	return (fit_result)
+	
+	# return (structure(
+	# 		IAM_mcmc_fit(y = y, mix_kernel_hyperparams = mix_kernel_hyperparams, initial_clustering = initial_clustering, fixed_clustering=  fixed_cluster , mix_components_prior = mix_components_prior, mix_weight_prior = mix_weight_prior, mcmc_parameters = mcmc_parameters)
+	# 		, class = "AM_mcmc_output",
+	# 		mix_kernel_hyperparams = mix_kernel_hyperparams, 
+	# 		initial_clustering = initial_clustering, 
+	# 		init_K = init_K, 
+	# 		fixed_clustering = fixed_clustering, 
+	# 		mix_components_prior =mix_components_prior , 
+	# 		mix_weight_prior = mix_weight_prior, 
+	# 		mcmc_parameters =mcmc_parameters));
+
+
 }
 
 
