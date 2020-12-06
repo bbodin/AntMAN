@@ -246,7 +246,7 @@ AM_plot_chaincor=function(x, tags = NULL, title = "MCMC Results"){
 
 }
 
-#'  Plot the cluster frequency plot for the multivariate bernoulli model
+#'  Visualise the cluster frequency plot for the multivariate bernoulli model
 #'  
 #'  Given the specified inputs, this function will produce a cluster frequency plot
 #'  
