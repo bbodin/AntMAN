@@ -245,4 +245,40 @@ AM_plot_chaincor=function(x, tags = NULL, title = "MCMC Results"){
 	
 
 }
+
+#'  Plot the cluster frequency plot for the multivariate bernoulli model
+#'  
+#'  Given the specified inputs, this function will produce a cluster frequency plot
+#'  
+#'@param fit a AM_mcmc_output object
+#'@param y a matrix containing the y observations which produced fit
+#'@param x_lim_param a vector with two elements describing the plot's x_axis scale, e.g. c(0.8, 7.2)
+#'@param y_lim_param a vector with two elements describing the plot's y_axis scale, e.g. c(0, 1)
+mvb_cluster_frequency <- function(fit, y, x_lim_param, y_lim_param){
+
+  result = AM_binder(fit, with_coclustering_probability=TRUE)
+  hatc = result$clustering
+  hatk = length(unique(hatc))
+  ci = t(do.call(cbind,fit$CI)) +1
+  
+  # obtain dim of y
+  y_dim = dim(y_mvb)[2]
+  
+  # ensure indexing of plots starts from 1
+  hatc = hatc + 1
+  
+  # obtain col names (if any)
+  col_names = colnames(y)
+  
+  par(mfrow=rev(n2mfrow(hatk)))
+  
+  for(j in 1:hatk){
+    plot(1:y_dim,apply(thetahat[hatc==j,],2, mean),type="h",xaxt="n",
+         xlim = x_lim_param, ylim= y_lim_param ,col=j, lwd=2, xlab = "",
+         ylab = expression(hat(theta)), main=paste("Group", j))
+    lines((1:y_dim)+0.1, apply(y_mvb[hatc==j,],2,mean), type="h",xaxt="n",
+          xlim = x_lim_param, ylim = y_lim_param, col=j, lwd=2, ylab="",lty=2)
+    axis(1, at=1:y_dim, labels = col_names)
+  }
+}
 	
