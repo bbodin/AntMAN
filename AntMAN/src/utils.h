@@ -63,8 +63,8 @@ inline arma::vec mvrnormArma(arma::colvec mu, arma::mat SigUnchecked) {  // TODO
 	arma::mat Sig = SigUnchecked;
 
 	if (not Sig.is_sympd()) {
-		VERBOSE_WARNING("mvrnormArma requires Sig to be symmetric. Sig auto-corrected.");
-		Sig  =  arma::symmatu(Sig);
+		//VERBOSE_WARNING("mvrnormArma requires Sig to be symmetric. Sig auto-corrected.");
+		//Sig  =  arma::symmatu(Sig);
 	}
 
 
@@ -109,8 +109,8 @@ inline arma::mat riwish(const int df, const arma::mat& iSUnchecked) {  // TODO :
 	arma::mat iS = iSUnchecked;
 
 		if (not iS.is_sympd()) {
-			VERBOSE_WARNING("riwish requires iS to be symmetric. iS auto-corrected.");
-			iS  =  arma::symmatu(iS);
+			//VERBOSE_WARNING("riwish requires iS to be symmetric. iS auto-corrected.");
+			//iS  =  arma::symmatu(iS);
 		}
 
 
