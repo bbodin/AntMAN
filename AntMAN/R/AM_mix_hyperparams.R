@@ -120,32 +120,6 @@ AM_mix_hyperparams_uninorm <- function(m0, k0, nu0, sig02) {
 	) ;
 }
 
-#' Univariate Binomial Mixture Hyperparameters.
-#'  
-#' Generate a configuration object that specifies the prior hyperparameters for a mixture of  Univariate Binomial kernels wth probability of success \eqn{\tau} and size \eqn{N}. 
-#' The conjugate prior on \eqn{\tau} is a Beta distribution: 
-#' \deqn{ \pi(\tau\mid \alpha,\beta)=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)} \tau^{\alpha-1}\left( 1-\tau \right)^{\beta-1} , \qquad 0\le\tau\le1}
-#' \eqn{N} is fixed by the user and should always be specified. Here,  
-#'  \eqn{\alpha} corresponds to \code{a0},\eqn{\beta} to \code{b0}.
-#'  The default for the prior hyperparameters is \eqn{a0=1, b0=1}.
-#' 
-#' 
-#'@param a0        The a0 hyperparameter.
-#'@param b0        The b0 hyperparameter.
-#'@param N         size of the Binomial distribution.
-#'@return A list to be used as \code{mix_kernel_hyperparams} argument for \code{mcmc_fit}.
-#'@examples 
-#' AM_mix_hyperparams_unibin (a0=1,b0=1,N=100)
-#'@export
-AM_mix_hyperparams_unibin <- function(a0, b0, N) {
-	## TODO: Warning N > 1 an for small N almost not identifiable.			  
-	parameters = list ( type = "AM_mix_hyperparams_unibin",a0 = a0 , b0 = b0  , mb = N );
-	return ( structure(
-					parameters, 
-					class = "AM_mix_hyperparams")
-	) ;
-}
-
 
 #' Multivariate Bernoulli Mixture Hyperparameters (Latent Class analysis)
 #' 

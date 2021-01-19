@@ -15,7 +15,7 @@
 #'  
 #'@return hyperparameters
 #'@export
-AM_emp_bayes_uninorm <- function(y,scEmu=1,scEsig2=3,CVsig2=3){
+AM_emp_bayes_uninorm = function(y,scEmu=1,scEsig2=3,CVsig2=3){
 	n <- length(y)   ### sample size
 	bary <- mean(y)  ### sample mean
 	s2y <- var(y)    ### sample variance
