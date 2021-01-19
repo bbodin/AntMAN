@@ -225,17 +225,6 @@ AM_mcmc_fit <- function(
 
 	return (fit_result)
 	
-	# return (structure(
-	# 		IAM_mcmc_fit(y = y, mix_kernel_hyperparams = mix_kernel_hyperparams, initial_clustering = initial_clustering, fixed_clustering=  fixed_cluster , mix_components_prior = mix_components_prior, mix_weight_prior = mix_weight_prior, mcmc_parameters = mcmc_parameters)
-	# 		, class = "AM_mcmc_output",
-	# 		mix_kernel_hyperparams = mix_kernel_hyperparams, 
-	# 		initial_clustering = initial_clustering, 
-	# 		init_K = init_K, 
-	# 		fixed_clustering = fixed_clustering, 
-	# 		mix_components_prior =mix_components_prior , 
-	# 		mix_weight_prior = mix_weight_prior, 
-	# 		mcmc_parameters =mcmc_parameters));
-
 
 }
 

@@ -8,7 +8,7 @@
 
 # density_discrete_variables is internal
 # 
-density_discrete_variables <- function(Par, color=rgb(0.4, 0.8, 1, alpha=0.7), single_maxy=TRUE, ...){
+density_discrete_variables <- function(Par, color=rgb(0.4, 0.8, 1, alpha=0.7), single_maxy=TRUE, title, ...){
 	rows <- dim(Par)[2]
 	fun <- function(xx){
 		return(table(xx)/length(xx))
@@ -31,7 +31,7 @@ density_discrete_variables <- function(Par, color=rgb(0.4, 0.8, 1, alpha=0.7), s
 	
 	par(mfrow=c(rows,1))
 	for(r in 1:rows){
-		plot(tables[[r]],lwd=8,col=color,ylim=c(0,maxy[r]),xlab=names(tables)[r],ylab="p.m.f.",...)
+		plot(tables[[r]],lwd=8,col=color,ylim=c(0,maxy[r]),xlab=names(tables)[r],ylab="p.m.f.", main=title,...)
 	}
 	
 	
@@ -67,15 +67,16 @@ AM_plot_pairs=function(x,tags = NULL,title = "MCMC Results"){
 
 }
 
-
-#' plot density of variables from AM_mcmc_output object  
+#' plot the density of variables from AM_mcmc_output object
 #' 
-#' TBD
+#' Given an object of class fit, AM_plot_density plots the posterior density of variables M and K combined across all chains. AM_plot_density makes use 
+#' of bayesplot's plotting function mcmc_areas.
+#' 
 #'  
-#'@param x a AM_mcmc_output object
-#'@param tags A list of variables to consider
+#'@param x An AM_mcmc_output fit object
+#'@param tags A list of variables (containing M and/or K) to consider. By default, the densities of both M and K will be plotted.
 #'@param title Title for the plot
-#'@return TBD
+#'@return a ggplot object visualising the posterior density of variables $M$ and $K$
 #'@importFrom bayesplot mcmc_areas color_scheme_set
 #'@export
 AM_plot_density=function(x,tags = NULL,title = "MCMC Results"){
@@ -91,23 +92,23 @@ AM_plot_density=function(x,tags = NULL,title = "MCMC Results"){
 	if (length(targets) > 0) {
 		df = AM_extract(x,targets)
 		color_scheme_set("brightblue")
-		mcmc_areas(df)
+		mcmc_areas(df)+ ggplot2::labs(title=title)
 	}
 	
 }
 
 
-#' TBD
+#' plot the probability mass function of variables from AM_mcmc_output object
 #' 
-#' TBD
+#' Given an object of class fit, AM_plot_bars plots the posterior probability mass function of variables M and K, where M and K are discrete.
 #'  
-#'@param x a AM_mcmc_output object
-#'@param tags A list of variables to consider
-#'@param title Title for the plot
-#'@return TBD
+#'@param x an AM_mcmc_output object.
+#'@param tags A list of variables (containing M and/or K) to consider. By default, the densities of both M and $K$ will be plotted.
+#'@param title Title for the plot.
+#'@return NULL
 #'@importFrom grDevices rgb
 #'@export
-AM_plot_bars=function(x,tags = NULL,title = "MCMC Results"){
+AM_plot_pmf=function(x,tags = NULL,title = "MCMC Results"){
 	## TODO / Need raffa script for integer values
 	## skip integer
 	targets = tags
@@ -119,7 +120,7 @@ AM_plot_bars=function(x,tags = NULL,title = "MCMC Results"){
 	
 	if (length(targets) > 0) {
 		df = AM_extract(x,targets)
-		density_discrete_variables(df, single_maxy=TRUE)
+		density_discrete_variables(df, single_maxy=TRUE, title = title)
 	}
 	
 }
@@ -146,7 +147,7 @@ AM_plot_traces=function(x,tags = NULL,title = "MCMC Results"){
 	if (length(targets) > 0) {
 		df = AM_extract(x,targets)
 		color_scheme_set("brightblue")
-		mcmc_trace(df)
+		mcmc_trace(df)+ ggplot2::labs(title=title)
 	}
 	
 }
@@ -173,7 +174,7 @@ AM_plot_values=function(x,tags = NULL,title = "MCMC Results"){
 	if (length(targets) > 0) {
 		df = AM_extract(x,targets)
 		color_scheme_set("brightblue")
-		mcmc_intervals(df)
+		mcmc_intervals(df)+ ggplot2::labs(title=title)
 	}
 	
 }
@@ -240,7 +241,7 @@ AM_plot_chaincor=function(x, tags = NULL, title = "MCMC Results"){
 	if (length(targets) > 0) {
 		df = AM_extract(x,targets)
 		color_scheme_set("brightblue")
-		mcmc_acf_bar(df)
+		mcmc_acf_bar(df)+ ggplot2::labs(title=title)
 	}
 	
 
