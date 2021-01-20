@@ -205,13 +205,11 @@ AM_extract = function(object, targets, iterations = NULL, debug = FALSE){
 		if(is.null(df)) {
 			nrows = nrow(tmp)
 			df = list();
-		#	df = tmp;
 		} else {
 			if (nrow(tmp) != nrows) {#(nrow(df) != nrow(tmp)) {
 				warning("ERROR: Invalid extraction size, previously found ",nrow(df),"while with target '",target,"' we have ", nrow(tmp),"\n", sep="");
 				return (NULL);
 			}
-		#	df = data.frame(df,tmp);
 		}
 		df[[target]] = tmp;
 	}
