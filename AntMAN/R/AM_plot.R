@@ -74,18 +74,17 @@ AM_plot_pairs=function(x,tags = NULL,title = "MCMC Results"){
 #' 
 #'  
 #'@param x An AM_mcmc_output fit object
-#'@param tags A list of variables (containing M and/or K) to consider. By default, the densities of both M and K will be plotted.
+#'@param tags A list of variables (containing M and/or K) to consider. 
 #'@param title Title for the plot
 #'@return a ggplot object visualising the posterior density of variables $M$ and $K$
 #'@importFrom bayesplot mcmc_areas color_scheme_set
 #'@export
 AM_plot_density=function(x,tags = NULL,title = "MCMC Results"){
-	## TODO / Need raffa script for integer values
-	## skip integer
 	targets = tags
 	if (is.null(targets)) {
-		if (!is.null(x$M)) {targets = c(targets,"M")}
-		if (!is.null(x$K)) {targets = c(targets,"K")}
+		stop('Please supplement arguments to tags. tags cannot be NULL.')
+		# if (!is.null(x$M)) {targets = c(targets,"M")}
+		# if (!is.null(x$K)) {targets = c(targets,"K")}
 	}
 	message("Plotting density from ",paste(targets,collapse=","));
 	
@@ -100,23 +99,21 @@ AM_plot_density=function(x,tags = NULL,title = "MCMC Results"){
 
 #' plot the probability mass function of variables from AM_mcmc_output object
 #' 
-#' Given an object of class fit, AM_plot_bars plots the posterior probability mass function of variables M and K, where M and K are discrete.
+#' Given an object of class fit, AM_plot_pmf plots the posterior probability mass function of variables M and K, where M and K are discrete.
 #'  
 #'@param x an AM_mcmc_output object.
-#'@param tags A list of variables (containing M and/or K) to consider. By default, the densities of both M and $K$ will be plotted.
+#'@param tags A list of variables (containing M and/or K) to consider. By default, the pmf of both M and K will be plotted.
 #'@param title Title for the plot.
 #'@return NULL
 #'@importFrom grDevices rgb
 #'@export
 AM_plot_pmf=function(x,tags = NULL,title = "MCMC Results"){
-	## TODO / Need raffa script for integer values
-	## skip integer
 	targets = tags
 	if (is.null(targets)) {
 		if (!is.null(x$M)) {targets = c(targets,"M")}
 		if (!is.null(x$K)) {targets = c(targets,"K")}
 	}
-	message("Plotting density from ",paste(targets,collapse=","));
+	message("Plotting pmf for ",paste(targets,collapse=","));
 	
 	if (length(targets) > 0) {
 		df = AM_extract(x,targets)

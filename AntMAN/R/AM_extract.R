@@ -173,7 +173,6 @@ AM_extract = function(object, targets, iterations = NULL, debug = FALSE){
 	df = NULL;
 	for (target in targets) {
 		
-		
 		if (target == "CI") {
 			## CI Extractor
 			nrows = length(object$CI)
@@ -183,7 +182,16 @@ AM_extract = function(object, targets, iterations = NULL, debug = FALSE){
 			if (!is.null(iterations)) {
 				tmp = tmp[iterations,];
 			}
-		} else {
+		}
+		
+		if (target == "theta"){
+			tmp = as.matrix(object$theta)
+			if (!is.null(iterations)){
+				tmp = as.matrix(tmp[iterations,])
+			}
+		}
+
+		 else {
 			## Generic extractor (SLOW)
 			tmp = extract_target(object,target,iterations,debug);
 		}
@@ -195,14 +203,17 @@ AM_extract = function(object, targets, iterations = NULL, debug = FALSE){
 		}
 		
 		if(is.null(df)) {
-			df = tmp;
+			nrows = nrow(tmp)
+			df = list();
+		#	df = tmp;
 		} else {
-			if (nrow(df) != nrow(tmp)) {
+			if (nrow(tmp) != nrows) {#(nrow(df) != nrow(tmp)) {
 				warning("ERROR: Invalid extraction size, previously found ",nrow(df),"while with target '",target,"' we have ", nrow(tmp),"\n", sep="");
 				return (NULL);
 			}
-			df = data.frame(df,tmp);
+		#	df = data.frame(df,tmp);
 		}
+		df[[target]] = tmp;
 	}
 	return (df);
 	
