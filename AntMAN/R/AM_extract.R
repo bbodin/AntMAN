@@ -170,6 +170,7 @@ extract_target = function(fit, target, iterations = NULL, debug = FALSE){
 #'@export
 AM_extract = function(object, targets, iterations = NULL, debug = FALSE){
 	
+	
 	df = NULL;
 	for (target in targets) {
 		
@@ -184,8 +185,8 @@ AM_extract = function(object, targets, iterations = NULL, debug = FALSE){
 			}
 		}
 		
-		if (target == "theta"){
-			tmp = as.matrix(object$theta)
+		if (target == "mu" || target == "sig2" || target == "Sig" || target == "theta"){
+			tmp = as.matrix(object[[target]])
 			if (!is.null(iterations)){
 				tmp = as.matrix(tmp[iterations,])
 			}
@@ -193,7 +194,7 @@ AM_extract = function(object, targets, iterations = NULL, debug = FALSE){
 
 		 else {
 			## Generic extractor (SLOW)
-			tmp = extract_target(object,target,iterations,debug);
+			tmp = as.matrix(extract_target(object,target,iterations,debug));
 		}
 		
 		
