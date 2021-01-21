@@ -35,7 +35,7 @@ NULL
 summary.AM_mcmc_configuration = function(object, ...){
 	cat("\n", "AM_mcmc_configuration\n", sep = "")	
 	for (item in names(object)) {
-		cat(' -', item , ': ' , head(object[[item]]), "\n")
+		cat(' -', item , ': ' , head(unlist(object[[item]], use.names=FALSE)), "\n")
 	}
 }
 
@@ -101,7 +101,7 @@ summary.AM_mcmc_output=function(object,...){
 	cat(" -mcmc_parameters(",list_values(attr(object,'mcmc_parameters')),")\n", sep = "");
 	cat("\n - Summary of the MCMC output:\n\n");
 	cat(sprintf("    %10s%10s%10s%10s%10s%10s%10s%10s\n", "Name", "Mean", "StdDev", "2.5%","50%","97.5%", "ESS", "MCMC Err."));
-	invisible = c("CI","W","mu","sig","sig2","theta","R","P")
+	invisible = c("CI","W","mu","Sig","sig2","theta","R","P")
 	
 	
 	
@@ -110,7 +110,7 @@ summary.AM_mcmc_output=function(object,...){
 		if (!item %in% invisible) { 
 			allcols = AM_extract(object,c(item))
 			for (subitem in names(allcols)) {
-				e = allcols[,subitem] 
+				e = allcols[[subitem]]
 				emean = mean(e)
 				esd = sd(e)
 				elen = length(e)
@@ -126,8 +126,57 @@ summary.AM_mcmc_output=function(object,...){
 	
 }
 
+## INTERNAL
+# AM_reshape is an internal function for reshaping the fit output into the correct form 
 
+AM_reshape <- function(fit, y){
 
+	y_dim = dim(y)[2]
+	if (is.null(y_dim)){
+			y_dim = 1}
+
+  if (!is.null(fit$theta)){
+	theta_mat = as.matrix(fit$theta)
+    theta = apply(theta_mat, 1, function(x){
+    x_vec = as.numeric(unlist(x))
+      matrix(x_vec, ncol=y_dim, nrow=length(x_vec)/y_dim, byrow=F)})
+    fit$theta = theta
+  }
+  
+  if (!is.null(fit$mu)){
+      mu = mapply(function(x, m){
+      mu_size = length(x)/m
+      mu_individual = split(x, ceiling(seq_along(x)/mu_size))
+      mu_combined = lapply(mu_individual, function(mu_vec){
+        matrix(unlist(mu_vec), nrow=y_dim, byrow=F)
+      })
+    }, fit$mu, fit$M)
+    fit$mu = mu
+  }
+
+   if (!is.null(fit$sig2)){
+    sig = mapply(function(x, m){
+      sig_size = length(x)/m
+      sig_individual = split(x, ceiling(seq_along(x)/sig_size))
+      sig_combined = lapply(sig_individual, function(sig_vec){
+        matrix(unlist(sig_vec), ncol=y_dim, nrow=y_dim, byrow=F)
+      })
+    }, fit$sig2, fit$M)
+    fit$sig2 = sig
+  }
+  
+  if (!is.null(fit$Sig)){
+    sig = mapply(function(x, m){
+      sig_size = length(x)/m
+      sig_individual = split(x, ceiling(seq_along(x)/sig_size))
+      sig_combined = lapply(sig_individual, function(sig_vec){
+        matrix(unlist(sig_vec), ncol=y_dim, nrow=y_dim, byrow=F)
+      })
+    }, fit$Sig, fit$M)
+    fit$Sig = sig
+  }
+  return(fit)
+}
 
 
 
@@ -214,18 +263,18 @@ AM_mcmc_fit <- function(
 			mix_weight_prior = mix_weight_prior, 
 			mcmc_parameters =mcmc_parameters));
 
-	# cast the vector of thetas into a matrix if mixture type is multibernoulli
-	if (attr(fit_result,'mix_kernel_hyperparams')$type == ("AM_mix_hyperparams_multiber")){
-		theta_mat = as.matrix(fit_result$theta)
-		fit_result$theta <- apply(theta_mat, 1, function(x){
-			x_vec = as.numeric(unlist(x))
-			y_dim = dim(y)[2]
-			matrix(x_vec, ncol=y_dim, nrow=length(x_vec)/y_dim, byrow=F)})
-		}
+	fit_result = AM_reshape(fit_result, y)
+
+	## cast the vector of thetas into a matrix if mixture type is multibernoulli
+	# if (attr(fit_result,'mix_kernel_hyperparams')$type == ("AM_mix_hyperparams_multiber")){
+	# 	theta_mat = as.matrix(fit_result$theta)
+	# 	fit_result$theta <- apply(theta_mat, 1, function(x){
+	# 		x_vec = as.numeric(unlist(x))
+	# 		y_dim = dim(y)[2]
+	# 		matrix(x_vec, ncol=y_dim, nrow=length(x_vec)/y_dim, byrow=F)})
+	# 	}
 
 	return (fit_result)
-	
-
 }
 
 
