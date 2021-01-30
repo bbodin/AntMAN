@@ -41,11 +41,11 @@ density_discrete_variables <- function(Par, color=rgb(0.4, 0.8, 1, alpha=0.7), s
 
 #' plot AM_mcmc_output  
 #' 
-#' plot some useful informations about the mcmc results
+#' visualise a matrix of plots describing the mcmc results. This function is built upon ggpairs.
 #'  
-#'@param x a AM_mcmc_output object
-#'@param tags A list of variables to consider
-#'@param title Title for the plot
+#'@param x an AM_mcmc_output object, produced by calling \code{AM_MCMC_fit}.
+#'@param tags A list of variables to consider for plotting. This function only produces meaningful plots for variables that have fixed dimension across the draws. If not specified, plots pertaining to M and K will be produced. 
+#'@param title Title for the plot.
 #'@return Same as ggpairs function, a ggmatrix object that if called, will print.
 #'@importFrom graphics image
 #'@importFrom GGally ggpairs
@@ -61,35 +61,33 @@ AM_plot_pairs=function(x,tags = NULL,title = "MCMC Results"){
 	message("Plotting pairs from ",paste(targets,collapse=","));
 	
 	if (length(targets) > 0) {
-		df = AM_extract(x,targets)
-		ggpairs(df, title = title, upper = list(continuous = "points"),)
+		df = data.frame(AM_extract(x,targets))
+		ggpairs(df, title = title, upper = list(continuous = "points"),) + ggplot2::labs(title=title)
 	}
 
 }
 
-#' plot the density of variables from AM_mcmc_output object
+#' plot the density of variables from AM_mcmc_output object.
 #' 
 #' Given an object of class fit, AM_plot_density plots the posterior density of variables M and K combined across all chains. AM_plot_density makes use 
 #' of bayesplot's plotting function mcmc_areas.
 #' 
 #'  
-#'@param x An AM_mcmc_output fit object
-#'@param tags A list of variables (containing M and/or K) to consider. 
-#'@param title Title for the plot
-#'@return a ggplot object visualising the posterior density of variables $M$ and $K$
+#'@param x An AM_mcmc_output fit object, produced by calling \code{AM_MCMC_fit}.
+#'@param tags A list of variables to consider. This function only produces meaningful plots for variables that have fixed dimension across the draws. If not specified, plots pertaining to M and K will be produced. 
+#'@param title Title for the plot.
+#'@return a ggplot object visualising the posterior density of variables M and K.
 #'@importFrom bayesplot mcmc_areas color_scheme_set
 #'@export
 AM_plot_density=function(x,tags = NULL,title = "MCMC Results"){
 	targets = tags
 	if (is.null(targets)) {
 		stop('Please supplement arguments to tags. tags cannot be NULL.')
-		# if (!is.null(x$M)) {targets = c(targets,"M")}
-		# if (!is.null(x$K)) {targets = c(targets,"K")}
 	}
 	message("Plotting density from ",paste(targets,collapse=","));
 	
 	if (length(targets) > 0) {
-		df = AM_extract(x,targets)
+		df = data.frame(AM_extract(x,targets))
 		color_scheme_set("brightblue")
 		mcmc_areas(df)+ ggplot2::labs(title=title)
 	}
@@ -97,11 +95,11 @@ AM_plot_density=function(x,tags = NULL,title = "MCMC Results"){
 }
 
 
-#' plot the probability mass function of variables from AM_mcmc_output object
+#' plot the probability mass function of variables from AM_mcmc_output object.
 #' 
 #' Given an object of class fit, AM_plot_pmf plots the posterior probability mass function of variables M and K, where M and K are discrete.
 #'  
-#'@param x an AM_mcmc_output object.
+#'@param x An AM_mcmc_output fit object, produced by calling \code{AM_MCMC_fit}.
 #'@param tags A list of variables (containing M and/or K) to consider. By default, the pmf of both M and K will be plotted.
 #'@param title Title for the plot.
 #'@return NULL
@@ -116,20 +114,20 @@ AM_plot_pmf=function(x,tags = NULL,title = "MCMC Results"){
 	message("Plotting pmf for ",paste(targets,collapse=","));
 	
 	if (length(targets) > 0) {
-		df = AM_extract(x,targets)
+		df = data.frame(AM_extract(x,targets))
 		density_discrete_variables(df, single_maxy=TRUE, title = title)
 	}
 	
 }
 
-#' plot traces of variables from AM_mcmc_output object  
+#' plot traces of variables from AM_mcmc_output object.  
 #' 
-#' TBD
+#' Given an object of class fit, AM_plot_traces visualises the traceplots of the specified variables involved in the MCMC inference. 
 #'  
-#'@param x a AM_mcmc_output object
-#'@param tags A list of variables to consider
+#'@param x An AM_mcmc_output fit object, produced by calling \code{AM_MCMC_fit}.
+#'@param tags A list of variables to consider. This function only produces meaningful plots for variables that have fixed dimension across the draws. If not specified, plots pertaining to M and K will be produced. 
 #'@param title Title for the plot
-#'@return TBD
+#'@return NULL
 #'@importFrom bayesplot mcmc_trace color_scheme_set
 #'@export
 AM_plot_traces=function(x,tags = NULL,title = "MCMC Results"){
@@ -142,21 +140,21 @@ AM_plot_traces=function(x,tags = NULL,title = "MCMC Results"){
 	message("Plotting traces from ",paste(targets,collapse=","));
 	
 	if (length(targets) > 0) {
-		df = AM_extract(x,targets)
+		df = data.frame(AM_extract(x,targets))
 		color_scheme_set("brightblue")
 		mcmc_trace(df)+ ggplot2::labs(title=title)
 	}
 	
 }
 
-#' plot histogram of variables from AM_mcmc_output object  
+#' plot posterior interval estimates obtained from MCMC draws.
 #' 
-#' TBD
+#' Given an object of class fit, AM_plot_values visualises the interval estimates of the specified variables involved in the MCMC inference. 
 #'  
-#'@param x a AM_mcmc_output object
-#'@param tags A list of variables to consider
-#'@param title Title for the plot
-#'@return TBD
+#'@param x An AM_mcmc_output fit object, produced by calling \code{AM_MCMC_fit}.
+#'@param tags A list of variables to consider. This function only produces meaningful plots for variables that have fixed dimension across the draws. If not specified, plots pertaining to M and K will be produced. 
+#'@param title Title for the plot.
+#'@return NULL
 #'@importFrom bayesplot mcmc_intervals color_scheme_set
 #'@export
 AM_plot_values=function(x,tags = NULL,title = "MCMC Results"){
@@ -169,7 +167,7 @@ AM_plot_values=function(x,tags = NULL,title = "MCMC Results"){
 	message("Plotting values from ",paste(targets,collapse=","));
 	
 	if (length(targets) > 0) {
-		df = AM_extract(x,targets)
+		df = data.frame(AM_extract(x,targets))
 		color_scheme_set("brightblue")
 		mcmc_intervals(df)+ ggplot2::labs(title=title)
 	}
@@ -179,9 +177,9 @@ AM_plot_values=function(x,tags = NULL,title = "MCMC Results"){
 
 #'  Plot the Similarity Matrix
 #'  
-#'  Given a MCMC output, this function will produce an image of the Similarity Matrix
+#'  Given a MCMC output, this function will produce an image of the Similarity Matrix.
 #'  
-#'@param x a AM_mcmc_output object
+#'@param x An AM_mcmc_output fit object, produced by calling \code{AM_MCMC_fit}.
 #'@param ... All additional parameters wil lbe pass to the image command.
 #'  
 #'@export
@@ -207,7 +205,7 @@ AM_plot_similarity_matrix=function(x, ...){
 			pij = pij[new_indexes,new_indexes];
 		}
 		
-		image(pij,main="Similarity matrix",col = gray.colors(30))
+		image(pij,main="Similarity matrix") #,col = gray.colors(30))
 	} else {
 		warning("CI has not been generated. Cannot plot the similarity matrix.")
 	}
@@ -215,11 +213,11 @@ AM_plot_similarity_matrix=function(x, ...){
 }
 #'  Plot the Autocorrelation
 #'  
-#'  Given a MCMC output, this function will produce acf bar
+#'  Given a MCMC output, this function will produce the acf bar describing the MCMC results.
 #'  
-#'@param x a AM_mcmc_output object
-#'@param tags A list of variables to consider
-#'@param title Title for the plot
+#'@param x An AM_mcmc_output fit object, produced by calling \code{AM_MCMC_fit}.
+#'@param tags A list of variables to consider. This function only produces meaningful plots for variables that have fixed dimension across the draws. If not specified, plots pertaining to M and K will be produced. 
+#'@param title Title for the plot.
 #'  
 #'@importFrom bayesplot mcmc_acf_bar
 #'@export
@@ -228,15 +226,15 @@ AM_plot_chaincor=function(x, tags = NULL, title = "MCMC Results"){
 	targets = tags
 	if (is.null(targets)) {
 		if (!is.null(x$M)) {targets = c(targets,"M")}
-		if (!is.null(x$M)) {targets = c(targets,"K")}
-		if (!is.null(x$MNA)) {targets = c(targets,"MNA")}
-		if (!is.null(x$H) && (length(x$H) > 0) && (length(x$H[[1]]) > 0)) {targets = c(targets,paste0("H_",names(x$H[[1]])))}
-		if (!is.null(x$Q) && (length(x$Q) > 0) && (length(x$Q[[1]]) > 0)) {targets = c(targets,paste0("Q_",names(x$Q[[1]])))}
+		if (!is.null(x$K)) {targets = c(targets,"K")}
+	#	if (!is.null(x$MNA)) {targets = c(targets,"MNA")}
+	#	if (!is.null(x$H) && (length(x$H) > 0) && (length(x$H[[1]]) > 0)) {targets = c(targets,paste0("H_",names(x$H[[1]])))}
+	#	if (!is.null(x$Q) && (length(x$Q) > 0) && (length(x$Q[[1]]) > 0)) {targets = c(targets,paste0("Q_",names(x$Q[[1]])))}
 	}
 	message("Plotting Autocorrelation from ",paste(targets,collapse=","))
 	
 	if (length(targets) > 0) {
-		df = AM_extract(x,targets)
+		df = data.frame(AM_extract(x,targets))
 		color_scheme_set("brightblue")
 		mcmc_acf_bar(df)+ ggplot2::labs(title=title)
 	}
@@ -244,15 +242,15 @@ AM_plot_chaincor=function(x, tags = NULL, title = "MCMC Results"){
 
 }
 
-#'  Visualise the cluster frequency plot for the multivariate bernoulli model
+#'  Visualise the cluster frequency plot for the multivariate bernoulli model.
 #'  
-#'  Given the specified inputs, this function will produce a cluster frequency plot
+#'  Given the specified inputs, this function will produce a cluster frequency plot for the multivariate bernoulli model.
 #'  
-#'@param fit a AM_mcmc_output object
-#'@param y a matrix containing the y observations which produced fit
-#'@param x_lim_param a vector with two elements describing the plot's x_axis scale, e.g. c(0.8, 7.2)
-#'@param y_lim_param a vector with two elements describing the plot's y_axis scale, e.g. c(0, 1)
-mvb_cluster_frequency <- function(fit, y, x_lim_param, y_lim_param){
+#'@param fit An AM_mcmc_output fit object, produced by calling \code{AM_MCMC_fit}.
+#'@param y A matrix containing the y observations which produced fit.
+#'@param x_lim_param A vector with two elements describing the plot's x_axis scale, e.g. c(0.8, 7.2).
+#'@param y_lim_param A vector with two elements describing the plot's y_axis scale, e.g. c(0, 1).
+mvb_cluster_frequency <- function(fit, y, x_lim_param= c(0.8, 7.2), y_lim_param = c(0,1)){
 
   result = AM_binder(fit, with_coclustering_probability=TRUE)
   hatc = result$clustering
@@ -261,6 +259,17 @@ mvb_cluster_frequency <- function(fit, y, x_lim_param, y_lim_param){
   
   # obtain dim of y
   y_dim = dim(y_mvb)[2]
+
+  G = length(fit$K)
+  n = length(hatc)
+  
+  thetapost <- array(0,dim=c(G,n,y_dim))
+  for(g in 1:G){
+    thetapost[g,,] =fit$theta[[g]][ci[g,],]
+  }
+  
+  thetahat <- apply(thetapost,c(2,3),mean)
+  
   
   # ensure indexing of plots starts from 1
   hatc = hatc + 1
