@@ -6,14 +6,14 @@
 #######################################################################################
 
 
-
-
+#' Given that the prior on M is a dirac delta, find the \eqn{\gamma} hyperparameter of the weights prior to match \eqn{\mathbb{E}(K)=K&*}, where \eqn{K^*} is user-specified. 
+#'
 #' Once specified a fixed value of components \code{M^*} this function  adopt a  \emph{bisection method} to find the value of \code{gamma} 
-#' such that the induced distribution on the number of clusers is centered around a user specifed value \eqn{K^*}, i.e. the function use
+#' such that the induced distribution on the number of clusters is centered around a user specifed value \eqn{K^*}, i.e. the function use
 #'  a bisection method to solve Eq.~{eq:findgamma} of WE NEED TO CITE ANTMAN PAPER. The user can provide a lower \eqn{\gamma_{l}} and
-#'  an upper \eqn{\gamma_{u}} bound for the possible values of $gamma$. The default values are \eqn{\gamma_l= 10^{-3}} and \eqn{\gamma_{u}=10}.
+#'  an upper \eqn{\gamma_{u}} bound for the possible values of \eqn{\gamma}. The default values are \eqn{\gamma_l= 10^{-3}} and \eqn{\gamma_{u}=10}.
 #'  A default value for the tolerance is \eqn{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31), the function 
-#'  stops warning that convergence has not bee reached.
+#'  stops warning that convergence has not been reached.
 #'
 #' @param n             sample size
 #' @param Mstar         number of component of the mixture 
@@ -41,7 +41,9 @@ AM_find_gamma_Delta <- function (n,Mstar,Kstar=6, gam_min=0.0001,gam_max=10, tol
 }
 
 
-#' Once the prior on the numbuer of mixture $M$ is assumed to be a Shifted Posson of parameter \code{Lambda}, 
+#' Given that the prior on M is a shifted Poisson, find the \eqn{\gamma} hyperparameter of the weights prior to match \eqn{\mathbb{E}(K)=K&*}, where \eqn{K^*} is user-specified. 
+#'
+#' Once the prior on the number of mixture M is assumed to be a Shifted Poisson of parameter \code{Lambda}, 
 #' this function  adopt a \emph{bisection method} to find the value of \code{gamma} such that the induced distribution
 #'  on the number of clusers is centered around a user specifed value \eqn{K^*}, i.e. the function use a bisection
 #'   method to solve Eq.~{eq:findgamma} of WE NEED TO CITE ANTMAN PAPER. The user can provide a lower \eqn{\gamma_{l}} 
@@ -74,7 +76,9 @@ AM_find_gamma_Pois <- function (n,Lambda,Kstar=6, gam_min=0.0001,gam_max=10, tol
 	return (find_gamma_Pois(n,Lambda,Kstar, gam_min,gam_max, tolerance));
 }
 
-#' Once the prior on the numbuer of mixture $M$ is assumed to be a Negative Binomial  Negative Binomial with parameter \code{r>0} and \code{0<p<1}, with  mean is 1+ r*p/(1-p), this function  adopt a \emph{bisection method} to find the value of \code{gamma} such that the induced distribution on the number of clusers is centered around a user specifed value \eqn{K^*}, i.e. the function use a bisection method to solve Eq.~{eq:findgamma} of WE NEED TO CITE ANTMAN PAPER. The user can provide a lower \eqn{\gamma_{l}} and an upper \eqn{\gamma_{u}} bound for the possible values of $gamma$. The default values are \eqn{\gamma_l= 10^{-3}} and \eqn{\gamma_{u}=10}.  A defaault value for the tolerance is \eqn{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31), the function stops warning that convergence has not bee reached.
+#' Given that the prior on M is a Negative Binomial, find the \eqn{\gamma} hyperparameter of the weights prior to match \eqn{\mathbb{E}(K)=K&*}, where \eqn{K^*} is user-specified. 
+#'
+#' Once the prior on the numbuer of mixture M is assumed to be a Negative Binomial  Negative Binomial with parameter \code{r>0} and \code{0<p<1}, with  mean is 1+ r*p/(1-p), this function  adopt a \emph{bisection method} to find the value of \code{gamma} such that the induced distribution on the number of clusers is centered around a user specifed value \eqn{K^*}, i.e. the function use a bisection method to solve Eq.~{eq:findgamma} of WE NEED TO CITE ANTMAN PAPER. The user can provide a lower \eqn{\gamma_{l}} and an upper \eqn{\gamma_{u}} bound for the possible values of $gamma$. The default values are \eqn{\gamma_l= 10^{-3}} and \eqn{\gamma_{u}=10}.  A defaault value for the tolerance is \eqn{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31), the function stops warning that convergence has not bee reached.
 #'
 #' @param n             The sample size
 #' @param r      The dispersion parameter \code{r} of Negative Binomial
