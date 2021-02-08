@@ -14,7 +14,7 @@ list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_
 }
 \description{
 Generate a configuration object that assigns a Point mass prior to the number of mixture components.
-This is the simplest option and it requires to specify a value \eqn{\widetilde{M}}
+This is the simplest option and it requires users to specify a value \eqn{\widetilde{M}}
 such that \eqn{Pr(M=\widetilde{M}) =1}.
 }
 \examples{

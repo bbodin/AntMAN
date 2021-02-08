@@ -46,7 +46,11 @@
 #' }
 AM_salso <- function(fit, maxClusts=0L, Const_Binder = 0.5, batchSize = 1000L, nScans = 10L, maxThreads = 0L, timeLimit = 600000L) {
 	 
-	eam = computeAdjacencyMatrix (data.matrix(AM_extract(fit, c("CI")))) ;
+#	CI = as.matrix((AM_extract(fit, c("CI")))[["CI"]])
+
+#	eam = computeAdjacencyMatrix (CI); 
+#  (data.matrix(AM_extract(fit, c("CI")))) ;
+	eam  = AM_coclustering(fit)
 	
 	
 	if (!is.validAdjacencyMatrix(eam)){
@@ -98,7 +102,7 @@ AM_salso <- function(fit, maxClusts=0L, Const_Binder = 0.5, batchSize = 1000L, n
 #'  
 #'@export
 AM_binder = function (fit,  weight = 0.5, with_coclustering_probability = FALSE) {
-	CI = data.matrix(AM_extract(fit, c("CI")));
+	CI =  as.matrix((AM_extract(fit, c("CI")))[["CI"]]) #data.matrix(AM_extract(fit, c("CI")));
 	#Equal costs
 	Const_Binder <- weight
 	

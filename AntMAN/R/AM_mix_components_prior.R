@@ -43,7 +43,7 @@ summary.AM_mix_components_prior = function(object, ...){
 #' Generate a configuration object that contains a Point mass prior.
 #' 
 #' Generate a configuration object that assigns a Point mass prior to the number of mixture components.
-#' This is the simplest option and it requires to specify a value \eqn{\widetilde{M}} 
+#' This is the simplest option and it requires users to specify a value \eqn{\widetilde{M}} 
 #' such that \eqn{Pr(M=\widetilde{M}) =1}. 
 #'
 #'@param Mstar      Fixed value  \eqn{\widetilde{M}} for the number of components. 

@@ -2,20 +2,17 @@
 % Please edit documentation in R/AM_plot.R
 \name{AM_plot_values}
 \alias{AM_plot_values}
-\title{plot histogram of variables from AM_mcmc_output object}
+\title{plot posterior interval estimates obtained from MCMC draws.}
 \usage{
 AM_plot_values(x, tags = NULL, title = "MCMC Results")
 }
 \arguments{
-\item{x}{a AM_mcmc_output object}
+\item{x}{An AM_mcmc_output fit object, produced by calling \code{AM_MCMC_fit}.}
 
-\item{tags}{A list of variables to consider}
+\item{tags}{A list of variables to consider. This function only produces meaningful plots for variables that have fixed dimension across the draws. If not specified, plots pertaining to M and K will be produced.}
 
-\item{title}{Title for the plot}
-}
-\value{
-TBD
+\item{title}{Title for the plot.}
 }
 \description{
-TBD
+Given an object of class fit, AM_plot_values visualises the interval estimates of the specified variables involved in the MCMC inference.
 }

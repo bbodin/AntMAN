@@ -7,15 +7,15 @@
 AM_plot_pairs(x, tags = NULL, title = "MCMC Results")
 }
 \arguments{
-\item{x}{a AM_mcmc_output object}
+\item{x}{an AM_mcmc_output object, produced by calling \code{AM_MCMC_fit}.}
 
-\item{tags}{A list of variables to consider}
+\item{tags}{A list of variables to consider for plotting. This function only produces meaningful plots for variables that have fixed dimension across the draws. If not specified, plots pertaining to M and K will be produced.}
 
-\item{title}{Title for the plot}
+\item{title}{Title for the plot.}
 }
 \value{
 Same as ggpairs function, a ggmatrix object that if called, will print.
 }
 \description{
-plot some useful informations about the mcmc results
+visualise a matrix of plots describing the mcmc results. This function is built upon ggpairs.
 }

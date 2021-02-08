@@ -2,12 +2,7 @@
 % Please edit documentation in R/AM_find_gamma.R
 \name{AM_find_gamma_Delta}
 \alias{AM_find_gamma_Delta}
-\title{Once specified a fixed value of components \code{M^*} this function  adopt a  \emph{bisection method} to find the value of \code{gamma}
-such that the induced distribution on the number of clusers is centered around a user specifed value \eqn{K^*}, i.e. the function use
-a bisection method to solve Eq.~{eq:findgamma} of WE NEED TO CITE ANTMAN PAPER. The user can provide a lower \eqn{\gamma_{l}} and
-an upper \eqn{\gamma_{u}} bound for the possible values of $gamma$. The default values are \eqn{\gamma_l= 10^{-3}} and \eqn{\gamma_{u}=10}.
-A default value for the tolerance is \eqn{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31), the function
-stops warning that convergence has not bee reached.}
+\title{Given that the prior on M is a dirac delta, find the \eqn{\gamma} hyperparameter of the weights prior to match \eqn{E(K)=K&*}, where \eqn{K^*} is user-specified.}
 \usage{
 AM_find_gamma_Delta(
   n,
@@ -36,11 +31,11 @@ A value of \code{gamma} such that \code{E(K)=K^*}
 }
 \description{
 Once specified a fixed value of components \code{M^*} this function  adopt a  \emph{bisection method} to find the value of \code{gamma}
-such that the induced distribution on the number of clusers is centered around a user specifed value \eqn{K^*}, i.e. the function use
+such that the induced distribution on the number of clusters is centered around a user specifed value \eqn{K^*}, i.e. the function use
 a bisection method to solve Eq.~{eq:findgamma} of WE NEED TO CITE ANTMAN PAPER. The user can provide a lower \eqn{\gamma_{l}} and
-an upper \eqn{\gamma_{u}} bound for the possible values of $gamma$. The default values are \eqn{\gamma_l= 10^{-3}} and \eqn{\gamma_{u}=10}.
+an upper \eqn{\gamma_{u}} bound for the possible values of \eqn{\gamma}. The default values are \eqn{\gamma_l= 10^{-3}} and \eqn{\gamma_{u}=10}.
 A default value for the tolerance is \eqn{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31), the function
-stops warning that convergence has not bee reached.
+stops warning that convergence has not been reached.
 }
 \examples{
 n <- 82

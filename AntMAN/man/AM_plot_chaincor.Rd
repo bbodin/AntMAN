@@ -4,19 +4,19 @@
 \alias{AM_plot_chaincor}
 \title{Plot the Autocorrelation
 
-Given a MCMC output, this function will produce acf bar}
+Given a MCMC output, this function will produce the acf bar describing the MCMC results.}
 \usage{
 AM_plot_chaincor(x, tags = NULL, title = "MCMC Results")
 }
 \arguments{
-\item{x}{a AM_mcmc_output object}
+\item{x}{An AM_mcmc_output fit object, produced by calling \code{AM_MCMC_fit}.}
 
-\item{tags}{A list of variables to consider}
+\item{tags}{A list of variables to consider. This function only produces meaningful plots for variables that have fixed dimension across the draws. If not specified, plots pertaining to M and K will be produced.}
 
-\item{title}{Title for the plot}
+\item{title}{Title for the plot.}
 }
 \description{
 Plot the Autocorrelation
 
-Given a MCMC output, this function will produce acf bar
+Given a MCMC output, this function will produce the acf bar describing the MCMC results.
 }

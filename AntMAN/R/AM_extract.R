@@ -158,7 +158,9 @@ extract_target = function(fit, target, iterations = NULL, debug = FALSE){
 
 #'  Extract values within a AM_mcmc_output object. 
 #' 
-#'  Given an object produced by AM_mcmc_fit, as well as the target variable names, AM_extract will return a list of the variables of interest.
+#'  Given an object produced by AM_mcmc_fit, as well as the target variable names, 
+#'  AM_extract will return a list of the variables of interest.
+#'
 #'  Due to the complexity of AntMAN outputs, AM_mcmc_output object can be difficult
 #'  to handle. The AM_extract function eases access of particular variables within the
 #'  AM_mcmc_output object. Variables of varying dimension are expected to result from the transdimensional moves. When considering such
@@ -187,7 +189,7 @@ AM_extract = function(object, targets, iterations = NULL, debug = FALSE){
 				tmp = tmp[iterations,];
 			}
 		}
-		
+		#TODO: working but not elegant
 		if (target == "mu" || target == "sig2" || target == "Sig" || target == "theta"){
 			tmp = as.matrix(object[[target]])
 			if (!is.null(iterations)){
