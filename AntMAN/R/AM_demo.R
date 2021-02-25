@@ -5,14 +5,22 @@
 ###############
 #######################################################################################
 
-#' AM_demo_mvb_prior_poi
+#' Returns an example of \code{AM_mcmc_fit} output produced by the multivariate bernoulli model
 #'  
-#' Returns AM_MCMC_OUTPUT Object from a running demo of MVB.
+#'
+#' This function allows us to generate a sample output of fitting the multivariate bernoulli model. No arguments are needed to be passed.
+#' The purpose of this function is to serve as a demo for users to understand the model's output, without diving too deep into details. By default,
+#' this demo generates a sample dataset of dimension 500x4, where the MCMC sampler is specified to run for 2000 iterations, with a burn-in of 1000, and a thinning interval of 10. All possible outputs
+#' that can be produced by \code{AM_mcmc_fit} are returned.   
 #'  
-#' @param  n           Number of sample
-#' @param  mcmc_params AM_mcmc_parameters object to fit with
+#' @return an \code{AM_MCMC_fit} object
+#'
 #' @keywords demo
+
 #' @export
+#'
+#' @examples
+#' mvb_output <- AM_demo_mvb_poi()
 AM_demo_mvb_poi = function (n = 500 , mcmc_params = AM_mcmc_parameters(niter=2000, burnin=1000, thin=10, verbose=0, output=c("ALL"))) {
 	
 	set.seed(123) # TODO : discuss if this make sense
@@ -45,14 +53,22 @@ AM_demo_mvb_poi = function (n = 500 , mcmc_params = AM_mcmc_parameters(niter=200
 }
 
 
-#' AM_demo_mvn_poi
+#' Returns an example of \code{AM_MCMC_fit} output produced by the multivariate gaussian model
 #'  
-#' Returns AM_MCMC_OUTPUT Object from a running demo of MVN.
+#'
+#'This function allows us to generate a sample output of fitting the multivariate gaussian model. No arguments are needed to be passed.
+#' The purpose of this function is to serve as a demo for users to understand the model's output, without diving too deep into details. By default,
+#' this demo generates a sample dataset of dimension 500x2, where the MCMC sampler is specified to run for 2000 iterations, with a burn-in of 1000, and a thinning interval of 10. All possible outputs
+#' that can be produced by \code{AM_mcmc_fit} are returned.
 #'  
-#' @param  n           Number of sample
-#' @param  mcmc_params AM_mcmc_parameters object to fit with
+#' @return an \code{AM_MCMC_fit} object
+#'
 #' @keywords demo
+
 #' @export
+#'
+#' @examples
+#' mvn_output <- AM_demo_mvn_poi()
 AM_demo_mvn_poi = function (n = 500 , mcmc_params        = AM_mcmc_parameters(niter=2000, burnin=1000, thin=10, verbose=0, output=c("ALL"))) {
 	
 	set.seed(123) 
@@ -108,19 +124,27 @@ AM_demo_mvn_poi = function (n = 500 , mcmc_params        = AM_mcmc_parameters(ni
 }
 
 
-#' AM_demo_uvn_poi
+##' Returns an example of \code{AM_MCMC_fit} output produced by the univariate gaussian model
 #'  
-#' Returns AM_MCMC_OUTPUT Object from a running demo of Univariate Poisson Gamma.
+#'
+#'This function allows us to generate a sample output of fitting the univariate poisson model. No arguments are needed to be passed.
+#' The purpose of this function is to serve as a demo for users to understand the model's output, without diving too deep into details. By default,
+#' this demo generates a sample dataset of dimension 500x1, where the MCMC sampler is specified to run for 2000 iterations, with a burn-in of 1000, and a thinning interval of 10. All possible outputs
+#' that can be produced by \code{AM_mcmc_fit} are returned.
 #'  
-#' @param  n           Number of sample
-#' @param  mcmc_params AM_mcmc_parameters object to fit with
+#' @return an \code{AM_MCMC_fit} object
+#'
 #' @keywords demo
+
 #' @export
-AM_demo_uvn_poi = function (n = 500 , mcmc_params        = AM_mcmc_parameters(niter=2000, burnin=1000, thin=10, verbose=0, output=c("ALL"))) {
+#'
+#' @examples
+#' mvn_output <- AM_demo_uvn_poi()
+AM_demo_uvn_poi = function (n = 500, mcmc_params        = AM_mcmc_parameters(niter=2000, burnin=1000, thin=10, verbose=0, output=c("ALL"))) {
 	
 	set.seed(123) 
 	
-	demo_univariate_normal <-AM_sample_uninorm(n=1000,pro=c(0.2,0.5,0.3),mmu=c(-2.1,0,2.3),ssd=c(0.5,0.5,0.5))
+	demo_univariate_normal <-AM_sample_uninorm(n=n, pro=c(0.2,0.5,0.3),mmu=c(-2.1,0,2.3),ssd=c(0.5,0.5,0.5))
 	y_uvn  <- demo_univariate_normal$y
 	ci_uvn <- demo_univariate_normal$ci
 	
