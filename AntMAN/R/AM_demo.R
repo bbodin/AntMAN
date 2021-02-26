@@ -210,5 +210,5 @@ AM_demo_uvp_poi = function () {
 			mcmc_parameters = mcmc_params)
 	
 	
-	return (list(input = y_uvn, clusters = ci_uvp, fit = fit))
+	return (list(input = y_uvp, clusters = ci_uvp, fit = fit))
 }
