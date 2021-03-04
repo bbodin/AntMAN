@@ -274,8 +274,8 @@ AM_mcmc_fit <- function(
 #' Similarly to \code{AM_mcmc_fit}, the \code{AM_mcmc_refit} function performs a Gibbs sampling in order to estimate 
 #' a mixture. However parameter will be reused from a previous result from \code{AM_mcmc_fit}.
 #' 
-#' In practice this function will call	AM_mcmc_fit(y, fixed_clustering = fixed_clustering, ...); with the same parameter as previously
-#' 
+#' In practice this function will call	AM_mcmc_fit(y, fixed_clustering = fixed_clustering, ...); with the same parameters as previously
+#' specified.
 #'
 #'@param y input data, can be a vector or a matrix.
 #'@param fit previous output from \code{AM_mcmc_fit} that is used to setup kernel and priors.

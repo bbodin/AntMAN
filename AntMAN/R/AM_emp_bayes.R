@@ -6,14 +6,20 @@
 #######################################################################################
 
 
-#'  compute the hyperparameters of an Normal-Inverse-Gamma distribution using an empirical Bayes approach.
+#' compute the hyperparameters of an Normal-Inverse-Gamma distribution using an empirical Bayes approach.
+#'
+#' This function computes the hyperparameters of a Normal Inverse-Gamma distribution using an empirical Bayes approach. More information
+#' about how these hyperparameters are determined can be found here: \url{Petrone S, Rousseau J, Scricciolo C (2014). “Bayes and Empirical Bayes: do They Merge?” Biometrika, 101(2), 285–302. doi:10.1093/biomet/ast067.}
 #'  
-#'@param y The data y
+#'@param y The data y. If y is univariate, a vector is expected. Otherwise, y should be a matrix.
 #'@param scEmu a positive value (default=1) such that marginally E(mu)=(sample variance)*scEmu
 #'@param scEsig2 a positive value (default=3) such that marginally E(sig2)=(sample variance)*scEsig2
 #'@param CVsig2 The coefficient of variation of sig2 (default=3)
-#'  
-#'@return hyperparameters
+#'  }
+#'@return an object of class \code{\link{AM_mix_hyperparams}}, in which hyperparameters \code{m0}, \code{k0},
+#' \code{nu0} and \code{sig02} are specified. To understand the usage of these hyperparameters, please refer to
+#' \code{\link{AM_mix_hyperparams_uninorm}}.
+
 #'@export
 AM_emp_bayes_uninorm = function(y,scEmu=1,scEsig2=3,CVsig2=3){
 	n <- length(y)   ### sample size

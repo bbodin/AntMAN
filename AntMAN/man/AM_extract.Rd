@@ -7,13 +7,16 @@
 AM_extract(object, targets, iterations = NULL, debug = FALSE)
 }
 \arguments{
-\item{object}{a \code{\link{AM_mcmc_output}} object}
+\item{object}{an \code{\link{AM_mcmc_output}} object}
 
 \item{targets}{List of variables to extract (ie. K, M, mu).}
 
 \item{iterations}{Can specify particular iterations to extracts, NULL for all.}
 
 \item{debug}{Activate log to}
+}
+\value{
+a list of variables specified in \code{targets}.
 }
 \description{
 Given an object produced by AM_mcmc_fit, as well as the target variable names,

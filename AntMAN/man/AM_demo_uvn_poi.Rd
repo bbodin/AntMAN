@@ -2,24 +2,20 @@
 % Please edit documentation in R/AM_demo.R
 \name{AM_demo_uvn_poi}
 \alias{AM_demo_uvn_poi}
-\title{AM_demo_uvn_poi
-
-Returns AM_MCMC_OUTPUT Object from a running demo of Univariate Poisson Gamma.}
+\title{Returns an example of \code{AM_MCMC_fit} output produced by the univariate gaussian model}
 \usage{
-AM_demo_uvn_poi(
-  n = 500,
-  mcmc_params = AM_mcmc_parameters(niter = 2000, burnin = 1000, thin = 10, verbose = 0,
-    output = c("ALL"))
-)
+AM_demo_uvn_poi()
 }
-\arguments{
-\item{n}{Number of sample}
-
-\item{mcmc_params}{AM_mcmc_parameters object to fit with}
+\value{
+The return value is a \code{\link{AM_mcmc_output}} object.
 }
 \description{
-AM_demo_uvn_poi
-
-Returns AM_MCMC_OUTPUT Object from a running demo of Univariate Poisson Gamma.
+This function allows us to generate a sample output of fitting the univariate gaussian model. No arguments are needed to be passed.
+The purpose of this function is to serve as a demo for users to understand the model's output, without diving too deep into details. By default,
+this demo generates a sample dataset of dimension 500x1, where the MCMC sampler is specified to run for 2000 iterations, with a burn-in of 1000, and a thinning interval of 10. All possible outputs
+that can be produced by \code{\link{AM_mcmc_fit}} are returned.
+}
+\examples{
+mvn_output <- AM_demo_uvn_poi()
 }
 \keyword{demo}

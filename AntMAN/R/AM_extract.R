@@ -167,10 +167,11 @@ extract_target = function(fit, target, iterations = NULL, debug = FALSE){
 #'  variables, the extracted list would correspond to an nx1 list, where n refers to the number of extracted iterations. Each of these nx1 entries consists
 #'  of another list of dimension mx1, where m specifies the number of components inferred for that iteration.
 #'  
-#'@param object a \code{\link{AM_mcmc_output}} object
+#'@param object an \code{\link{AM_mcmc_output}} object
 #'@param targets List of variables to extract (ie. K, M, mu).
 #'@param iterations Can specify particular iterations to extracts, NULL for all.
 #'@param debug Activate log to 
+#'@return a list of variables specified in \code{targets}.
 #'  
 #'@export
 AM_extract = function(object, targets, iterations = NULL, debug = FALSE){

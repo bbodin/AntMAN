@@ -5,12 +5,8 @@
 \title{AM_sample_multibin}
 \usage{
 AM_sample_multibin(n, d, pro, TH)
-
-AM_sample_multibin(n, d, pro, TH)
 }
 \description{
-AM_sample_multibin
-
 AM_sample_multibin
 }
 \keyword{internal}

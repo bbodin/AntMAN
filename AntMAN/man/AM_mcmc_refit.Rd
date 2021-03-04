@@ -23,7 +23,8 @@ Similarly to \code{AM_mcmc_fit}, the \code{AM_mcmc_refit} function performs a Gi
 a mixture. However parameter will be reused from a previous result from \code{AM_mcmc_fit}.
 }
 \details{
-In practice this function will call	AM_mcmc_fit(y, fixed_clustering = fixed_clustering, ...); with the same parameter as previously
+In practice this function will call	AM_mcmc_fit(y, fixed_clustering = fixed_clustering, ...); with the same parameters as previously
+specified.
 }
 \examples{
 y = AM_sample_unipois()$y

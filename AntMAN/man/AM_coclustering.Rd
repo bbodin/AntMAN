@@ -2,9 +2,7 @@
 % Please edit documentation in R/AM_coclustering.R
 \name{AM_coclustering}
 \alias{AM_coclustering}
-\title{Return co-clustering
-
-Given a MCMC output, this function return co-clustering matrix}
+\title{Return the co-clustering matrix}
 \usage{
 AM_coclustering(fit)
 }
@@ -15,7 +13,8 @@ AM_coclustering(fit)
 co-clustering matrix
 }
 \description{
-Return co-clustering
-
-Given a MCMC output, this function return co-clustering matrix
+Given an MCMC output produced by \code{AM_MCMC_fit}, this function returns the co-clustering matrix.
+}
+\examples{
+ccm <- AM_coclustering(fit)
 }
