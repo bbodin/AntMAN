@@ -4,7 +4,7 @@
 \alias{AM_binder}
 \title{Run the binder algorithm using R (TBD)
 
-TBD TODO : need the C version of that.}
+TBD TODO : need the C version of that. \insertCite{Scholar}{AntMAN}}
 \usage{
 AM_binder(fit, weight = 0.5, with_coclustering_probability = FALSE)
 }
@@ -19,5 +19,5 @@ When with_coclustering_probability, the function also return the coclustering pr
 \description{
 Run the binder algorithm using R (TBD)
 
-TBD TODO : need the C version of that.
+TBD TODO : need the C version of that. \insertCite{Scholar}{AntMAN}
 }

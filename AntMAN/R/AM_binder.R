@@ -93,7 +93,7 @@ AM_salso <- function(fit, maxClusts=0L, Const_Binder = 0.5, batchSize = 1000L, n
 
 #'  Run the binder algorithm using R (TBD)
 #'  
-#'  TBD TODO : need the C version of that.
+#'  TBD TODO : need the C version of that. \insertCite{Scholar}{AntMAN}
 #'  
 #'@param fit                            Output from MCMC_fit
 #'@param weight                         Weight between bad and good pairs, default is 0.5.
