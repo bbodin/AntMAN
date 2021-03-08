@@ -93,12 +93,13 @@ AM_salso <- function(fit, maxClusts=0L, Const_Binder = 0.5, batchSize = 1000L, n
 
 #'  Run the binder algorithm using R (TBD)
 #'  
-#'  TBD TODO : need the C version of that. \insertCite{Scholar}{AntMAN}
+#'  TBD TODO : need the C version of that. 
 #'  
 #'@param fit                            Output from MCMC_fit
 #'@param weight                         Weight between bad and good pairs, default is 0.5.
 #'@param with_coclustering_probability  By default this function only return the index of the closest guess. 
-#'                                      When with_coclustering_probability, the function also return the coclustering probability matrix.
+#'                                      When with_coclustering_probability, the function also return the coclustering probability
+#' matrix. 
 #'  
 #'@export
 AM_binder = function (fit,  weight = 0.5, with_coclustering_probability = FALSE) {

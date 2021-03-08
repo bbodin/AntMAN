@@ -194,23 +194,25 @@ AM_reshape <- function(fit, y){
 #' \code{*} denotes the chosen kernel) 
 #' sample data \code{y}. 
 #' Additionaly a prior distribution on the number of mixture components  
-#' must be specified  through  \code{mix_components_prior} 
+#' must be specified  through  \code{mix_components_prior}
 #' (generated with  \code{AM_mix_components_prior_*} functions, where \code{*}  denotes the chosen prior). Similarly,  
 #' a prior on the weights of  the mixture is specified through \code{mix_weight_prior} 
 #' (defined with  \code{AM_mix_weights_prior_*} functions). Finally, with \code{mcmc_parameters} the user sets
-#' the MCMC parameters for the Gibbs sampler (defined with  \code{AM_mcmc_parameters} functions). 
+#' the MCMC parameters for the Gibbs sampler (defined with  \code{\link{AM_mcmc_parameters}} functions). 
 #' 
 #' If no initial clustering is specified (either as \code{init_K} or \code{init_clustering}), 
 #' then every observation is allocated to a different cluster. 
 #' If \code{init_K} is specified then AntMAN initialises the clustering through K-means. 
 #' 
-#' **Warning**: if the user does not specify init_K or initial_cluster, the first steps can be be time-consuming because of default value for the initial clustering. 
+#' **Warning**: if the user does not specify init_K or initial_cluster, the first steps can be be time-consuming because of default setting of the initial clustering. 
 #' 
 #'
 #'@param y input data, can be a vector or a matrix.
-#'@param mix_kernel_hyperparams is a configuration list, defined by *_mix_hyperparams functions, where * denotes the chosen kernel.
-#'@param initial_clustering is a vector CI of initial cluster assignement. If no clustering is specified (either as \code{init_K} or \code{init_clustering}), then every observation is assigned to its own cluster.
-#'@param fixed_clustering is a vector CI of cluster assignement that will remained unchanged for every iterations.
+#'@param mix_kernel_hyperparams is a configuration list, defined by *_mix_hyperparams functions, where * denotes the chosen kernel. See \code{\link{AM_mix_hyperparams_multiber}}, 
+#' \code{\link{AM_mix_hyperparams_multinorm}}, \code{\link{AM_mix_hyperparams_uninorm}}, \code{\link{AM_mix_hyperparams_unipois}} for more details.
+#'@param initial_clustering is a vector CI of initial cluster assignement. If no clustering is specified (either as \code{init_K} or \code{init_clustering}), then every observation is 
+#' assigned to its own cluster.
+#'@param fixed_clustering if specified, this is the vector CI containing the cluster assignments. This will remained unchanged for every iteration.
 #'@param init_K initial value for  the number of cluster. When this is specified, AntMAN intitialises the clustering assign usng K-means.
 #'@param mix_components_prior is a configuration list defined by AM_mix_components_prior_* functions, where * denotes the chosen prior.
 #'@param mix_weight_prior is a configuration list defined by AM_weight_prior_* functions, where * denotes the chosen prior specification.
@@ -272,9 +274,9 @@ AM_mcmc_fit <- function(
 #' Performs a Gibbs sampling with fixed clustering and reusing previous configuration
 #' 
 #' Similarly to \code{AM_mcmc_fit}, the \code{AM_mcmc_refit} function performs a Gibbs sampling in order to estimate 
-#' a mixture. However parameter will be reused from a previous result from \code{AM_mcmc_fit}.
+#' a mixture. However parameters will be reused from a previous result from \code{AM_mcmc_fit}.
 #' 
-#' In practice this function will call	AM_mcmc_fit(y, fixed_clustering = fixed_clustering, ...); with the same parameters as previously
+#' In practice this function will call AM_mcmc_fit(y, fixed_clustering = fixed_clustering, ...); with the same parameters as previously
 #' specified.
 #'
 #'@param y input data, can be a vector or a matrix.

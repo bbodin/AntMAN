@@ -8,9 +8,10 @@
 
 #' compute the hyperparameters of an Normal-Inverse-Gamma distribution using an empirical Bayes approach.
 #'
-#' This function computes the hyperparameters of a Normal Inverse-Gamma distribution using an empirical Bayes approach. More information
-#' about how these hyperparameters are determined can be found here: \url{Petrone S, Rousseau J, Scricciolo C (2014). “Bayes and Empirical Bayes: do They Merge?” Biometrika, 101(2), 285–302. doi:10.1093/biomet/ast067.}
-#'  
+#' This function computes the hyperparameters of a Normal Inverse-Gamma distribution using an empirical Bayes approach. 
+#' More information about how these hyperparameters are determined can be found here: 
+#' \emph{Bayes and empirical Bayes: do they merge?} \insertCite{petrone2012bayes}{AntMAN}.
+#'
 #'@param y The data y. If y is univariate, a vector is expected. Otherwise, y should be a matrix.
 #'@param scEmu a positive value (default=1) such that marginally E(mu)=(sample variance)*scEmu
 #'@param scEsig2 a positive value (default=3) such that marginally E(sig2)=(sample variance)*scEsig2
