@@ -15,11 +15,13 @@ AM_mcmc_parameters(
 )
 }
 \arguments{
-\item{niter}{Total number of MCMC iterations.}
+\item{niter}{Total number of MCMC iterations to be carried out.}
 
-\item{burnin}{Number of iterations to discard as burn-in.}
+\item{burnin}{Number of iterations to be considered as burn-in. Samples from this burn-in period are discarded.}
 
-\item{thin}{Thining rate.}
+\item{thin}{Thinning rate. This argument specifies how often a draw from the posterior distribution is stored after
+burnin, i.e. one every -th samples is saved. Therefore, the toral number of MCMC samples saved is
+(\code{niter} -\code{burnin})/\code{thin}. If thin =1, then AntMAN stores every iteration.}
 
 \item{verbose}{A value from 0 to 4, that specifies the desired level of verbosity (0:None, 1:Warnings, 2:Debug, 3:Extras)}
 
@@ -30,17 +32,10 @@ AM_mcmc_parameters(
 \item{output_dir}{Path to an output dir, where to store all the outputs.}
 }
 \value{
-AM_mcmc_configuration Object, this is a list to be used as \code{mcmc_parameters} argument with \code{AM_mcmc_fit}.
+\code{\link{AM_mcmc_configuration}} Object, this is a list to be used as \code{mcmc_parameters} argument with \code{\link{AM_mcmc_fit}}.
 }
 \description{
-This function generates an MCMC parameters list to be used as \code{mcmc_parameters} argument within \code{AM_mcmc_fit}.
-}
-\details{
-The \code{niter} argument specify the total number of iteration.
-\code{burnin} is the number of initial iterations to discard.
-\code{thin} specifies how often a draw from teh posterior distribution is stored after
-burnin, i.e. one every -th samples is saved. Therefore, the toral number of MCMC samples saved is
-(\code{niter} -\code{burnin})/\code{thin}. If thin =1, then AntMAN stores every iteration.
+This function generates an MCMC parameters list to be used as \code{mcmc_parameters} argument within \code{\link{AM_mcmc_fit}}.
 }
 \examples{
 AM_mcmc_parameters (niter=1000, burnin=10000, thin=50)

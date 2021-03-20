@@ -2,28 +2,28 @@
 % Please edit documentation in R/AM_mcmc.R
 \name{AM_mcmc_refit}
 \alias{AM_mcmc_refit}
-\title{Performs a Gibbs sampling with fixed clustering and reusing previous configuration}
+\title{Performs a Gibbs sampling reusing previous configuration}
 \usage{
 AM_mcmc_refit(y, fit, fixed_clustering, mcmc_parameters = AM_mcmc_parameters())
 }
 \arguments{
 \item{y}{input data, can be a vector or a matrix.}
 
-\item{fit}{previous output from \code{AM_mcmc_fit} that is used to setup kernel and priors.}
+\item{fit}{previous output from \code{\link{AM_mcmc_fit}} that is used to setup kernel and priors.}
 
-\item{fixed_clustering}{is a vector CI of cluster assignement that will remained unchanged for every iterations.}
+\item{fixed_clustering}{is a vector CI of cluster assignment that will remain unchanged for every iterations.}
 
-\item{mcmc_parameters}{is a configuration list defined by AM_mcmc_parameters.}
+\item{mcmc_parameters}{is a configuration list defined by \code{\link{AM_mcmc_parameters}}.}
 }
 \value{
 The return value is a \code{\link{AM_mcmc_output}} object.
 }
 \description{
-Similarly to \code{AM_mcmc_fit}, the \code{AM_mcmc_refit} function performs a Gibbs sampling in order to estimate
-a mixture. However parameter will be reused from a previous result from \code{AM_mcmc_fit}.
+Similar to \code{\link{AM_mcmc_fit}}, the \code{\link{AM_mcmc_refit}} function performs a Gibbs sampling in order to estimate
+a mixture. However parameters will be reused from a previous result from \code{\link{AM_mcmc_fit}}.
 }
 \details{
-In practice this function will call	AM_mcmc_fit(y, fixed_clustering = fixed_clustering, ...); with the same parameters as previously
+In practice this function will call AM_mcmc_fit(y, fixed_clustering = fixed_clustering, ...); with the same parameters as previously
 specified.
 }
 \examples{

@@ -7,13 +7,18 @@
 AM_demo_uvn_poi()
 }
 \value{
-The return value is a \code{\link{AM_mcmc_output}} object.
+A list containing the following items:
+\itemize{
+\item the vector (or matrix) containing the synthetic data used to fit the model
+\item the vector containing the final cluster assignment of each observation
+\item an \code{\link{AM_mcmc_output}} object, which is the typical output of \code{\link{AM_mcmc_fit}}
+}
 }
 \description{
 This function allows us to generate a sample output of fitting the univariate gaussian model. No arguments are needed to be passed.
 The purpose of this function is to serve as a demo for users to understand the model's output, without diving too deep into details. By default,
 this demo generates a sample dataset of dimension 500x1, where the MCMC sampler is specified to run for 2000 iterations, with a burn-in of 1000, and a thinning interval of 10. All possible outputs
-that can be produced by \code{\link{AM_mcmc_fit}} are returned.
+that can be produced by \code{\link{AM_mcmc_fit}} are returned (see return value below).
 }
 \examples{
 mvn_output <- AM_demo_uvn_poi()

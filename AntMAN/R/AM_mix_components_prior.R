@@ -20,7 +20,7 @@ NULL
 #'  Print infos on AM_mix_components_prior Object
 #'  
 #'@param object a \code{\link{AM_mix_components_prior}} object
-#'@param ... all additionnal parameters are ignored
+#'@param ... all additional parameters are ignored
 #'  
 #'@importFrom utils head
 #'@method summary AM_mix_components_prior 
@@ -71,7 +71,7 @@ AM_mix_components_prior_dirac <- function(Mstar) {
 
 #' Negative Binomial Prior.
 #' 
-#' This generate a configuration object for a Shifted Negative Binomial prior on the number of mixture components such as 
+#' This generates a configuration object for a Shifted Negative Binomial prior on the number of mixture components such as 
 #'  \deqn{q_M(m)=Pr(M=m) =\frac{\Gamma(r+m-1)}{(m-1)!\Gamma(r)} p^{m-1}(1-p)^r, \quad m=1,2,3,\ldots}
 #' The hyper-parameters \eqn{p\in (0,1)}  (probability of success) and \eqn{r>0} (size) can either be fixed using \code{r} and \code{p}
 #' or assigned appropriate prior distributions. 
@@ -82,13 +82,13 @@ AM_mix_components_prior_dirac <- function(Mstar) {
 #' 
 #' If no arguments are provided, the default is \eqn{r = 1 , a_P = 1, b_P = 1}.
 #' 
-#' Additionnaly, when init_R and init_P are no specified, there is default values : 
+#' Additionally, when init_R and init_P are not specified, there is default values : 
 #' \eqn{init_R = 1} and \eqn{init_P = 0.5}
 #'
 #'@param a_R      The shape parameter \eqn{a}  of the \eqn{Gamma(a,b)} prior distribution for \eqn{r}.
 #'@param b_R      The  rate parameter \eqn{b} of the \eqn{Gamma(a,b)} prior distribution for \eqn{r}.
 #'@param init_R   The initial value of \eqn{r}, when specifying \code{a_R} and \code{b_R}.
-#'@param a_P      The parameter\eqn{a}  of the \eqn{Beta(a,b)} prior distribution for \eqn{p}.
+#'@param a_P      The parameter \eqn{a}  of the \eqn{Beta(a,b)} prior distribution for \eqn{p}.
 #'@param b_P      The parameter \eqn{b}  of the \eqn{Beta(a,b)} prior distribution for \eqn{p}.
 #'@param init_P   The inivial  value of \eqn{p}, when specifying \code{a_P} and \code{b_P}.
 #'@param R        It allows  to fix  \eqn{r} to a specific value.
@@ -150,7 +150,7 @@ AM_mix_components_prior_negbin <- function(a_R = NULL, b_R = NULL, a_P = NULL, b
 #'@param a      The shape parameter \code{a} of  the \eqn{Gamma(a,b)} prior distribution.
 #'@param b      The rate  parameter \code{b} of the \eqn{Gamma(a,b)} prior distribution.
 #'@param init   The  initial value for \eqn{\Lambda}, when specifying \code{a} and \code{b}.
-#'@param Lambda It allows to set the   hyper-parameter \eqn{\Lambda} to  fixed value.
+#'@param Lambda It allows to set the  hyper-parameter \eqn{\Lambda} to be assigned a fixed value.
 #'
 #'@return A configuration list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_fit}}. 
 #'
@@ -160,8 +160,8 @@ AM_mix_components_prior_negbin <- function(a_R = NULL, b_R = NULL, a_P = NULL, b
 #' 
 #'@examples
 #' 
-#' ## See \code{\link{AM_mix_hyperparams_uninorm}} example.
-#' components_prior   = AM_mix_components_prior_pois (init=3,  a=1, b=1) 
+#' See \code{\link{AM_mix_hyperparams_uninorm}} example.
+#' components_prior = AM_mix_components_prior_pois (init=3,  a=1, b=1) 
 #' 
 
 AM_mix_components_prior_pois <- function(a=NULL, b=NULL, Lambda=NULL, init=NULL) {

@@ -39,11 +39,11 @@ density_discrete_variables <- function(Par, color=rgb(0.4, 0.8, 1, alpha=0.7), s
 }
 
 
-#' plot AM_mcmc_output  
+#' Plot \code{\link{AM_mcmc_output}} scatterplot matrix
 #' 
-#' visualise a matrix of plots describing the mcmc results. This function is built upon ggpairs.
+#' visualise a matrix of plots describing the MCMC results. This function is built upon ggpairs.
 #'  
-#'@param x an AM_mcmc_output object, produced by calling \code{AM_MCMC_fit}.
+#'@param x an \code{\link{AM_mcmc_output}} object, produced by calling \code{\link{AM_mcmc_fit}}.
 #'@param tags A list of variables to consider for plotting. This function only produces meaningful plots for variables that have fixed dimension across the draws. If not specified, plots pertaining to M and K will be produced. 
 #'@param title Title for the plot.
 #'@return Same as ggpairs function, a ggmatrix object that if called, will print.
@@ -67,16 +67,17 @@ AM_plot_pairs=function(x,tags = NULL,title = "MCMC Results"){
 
 }
 
-#' plot the density of variables from AM_mcmc_output object.
+#' Plot the density of variables from \code{\link{AM_mcmc_output}} object.
 #' 
-#' Given an object of class fit, AM_plot_density plots the posterior density of variables M and K combined across all chains. AM_plot_density makes use 
+#'
+#' Given an object of class \code{\link{AM_mcmc_fit}}, AM_plot_density plots the posterior density of specified combined across all chains. AM_plot_density makes use 
 #' of bayesplot's plotting function mcmc_areas.
 #' 
 #'  
-#'@param x An AM_mcmc_output fit object, produced by calling \code{AM_MCMC_fit}.
-#'@param tags A list of variables to consider. This function only produces meaningful plots for variables that have fixed dimension across the draws. If not specified, plots pertaining to M and K will be produced. 
+#'@param x An \code{\link{AM_mcmc_output}} fit object, produced by calling \code{\link{AM_mcmc_fit}}.
+#'@param tags A list of variables to consider. This function only produces meaningful plots for variables that have fixed dimension across the draws.
 #'@param title Title for the plot.
-#'@return a ggplot object visualising the posterior density of variables M and K.
+#'@return a ggplot object visualising the posterior density of the specified variables.
 #'@importFrom bayesplot mcmc_areas color_scheme_set
 #'@export
 AM_plot_density=function(x,tags = NULL,title = "MCMC Results"){
@@ -95,11 +96,12 @@ AM_plot_density=function(x,tags = NULL,title = "MCMC Results"){
 }
 
 
-#' plot the probability mass function of variables from AM_mcmc_output object.
+#' Plot the probability mass function of variables from AM_mcmc_output object.
 #' 
-#' Given an object of class fit, AM_plot_pmf plots the posterior probability mass function of variables M and K, where M and K are discrete.
+#'
+#' Given an object of class \code{\link{AM_mcmc_fit}}, AM_plot_pmf plots the posterior probability mass function of variables M and K, where M and K are discrete.
 #'  
-#'@param x An AM_mcmc_output fit object, produced by calling \code{AM_MCMC_fit}.
+#'@param x An AM_mcmc_output fit object, produced by calling \code{AM_mcmc_fit}.
 #'@param tags A list of variables (containing M and/or K) to consider. By default, the pmf of both M and K will be plotted.
 #'@param title Title for the plot.
 #'@return NULL
@@ -120,11 +122,12 @@ AM_plot_pmf=function(x,tags = NULL,title = "MCMC Results"){
 	
 }
 
-#' plot traces of variables from AM_mcmc_output object.  
+#' Plot traces of variables from AM_mcmc_output object.  
 #' 
-#' Given an object of class fit, AM_plot_traces visualises the traceplots of the specified variables involved in the MCMC inference. 
+#'
+#' Given an object of class AM_mcmc_output, \code{\link{AM_plot_traces}} visualises the traceplots of the specified variables involved in the MCMC inference. 
 #'  
-#'@param x An AM_mcmc_output fit object, produced by calling \code{AM_MCMC_fit}.
+#'@param x An \code{\link{AM_mcmc_output fit object, produced by calling \code{\link{AM_mcmc_fit}}.
 #'@param tags A list of variables to consider. This function only produces meaningful plots for variables that have fixed dimension across the draws. If not specified, plots pertaining to M and K will be produced. 
 #'@param title Title for the plot
 #'@return NULL
@@ -147,11 +150,11 @@ AM_plot_traces=function(x,tags = NULL,title = "MCMC Results"){
 	
 }
 
-#' plot posterior interval estimates obtained from MCMC draws.
+#' Plot posterior interval estimates obtained from MCMC draws.
 #' 
-#' Given an object of class fit, AM_plot_values visualises the interval estimates of the specified variables involved in the MCMC inference. 
+#' Given an object of class \code{\link{AM_mcmc_fit}}, AM_plot_values visualises the interval estimates of the specified variables involved in the MCMC inference. 
 #'  
-#'@param x An AM_mcmc_output fit object, produced by calling \code{AM_MCMC_fit}.
+#'@param x An \code{\link{AM_mcmc_output}} fit object, produced by calling \code{\link{AM_mcmc_fit}}.
 #'@param tags A list of variables to consider. This function only produces meaningful plots for variables that have fixed dimension across the draws. If not specified, plots pertaining to M and K will be produced. 
 #'@param title Title for the plot.
 #'@return NULL
@@ -177,9 +180,9 @@ AM_plot_values=function(x,tags = NULL,title = "MCMC Results"){
 
 #'  Plot the Similarity Matrix
 #'  
-#'  Given a MCMC output, this function will produce an image of the Similarity Matrix.
+#'  Given an \code{\link{AM_mcmc_fit}} output, this function will produce an image of the Similarity Matrix.
 #'  
-#'@param x An AM_mcmc_output fit object, produced by calling \code{AM_MCMC_fit}.
+#'@param x An \code{\link{AM_mcmc_output}} fit object, produced by calling \code{AM_mcmc_fit}.
 #'@param ... All additional parameters wil lbe pass to the image command.
 #'  
 #'@export
@@ -211,12 +214,14 @@ AM_plot_similarity_matrix=function(x, ...){
 	}
 	
 }
-#'  Plot the Autocorrelation
+#'  Plot the Autocorrelation function
 #'  
-#'  Given a MCMC output, this function will produce the acf bar describing the MCMC results.
 #'  
-#'@param x An AM_mcmc_output fit object, produced by calling \code{AM_MCMC_fit}.
+#' Given an MCMC output object, this function produces the autocorrelation function bars describing the MCMC results.
+#'  
+#'@param x An \code{\link{AM_mcmc_output} object, produced by calling \code{\link{AM_mcmc_fit}}.
 #'@param tags A list of variables to consider. This function only produces meaningful plots for variables that have fixed dimension across the draws. If not specified, plots pertaining to M and K will be produced. 
+#'This function is built upon bayesplot's \code{mcmc_acf_bar}.
 #'@param title Title for the plot.
 #'  
 #'@importFrom bayesplot mcmc_acf_bar
@@ -246,7 +251,7 @@ AM_plot_chaincor=function(x, tags = NULL, title = "MCMC Results"){
 #'  
 #'  Given the specified inputs, this function will produce a cluster frequency plot for the multivariate bernoulli model.
 #'  
-#'@param fit An AM_mcmc_output fit object, produced by calling \code{AM_MCMC_fit}.
+#'@param fit An \code{\link{AM_mcmc_output}} fit object, produced by calling \code{AM_mcmc_fit}.
 #'@param y A matrix containing the y observations which produced fit.
 #'@param x_lim_param A vector with two elements describing the plot's x_axis scale, e.g. c(0.8, 7.2).
 #'@param y_lim_param A vector with two elements describing the plot's y_axis scale, e.g. c(0, 1).

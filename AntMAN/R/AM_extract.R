@@ -156,14 +156,14 @@ extract_target = function(fit, target, iterations = NULL, debug = FALSE){
 
 
 
-#'  Extract values within a AM_mcmc_output object. 
+#'  Extract values within a \code{\link{AM_mcmc_output}} object. 
 #' 
-#'  Given an object produced by AM_mcmc_fit, as well as the target variable names, 
+#'  Given an object produced by \code{\link{AM_mcmc_fit}}, as well as the target variable names, 
 #'  AM_extract will return a list of the variables of interest.
 #'
-#'  Due to the complexity of AntMAN outputs, AM_mcmc_output object can be difficult
+#'  Due to the complexity of AntMAN outputs, \code{\link{AM_mcmc_output}} object can be difficult
 #'  to handle. The AM_extract function eases access of particular variables within the
-#'  AM_mcmc_output object. Variables of varying dimension are expected to result from the transdimensional moves. When considering such
+#'  \code{\link{AM_mcmc_output}} object. Variables of varying dimension are expected to result from the transdimensional moves. When considering such
 #'  variables, the extracted list would correspond to an nx1 list, where n refers to the number of extracted iterations. Each of these nx1 entries consists
 #'  of another list of dimension mx1, where m specifies the number of components inferred for that iteration.
 #'  

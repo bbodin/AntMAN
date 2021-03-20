@@ -16,7 +16,7 @@ AM_mix_hyperparams_uninorm(m0, k0, nu0, sig02)
 \item{sig02}{The \eqn{\sigma^2_0} hyperparameter.}
 }
 \value{
-A list to be used as \code{mix_kernel_hyperparams} argument for \code{mcmc_fit}.
+A list to be used as \code{mix_kernel_hyperparams} argument for \code{\link{AM_mcmc_fit}}.
 }
 \description{
 Generate a configuration object that specifies univariate Normal mixture kernel and allows to set the hyperparameters of the Normal-InverseGamma conjugate prior. As such, the kernel is a Gaussian dsistribution

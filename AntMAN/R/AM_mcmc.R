@@ -189,16 +189,15 @@ AM_reshape <- function(fit, y){
 
 #' Performs a Gibbs sampling
 #' 
-#' The \code{AM_mcmc_fit} function performs a Gibbs sampling in order to estimate 
-#' a mixture of a predifined type \code{mix_kernel_hyperparams} (defined with \code{AM_mix_hyperparams_*} functions, where star 
-#' \code{*} denotes the chosen kernel) 
-#' sample data \code{y}. 
-#' Additionaly a prior distribution on the number of mixture components  
-#' must be specified  through  \code{mix_components_prior}
+#' The \code{AM_mcmc_fit} function performs a Gibbs sampling in order to estimate the mixture comprising the sample data \code{y}.
+#' The mixture selected must be of a predefined type \code{mix_kernel_hyperparams} (defined with \code{AM_mix_hyperparams_*} functions, where star 
+#' \code{*} denotes the chosen kernel). 
+#' Additionally, a prior distribution on the number of mixture components  
+#' must be specified through \code{mix_components_prior}
 #' (generated with  \code{AM_mix_components_prior_*} functions, where \code{*}  denotes the chosen prior). Similarly,  
-#' a prior on the weights of  the mixture is specified through \code{mix_weight_prior} 
-#' (defined with  \code{AM_mix_weights_prior_*} functions). Finally, with \code{mcmc_parameters} the user sets
-#' the MCMC parameters for the Gibbs sampler (defined with  \code{\link{AM_mcmc_parameters}} functions). 
+#' a prior on the weights of the mixture should be specified through \code{mix_weight_prior} 
+#' (defined with  \code{AM_mix_weights_prior_*} functions). Finally, with \code{mcmc_parameters}, the user sets
+#' the MCMC parameters for the Gibbs sampler (defined with \code{\link{AM_mcmc_parameters}} functions). 
 #' 
 #' If no initial clustering is specified (either as \code{init_K} or \code{init_clustering}), 
 #' then every observation is allocated to a different cluster. 
@@ -208,15 +207,16 @@ AM_reshape <- function(fit, y){
 #' 
 #'
 #'@param y input data, can be a vector or a matrix.
-#'@param mix_kernel_hyperparams is a configuration list, defined by *_mix_hyperparams functions, where * denotes the chosen kernel. See \code{\link{AM_mix_hyperparams_multiber}}, 
-#' \code{\link{AM_mix_hyperparams_multinorm}}, \code{\link{AM_mix_hyperparams_uninorm}}, \code{\link{AM_mix_hyperparams_unipois}} for more details.
+#'@param mix_kernel_hyperparams is a configuration list, defined by *_mix_hyperparams functions, where * denotes the chosen kernel. 
+#'See \code{\link{AM_mix_hyperparams_multiber}}, \code{\link{AM_mix_hyperparams_multinorm}}, \code{\link{AM_mix_hyperparams_uninorm}}, \code{\link{AM_mix_hyperparams_unipois}} for more details.
 #'@param initial_clustering is a vector CI of initial cluster assignement. If no clustering is specified (either as \code{init_K} or \code{init_clustering}), then every observation is 
 #' assigned to its own cluster.
-#'@param fixed_clustering if specified, this is the vector CI containing the cluster assignments. This will remained unchanged for every iteration.
+#'@param fixed_clustering if specified, this is the vector CI containing the cluster assignments. This will remain unchanged for every iteration.
 #'@param init_K initial value for  the number of cluster. When this is specified, AntMAN intitialises the clustering assign usng K-means.
-#'@param mix_components_prior is a configuration list defined by AM_mix_components_prior_* functions, where * denotes the chosen prior.
+#'@param mix_components_prior is a configuration list defined by AM_mix_components_prior_* functions, where * denotes the chosen prior. See \code{\link{AM_mix_hyperparams_uninorm}}, 
+#' \code{\link{AM_mix_hyperparams_unipois}},  \code{\link{AM_mix_hyperparams_multinorm}}, and \code{\link{AM_mix_hyperparams_multiber}} for more details.
 #'@param mix_weight_prior is a configuration list defined by AM_weight_prior_* functions, where * denotes the chosen prior specification.
-#'@param mcmc_parameters is a configuration list defined by AM_mcmc_parameters. 
+#'@param mcmc_parameters is a configuration list defined by AM_mcmc_parameters. See \code{\link{AM_mcmc_parameters}} for more details.
 #'@return The return value is a \code{\link{AM_mcmc_output}} object.
 #'@examples
 #' AM_mcmc_fit( AM_sample_unipois()$y, 
@@ -271,18 +271,18 @@ AM_mcmc_fit <- function(
 }
 
 
-#' Performs a Gibbs sampling with fixed clustering and reusing previous configuration
+#' Performs a Gibbs sampling reusing previous configuration
 #' 
-#' Similarly to \code{AM_mcmc_fit}, the \code{AM_mcmc_refit} function performs a Gibbs sampling in order to estimate 
-#' a mixture. However parameters will be reused from a previous result from \code{AM_mcmc_fit}.
+#' Similar to \code{\link{AM_mcmc_fit}}, the \code{\link{AM_mcmc_refit}} function performs a Gibbs sampling in order to estimate 
+#' a mixture. However parameters will be reused from a previous result from \code{\link{AM_mcmc_fit}}.
 #' 
 #' In practice this function will call AM_mcmc_fit(y, fixed_clustering = fixed_clustering, ...); with the same parameters as previously
 #' specified.
 #'
 #'@param y input data, can be a vector or a matrix.
-#'@param fit previous output from \code{AM_mcmc_fit} that is used to setup kernel and priors.
-#'@param fixed_clustering is a vector CI of cluster assignement that will remained unchanged for every iterations.
-#'@param mcmc_parameters is a configuration list defined by AM_mcmc_parameters. 
+#'@param fit previous output from \code{\link{AM_mcmc_fit}} that is used to setup kernel and priors.
+#'@param fixed_clustering is a vector CI of cluster assignment that will remain unchanged for every iterations.
+#'@param mcmc_parameters is a configuration list defined by \code{\link{AM_mcmc_parameters}}. 
 #'@return The return value is a \code{\link{AM_mcmc_output}} object.
 #'@examples
 #' y = AM_sample_unipois()$y
@@ -321,23 +321,20 @@ AM_mcmc_refit <- function(
 
 #' MCMC Parameters
 #' 
-#' This function generates an MCMC parameters list to be used as \code{mcmc_parameters} argument within \code{AM_mcmc_fit}. 
+#' This function generates an MCMC parameters list to be used as \code{mcmc_parameters} argument within \code{\link{AM_mcmc_fit}}. 
+#'   
 #' 
-#' The \code{niter} argument specify the total number of iteration. 
-#' \code{burnin} is the number of initial iterations to discard.
-#' \code{thin} specifies how often a draw from teh posterior distribution is stored after 
+#' 
+#'@param niter        Total number of MCMC iterations to be carried out. 
+#'@param burnin       Number of iterations to be considered as burn-in. Samples from this burn-in period are discarded.
+#'@param thin         Thinning rate. This argument specifies how often a draw from the posterior distribution is stored after 
 #' burnin, i.e. one every -th samples is saved. Therefore, the toral number of MCMC samples saved is 
-#' (\code{niter} -\code{burnin})/\code{thin}. If thin =1, then AntMAN stores every iteration.  
-#' 
-#' 
-#'@param niter        Total number of MCMC iterations. 
-#'@param burnin       Number of iterations to discard as burn-in.
-#'@param thin         Thining rate.
+#' (\code{niter} -\code{burnin})/\code{thin}. If thin =1, then AntMAN stores every iteration. 
 #'@param verbose      A value from 0 to 4, that specifies the desired level of verbosity (0:None, 1:Warnings, 2:Debug, 3:Extras)
 #'@param output       A list of parameters output to return
 #'@param output_dir   Path to an output dir, where to store all the outputs.
 #'@param parallel     Some of the algorithms can be run in parallel using OpenMP. When set to True, this parameter triggers the parallelism.
-#'@return AM_mcmc_configuration Object, this is a list to be used as \code{mcmc_parameters} argument with \code{AM_mcmc_fit}. 
+#'@return \code{\link{AM_mcmc_configuration}} Object, this is a list to be used as \code{mcmc_parameters} argument with \code{\link{AM_mcmc_fit}}. 
 #'@examples 
 #' AM_mcmc_parameters (niter=1000, burnin=10000, thin=50)
 #' AM_mcmc_parameters (niter=1000, burnin=10000, thin=50, output=c("CI","W","TAU"))

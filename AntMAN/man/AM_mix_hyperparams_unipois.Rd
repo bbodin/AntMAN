@@ -12,8 +12,7 @@ AM_mix_hyperparams_unipois(alpha0, beta0)
 \item{beta0}{The  rate hyperparameter \eqn{\beta_0}.}
 }
 \value{
-\preformatted{        A list to be used as \code{mix_kernel_hyperparams} argument for \code{mcmc_fit}.
-}
+A list to be used as \code{\link{mix_kernel_hyperparams}} argument for \code{\link{AM_mcmc_fit}}.
 }
 \description{
 Generate a configuration object that specifies a univariate Poisson mixture kernel and allows to

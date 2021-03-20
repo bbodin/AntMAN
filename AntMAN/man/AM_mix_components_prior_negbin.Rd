@@ -20,7 +20,7 @@ AM_mix_components_prior_negbin(
 
 \item{b_R}{The  rate parameter \eqn{b} of the \eqn{Gamma(a,b)} prior distribution for \eqn{r}.}
 
-\item{a_P}{The parameter\eqn{a}  of the \eqn{Beta(a,b)} prior distribution for \eqn{p}.}
+\item{a_P}{The parameter \eqn{a}  of the \eqn{Beta(a,b)} prior distribution for \eqn{p}.}
 
 \item{b_P}{The parameter \eqn{b}  of the \eqn{Beta(a,b)} prior distribution for \eqn{p}.}
 
@@ -36,7 +36,7 @@ AM_mix_components_prior_negbin(
 A configuration list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_fit}}.
 }
 \description{
-This generate a configuration object for a Shifted Negative Binomial prior on the number of mixture components such as
+This generates a configuration object for a Shifted Negative Binomial prior on the number of mixture components such as
 \deqn{q_M(m)=Pr(M=m) =\frac{\Gamma(r+m-1)}{(m-1)!\Gamma(r)} p^{m-1}(1-p)^r, \quad m=1,2,3,\ldots}
 The hyper-parameters \eqn{p\in (0,1)}  (probability of success) and \eqn{r>0} (size) can either be fixed using \code{r} and \code{p}
 or assigned appropriate prior distributions.
@@ -47,7 +47,7 @@ parametrization of the Gamma density:
 \details{
 If no arguments are provided, the default is \eqn{r = 1 , a_P = 1, b_P = 1}.
 
-Additionnaly, when init_R and init_P are no specified, there is default values :
+Additionally, when init_R and init_P are not specified, there is default values :
 \eqn{init_R = 1} and \eqn{init_P = 0.5}
 }
 \examples{

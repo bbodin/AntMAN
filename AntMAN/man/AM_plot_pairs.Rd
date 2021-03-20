@@ -2,12 +2,12 @@
 % Please edit documentation in R/AM_plot.R
 \name{AM_plot_pairs}
 \alias{AM_plot_pairs}
-\title{plot AM_mcmc_output}
+\title{Plot \code{\link{AM_mcmc_output}} scatterplot matrix}
 \usage{
 AM_plot_pairs(x, tags = NULL, title = "MCMC Results")
 }
 \arguments{
-\item{x}{an AM_mcmc_output object, produced by calling \code{AM_MCMC_fit}.}
+\item{x}{an \code{\link{AM_mcmc_output}} object, produced by calling \code{\link{AM_mcmc_fit}}.}
 
 \item{tags}{A list of variables to consider for plotting. This function only produces meaningful plots for variables that have fixed dimension across the draws. If not specified, plots pertaining to M and K will be produced.}
 
@@ -17,5 +17,5 @@ AM_plot_pairs(x, tags = NULL, title = "MCMC Results")
 Same as ggpairs function, a ggmatrix object that if called, will print.
 }
 \description{
-visualise a matrix of plots describing the mcmc results. This function is built upon ggpairs.
+visualise a matrix of plots describing the MCMC results. This function is built upon ggpairs.
 }

@@ -15,6 +15,11 @@ co-clustering matrix
 \description{
 Given an MCMC output produced by \code{AM_MCMC_fit}, this function returns the co-clustering matrix.
 }
+\details{
+The co-clustering matrix is produced by the simultaneous clustering of the rows and columns. Each entry denotes the (posterior) probability
+that items \eqn{i} and \eqn{j} are together.  This technique is also known as
+bi-clustering and block clustering \insertCite{govaert2013co}{AntMAN}, and is useful for understanding the number of clusters in the dataset.
+}
 \examples{
 ccm <- AM_coclustering(fit)
 }

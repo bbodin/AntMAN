@@ -2,21 +2,20 @@
 % Please edit documentation in R/AM_plot.R
 \name{AM_plot_chaincor}
 \alias{AM_plot_chaincor}
-\title{Plot the Autocorrelation
+\title{Plot the Autocorrelation function
 
-Given a MCMC output, this function will produce the acf bar describing the MCMC results.}
+Given an MCMC output object, this function produces the autocorrelation function bars describing the MCMC results.}
 \usage{
 AM_plot_chaincor(x, tags = NULL, title = "MCMC Results")
 }
 \arguments{
-\item{x}{An AM_mcmc_output fit object, produced by calling \code{AM_MCMC_fit}.}
-
-\item{tags}{A list of variables to consider. This function only produces meaningful plots for variables that have fixed dimension across the draws. If not specified, plots pertaining to M and K will be produced.}
+\item{tags}{A list of variables to consider. This function only produces meaningful plots for variables that have fixed dimension across the draws. If not specified, plots pertaining to M and K will be produced.
+This function is built upon bayesplot's \code{mcmc_acf_bar}.}
 
 \item{title}{Title for the plot.}
 }
 \description{
-Plot the Autocorrelation
+Plot the Autocorrelation function
 
-Given a MCMC output, this function will produce the acf bar describing the MCMC results.
+Given an MCMC output object, this function produces the autocorrelation function bars describing the MCMC results.
 }

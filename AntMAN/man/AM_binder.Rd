@@ -4,7 +4,7 @@
 \alias{AM_binder}
 \title{Run the binder algorithm using R (TBD)
 
-TBD TODO : need the C version of that. \insertCite{Scholar}{AntMAN}}
+TBD TODO : need the C version of that.}
 \usage{
 AM_binder(fit, weight = 0.5, with_coclustering_probability = FALSE)
 }
@@ -14,10 +14,11 @@ AM_binder(fit, weight = 0.5, with_coclustering_probability = FALSE)
 \item{weight}{Weight between bad and good pairs, default is 0.5.}
 
 \item{with_coclustering_probability}{By default this function only return the index of the closest guess.
-When with_coclustering_probability, the function also return the coclustering probability matrix.}
+When with_coclustering_probability, the function also return the coclustering probability
+matrix.}
 }
 \description{
 Run the binder algorithm using R (TBD)
 
-TBD TODO : need the C version of that. \insertCite{Scholar}{AntMAN}
+TBD TODO : need the C version of that.
 }
