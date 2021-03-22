@@ -2,23 +2,62 @@
 % Please edit documentation in R/AM_binder.R
 \name{AM_binder}
 \alias{AM_binder}
-\title{Run the binder algorithm using R (TBD)
-
-TBD TODO : need the C version of that.}
+\title{Sequentially Allocated Latent Structure Optimisation}
 \usage{
-AM_binder(fit, weight = 0.5, with_coclustering_probability = FALSE)
+AM_binder(
+  fit,
+  maxClusts = 0L,
+  Const_Binder = 0.5,
+  batchSize = 1000L,
+  nScans = 10L,
+  maxThreads = 0L,
+  timeLimit = 600000L
+)
 }
 \arguments{
-\item{fit}{Output from MCMC_fit}
+\item{maxClusts}{Maximum number of clusters.
+The actual number of clusters searched may be lower.
+If set to 0L, the maximum is automatically limited by the number of items.}
 
-\item{weight}{Weight between bad and good pairs, default is 0.5.}
+\item{Const_Binder}{Relative penalty in the Binder loss function
+for false-positives vis-a-vis false-negatives.
+Must be a real number in the interval \link{0, 1}.}
 
-\item{with_coclustering_probability}{By default this function only return the index of the closest guess.
-When with_coclustering_probability, the function also return the coclustering probability
-matrix.}
+\item{batchSize}{Number of permutations scanned per thread.
+If set to 0L, the thread will continue to scan permutations until it times out
+(in which case \code{timeLimit} cannot be 0L).}
+
+\item{nScans}{Number of scans for each permutation.}
+
+\item{maxThreads}{Maximum number of threads to use.
+If set to 0L (default), the maximum number of threads
+will be determined by the runtime.
+Set to 1L for no parallelisation.
+The actual number of threads used may be lower than \code{maxThreads}.}
+
+\item{timeLimit}{Maximum computation time for each thread in milliseconds.
+The actual computational time may be higher,
+since the time limit is only checked at the end of each iteration.
+If set to 0L, the thread will never time out
+(in which case \code{batchSize} cannot be 0L).}
+
+\item{eam}{Expected Adjacency Matrix, i.e.,
+the matrix whose entries \eqn{E_{ij}} is the (posterior) probability
+that items \eqn{i} and \eqn{j} are together.}
+}
+\value{
+A list containing the following items:
+\itemize{
+\item \code{Labels} - the vector of partition labels
+\item \code{BinderLoss} - the associated binder loss function
+\item \code{NumClusts} - the number of clusters found
+\item \code{NumPermutations} - the number of permutations actually scanned
+\item \code{WallClockTime} - cumulative wall-clock time used by all threads in milliseconds
+\item \code{TimeLimitReached} - whether the computation time limit was reached in any of the threads
+\item \code{NumThreads} - actual number of threads used.
+}
 }
 \description{
-Run the binder algorithm using R (TBD)
-
-TBD TODO : need the C version of that.
+Heuristic partitioning to minimise the expected Binder loss function
+with respect to a given expected adjacency matrix.
 }

@@ -2,9 +2,7 @@
 % Please edit documentation in R/AM_plot.R
 \name{AM_plot_chaincor}
 \alias{AM_plot_chaincor}
-\title{Plot the Autocorrelation function
-
-Given an MCMC output object, this function produces the autocorrelation function bars describing the MCMC results.}
+\title{Plot the Autocorrelation function}
 \usage{
 AM_plot_chaincor(x, tags = NULL, title = "MCMC Results")
 }
@@ -15,7 +13,5 @@ This function is built upon bayesplot's \code{mcmc_acf_bar}.}
 \item{title}{Title for the plot.}
 }
 \description{
-Plot the Autocorrelation function
-
 Given an MCMC output object, this function produces the autocorrelation function bars describing the MCMC results.
 }

@@ -2,9 +2,7 @@
 % Please edit documentation in R/AM_plot.R
 \name{AM_plot_similarity_matrix}
 \alias{AM_plot_similarity_matrix}
-\title{Plot the Similarity Matrix
-
-Given an \code{\link{AM_mcmc_fit}} output, this function will produce an image of the Similarity Matrix.}
+\title{Plot the Similarity Matrix}
 \usage{
 AM_plot_similarity_matrix(x, ...)
 }
@@ -14,7 +12,5 @@ AM_plot_similarity_matrix(x, ...)
 \item{...}{All additional parameters wil lbe pass to the image command.}
 }
 \description{
-Plot the Similarity Matrix
-
 Given an \code{\link{AM_mcmc_fit}} output, this function will produce an image of the Similarity Matrix.
 }

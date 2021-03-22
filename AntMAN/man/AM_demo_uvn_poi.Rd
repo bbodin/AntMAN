@@ -2,7 +2,7 @@
 % Please edit documentation in R/AM_demo.R
 \name{AM_demo_uvn_poi}
 \alias{AM_demo_uvn_poi}
-\title{Returns an example of \code{AM_MCMC_fit} output produced by the univariate gaussian model}
+\title{Returns an example of \code{\link{AM_mcmc_fit}} output produced by the univariate gaussian model}
 \usage{
 AM_demo_uvn_poi()
 }

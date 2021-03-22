@@ -2,7 +2,7 @@
 % Please edit documentation in R/AM_demo.R
 \name{AM_demo_mvb_poi}
 \alias{AM_demo_mvb_poi}
-\title{Returns an example of \code{AM_mcmc_fit} output produced by the multivariate bernoulli model}
+\title{Returns an example of \code{\link{AM_mcmc_fit}} output produced by the multivariate bernoulli model}
 \usage{
 AM_demo_mvb_poi()
 }
