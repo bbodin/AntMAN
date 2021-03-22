@@ -5,7 +5,7 @@
 ###############
 #######################################################################################
 
-#' Returns an example of \code{AM_mcmc_fit} output produced by the multivariate bernoulli model
+#' Returns an example of \code{\link{AM_mcmc_fit}} output produced by the multivariate bernoulli model
 #'  
 #'
 #' This function allows us to generate a sample output of fitting the multivariate bernoulli model. No arguments are needed to be passed.
@@ -58,7 +58,7 @@ AM_demo_mvb_poi = function () {
 }
 
 
-#' Returns an example of \code{AM_MCMC_fit} output produced by the multivariate gaussian model
+#' Returns an example of \code{\link{AM_mcmc_fit}} output produced by the multivariate gaussian model
 #'  
 #'
 #'This function allows us to generate a sample output of fitting the multivariate gaussian model. No arguments are needed to be passed.
@@ -134,7 +134,7 @@ AM_demo_mvn_poi = function () {
 }
 
 
-##' Returns an example of \code{AM_MCMC_fit} output produced by the univariate gaussian model
+##' Returns an example of \code{\link{AM_mcmc_fit}} output produced by the univariate gaussian model
 #'  
 #'
 #'This function allows us to generate a sample output of fitting the univariate gaussian model. No arguments are needed to be passed.
@@ -187,7 +187,7 @@ AM_demo_uvn_poi = function () {
 }
 
 
-##' Returns an example of \code{AM_MCMC_fit} output produced by the univariate poisson model
+##' Returns an example of \code{\link{AM_mcmc_fit}} output produced by the univariate poisson model
 #'  
 #'
 #'This function allows us to generate a sample output of fitting the univariate poisson model. No arguments are needed to be passed.

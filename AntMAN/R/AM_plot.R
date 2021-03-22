@@ -99,10 +99,10 @@ AM_plot_density=function(x,tags = NULL,title = "MCMC Results"){
 #' Plot the probability mass function of variables from AM_mcmc_output object.
 #' 
 #'
-#' Given an object of class \code{\link{AM_mcmc_fit}}, AM_plot_pmf plots the posterior probability mass function of variables M and K, where M and K are discrete.
+#' Given an object of class \code{\link{AM_mcmc_fit}}, AM_plot_pmf plots the posterior probability mass function of the specified variables.
 #'  
-#'@param x An AM_mcmc_output fit object, produced by calling \code{AM_mcmc_fit}.
-#'@param tags A list of variables (containing M and/or K) to consider. By default, the pmf of both M and K will be plotted.
+#'@param x An \code{\link{AM_mcmc_output}} object, produced by calling \code{AM_mcmc_fit}.
+#'@param tags A list of variables to consider. If not specified, the pmf of both M and K will be plotted.
 #'@param title Title for the plot.
 #'@return NULL
 #'@importFrom grDevices rgb
@@ -180,6 +180,7 @@ AM_plot_values=function(x,tags = NULL,title = "MCMC Results"){
 
 #'  Plot the Similarity Matrix
 #'  
+#'
 #'  Given an \code{\link{AM_mcmc_fit}} output, this function will produce an image of the Similarity Matrix.
 #'  
 #'@param x An \code{\link{AM_mcmc_output}} fit object, produced by calling \code{AM_mcmc_fit}.
@@ -217,6 +218,7 @@ AM_plot_similarity_matrix=function(x, ...){
 #'  Plot the Autocorrelation function
 #'  
 #'  
+#'
 #' Given an MCMC output object, this function produces the autocorrelation function bars describing the MCMC results.
 #'  
 #'@param x An \code{\link{AM_mcmc_output} object, produced by calling \code{\link{AM_mcmc_fit}}.
@@ -257,8 +259,8 @@ AM_plot_chaincor=function(x, tags = NULL, title = "MCMC Results"){
 #'@param y_lim_param A vector with two elements describing the plot's y_axis scale, e.g. c(0, 1).
 mvb_cluster_frequency <- function(fit, y, x_lim_param= c(0.8, 7.2), y_lim_param = c(0,1)){
 
-  result = AM_binder(fit, with_coclustering_probability=TRUE)
-  hatc = result$clustering
+  result = AM_binder(fit)
+  hatc = result$Labels
   hatk = length(unique(hatc))
   ci = t(do.call(cbind,fit$CI)) +1
   
@@ -277,7 +279,7 @@ mvb_cluster_frequency <- function(fit, y, x_lim_param= c(0.8, 7.2), y_lim_param 
   
   
   # ensure indexing of plots starts from 1
-  hatc = hatc + 1
+  #hatc = hatc + 1
   
   # obtain col names (if any)
   col_names = colnames(y)
