@@ -45,17 +45,16 @@
 #' 
 #' In this example \code{AM_mix_hyperparams_multiber} is one of the possible mixture to identify. 
 #' 
-#' AntMAN currently support five different mixtures :
+#' AntMAN currently support four different mixtures :
 #' 
 #' ```
 #' AM_mix_hyperparams_unipois(alpha0, beta0) 
 #' AM_mix_hyperparams_uninorm(m0, k0, nu0, sig02) 
-#' AM_mix_hyperparams_unibin(a0, b0, mb) 
 #' AM_mix_hyperparams_multiber(a0, b0) 
 #' AM_mix_hyperparams_multinorm(mu0, ka0, nu0, Lam0)
 #' ```
 #' 
-#' Additionnaly, there is three prior_component available :
+#' Additionally, three types of kernels on the prior number of components are available :
 #' 
 #' ```
 #' AM_mix_components_prior_pois()
@@ -63,13 +62,14 @@
 #' AM_mix_components_prior_dirac()
 #' ```
 #' 
-#' For example, in the context of image segmentation, where a maximal number of colour is require, a prior dirac can be used :
+#' For example, in the context of image segmentation, if we know that there are 10 colours present, a prior dirac can be used :
 #' 
 #' ```
 #' mcmc = AM_mcmc_parameters(niter=20000) 
-#' mix = AM_mix_hyperparams_multinorn () 
-#' prior_component = AM_mix_components_prior_dirac(10) # nothing more than 10 colours 
-#' fit = AM_mcmc_fit (mix, prior_component, mcmc) summary (fit)
+#' mix = AM_mix_hyperparams_multinorm () 
+#' prior_component = AM_mix_components_prior_dirac(10) #  10 colours present
+#' fit = AM_mcmc_fit (mix, prior_component, mcmc) 
+#' summary (fit)
 #' ```
 #' 
 #'@importFrom Rcpp evalCpp

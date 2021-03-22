@@ -48,7 +48,7 @@ fit <- AM_mcmc_fit(
 summary (fit)
 plot (fit)
 
-cluster = AM_binder(fit)$cluster 
+cluster = AM_binder(fit)$Labels 
 
 refit = AM_mcmc_refit(y = y_uvp , 
 		fit = fit , 

@@ -2,20 +2,21 @@
 % Please edit documentation in R/AM_plot.R
 \name{AM_plot_density}
 \alias{AM_plot_density}
-\title{plot density of variables from AM_mcmc_output object}
+\title{Plot the density of variables from \code{\link{AM_mcmc_output}} object.}
 \usage{
 AM_plot_density(x, tags = NULL, title = "MCMC Results")
 }
 \arguments{
-\item{x}{a AM_mcmc_output object}
+\item{x}{An \code{\link{AM_mcmc_output}} fit object, produced by calling \code{\link{AM_mcmc_fit}}.}
 
-\item{tags}{A list of variables to consider}
+\item{tags}{A list of variables to consider. This function only produces meaningful plots for variables that have fixed dimension across the draws.}
 
-\item{title}{Title for the plot}
+\item{title}{Title for the plot.}
 }
 \value{
-TBD
+a ggplot object visualising the posterior density of the specified variables.
 }
 \description{
-TBD
+Given an object of class \code{\link{AM_mcmc_fit}}, AM_plot_density plots the posterior density of specified combined across all chains. AM_plot_density makes use
+of bayesplot's plotting function mcmc_areas.
 }

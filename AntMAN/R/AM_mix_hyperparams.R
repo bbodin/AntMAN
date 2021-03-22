@@ -53,7 +53,7 @@ summary.AM_mix_hyperparams = function(object, ...){
 #'
 #'@param alpha0       The shape  hyperparameter \eqn{\alpha_0}.
 #'@param beta0        The  rate hyperparameter \eqn{\beta_0}.
-#'@return             A list to be used as \code{mix_kernel_hyperparams} argument for \code{mcmc_fit}.
+#'@return A list to be used as \code{\link{mix_kernel_hyperparams}} argument for \code{\link{AM_mcmc_fit}}.
 #'@examples 
 #' AM_mix_hyperparams_unipois (alpha0=2, beta0=0.2)
 #'@export
@@ -87,7 +87,7 @@ AM_mix_hyperparams_unipois <- function(alpha0, beta0) {
 #'@param k0      The \eqn{\kappa_0} hyperparameter.
 #'@param nu0     The \eqn{\nu_0} hyperparameter.
 #'@param sig02   The \eqn{\sigma^2_0} hyperparameter.
-#'@return A list to be used as \code{mix_kernel_hyperparams} argument for \code{mcmc_fit}. 
+#'@return A list to be used as \code{mix_kernel_hyperparams} argument for \code{\link{AM_mcmc_fit}}. 
 #'@examples 
 #'      
 #'      #### This example ...
@@ -124,12 +124,12 @@ AM_mix_hyperparams_uninorm <- function(m0, k0, nu0, sig02) {
 #' Multivariate Bernoulli Mixture Hyperparameters (Latent Class analysis)
 #' 
 #' Generate a configuration object that defines the prior hyperparameters for a mixture of multivariate Bernoulli.
-#' If the dimension of the data is P, then the prior is a product of P independent Beta distributions, Beta(\eqn{a_{0i},a_{0i}}). Therefore,
+#' If the dimension of the data is P, then the prior is a product of P independent Beta distributions, Beta(\eqn{a_{0i},b_{0i}}). Therefore,
 #' the vectors of hyperparameters, a0 and b0,  are P-dimensional. Default is (a0= c(1,....,1),b0= c(1,....,1))
 #'
 #'@param a0        The a0 hyperparameters.
 #'@param b0        The b0 hyperparameters.
-#'@return A list to be used as \code{mix_kernel_hyperparams} argument for \code{mcmc_fit}.
+#'@return A list to be used as \code{\link{AM_mix_kernel_hyperparams}} argument for \code{\link{AM_mcmc_fit}}.
 #'@examples 
 #' AM_mix_hyperparams_multiber (a0= c(1,1,1,1),b0= c(1,1,1,1))
 #'@export
@@ -148,7 +148,7 @@ AM_mix_hyperparams_multiber <- function(a0, b0) {
 #' Multivariate Normal Mixture Hyperparameters.
 #' 
 #' 
-#' This fnctions allows the user to specify the hyperparameters for the conjugate prior for a mixture of Multivariate Normals. We assume that the data are d-dimensional vectors \eqn{y_i}, where \eqn{y_i} are iid 
+#' This function allows the user to specify the hyperparameters for the conjugate prior for a mixture of Multivariate Normals. We assume that the data are d-dimensional vectors \eqn{y_i}, where \eqn{y_i} are iid 
 #' Normal randm variables with mean \eqn{\boldsymbol{\mu}} and covariance matrix \eqn{\boldsymbol{\Sigma}}.
 #' The conjugate prior is 
 #' \deqn{\pi(\boldsymbol \mu, \boldsymbol \Sigma\mid\boldsymbol m_0,\kappa_0,\nu_0,\boldsymbol \Lambda_0)= 
@@ -167,7 +167,7 @@ AM_mix_hyperparams_multiber <- function(a0, b0) {
 #'@param ka0    The hyperparameter \eqn{\kappa_0}.
 #'@param nu0    The hyperparameter \eqn{\nu_0}.
 #'@param Lam0   The hyperparameter \eqn{\Lambda_0}.
-#'@return A list to be used as \code{mix_kernel_hyperparams} argument for \code{mcmc_fit}.
+#'@return A list to be used as \code{\link{AM_mix_kernel_hyperparams}} argument for \code{\link{AM_mcmc_fit}}.
 #'@examples 
 #' AM_mix_hyperparams_multinorm ()
 #'@export

@@ -12,11 +12,11 @@ AM_mix_hyperparams_multiber(a0, b0)
 \item{b0}{The b0 hyperparameters.}
 }
 \value{
-A list to be used as \code{mix_kernel_hyperparams} argument for \code{mcmc_fit}.
+A list to be used as \code{\link{AM_mix_kernel_hyperparams}} argument for \code{\link{AM_mcmc_fit}}.
 }
 \description{
 Generate a configuration object that defines the prior hyperparameters for a mixture of multivariate Bernoulli.
-If the dimension of the data is P, then the prior is a product of P independent Beta distributions, Beta(\eqn{a_{0i},a_{0i}}). Therefore,
+If the dimension of the data is P, then the prior is a product of P independent Beta distributions, Beta(\eqn{a_{0i},b_{0i}}). Therefore,
 the vectors of hyperparameters, a0 and b0,  are P-dimensional. Default is (a0= c(1,....,1),b0= c(1,....,1))
 }
 \examples{

@@ -2,7 +2,8 @@
 % Please edit documentation in R/AM_prior.R
 \name{AM_prior_K_Pois}
 \alias{AM_prior_K_Pois}
-\title{This function compute the prior on the number of cluster, i.e. occupied component of the mixutre for a Finite Dirichlet process when the prior on the component-weigts of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights are distributed as Gamma(\eqn{\gamma},1) ) when the prior on the number of componet is Shifted Poisson of parameter \code{Lambda}. See Section 9.1.1 of Argiento de Iorio (2019) for more details.}
+\title{This function computes the prior on the number of clusters, i.e. occupied components of the mixture for a Finite Dirichlet process when the prior on the component-weights of the mixture is a Dirichlet with parameter \code{gamma}
+(i.e. when unnormalized weights are distributed as Gamma(\eqn{\gamma},1) ) when the prior on the number of component is Shifted Poisson of parameter \code{Lambda}. See Section 9.1.1 of \insertCite{argiento2019infinity}{AntMAN} for more details.}
 \usage{
 AM_prior_K_Pois(n, gamma, Lambda)
 }

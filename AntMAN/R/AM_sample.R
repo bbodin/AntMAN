@@ -71,67 +71,67 @@ AM_sample_unipois <- function(n=1000,pro=c(0.2,0.5,0.3),mth=c(5,25,50)){
 
 
 
-#' AM_sample_unibin
-#'  
-#'  
-#' @keywords internal
-#' @export
-AM_sample_unibin <- function(n,mb, pro,mth){
-  if(length(mth)!=length(pro)){stop()}
+# #' AM_sample_unibin
+# #'  
+# #'  
+# #' @keywords internal
+# #' @export
+# AM_sample_unibin <- function(n,mb, pro,mth){
+#   if(length(mth)!=length(pro)){stop()}
   
-  y <- vector(length=n)
-  ci <- vector(length=n)
-  for(i in 1:n){
-    u <- runif(1)
-    if(u<pro[1]){
-      ci[i] <- 0
-      y[i] <- rbinom(1, size=mb, prob=mth[1])
-    }
-    else{
-      if(u<(pro[1]+pro[2])){
-        ci[i] <- 1
-        y[i] <- rbinom(1, size=mb, prob=mth[2])
-      }
-      else{
-        ci[i] <- 2
-        y[i] <- rbinom(1, size=mb, prob=mth[3])
+#   y <- vector(length=n)
+#   ci <- vector(length=n)
+#   for(i in 1:n){
+#     u <- runif(1)
+#     if(u<pro[1]){
+#       ci[i] <- 0
+#       y[i] <- rbinom(1, size=mb, prob=mth[1])
+#     }
+#     else{
+#       if(u<(pro[1]+pro[2])){
+#         ci[i] <- 1
+#         y[i] <- rbinom(1, size=mb, prob=mth[2])
+#       }
+#       else{
+#         ci[i] <- 2
+#         y[i] <- rbinom(1, size=mb, prob=mth[3])
         
-      }
-    }
-  }
-  return(list(y=y,ci=ci))
-}
+#       }
+#     }
+#   }
+#   return(list(y=y,ci=ci))
+# }
 
-#' AM_sample_multibin
-#'  
-#'  
-#' @keywords internal
-#' @export
-AM_sample_multibin <- function(n,d,pro,TH){
+# #' AM_sample_multibin
+# #'  
+# #'  
+# #' @keywords internal
+# #' @export
+# AM_sample_multibin <- function(n,d,pro,TH){
   
-  y <- matrix(nrow=n,ncol=d)
-  ci <- vector(length=n)
-  for(i in 1:n){
-    u <- runif(1)
-    if(u<pro[1]){
-      ci[i] <- 0
-      y[i,] <-rbinom(d, rep(1,d), TH[1,])
-    }
-    else{
-      if(u<(pro[1]+pro[2])){
-        ci[i] <- 1
-        y[i,] <-rbinom(d, rep(1,d), TH[2,])
+#   y <- matrix(nrow=n,ncol=d)
+#   ci <- vector(length=n)
+#   for(i in 1:n){
+#     u <- runif(1)
+#     if(u<pro[1]){
+#       ci[i] <- 0
+#       y[i,] <-rbinom(d, rep(1,d), TH[1,])
+#     }
+#     else{
+#       if(u<(pro[1]+pro[2])){
+#         ci[i] <- 1
+#         y[i,] <-rbinom(d, rep(1,d), TH[2,])
         
-      }
-      else{
-        ci[i] <- 2
-        y[i,] <-rbinom(d, rep(1,d), TH[3,])
+#       }
+#       else{
+#         ci[i] <- 2
+#         y[i,] <-rbinom(d, rep(1,d), TH[3,])
         
-      }
-    }
-  }
-  return(list(y=y,ci=ci))
-}
+#       }
+#     }
+#   }
+#   return(list(y=y,ci=ci))
+# }
 
 #' AM_sample_multinorm
 #'  

@@ -2,9 +2,7 @@
 % Please edit documentation in R/AM_coclustering.R
 \name{AM_coclustering}
 \alias{AM_coclustering}
-\title{Return co-clustering
-
-Given a MCMC output, this function return co-clustering matrix}
+\title{Return the co-clustering matrix}
 \usage{
 AM_coclustering(fit)
 }
@@ -15,7 +13,13 @@ AM_coclustering(fit)
 co-clustering matrix
 }
 \description{
-Return co-clustering
-
-Given a MCMC output, this function return co-clustering matrix
+Given an MCMC output produced by \link{\code{AM_MCMC_fit}}, this function returns the co-clustering matrix.
+}
+\details{
+The co-clustering matrix is produced by the simultaneous clustering of the rows and columns. Each entry denotes the (posterior) probability
+that items \eqn{i} and \eqn{j} are together.  This technique is also known as
+bi-clustering and block clustering \insertCite{govaert2013co}{AntMAN}, and is useful for understanding the number of clusters in the dataset.
+}
+\examples{
+ccm <- AM_coclustering(fit)
 }

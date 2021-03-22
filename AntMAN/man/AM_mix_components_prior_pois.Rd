@@ -11,7 +11,7 @@ AM_mix_components_prior_pois(a = NULL, b = NULL, Lambda = NULL, init = NULL)
 
 \item{b}{The rate  parameter \code{b} of the \eqn{Gamma(a,b)} prior distribution.}
 
-\item{Lambda}{It allows to set the   hyper-parameter \eqn{\Lambda} to  fixed value.}
+\item{Lambda}{It allows to set the  hyper-parameter \eqn{\Lambda} to be assigned a fixed value.}
 
 \item{init}{The  initial value for \eqn{\Lambda}, when specifying \code{a} and \code{b}.}
 }
@@ -32,8 +32,8 @@ If no arguments are provided, the default is a prior distribution with \code{a =
 }
 \examples{
 
-## See \code{\link{AM_mix_hyperparams_uninorm}} example.
-components_prior   = AM_mix_components_prior_pois (init=3,  a=1, b=1) 
+See \code{\link{AM_mix_hyperparams_uninorm}} example.
+components_prior = AM_mix_components_prior_pois (init=3,  a=1, b=1) 
 
 }
 \seealso{

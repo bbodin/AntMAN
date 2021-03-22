@@ -58,6 +58,7 @@ public :
 				for(int l=0;l<M;l++){
 
 					const arma::mat res = riwish (nu0, Lam0);
+
 					VERBOSE_EXTRA("In Alloc: riwish (nu0, Lam0) = " << res);
 
 					_Sig_current.slice(l) = res;
@@ -181,7 +182,6 @@ public :
 				}
 
 
-
 				for(int l=0; l<K;l++){
 
 					// Find the index of the data in the l-th cluster
@@ -208,7 +208,7 @@ public :
 					VERBOSE_EXTRA("ysum =>" << ysum.n_rows << "x" << ysum.n_cols);
 					VERBOSE_EXTRA("++");
 					const double ka0nokon = (ka0 * njl ) / (ka0 + njl);
-
+					
 
 					const arma::vec ybar = (ysum / (double) njl) ; // cast?
 
@@ -232,12 +232,13 @@ public :
 						S2 =  S2 + matmul;
 					}
 
-					// Then the parameters of the posteriorr  Normal-inverse-gamma a posteriori are
+					// Then the parameters of the posterior Normal-inverse-gamma a posteriori are
 					const double kan = ka0  +  (double) njl; // maybe the cast at double in the sum is not needed
 					const unsigned int nun = nu0 + njl;  // maybe the cast at  double in the sum is not needed
 					const arma::vec mun = (ysum+mu0*ka0)/kan;
 					const arma::mat ka0nokonybarmatmul = ka0nokon * ybarmatmul;
 					const arma::mat Lamn = Lam0 + S2 + ka0nokonybarmatmul;
+
 
 					VERBOSE_EXTRA("In Alloc: ka0  = " << ka0);
 					VERBOSE_EXTRA("In Alloc: nun  = " << nun);
@@ -252,12 +253,21 @@ public :
 					VERBOSE_EXTRA("In Alloc: S2  = " << S2);
 					VERBOSE_EXTRA("In Alloc: Lam0  = " << Lam0);
 					VERBOSE_EXTRA("In Alloc: Lamn  = " << Lamn);
-					VERBOSE_ASSERT(Lam0.is_sympd(), "In Alloc: rwish requires Lamn to be symmetric. It is not Lamn = " << Lamn);
-
+					VERBOSE_ASSERT(Lamn.is_sympd(), "In Alloc: rwish requires Lamn to be symmetric. It is not Lamn = " << Lamn);
+							
 					const arma::mat Sig_l =  riwish (nun, Lamn) ;
+
+					// std::cout << "---";
+					//std::cout << arma::chol(Lamn.i());
+					// if (not Lamn.i().is_symmetric()){
+					// 	arma::mat eq = (Lamn - Lamn.t());
+					// 	std::cout << eq;
+					// }
+
 					VERBOSE_EXTRA("In Alloc: Sig_l  = " << Sig_l);
 					const arma::vec mu_l   = mvrnormArma(mun, Sig_l/kan);
 					VERBOSE_EXTRA("In Alloc: mu_l  = " << mu_l);
+
 
 					Sig_current.slice(l) = Sig_l; // In case 4 we have to update a matrix
 					mu_current.row(l)  = mu_l.t();
@@ -278,6 +288,7 @@ public :
 				for(int l=K; l<M;l++){
 
 							const arma::mat res = riwish (nu0, Lam0);
+
 							Sig_current.slice(l) = res; // TODO[CHECK ME] : Raffa study the lam0 - 1
 							mu_current.row(l)   = mvrnormArma (mu0, Sig_current.slice(l) / ka0).t() ;
 							S_current[l]=am_rgamma(gamma_current,1./(U_current+1.0));

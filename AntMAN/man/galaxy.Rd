@@ -4,7 +4,11 @@
 \name{galaxy}
 \alias{galaxy}
 \title{Galaxy velocities dataset}
-\format{A data frame with X rows and Y variables.}
+\format{
+A data frame with X rows and Y variables.
+
+A numeric vector giving the speed of galaxies (1000*(km/second))
+}
 \source{
 Roeder, K. (1990) Density estimation with confidence sets exemplified by superclusters and voids in the galaxies, Journal of the American Statistical Association, 85: 617-624.
 }
@@ -12,7 +16,7 @@ Roeder, K. (1990) Density estimation with confidence sets exemplified by supercl
 galaxy
 }
 \description{
-This data set consider physical information on velocities (km/second) for
+This data set considers the physical information of velocities (10^3 km/second) for
 82 galaxies reported by Roeder (1990). These are drawn from six well-separated
 conic sections of the Corona Borealis region.
 }

@@ -2,21 +2,30 @@
 % Please edit documentation in R/AM_extract.R
 \name{AM_extract}
 \alias{AM_extract}
-\title{Extract values within a AM_mcmc_output object.}
+\title{Extract values within a \code{\link{AM_mcmc_output}} object.}
 \usage{
 AM_extract(object, targets, iterations = NULL, debug = FALSE)
 }
 \arguments{
-\item{object}{a \code{\link{AM_mcmc_output}} object}
+\item{object}{an \code{\link{AM_mcmc_output}} object}
 
-\item{targets}{List of variables to extract (ie. K, M, Mna, mu).}
+\item{targets}{List of variables to extract (ie. K, M, mu).}
 
 \item{iterations}{Can specify particular iterations to extracts, NULL for all.}
 
 \item{debug}{Activate log to}
 }
+\value{
+a list of variables specified in \code{targets}.
+}
 \description{
-Due to the complexity of AntMAN outputs, AM_mcmc_output object can be difficult
-to handle. The AM_extract function ease access of particular variables within
-AM_mcmc_output object.
+Given an object produced by \code{\link{AM_mcmc_fit}}, as well as the target variable names,
+AM_extract will return a list of the variables of interest.
+}
+\details{
+Due to the complexity of AntMAN outputs, \code{\link{AM_mcmc_output}} object can be difficult
+to handle. The AM_extract function eases access of particular variables within the
+\code{\link{AM_mcmc_output}} object. Variables of varying dimension are expected to result from the transdimensional moves. When considering such
+variables, the extracted list would correspond to an nx1 list, where n refers to the number of extracted iterations. Each of these nx1 entries consists
+of another list of dimension mx1, where m specifies the number of components inferred for that iteration.
 }

@@ -11,7 +11,7 @@ Print infos on AM_mix_components_prior Object}
 \arguments{
 \item{object}{a \code{\link{AM_mix_components_prior}} object}
 
-\item{...}{all additionnal parameters are ignored}
+\item{...}{all additional parameters are ignored}
 }
 \description{
 summary AM_mix_components_prior
