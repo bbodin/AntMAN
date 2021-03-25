@@ -257,12 +257,6 @@ public :
 							
 					const arma::mat Sig_l =  riwish (nun, Lamn) ;
 
-					// std::cout << "---";
-					//std::cout << arma::chol(Lamn.i());
-					// if (not Lamn.i().is_symmetric()){
-					// 	arma::mat eq = (Lamn - Lamn.t());
-					// 	std::cout << eq;
-					// }
 
 					VERBOSE_EXTRA("In Alloc: Sig_l  = " << Sig_l);
 					const arma::vec mu_l   = mvrnormArma(mun, Sig_l/kan);
