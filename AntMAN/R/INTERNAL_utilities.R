@@ -20,7 +20,6 @@
 #'
 #' @keywords prior number of cluster
 #'
-#' @export
 #' @examples
 #' dd= IAM_compute_stirling_ricor_abs(11,10)
 #' print(dd)
@@ -40,7 +39,6 @@ IAM_compute_stirling_ricor_abs <- function (n,gamma) {
 #'
 #' @keywords prior number of cluster
 #'
-#' @export
 #' @examples
 #' dd= IAM_compute_stirling_ricor_log(11,10)
 #' print(dd)
@@ -60,7 +58,6 @@ IAM_compute_stirling_ricor_log<- function (n,gamma) {
 #'
 #' @keywords prior number of cluster
 #'
-#' @export
 #' @examples
 #' n=1000
 #' Lam=100
@@ -88,7 +85,6 @@ IAM_VnkPoisson <- function (n,Lambda,gamma) {
 #'
 #' @keywords prior number of cluster
 #'
-#' @export
 #' @examples
 #' n=1000
 #' r=1000
@@ -119,7 +115,6 @@ IAM_VnkNegBin <- function (n,r,p,gam) {
 #'
 #' @keywords prior number of cluster
 #'
-#' @export
 #' @examples
 #' n=200
 #' Mstar=100
@@ -140,16 +135,12 @@ IAM_VnkDelta <- function (n,Mstar,gamma) {
 #' 
 #' TBD
 #' 
-#'@export
 #'@param  unichain  TBD
 #'@return TBD
 ### Provo a calcolare l'effective sample size
 IAM_mcmc_neff <- function(unichain){ # Using 11.5 of Bayesian Data Analysis
 	
-	## TODO: Compare with this : 
-	#library(coda)
-	#effectiveSize(mcmc(unichain))
-	
+
 	
 	# Dunson Ventari Rubin Section 11.5
 	# Whit rho estimated using the acf function of R
@@ -172,7 +163,6 @@ IAM_mcmc_neff <- function(unichain){ # Using 11.5 of Bayesian Data Analysis
 
 #' Internal function used to compute the MCMC Error as a batch mean.
 #' 
-#'@export
 #'@param  X is a chain
 #'@return the MCMC Error (sqrt(sigma2) / sqrt(N))
 IAM_mcmc_error <- function(X){
