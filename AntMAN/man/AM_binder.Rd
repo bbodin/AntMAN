@@ -15,6 +15,8 @@ AM_binder(
 )
 }
 \arguments{
+\item{fit}{an \code{\link{AM_mcmc_fit}} object.}
+
 \item{maxClusts}{Maximum number of clusters.
 The actual number of clusters searched may be lower.
 If set to 0L, the maximum is automatically limited by the number of items.}
@@ -40,10 +42,6 @@ The actual computational time may be higher,
 since the time limit is only checked at the end of each iteration.
 If set to 0L, the thread will never time out
 (in which case \code{batchSize} cannot be 0L).}
-
-\item{eam}{Expected Adjacency Matrix, i.e.,
-the matrix whose entries \eqn{E_{ij}} is the (posterior) probability
-that items \eqn{i} and \eqn{j} are together.}
 }
 \value{
 A list containing the following items:

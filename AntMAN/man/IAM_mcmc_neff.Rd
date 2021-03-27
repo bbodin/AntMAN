@@ -7,11 +7,12 @@
 IAM_mcmc_neff(unichain)
 }
 \arguments{
-\item{unichain}{TBD}
+\item{unichain}{}
 }
 \value{
-TBD
+Effective Sample Size
 }
 \description{
 TBD
 }
+\keyword{internal}

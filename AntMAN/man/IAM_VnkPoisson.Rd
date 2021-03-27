@@ -28,7 +28,4 @@ stir= IAM_compute_stirling_ricor_log(n, gam)
 plot(exp(vnk+stir))
 sum(exp(vnk+stir ))
 }
-\keyword{cluster}
-\keyword{number}
-\keyword{of}
-\keyword{prior}
+\keyword{internal}

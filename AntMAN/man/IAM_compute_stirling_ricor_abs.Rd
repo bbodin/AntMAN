@@ -21,7 +21,4 @@ There are no default values.
 dd= IAM_compute_stirling_ricor_abs(11,10)
 print(dd)
 }
-\keyword{cluster}
-\keyword{number}
-\keyword{of}
-\keyword{prior}
+\keyword{internal}

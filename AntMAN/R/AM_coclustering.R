@@ -24,9 +24,7 @@
 #' ccm <- AM_coclustering(fit)
 AM_coclustering = function (fit) {
 	
-
 	CI =  as.matrix((AM_extract(fit, c("CI")))[["CI"]]);
-
 	n_save <- dim(CI)[1]
 	N  <- dim(CI)[2]
 	
@@ -35,36 +33,7 @@ AM_coclustering = function (fit) {
 
 	#cast pij into matrix
 	pij = matrix(unlist(pij), ncol=N, nrow=N, byrow=F)
-
-
-	# result = AM_binder(fit , with_coclustering_probability=TRUE)
-	
-	# return (result[["coclustering_probability"]])
-	
-	# #c_out contains matrix of allocation labels
-	# c_out <- CI
-	
-	
-	# #c_contains matrix of allocation labels
-	
-	
-	# n_save <- dim(c_out)[1]
-	# N      <- dim(c_out)[2]
-	
-	
-	# #Compute similarity matrix pij
-	
-	# pij <- matrix(0,N,N)
-	
-	# for(g in 1:n_save){
-		
-	# 	pij <- pij + outer(c_out[g,], c_out[g,], "==")
-		
-	# }
-	
-	# pij <- pij/n_save
 	
 	return(coclustering_probability = pij);
-	#return (list(coclustering_probability = pij));
 }
 

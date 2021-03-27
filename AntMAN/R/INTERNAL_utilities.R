@@ -18,7 +18,7 @@
 #'
 #' @return A vector of length n, reporting the values \code{C(gamma,n,k)} for \code{k=1,...,n}
 #'
-#' @keywords prior number of cluster
+#' @keywords internal
 #'
 #' @examples
 #' dd= IAM_compute_stirling_ricor_abs(11,10)
@@ -28,7 +28,7 @@ IAM_compute_stirling_ricor_abs <- function (n,gamma) {
 }
 
 
-#' Compute ...
+#' Compute stirling ricor log
 #' 
 #' There are no default values.
 #'
@@ -37,8 +37,7 @@ IAM_compute_stirling_ricor_abs <- function (n,gamma) {
 #'
 #' @return A vector of length n, reporting the values ... for \code{k=1,...,n}
 #'
-#' @keywords prior number of cluster
-#'
+#' @keywords internal
 #' @examples
 #' dd= IAM_compute_stirling_ricor_log(11,10)
 #' print(dd)
@@ -56,7 +55,7 @@ IAM_compute_stirling_ricor_log<- function (n,gamma) {
 #'
 #' @return A vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}
 #'
-#' @keywords prior number of cluster
+#' @keywords internal
 #'
 #' @examples
 #' n=1000
@@ -83,7 +82,7 @@ IAM_VnkPoisson <- function (n,Lambda,gamma) {
 #'
 #' @return A vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}
 #'
-#' @keywords prior number of cluster
+#' @keywords internal
 #'
 #' @examples
 #' n=1000
@@ -113,7 +112,7 @@ IAM_VnkNegBin <- function (n,r,p,gam) {
 #'
 #' @return A vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}
 #'
-#' @keywords prior number of cluster
+#' @keywords internal
 #'
 #' @examples
 #' n=200
@@ -135,9 +134,9 @@ IAM_VnkDelta <- function (n,Mstar,gamma) {
 #' 
 #' TBD
 #' 
-#'@param  unichain  TBD
-#'@return TBD
-### Provo a calcolare l'effective sample size
+#'@keywords internal
+#'@param  unichain  
+#'@return Effective Sample Size
 IAM_mcmc_neff <- function(unichain){ # Using 11.5 of Bayesian Data Analysis
 	
 
@@ -163,6 +162,7 @@ IAM_mcmc_neff <- function(unichain){ # Using 11.5 of Bayesian Data Analysis
 
 #' Internal function used to compute the MCMC Error as a batch mean.
 #' 
+#'@keywords internal
 #'@param  X is a chain
 #'@return the MCMC Error (sqrt(sigma2) / sqrt(N))
 IAM_mcmc_error <- function(X){

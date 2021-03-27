@@ -32,7 +32,4 @@ stir
 plot(exp(vvv+stir) )
 sum(exp(vvv+stir ))
 }
-\keyword{cluster}
-\keyword{number}
-\keyword{of}
-\keyword{prior}
+\keyword{internal}

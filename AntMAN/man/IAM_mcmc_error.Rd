@@ -15,3 +15,4 @@ the MCMC Error (sqrt(sigma2) / sqrt(N))
 \description{
 Internal function used to compute the MCMC Error as a batch mean.
 }
+\keyword{internal}

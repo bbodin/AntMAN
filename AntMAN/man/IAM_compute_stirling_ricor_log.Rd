@@ -2,7 +2,7 @@
 % Please edit documentation in R/INTERNAL_utilities.R
 \name{IAM_compute_stirling_ricor_log}
 \alias{IAM_compute_stirling_ricor_log}
-\title{Compute ...}
+\title{Compute stirling ricor log}
 \usage{
 IAM_compute_stirling_ricor_log(n, gamma)
 }
@@ -21,7 +21,4 @@ There are no default values.
 dd= IAM_compute_stirling_ricor_log(11,10)
 print(dd)
 }
-\keyword{cluster}
-\keyword{number}
-\keyword{of}
-\keyword{prior}
+\keyword{internal}
