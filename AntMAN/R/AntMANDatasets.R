@@ -10,7 +10,7 @@
 #################################################################################
 
 
-#' Usage frequency of the word "said" in the Brown corpus.
+#' Usage frequency of the word "said" in the Brown corpus
 #'     
 #'@format  A list with 500 observations on the frequency of said in different texts.
 #'  
@@ -39,8 +39,9 @@
 "galaxy"
 
 
-#' carcinoma
-#'  
+#' Carcinoma dataset
+#' 
+#' 
 #' The carcinoma data from Agresti (2002, 542) consist of seven dichotomous variables representing 
 #' the ratings by seven pathologists of 118 slides on the presence or absence of carcinoma.
 #' The purpose of studying this data is to model "interobserver agreement" by examining how

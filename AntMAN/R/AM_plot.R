@@ -70,7 +70,7 @@ AM_plot_pairs=function(x,tags = NULL,title = "MCMC Results"){
 #' Plot the density of variables from \code{\link{AM_mcmc_output}} object.
 #' 
 #'
-#' Given an object of class \code{\link{AM_mcmc_fit}}, AM_plot_density plots the posterior density of specified combined across all chains. AM_plot_density makes use 
+#' Given an object of class \code{\link{AM_mcmc_fit}}, AM_plot_density plots the posterior density of the specified variables of interest. AM_plot_density makes use 
 #' of bayesplot's plotting function mcmc_areas.
 #' 
 #'  
@@ -199,17 +199,16 @@ AM_plot_similarity_matrix=function(x, ...){
 	if (!is.null(x$CI)) {
 		
 		message("Plotting Similarity Matrix");
-		binder_result = AM_binder(x , with_coclustering_probability=TRUE)
-		
-		clustering = binder_result[["clustering"]]
-		pij = binder_result[["coclustering_probability"]]
+
+		binder_result = AM_binder(x)
+		clustering = binder_result[["Labels"]]
+		pij = AM_coclustering(x)
 		
 		if (sorted) {
 			new_indexes = order(clustering, decreasing = T)
 			pij = pij[new_indexes,new_indexes];
 		}
-		
-		image(pij,main="Similarity matrix") #,col = gray.colors(30))
+		image(pij,main="Similarity matrix") 
 	} else {
 		warning("CI has not been generated. Cannot plot the similarity matrix.")
 	}
@@ -224,11 +223,12 @@ AM_plot_similarity_matrix=function(x, ...){
 #'@param x An \code{\link{AM_mcmc_output} object, produced by calling \code{\link{AM_mcmc_fit}}.
 #'@param tags A list of variables to consider. This function only produces meaningful plots for variables that have fixed dimension across the draws. If not specified, plots pertaining to M and K will be produced. 
 #'This function is built upon bayesplot's \code{mcmc_acf_bar}.
+#'@param lags An integer specifying the number of lags to plot. If no value is specified, the default number of lags shown is half the total number of iterations.
 #'@param title Title for the plot.
 #'  
 #'@importFrom bayesplot mcmc_acf_bar
 #'@export
-AM_plot_chaincor=function(x, tags = NULL, title = "MCMC Results"){
+AM_plot_chaincor=function(x, tags = NULL, lags = NULL, title = "MCMC Results"){
 	
 	targets = tags
 	if (is.null(targets)) {
@@ -242,8 +242,11 @@ AM_plot_chaincor=function(x, tags = NULL, title = "MCMC Results"){
 	
 	if (length(targets) > 0) {
 		df = data.frame(AM_extract(x,targets))
+		if (is.null(lags)) {
+			lags = floor(dim(df)[1]/2)
+		}
 		color_scheme_set("brightblue")
-		mcmc_acf_bar(df)+ ggplot2::labs(title=title)
+		mcmc_acf_bar(df, lags = lags)+ ggplot2::labs(title=title)
 	}
 	
 
@@ -251,6 +254,7 @@ AM_plot_chaincor=function(x, tags = NULL, title = "MCMC Results"){
 
 #'  Visualise the cluster frequency plot for the multivariate bernoulli model.
 #'  
+#'
 #'  Given the specified inputs, this function will produce a cluster frequency plot for the multivariate bernoulli model.
 #'  
 #'@param fit An \code{\link{AM_mcmc_output}} fit object, produced by calling \code{AM_mcmc_fit}.
@@ -277,9 +281,6 @@ mvb_cluster_frequency <- function(fit, y, x_lim_param= c(0.8, 7.2), y_lim_param 
   
   thetahat <- apply(thetapost,c(2,3),mean)
   
-  
-  # ensure indexing of plots starts from 1
-  #hatc = hatc + 1
   
   # obtain col names (if any)
   col_names = colnames(y)

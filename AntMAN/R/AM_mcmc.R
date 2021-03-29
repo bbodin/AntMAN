@@ -49,24 +49,23 @@ summary.AM_mcmc_configuration = function(object, ...){
 
 #' plot AM_mcmc_output  
 #' 
-#' plot some useful informations about the mcmc results
+#'
+#' Given an \code{\link{AM_mcmc_output}} object, this function plots some useful information about the MCMC results
+#' regarding \eqn{M} and \eqn{K}. Besides the PMFs, some of the diagnostic plots of the MCMC chain are visualised.
 #'  
-#'@param x a AM_mcmc_output object
-#'@param ... all additionnal parameters passed to image command.
+#'@param x a \code{\link{AM_mcmc_output}} object
 #'  
 #'@method plot AM_mcmc_output 
 #'@importFrom graphics image
 #'@importFrom grDevices gray.colors
 #'@export
-plot.AM_mcmc_output=function(x,...){
-	
-	AM_plot_pairs(x);readline(prompt="Press [enter] to continue")
-	AM_plot_density(x);readline(prompt="Press [enter] to continue")
-	AM_plot_traces(x);readline(prompt="Press [enter] to continue")
-	AM_plot_values(x);readline(prompt="Press [enter] to continue")
-	AM_plot_similarity_matrix(x);readline(prompt="Press [enter] to continue")
-	AM_plot_chaincor(x);
-	
+plot.AM_mcmc_output=function(x){
+
+	print(AM_plot_pairs(x));readline(prompt="Press [enter] to continue")
+	print(AM_plot_pmf(x));readline(prompt="Press [enter] to continue")
+	print(AM_plot_traces(x));readline(prompt="Press [enter] to continue")
+	print(AM_plot_values(x));readline(prompt="Press [enter] to continue")
+	print(AM_plot_chaincor(x));
 }
 
 
