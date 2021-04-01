@@ -78,7 +78,7 @@ summary.AM_prior = function(object, ...){
 #' @param Lambda   The \code{Lambda} parameter of the Poisson
 #' @param gamma    The \code{gamma} parameter of the Dirichlet 
 #'
-#' @return AM_prior object, that is a vector of length n, reporting the values of the prior on the number of clusters induced by the prior on \code{M} and \code{w}, i.e. \code{p^*_k} for \code{k=1,...,n}. See Section 9.1.1 of Argiento de Iorio (2019) for more details.
+#' @return AM_prior object, that is a vector of length n, reporting the values of the prior on the number of clusters induced by the prior on \code{M} and \code{w}, i.e. \code{p^*_k} for \code{k=1,...,n}. See \insertCite{argiento2019infinity}{AntMAN} for more details.
 #'
 #' @keywords prior number of clusters
 #'
@@ -111,7 +111,7 @@ AM_prior_K_Pois <- function (n,gamma,Lambda) {
 #' This function computes the prior on the number of clusters, i.e. occupied component of the mixture for a Finite Dirichlet process when the 
 #' prior on the component-weights of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormalized weights are distributed as 
 #' Gamma(\eqn{\gamma},1)). This function can be used when the prior on the number of components is Negative Binomial with parameter \code{r>0} and
-#' \code{0<p<1}, with  mean is mu =1+ r*p/(1-p) ]TODO: CHECK THIS FORMULA!!!. See Section 9.1.1 of the Paper Argiento de Iorio 2019 for more details. 
+#' \code{0<p<1}, with  mean is mu =1+ r*p/(1-p). See \insertCite{argiento2019infinity}{AntMAN} for more details. 
 #' 
 #' There are no default values.
 #'
@@ -153,10 +153,10 @@ AM_prior_K_NegBin <- function (n,gamma, r, p){
 #' Computes the prior on the number of clusters
 #'
 #'
-#' This function compute the prior on the number of clusters, i.e. occupied components of the mixture for a Finite Dirichlet process 
+#' This function computes the prior on the number of clusters, i.e. occupied components of the mixture for a Finite Dirichlet process 
 #' when the prior on the component-weights of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormalised weights 
 #' are distributed as Gamma(\eqn{\gamma},1)). This function can be used when the number of components is fixed to \code{M^*}, i.e. 
-#' a Dirac prior assigning mass only to \code{M^*} is assumed. See Section 9.1.1 of the Paper Argiento de Iorio 2019 for more details.' There are no default values.
+#' a Dirac prior assigning mass only to \code{M^*} is assumed. See \insertCite{argiento2019infinity}{AntMAN} There are no default values.
 #'
 #' @param n        The sample size
 #' @param Mstar    The number of component of the mixture 

@@ -12,5 +12,5 @@ AM_plot_similarity_matrix(x, ...)
 \item{...}{All additional parameters wil lbe pass to the image command.}
 }
 \description{
-Given an \code{\link{AM_mcmc_fit}} output, this function will produce an image of the Similarity Matrix.
+Given an \code{\link{AM_mcmc_output}} object, this function will produce an image of the Similarity Matrix.
 }

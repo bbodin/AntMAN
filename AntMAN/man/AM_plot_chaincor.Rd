@@ -4,14 +4,16 @@
 \alias{AM_plot_chaincor}
 \title{Plot the Autocorrelation function}
 \usage{
-AM_plot_chaincor(x, tags = NULL, title = "MCMC Results")
+AM_plot_chaincor(x, tags = NULL, lags = NULL, title = "MCMC Results")
 }
 \arguments{
 \item{tags}{A list of variables to consider. This function only produces meaningful plots for variables that have fixed dimension across the draws. If not specified, plots pertaining to M and K will be produced.
 This function is built upon bayesplot's \code{mcmc_acf_bar}.}
 
+\item{lags}{An integer specifying the number of lags to plot. If no value is specified, the default number of lags shown is half the total number of iterations.}
+
 \item{title}{Title for the plot.}
 }
 \description{
-Given an MCMC output object, this function produces the autocorrelation function bars describing the MCMC results.
+Given an \code{\link{AM_mcmc_output}} object, this function produces the autocorrelation function bars describing the MCMC results.
 }

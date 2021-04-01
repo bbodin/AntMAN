@@ -7,15 +7,15 @@
 AM_mix_components_prior_dirac(Mstar)
 }
 \arguments{
-\item{Mstar}{Fixed value  \eqn{\widetilde{M}} for the number of components.}
+\item{Mstar}{Fixed value  \eqn{M^*} for the number of components.}
 }
 \value{
 list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_fit}}.
 }
 \description{
 Generate a configuration object that assigns a Point mass prior to the number of mixture components.
-This is the simplest option and it requires users to specify a value \eqn{\widetilde{M}}
-such that \eqn{Pr(M=\widetilde{M}) =1}.
+This is the simplest option and it requires users to specify a value \eqn{M^*}
+such that \eqn{Pr(M=M^* =1}.
 }
 \examples{
 

@@ -69,12 +69,13 @@ plot.AM_mcmc_output=function(x){
 }
 
 
-#' Internal function that produces a string fro ma list of values
+#' Internal function that produces a string from a list of values
 #'  
 #'@param x a list of values
 #'  
 #'@importFrom utils head
-list_values = function (x) { ## TODO : can be a head + paste
+#' @keywords internal
+list_values = function (x) { 
 	arguments = vector();
 	for (item in names(x)) {
 		arguments = append(arguments,sprintf("%s = %s",item, head(x[[item]]) )) ;
@@ -272,7 +273,7 @@ AM_mcmc_fit <- function(
 
 #' Performs a Gibbs sampling reusing previous configuration
 #' 
-#' Similar to \code{\link{AM_mcmc_fit}}, the \code{\link{AM_mcmc_refit}} function performs a Gibbs sampling in order to estimate 
+#' Similar to \code{\link{AM_mcmc_fit}}, the \code{AM_mcmc_refit} function performs a Gibbs sampling in order to estimate 
 #' a mixture. However parameters will be reused from a previous result from \code{\link{AM_mcmc_fit}}.
 #' 
 #' In practice this function will call AM_mcmc_fit(y, fixed_clustering = fixed_clustering, ...); with the same parameters as previously

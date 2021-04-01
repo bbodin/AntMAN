@@ -4,17 +4,18 @@
 \alias{summary.AM_prior}
 \title{summary AM_prior
 
-Print infos on AM_prior Object}
+Print summary information on an AM_prior object.}
 \usage{
 \method{summary}{AM_prior}(object, ...)
 }
 \arguments{
-\item{object}{a \code{\link{AM_prior}} object}
+\item{object}{a \code{\link{AM_prior}} object. See \code{\link{AM_prior_K_Delta}}, \code{\link{AM_prior_K_NegBin}},
+\code{\link{AM_prior_K_Pois}} for more details.}
 
 \item{...}{all additionnal parameters are ignored}
 }
 \description{
 summary AM_prior
 
-Print infos on AM_prior Object
+Print summary information on an AM_prior object.
 }

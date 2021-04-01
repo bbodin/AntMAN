@@ -70,7 +70,7 @@ AM_plot_pairs=function(x,tags = NULL,title = "MCMC Results"){
 #' Plot the density of variables from \code{\link{AM_mcmc_output}} object.
 #' 
 #'
-#' Given an object of class \code{\link{AM_mcmc_fit}}, AM_plot_density plots the posterior density of the specified variables of interest. AM_plot_density makes use 
+#' Given an \code{\link{AM_mcmc_output}} object, AM_plot_density plots the posterior density of the specified variables of interest. AM_plot_density makes use 
 #' of bayesplot's plotting function mcmc_areas.
 #' 
 #'  
@@ -96,10 +96,10 @@ AM_plot_density=function(x,tags = NULL,title = "MCMC Results"){
 }
 
 
-#' Plot the probability mass function of variables from AM_mcmc_output object.
+#' Plot the probability mass function of variables from \code{\link{AM_mcmc_output}} object.
 #' 
 #'
-#' Given an object of class \code{\link{AM_mcmc_fit}}, AM_plot_pmf plots the posterior probability mass function of the specified variables.
+#' Given an \code{\link{AM_mcmc_output}} object, AM_plot_pmf plots the posterior probability mass function of the specified variables.
 #'  
 #'@param x An \code{\link{AM_mcmc_output}} object, produced by calling \code{AM_mcmc_fit}.
 #'@param tags A list of variables to consider. If not specified, the pmf of both M and K will be plotted.
@@ -122,10 +122,10 @@ AM_plot_pmf=function(x,tags = NULL,title = "MCMC Results"){
 	
 }
 
-#' Plot traces of variables from AM_mcmc_output object.  
+#' Plot traces of variables from an \code{\link{AM_mcmc_output}} object.  
 #' 
 #'
-#' Given an object of class AM_mcmc_output, \code{\link{AM_plot_traces}} visualises the traceplots of the specified variables involved in the MCMC inference. 
+#' Given an \code{\link{AM_mcmc_output}} object, \code{\link{AM_plot_traces}} visualises the traceplots of the specified variables involved in the MCMC inference. 
 #'  
 #'@param x An \code{\link{AM_mcmc_output fit object, produced by calling \code{\link{AM_mcmc_fit}}.
 #'@param tags A list of variables to consider. This function only produces meaningful plots for variables that have fixed dimension across the draws. If not specified, plots pertaining to M and K will be produced. 
@@ -181,7 +181,7 @@ AM_plot_values=function(x,tags = NULL,title = "MCMC Results"){
 #'  Plot the Similarity Matrix
 #'  
 #'
-#'  Given an \code{\link{AM_mcmc_fit}} output, this function will produce an image of the Similarity Matrix.
+#'  Given an \code{\link{AM_mcmc_output}} object, this function will produce an image of the Similarity Matrix.
 #'  
 #'@param x An \code{\link{AM_mcmc_output}} fit object, produced by calling \code{AM_mcmc_fit}.
 #'@param ... All additional parameters wil lbe pass to the image command.
@@ -218,7 +218,7 @@ AM_plot_similarity_matrix=function(x, ...){
 #'  
 #'  
 #'
-#' Given an MCMC output object, this function produces the autocorrelation function bars describing the MCMC results.
+#' Given an \code{\link{AM_mcmc_output}} object, this function produces the autocorrelation function bars describing the MCMC results.
 #'  
 #'@param x An \code{\link{AM_mcmc_output} object, produced by calling \code{\link{AM_mcmc_fit}}.
 #'@param tags A list of variables to consider. This function only produces meaningful plots for variables that have fixed dimension across the draws. If not specified, plots pertaining to M and K will be produced. 
@@ -255,13 +255,13 @@ AM_plot_chaincor=function(x, tags = NULL, lags = NULL, title = "MCMC Results"){
 #'  Visualise the cluster frequency plot for the multivariate bernoulli model.
 #'  
 #'
-#'  Given the specified inputs, this function will produce a cluster frequency plot for the multivariate bernoulli model.
+#'  Given an \code{\link{AM_mcmc_output}} object, and the data the model was fit on, this function will produce a cluster frequency plot for the multivariate bernoulli model.
 #'  
 #'@param fit An \code{\link{AM_mcmc_output}} fit object, produced by calling \code{AM_mcmc_fit}.
 #'@param y A matrix containing the y observations which produced fit.
 #'@param x_lim_param A vector with two elements describing the plot's x_axis scale, e.g. c(0.8, 7.2).
 #'@param y_lim_param A vector with two elements describing the plot's y_axis scale, e.g. c(0, 1).
-mvb_cluster_frequency <- function(fit, y, x_lim_param= c(0.8, 7.2), y_lim_param = c(0,1)){
+AM_plot_mvb_cluster_frequency <- function(fit, y, x_lim_param= c(0.8, 7.2), y_lim_param = c(0,1)){
 
   result = AM_binder(fit)
   hatc = result$Labels

@@ -3,12 +3,7 @@
 \docType{data}
 \name{carcinoma}
 \alias{carcinoma}
-\title{carcinoma
-
-The carcinoma data from Agresti (2002, 542) consist of seven dichotomous variables representing
-the ratings by seven pathologists of 118 slides on the presence or absence of carcinoma.
-The purpose of studying this data is to model "interobserver agreement" by examining how
-subjects might be divided into groups depending upon the consistency of their diagnoses.}
+\title{Carcinoma dataset}
 \format{
 A data frame with 118 rows and 7 variables (from A to G).
 }
@@ -16,8 +11,6 @@ A data frame with 118 rows and 7 variables (from A to G).
 carcinoma
 }
 \description{
-carcinoma
-
 The carcinoma data from Agresti (2002, 542) consist of seven dichotomous variables representing
 the ratings by seven pathologists of 118 slides on the presence or absence of carcinoma.
 The purpose of studying this data is to model "interobserver agreement" by examining how

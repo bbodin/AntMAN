@@ -3,7 +3,7 @@
 \name{AM_find_gamma_NegBin}
 \alias{AM_find_gamma_NegBin}
 \title{Given that the prior on M is a Negative Binomial, find the \eqn{\gamma} hyperparameter of the weights
-prior to match \eqn{E(K)=\hat{K}}, where \eqn{K^{*}} is user-specified.}
+prior to match \eqn{E(K)=K*}, where \eqn{K*} is user-specified.}
 \usage{
 AM_find_gamma_NegBin(
   n,

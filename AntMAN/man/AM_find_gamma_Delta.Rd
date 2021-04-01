@@ -2,8 +2,8 @@
 % Please edit documentation in R/AM_find_gamma.R
 \name{AM_find_gamma_Delta}
 \alias{AM_find_gamma_Delta}
-\title{Given that the prior on M is a dirac delta, find the \eqn{\gamma} hyperparameter of the weights prior to match \eqn{E(K)=K^*},
-where \eqn{K^{*}} is user-specified.}
+\title{Given that the prior on M is a dirac delta, find the \eqn{\gamma} hyperparameter of the weights prior to match \eqn{E(K)=K*},
+where \eqn{K*} is user-specified.}
 \usage{
 AM_find_gamma_Delta(
   n,

@@ -3,7 +3,7 @@
 \docType{data}
 \name{said}
 \alias{said}
-\title{Usage frequency of the word "said" in the Brown corpus.}
+\title{Usage frequency of the word "said" in the Brown corpus}
 \format{
 A list with 500 observations on the frequency of said in different texts.
 }
@@ -14,7 +14,7 @@ https://www.kaggle.com/nltkdata/brown-corpus
 said
 }
 \description{
-Usage frequency of the word "said" in the Brown corpus.
+Usage frequency of the word "said" in the Brown corpus
 }
 \examples{
  data(said)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/AM_mix_components_prior.R
 \name{AM_mix_components_prior_negbin}
 \alias{AM_mix_components_prior_negbin}
-\title{Negative Binomial Prior.}
+\title{Generate a configuration object for a Shifted Negative Binomial prior on the number of mixture components.}
 \usage{
 AM_mix_components_prior_negbin(
   a_R = NULL,
@@ -36,7 +36,7 @@ AM_mix_components_prior_negbin(
 A configuration list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_fit}}.
 }
 \description{
-This generates a configuration object for a Shifted Negative Binomial prior on the number of mixture components such as
+This generates a configuration object for a Shifted Negative Binomial prior on the number of mixture components such that
 \deqn{q_M(m)=Pr(M=m) =\frac{\Gamma(r+m-1)}{(m-1)!\Gamma(r)} p^{m-1}(1-p)^r, \quad m=1,2,3,\ldots}
 The hyper-parameters \eqn{p\in (0,1)}  (probability of success) and \eqn{r>0} (size) can either be fixed using \code{r} and \code{p}
 or assigned appropriate prior distributions.

@@ -2,10 +2,7 @@
 % Please edit documentation in R/AM_prior.R
 \name{AM_prior_K_Delta}
 \alias{AM_prior_K_Delta}
-\title{This function compute the prior on the number of cluster, i.e. occupied component of the mixutre for a Finite Dirichlet process
-when the prior on the component-weigts of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights
-are distributed as Gamma(\eqn{\gamma},1) ) when the number of component are fixed to \code{M^*}, i.e. a Dirac prior assigning mass
-only to \code{M^*} is assumed. See Section 9.1.1 of the Paper Argiento de Iorio 2019 for more details.#' There are no default values.}
+\title{Computes the prior on the number of clusters}
 \usage{
 AM_prior_K_Delta(n, gamma, Mstar)
 }
@@ -20,10 +17,10 @@ AM_prior_K_Delta(n, gamma, Mstar)
 AM_prior object, that is a vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}
 }
 \description{
-This function compute the prior on the number of cluster, i.e. occupied component of the mixutre for a Finite Dirichlet process
-when the prior on the component-weigts of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights
-are distributed as Gamma(\eqn{\gamma},1) ) when the number of component are fixed to \code{M^*}, i.e. a Dirac prior assigning mass
-only to \code{M^*} is assumed. See Section 9.1.1 of the Paper Argiento de Iorio 2019 for more details.#' There are no default values.
+This function computes the prior on the number of clusters, i.e. occupied components of the mixture for a Finite Dirichlet process
+when the prior on the component-weights of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormalised weights
+are distributed as Gamma(\eqn{\gamma},1)). This function can be used when the number of components is fixed to \code{M^*}, i.e.
+a Dirac prior assigning mass only to \code{M^*} is assumed. See \insertCite{argiento2019infinity}{AntMAN} There are no default values.
 }
 \examples{
 n <- 82

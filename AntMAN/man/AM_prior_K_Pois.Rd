@@ -2,8 +2,7 @@
 % Please edit documentation in R/AM_prior.R
 \name{AM_prior_K_Pois}
 \alias{AM_prior_K_Pois}
-\title{This function computes the prior on the number of clusters, i.e. occupied components of the mixture for a Finite Dirichlet process when the prior on the component-weights of the mixture is a Dirichlet with parameter \code{gamma}
-(i.e. when unnormalized weights are distributed as Gamma(\eqn{\gamma},1) ) when the prior on the number of component is Shifted Poisson of parameter \code{Lambda}. See Section 9.1.1 of \insertCite{argiento2019infinity}{AntMAN} for more details.}
+\title{Computes the prior number of clusters}
 \usage{
 AM_prior_K_Pois(n, gamma, Lambda)
 }
@@ -15,9 +14,14 @@ AM_prior_K_Pois(n, gamma, Lambda)
 \item{Lambda}{The \code{Lambda} parameter of the Poisson}
 }
 \value{
-AM_prior object, that is a vector of length n, reporting the values of the prior on the number of clusters induced by the prior on \code{M} and \code{w}, i.e. \code{p^*_k} for \code{k=1,...,n}. See Section 9.1.1 of Argiento de Iorio (2019) for more details.
+AM_prior object, that is a vector of length n, reporting the values of the prior on the number of clusters induced by the prior on \code{M} and \code{w}, i.e. \code{p^*_k} for \code{k=1,...,n}. See \insertCite{argiento2019infinity}{AntMAN} for more details.
 }
 \description{
+This function computes the prior on the number of clusters, i.e. occupied components of the mixture for a Finite Dirichlet process when the prior on the component-weights of the mixture is a
+Dirichlet with parameter \code{gamma} (i.e. when unnormalized weights are distributed as Gamma(\eqn{\gamma},1)). This function can be used when the prior on the number of
+components is Shifted Poisson of parameter \code{Lambda}. See Section 9.1.1 of \insertCite{argiento2019infinity}{AntMAN} for more details.
+}
+\details{
 There are no default values.
 }
 \examples{

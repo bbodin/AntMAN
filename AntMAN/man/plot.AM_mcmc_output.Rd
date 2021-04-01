@@ -4,13 +4,12 @@
 \alias{plot.AM_mcmc_output}
 \title{plot AM_mcmc_output}
 \usage{
-\method{plot}{AM_mcmc_output}(x, ...)
+\method{plot}{AM_mcmc_output}(x)
 }
 \arguments{
-\item{x}{a AM_mcmc_output object}
-
-\item{...}{all additionnal parameters passed to image command.}
+\item{x}{a \code{\link{AM_mcmc_output}} object}
 }
 \description{
-plot some useful informations about the mcmc results
+Given an \code{\link{AM_mcmc_output}} object, this function plots some useful information about the MCMC results
+regarding \eqn{M} and \eqn{K}. Besides the PMFs, some of the diagnostic plots of the MCMC chain are visualised.
 }

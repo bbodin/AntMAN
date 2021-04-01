@@ -2,7 +2,7 @@
 % Please edit documentation in R/AM_mcmc.R
 \name{list_values}
 \alias{list_values}
-\title{Internal function that produces a string fro ma list of values}
+\title{Internal function that produces a string from a list of values}
 \usage{
 list_values(x)
 }
@@ -10,5 +10,6 @@ list_values(x)
 \item{x}{a list of values}
 }
 \description{
-Internal function that produces a string fro ma list of values
+Internal function that produces a string from a list of values
 }
+\keyword{internal}

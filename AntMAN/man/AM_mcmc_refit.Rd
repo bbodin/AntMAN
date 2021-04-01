@@ -19,7 +19,7 @@ AM_mcmc_refit(y, fit, fixed_clustering, mcmc_parameters = AM_mcmc_parameters())
 The return value is a \code{\link{AM_mcmc_output}} object.
 }
 \description{
-Similar to \code{\link{AM_mcmc_fit}}, the \code{\link{AM_mcmc_refit}} function performs a Gibbs sampling in order to estimate
+Similar to \code{\link{AM_mcmc_fit}}, the \code{AM_mcmc_refit} function performs a Gibbs sampling in order to estimate
 a mixture. However parameters will be reused from a previous result from \code{\link{AM_mcmc_fit}}.
 }
 \details{

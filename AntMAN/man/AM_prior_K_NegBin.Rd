@@ -2,7 +2,7 @@
 % Please edit documentation in R/AM_prior.R
 \name{AM_prior_K_NegBin}
 \alias{AM_prior_K_NegBin}
-\title{This function computes the prior on the number of cluster, i.e. occupied component of the mixutre for a Finite Dirichlet process when the prior on the component-weigts of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights are distributed as Gamma(\eqn{\gamma},1) ) when the prior on the number of componet  is Negative Binomial with parameter \code{r>0} and \code{0<p<1}, with  mean is mu =1+ r*p/(1-p) TODO: CHECK THIS FORMULA!!!. See Section 9.1.1 of the Paper Argiento de Iorio 2019 for more details.}
+\title{computes the prior number of clusters}
 \usage{
 AM_prior_K_NegBin(n, gamma, r, p)
 }
@@ -19,6 +19,12 @@ AM_prior_K_NegBin(n, gamma, r, p)
 AM_prior object, that is a vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}
 }
 \description{
+This function computes the prior on the number of clusters, i.e. occupied component of the mixture for a Finite Dirichlet process when the
+prior on the component-weights of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormalized weights are distributed as
+Gamma(\eqn{\gamma},1)). This function can be used when the prior on the number of components is Negative Binomial with parameter \code{r>0} and
+\code{0<p<1}, with  mean is mu =1+ r*p/(1-p). See \insertCite{argiento2019infinity}{AntMAN} for more details.
+}
+\details{
 There are no default values.
 }
 \examples{

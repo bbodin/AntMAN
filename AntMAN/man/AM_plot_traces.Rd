@@ -2,7 +2,7 @@
 % Please edit documentation in R/AM_plot.R
 \name{AM_plot_traces}
 \alias{AM_plot_traces}
-\title{Plot traces of variables from AM_mcmc_output object.}
+\title{Plot traces of variables from an \code{\link{AM_mcmc_output}} object.}
 \usage{
 AM_plot_traces(x, tags = NULL, title = "MCMC Results")
 }
@@ -12,5 +12,5 @@ AM_plot_traces(x, tags = NULL, title = "MCMC Results")
 \item{title}{Title for the plot}
 }
 \description{
-Given an object of class AM_mcmc_output, \code{\link{AM_plot_traces}} visualises the traceplots of the specified variables involved in the MCMC inference.
+Given an \code{\link{AM_mcmc_output}} object, \code{\link{AM_plot_traces}} visualises the traceplots of the specified variables involved in the MCMC inference.
 }

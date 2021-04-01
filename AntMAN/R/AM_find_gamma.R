@@ -6,8 +6,8 @@
 #######################################################################################
 
 
-#' Given that the prior on M is a dirac delta, find the \eqn{\gamma} hyperparameter of the weights prior to match \eqn{E(K)=K^*}, 
-#' where \eqn{K^{*}} is user-specified. 
+#' Given that the prior on M is a dirac delta, find the \eqn{\gamma} hyperparameter of the weights prior to match \eqn{E(K)=K*}, 
+#' where \eqn{K*} is user-specified. 
 #'
 #' Once a fixed value of the number of components \eqn{M^*} is specified, this function  adopts a \emph{bisection method} to find the value of \eqn{\gamma} 
 #' such that the induced distribution on the number of clusters is centered around a user specifed value \eqn{K^*}, i.e. the function uses
@@ -78,7 +78,7 @@ AM_find_gamma_Pois <- function (n,Lambda,Kstar=6, gam_min=0.0001,gam_max=10, tol
 }
 
 #' Given that the prior on M is a Negative Binomial, find the \eqn{\gamma} hyperparameter of the weights 
-#' prior to match \eqn{E(K)=\hat{K}}, where \eqn{K^{*}} is user-specified. 
+#' prior to match \eqn{E(K)=K*}, where \eqn{K*} is user-specified. 
 #'
 #' Once the prior on the number of mixture components M is assumed to be a Negative Binomial with 
 #' parameter \code{r>0} and \code{0<p<1}, with  mean is 1+ r*p/(1-p), this function adopts a \emph{bisection method} 

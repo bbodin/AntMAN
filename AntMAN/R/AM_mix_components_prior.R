@@ -43,10 +43,10 @@ summary.AM_mix_components_prior = function(object, ...){
 #' Generate a configuration object that contains a Point mass prior.
 #' 
 #' Generate a configuration object that assigns a Point mass prior to the number of mixture components.
-#' This is the simplest option and it requires users to specify a value \eqn{\widetilde{M}} 
-#' such that \eqn{Pr(M=\widetilde{M}) =1}. 
+#' This is the simplest option and it requires users to specify a value \eqn{M^*} 
+#' such that \eqn{Pr(M=M^* =1}. 
 #'
-#'@param Mstar      Fixed value  \eqn{\widetilde{M}} for the number of components. 
+#'@param Mstar      Fixed value  \eqn{M^*} for the number of components. 
 #'@return list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_fit}}. 
 #'
 #'@keywords prior
@@ -69,9 +69,10 @@ AM_mix_components_prior_dirac <- function(Mstar) {
 
 
 
-#' Negative Binomial Prior.
+#' Generate a configuration object for a Shifted Negative Binomial prior on the number of mixture components.
+#'
 #' 
-#' This generates a configuration object for a Shifted Negative Binomial prior on the number of mixture components such as 
+#' This generates a configuration object for a Shifted Negative Binomial prior on the number of mixture components such that 
 #'  \deqn{q_M(m)=Pr(M=m) =\frac{\Gamma(r+m-1)}{(m-1)!\Gamma(r)} p^{m-1}(1-p)^r, \quad m=1,2,3,\ldots}
 #' The hyper-parameters \eqn{p\in (0,1)}  (probability of success) and \eqn{r>0} (size) can either be fixed using \code{r} and \code{p}
 #' or assigned appropriate prior distributions. 
@@ -137,6 +138,7 @@ AM_mix_components_prior_negbin <- function(a_R = NULL, b_R = NULL, a_P = NULL, b
 
 #' Generate a configuration object for a Poisson prior on the number of mixture components.
 #' 
+#'
 #' This function generates a configuration object for a Shifted Poisson prior on the number 
 #' of mixture components such that  
 #' \deqn{q_M(m)=     Pr (M=m)= \frac{e^{-\Lambda}\Lambda^{m-1} }{(m-1)!}    ,      \quad m=1,2,3,\ldots}

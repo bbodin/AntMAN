@@ -28,7 +28,7 @@
 #' mvb_output <- AM_demo_mvb_poi()
 AM_demo_mvb_poi = function () {
 	
-	set.seed(123) # TODO : discuss if this make sense
+	set.seed(123) 
 	
 	d <- 4
 	k <- 3

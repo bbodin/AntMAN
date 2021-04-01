@@ -17,6 +17,6 @@ AM_plot_density(x, tags = NULL, title = "MCMC Results")
 a ggplot object visualising the posterior density of the specified variables.
 }
 \description{
-Given an object of class \code{\link{AM_mcmc_fit}}, AM_plot_density plots the posterior density of specified combined across all chains. AM_plot_density makes use
+Given an \code{\link{AM_mcmc_output}} object, AM_plot_density plots the posterior density of the specified variables of interest. AM_plot_density makes use
 of bayesplot's plotting function mcmc_areas.
 }
