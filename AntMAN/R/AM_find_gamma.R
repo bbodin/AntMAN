@@ -16,12 +16,12 @@
 #'  A default value for the tolerance is \eqn{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31), the function 
 #'  stops warning that convergence has not been reached.
 #'
-#' @param n             sample size
-#' @param Mstar         number of components of the mixture 
-#' @param Kstar         mean number of clusters the user wants to specify
-#' @param gam_min       lower bound of the interval in which \code{gamma} should lie (default 1e-4)
-#' @param gam_max       upper bound of the interval in which \code{gamma} should lie (default 10)
-#' @param tolerance     Level of tolerance for the method
+#' @param n             sample size.
+#' @param Mstar         number of components of the mixture.
+#' @param Kstar         mean number of clusters the user wants to specify.
+#' @param gam_min       lower bound of the interval in which \code{gamma} should lie (default 1e-4).
+#' @param gam_max       upper bound of the interval in which \code{gamma} should lie (default 10).
+#' @param tolerance     Level of tolerance for the method.
 #'
 #'
 #' @return A value of \code{gamma} such that \eqn{E(K)=K^*} 
@@ -52,12 +52,12 @@ AM_find_gamma_Delta <- function (n,Mstar,Kstar=6, gam_min=0.0001,gam_max=10, tol
 #' A defaault value for the tolerance is \eqn{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31),
 #'the function stops warning that convergence has not bee reached.
 #'
-#' @param n             The sample size
-#' @param Lambda        The parameter of the Shifted Poisson for the number of components of the mixture
-#' @param Kstar         The mean number of clusters the user wants to specify
-#' @param gam_min       The lower bound of the interval in which \code{gamma} should lie
-#' @param gam_max       The upper bound of the interval in which \code{gamma} should lie
-#' @param tolerance     Level of tolerance of the method
+#' @param n             The sample size.
+#' @param Lambda        The parameter of the Shifted Poisson for the number of components of the mixture.
+#' @param Kstar         The mean number of clusters the user wants to specify.
+#' @param gam_min       The lower bound of the interval in which \code{gamma} should lie.
+#' @param gam_max       The upper bound of the interval in which \code{gamma} should lie.
+#' @param tolerance     Level of tolerance of the method.
 #'
 #'
 #' @return A value of \code{gamma} such that \eqn{E(K)=K^{*}} 
@@ -88,13 +88,13 @@ AM_find_gamma_Pois <- function (n,Lambda,Kstar=6, gam_min=0.0001,gam_max=10, tol
 #' are \eqn{\gamma_l= 10^{-3}} and \eqn{\gamma_{u}=10}.  A defaault value for the tolerance is \eqn{\epsilon=0.1}. Moreover, after a 
 #' maximum number of iteration (default is 31), the function stops warning that convergence has not bee reached.
 #'
-#' @param n             The sample size
-#' @param r      The dispersion parameter \code{r} of the Negative Binomial
-#' @param p      The probability of failure parameter \code{p} of the Negative Binomial
-#' @param Kstar         The mean number of clusters the user wants to specify
-#' @param gam_min  The lower bound of the interval in which \code{gamma} should lie
-#' @param gam_max   The upper bound of the interval in which \code{gamma} should lie
-#' @param tolerance   Level of tolerance of the method
+#' @param n      The sample size.
+#' @param r      The dispersion parameter \code{r} of the Negative Binomial.
+#' @param p      The probability of failure parameter \code{p} of the Negative Binomial.
+#' @param Kstar         The mean number of clusters the user wants to specify.
+#' @param gam_min  The lower bound of the interval in which \code{gamma} should lie.
+#' @param gam_max   The upper bound of the interval in which \code{gamma} should lie.
+#' @param tolerance   Level of tolerance of the method.
 #'
 #'
 #' @return A value of \code{gamma} such that \eqn{E(K)=K^{*}} 

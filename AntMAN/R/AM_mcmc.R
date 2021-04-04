@@ -333,11 +333,11 @@ AM_mcmc_refit <- function(
 #' 
 #'@param niter        Total number of MCMC iterations to be carried out. 
 #'@param burnin       Number of iterations to be considered as burn-in. Samples from this burn-in period are discarded.
-#'@param thin         Thinning rate. This argument specifies how often a draw from the posterior distribution is stored after 
+#'@param thin         Thinning rate. This argument specifies how often a draw from the posterior distribution is stored after
 #' burnin, i.e. one every -th samples is saved. Therefore, the toral number of MCMC samples saved is 
 #' (\code{niter} -\code{burnin})/\code{thin}. If thin =1, then AntMAN stores every iteration. 
-#'@param verbose      A value from 0 to 4, that specifies the desired level of verbosity (0:None, 1:Warnings, 2:Debug, 3:Extras)
-#'@param output       A list of parameters output to return
+#'@param verbose      A value from 0 to 4, that specifies the desired level of verbosity (0:None, 1:Warnings, 2:Debug, 3:Extras).
+#'@param output       A list of parameters output to return.
 #'@param output_dir   Path to an output dir, where to store all the outputs.
 #'@param parallel     Some of the algorithms can be run in parallel using OpenMP. When set to True, this parameter triggers the parallelism.
 #'@return \code{\link{AM_mcmc_configuration}} Object, this is a list to be used as \code{mcmc_parameters} argument with \code{\link{AM_mcmc_fit}}. 
