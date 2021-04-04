@@ -4,14 +4,14 @@
 ###############
 ###############
 #######################################################################################
-#' S3 class AM_mcmc_output.
+#' S3 class AM_mcmc_output
 #' @description Output type of return values from  \code{\link{AM_mcmc_fit}}. 
 #' @exportClass AM_mcmc_output
 #' @seealso \code{\link{AM_mcmc_fit}}
 #' @name AM_mcmc_output
 NULL
 
-#' S3 class AM_mcmc_configuration.
+#' S3 class AM_mcmc_configuration
 #' @description Output type of return values from  \code{\link{AM_mcmc_parameters}}. 
 #' @exportClass AM_mcmc_configuration
 #' @seealso \code{\link{AM_mcmc_fit}}

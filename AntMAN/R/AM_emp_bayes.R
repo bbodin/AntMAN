@@ -6,7 +6,7 @@
 #######################################################################################
 
 
-#' compute the hyperparameters of an Normal-Inverse-Gamma distribution using an empirical Bayes approach.
+#' compute the hyperparameters of an Normal-Inverse-Gamma distribution using an empirical Bayes approach
 #'
 #' This function computes the hyperparameters of a Normal Inverse-Gamma distribution using an empirical Bayes approach. 
 #' More information about how these hyperparameters are determined can be found here: 

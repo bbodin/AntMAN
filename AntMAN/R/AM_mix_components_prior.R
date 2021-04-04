@@ -5,7 +5,7 @@
 ###############
 #######################################################################################
 
-#' S3 class AM_mix_components_prior.
+#' S3 class AM_mix_components_prior
 #' @description Object return by \code{AM_mix_components_prior_*}. 
 #' @exportClass AM_mix_components_prior
 #' @seealso \code{\link{AM_mix_components_prior_dirac}} 
