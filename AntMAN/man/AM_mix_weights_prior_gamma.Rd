@@ -2,8 +2,7 @@
 % Please edit documentation in R/AM_mix_weights_prior.R
 \name{AM_mix_weights_prior_gamma}
 \alias{AM_mix_weights_prior_gamma}
-\title{Generate a configuration object to specify a prior on the hyper-parameter \eqn{\gamma} for the Dirichlet prior on the
-mixture weights.}
+\title{specify a prior on the hyperparameter \eqn{\gamma} for the Dirichlet prior for the mixture weights}
 \usage{
 AM_mix_weights_prior_gamma(a = NULL, b = NULL, gamma = NULL, init = NULL)
 }
@@ -20,9 +19,9 @@ AM_mix_weights_prior_gamma(a = NULL, b = NULL, gamma = NULL, init = NULL)
 A configuration list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_fit}}.
 }
 \description{
-Generate a configuration object to specify a prior on the hyper-parameter \eqn{\gamma} for the Dirichlet prior on the
+Generate a configuration object to specify a prior on the hyperparameter \eqn{\gamma} for the Dirichlet prior on the
 mixture weights.
-We assume \eqn{\gamma \sim  Gamma(a,b)}. Alternatively we can fix \eqn{\gamma} to a specific value.
+We assume \eqn{\gamma \sim  Gamma(a,b)}. Alternatively, we can fix \eqn{\gamma} to a specific value.
 Default is \eqn{\gamma=1/N}, where N is the number of observations.
 In AntMAN we assume the following
 parametrization of the Gamma density:

@@ -101,7 +101,7 @@ AM_plot_density=function(x,tags = NULL,title = "MCMC Results"){
 #'
 #' Given an \code{\link{AM_mcmc_output}} object, AM_plot_pmf plots the posterior probability mass function of the specified variables.
 #'  
-#'@param x An \code{\link{AM_mcmc_output}} object, produced by calling \code{AM_mcmc_fit}.
+#'@param x An \code{\link{AM_mcmc_output}} object, produced by calling \code{\link{AM_mcmc_fit}}.
 #'@param tags A list of variables to consider. If not specified, the pmf of both M and K will be plotted.
 #'@param title Title for the plot.
 #'@return NULL

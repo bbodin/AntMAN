@@ -122,7 +122,7 @@ AM_prior_K_Pois <- function (n,gamma,Lambda) {
 #' @param p      The probability of failure parameter \code{p} of Negative Binomial.
 #' @param gamma  The \code{gamma} parameter of the Dirichlet distribution.
 #'
-#' @return an \code{\link{AM_prior}} object, that is a vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}
+#' @return an \code{\link{AM_prior}} object, that is a vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}.
 #'
 #' @keywords prior number of cluster
 #'

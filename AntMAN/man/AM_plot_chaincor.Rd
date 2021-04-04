@@ -15,5 +15,6 @@ This function is built upon bayesplot's \code{mcmc_acf_bar}.}
 \item{title}{Title for the plot.}
 }
 \description{
-Given an \code{\link{AM_mcmc_output}} object, this function produces the autocorrelation function bars describing the MCMC results.
+Given an \code{\link{AM_mcmc_output}} object, this function produces the autocorrelation function bars describing the MCMC results. AM_plot_chaincor makes use of bayesplot’s
+plotting function mcmc_acf_bar.
 }

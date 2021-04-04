@@ -13,4 +13,5 @@ AM_plot_traces(x, tags = NULL, title = "MCMC Results")
 }
 \description{
 Given an \code{\link{AM_mcmc_output}} object, \code{\link{AM_plot_traces}} visualises the traceplots of the specified variables involved in the MCMC inference.
+AM_plot_traces is built upon bayesplot's mcmc_trace.
 }
