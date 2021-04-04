@@ -19,11 +19,12 @@ NULL
 #' Given an \code{\link{AM_mix_hyperparams}} object, this function prints the summary information
 #' of the specified mixture hyperparameters. 
 #'  
-#'@param object a \code{\link{AM_mix_hyperparams}} object.
+#'@param object an \code{\link{AM_mix_hyperparams}} object.
 #'@param ... all additional parameters are ignored.
 #'  
 #'  
 #'@method summary AM_mix_hyperparams 
+#'@seealso \code{\link{AM_mix_hyperparams}}
 #'@importFrom utils head
 #'@export
 summary.AM_mix_hyperparams = function(object, ...){

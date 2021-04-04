@@ -15,17 +15,17 @@ AM_find_gamma_Delta(
 )
 }
 \arguments{
-\item{n}{sample size}
+\item{n}{sample size.}
 
-\item{Mstar}{number of components of the mixture}
+\item{Mstar}{number of components of the mixture.}
 
-\item{Kstar}{mean number of clusters the user wants to specify}
+\item{Kstar}{mean number of clusters the user wants to specify.}
 
-\item{gam_min}{lower bound of the interval in which \code{gamma} should lie (default 1e-4)}
+\item{gam_min}{lower bound of the interval in which \code{gamma} should lie (default 1e-4).}
 
-\item{gam_max}{upper bound of the interval in which \code{gamma} should lie (default 10)}
+\item{gam_max}{upper bound of the interval in which \code{gamma} should lie (default 10).}
 
-\item{tolerance}{Level of tolerance for the method}
+\item{tolerance}{Level of tolerance for the method.}
 }
 \value{
 A value of \code{gamma} such that \eqn{E(K)=K^*}

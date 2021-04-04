@@ -2,19 +2,16 @@
 % Please edit documentation in R/AM_mix_hyperparams.R
 \name{summary.AM_mix_hyperparams}
 \alias{summary.AM_mix_hyperparams}
-\title{summary AM_mix_hyperparams
-
-Print infos on AM_mix_hyperparams Object}
+\title{summary information of the AM_mix_hyperparams object}
 \usage{
 \method{summary}{AM_mix_hyperparams}(object, ...)
 }
 \arguments{
-\item{object}{a \code{\link{AM_mix_hyperparams}} object}
+\item{object}{a \code{\link{AM_mix_hyperparams}} object.}
 
-\item{...}{all additionnal parameters are ignored}
+\item{...}{all additional parameters are ignored.}
 }
 \description{
-summary AM_mix_hyperparams
-
-Print infos on AM_mix_hyperparams Object
+Given an \code{\link{AM_mix_hyperparams}} object, this function prints the summary information
+of the specified mixture hyperparameters.
 }

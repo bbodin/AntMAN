@@ -2,19 +2,19 @@
 % Please edit documentation in R/AM_mix_weights_prior.R
 \name{summary.AM_mix_weights_prior}
 \alias{summary.AM_mix_weights_prior}
-\title{summary AM_mix_weights_prior
-
-Print infos on AM_mix_weights_prior Object}
+\title{#' summary information of the AM_mix_weights_prior object}
 \usage{
 \method{summary}{AM_mix_weights_prior}(object, ...)
 }
 \arguments{
-\item{object}{a \code{\link{AM_mix_weights_prior}} object}
+\item{object}{a \code{\link{AM_mix_weights_prior}} object.}
 
-\item{...}{all additionnal parameters are ignored}
+\item{...}{all additional parameters are ignored.}
 }
 \description{
-summary AM_mix_weights_prior
-
-Print infos on AM_mix_weights_prior Object
+Given an \code{\link{AM_mix_weights_prior}} object, this function prints the summary information
+of the specified mixture weights prior.
+}
+\seealso{
+\code{\link{AM_mix_weights_prior}}
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/AM_mix_hyperparams.R
 \name{AM_mix_hyperparams_uninorm}
 \alias{AM_mix_hyperparams_uninorm}
-\title{Univariate Normal Mixture Hyperparameters}
+\title{univariate Normal mixture hyperparameters}
 \usage{
 AM_mix_hyperparams_uninorm(m0, k0, nu0, sig02)
 }

@@ -7,5 +7,5 @@
 Object type returned by \code{AM_mix_weights_prior_*} commands.
 }
 \seealso{
-\code{\link{AM_mix_weights_prior}}
+\code{\link{AM_mix_weights_prior_gamma}}
 }

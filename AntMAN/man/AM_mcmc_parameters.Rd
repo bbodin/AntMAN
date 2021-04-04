@@ -23,9 +23,9 @@ AM_mcmc_parameters(
 burnin, i.e. one every -th samples is saved. Therefore, the toral number of MCMC samples saved is
 (\code{niter} -\code{burnin})/\code{thin}. If thin =1, then AntMAN stores every iteration.}
 
-\item{verbose}{A value from 0 to 4, that specifies the desired level of verbosity (0:None, 1:Warnings, 2:Debug, 3:Extras)}
+\item{verbose}{A value from 0 to 4, that specifies the desired level of verbosity (0:None, 1:Warnings, 2:Debug, 3:Extras).}
 
-\item{output}{A list of parameters output to return}
+\item{output}{A list of parameters output to return.}
 
 \item{parallel}{Some of the algorithms can be run in parallel using OpenMP. When set to True, this parameter triggers the parallelism.}
 

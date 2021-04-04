@@ -46,12 +46,13 @@ plot.AM_prior=function(x,...){
 #'
 #' Given an \code{\link{AM_prior object}}, this function prints the summary information of the specified prior on the number of clusters. 
 #'  
-#'@param object a \code{\link{AM_prior}} object. See \code{\link{AM_prior_K_Delta}}, \code{\link{AM_prior_K_NegBin}},
+#'@param object an \code{\link{AM_prior}} object. See \code{\link{AM_prior_K_Delta}}, \code{\link{AM_prior_K_NegBin}},
 #'			\code{\link{AM_prior_K_Pois}} for more details.
 #'@param ... all additional parameters are ignored.
 #'  
 #'  
 #'@method summary AM_prior 
+#'@seealso \code{\link{AM_prior}}
 #'@export
 summary.AM_prior = function(object, ...){
 	quantiles = c(0.025, 0.25, 0.5, 0.75, 0.975) 

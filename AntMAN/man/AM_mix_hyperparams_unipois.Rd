@@ -2,7 +2,7 @@
 % Please edit documentation in R/AM_mix_hyperparams.R
 \name{AM_mix_hyperparams_unipois}
 \alias{AM_mix_hyperparams_unipois}
-\title{Univariate Poisson Mixture Hyperparameters.}
+\title{univariate Poisson mixture hyperparameters}
 \usage{
 AM_mix_hyperparams_unipois(alpha0, beta0)
 }

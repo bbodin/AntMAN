@@ -21,7 +21,7 @@ NULL
 #' Given an \code{\link{AM_mix_components_prior}} object, this function prints the summary information
 #' of the specified prior on the number of components. 
 #'  
-#'@param object a \code{\link{AM_mix_components_prior}} object.
+#'@param object an \code{\link{AM_mix_components_prior}} object.
 #'@param ... all additional parameters are ignored.
 #'  
 #'@importFrom utils head

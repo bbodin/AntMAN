@@ -7,5 +7,6 @@
 Object type returned by \code{AM_mix_hyperparams_*} commands.
 }
 \seealso{
-\code{\link{AM_mix_hyperparams}}
+\code{\link{AM_mix_hyperparams_unipois}}, \code{\link{AM_mix_hyperparams_uninorm}}, \code{\link{AM_mix_hyperparams_multiber}},
+\code{\link{AM_mix_hyperparams_multinorm}}
 }

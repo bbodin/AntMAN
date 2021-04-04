@@ -23,7 +23,7 @@ NULL
 #' Given an \code{\link{AM_mix_weights_prior}} object, this function prints the summary information
 #' of the specified mixture weights prior. 
 #'  
-#'@param object a \code{\link{AM_mix_weights_prior}} object.
+#'@param object an \code{\link{AM_mix_weights_prior}} object.
 #'@param ... all additional parameters are ignored.
 #'  
 #'  

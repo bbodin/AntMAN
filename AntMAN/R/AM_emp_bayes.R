@@ -13,9 +13,9 @@
 #' \emph{Bayes and empirical Bayes: do they merge?} \insertCite{petrone2012bayes}{AntMAN}.
 #'
 #'@param y The data y. If y is univariate, a vector is expected. Otherwise, y should be a matrix.
-#'@param scEmu a positive value (default=1) such that marginally E(\mu) = s^2*scEmu, where s^2 is the
+#'@param scEmu a positive value (default=1) such that marginally E(\eqn{\mu}) = \eqn{s^2}*scEmu, where \eqn{s^2} is the
 #'sample variance.
-#'@param scEsig2 a positive value (default=3) such that marginally E(\sig^2) = s^2*scEsig2, where s^2 is the
+#'@param scEsig2 a positive value (default=3) such that marginally E(\eqn{\sig^2}) = \eqn{s^2}*scEsig2, where \eqn{s^2} is the
 #'sample variance.
 #'@param CVsig2 The coefficient of variation of \eqn{\sig^2} (default=3).
 #'  }

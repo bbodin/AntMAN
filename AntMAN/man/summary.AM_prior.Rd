@@ -13,5 +13,5 @@
 \item{...}{all additional parameters are ignored.}
 }
 \description{
-Given an AM_prior object, this function prints the summary information of the specified prior on the number of clusters.
+Given an \code{\link{AM_prior object}}, this function prints the summary information of the specified prior on the number of clusters.
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/AM_mix_hyperparams.R
 \name{AM_mix_hyperparams_multiber}
 \alias{AM_mix_hyperparams_multiber}
-\title{Multivariate Bernoulli Mixture Hyperparameters (Latent Class analysis)}
+\title{multivariate Bernoulli mixture hyperparameters (Latent Class analysis)}
 \usage{
 AM_mix_hyperparams_multiber(a0, b0)
 }

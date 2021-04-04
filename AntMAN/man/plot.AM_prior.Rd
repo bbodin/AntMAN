@@ -7,10 +7,10 @@
 \method{plot}{AM_prior}(x, ...)
 }
 \arguments{
-\item{x}{an AM_prior object. See \code{\link{AM_prior_K_Delta}}, \code{\link{AM_prior_K_NegBin}},
+\item{x}{an \code{\link{AM_prior}} object. See \code{\link{AM_prior_K_Delta}}, \code{\link{AM_prior_K_NegBin}},
 \code{\link{AM_prior_K_Pois}} for more details.}
 
-\item{...}{all additionnal parameters are ignored.}
+\item{...}{all additional parameters are ignored.}
 }
 \description{
 '

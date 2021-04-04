@@ -8,9 +8,9 @@ mixture weights.}
 AM_mix_weights_prior_gamma(a = NULL, b = NULL, gamma = NULL, init = NULL)
 }
 \arguments{
-\item{a}{The shape parameter a of the Gamma prior}
+\item{a}{The shape parameter a of the Gamma prior.}
 
-\item{b}{The rate parameter b of the Gamma prior}
+\item{b}{The rate parameter b of the Gamma prior.}
 
 \item{gamma}{It allows to fix \eqn{\gamma}  to a specific value.}
 
