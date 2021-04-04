@@ -57,7 +57,8 @@ summary.AM_mcmc_configuration = function(object, ...){
 #' Given an \code{\link{AM_mcmc_output}} object, this function plots some useful information about the MCMC results
 #' regarding \eqn{M} and \eqn{K}. Besides the PMFs, some of the diagnostic plots of the MCMC chain are visualised.
 #'  
-#'@param x a \code{\link{AM_mcmc_output}} object
+#'@param x an \code{\link{AM_mcmc_output}} object.
+#'@param ... all additional parameters are ignored.
 #'  
 #'@method plot AM_mcmc_output 
 #'@importFrom graphics image

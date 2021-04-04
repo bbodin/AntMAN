@@ -60,7 +60,7 @@
 
 #' Teen Brain Images from the National Institutes of Health, U.S.
 #'
-#' Picture of brain activities from a teenager consumming drugs. 
+#' Picture of brain activities from a teenager consuming drugs. 
 #'  
 #'@format  A list that contains \code{dim} a (W:width,H:height) pair, and  \code{pic} a data frame (W*H pixels image in RGB format).
 #'  

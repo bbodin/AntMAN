@@ -17,7 +17,7 @@ NULL
 ##### Configuration functions for the prior on the mixture weights
 #################################################################################
 
-#'  #' summary information of the AM_mix_weights_prior object 
+#'  summary information of the AM_mix_weights_prior object 
 #'  
 #'
 #' Given an \code{\link{AM_mix_weights_prior}} object, this function prints the summary information
@@ -49,7 +49,7 @@ summary.AM_mix_weights_prior = function(object, ...){
 #' Default is \eqn{\gamma=1/N}, where N is the number of observations. 
 #'In AntMAN we assume the following 
 #' parametrization of the Gamma density: 
-#' \deqn{p(x\mid a,b )= \frac{b^a x^{a-1}}{\Gamma(a)} \exp\{ -bx \}, \quad x>0  }
+#' \deqn{p(x\mid a,b )= \frac{b^a x^{a-1}}{\Gamma(a)} \exp\{ -bx \}, \quad x>0.}
 #' 
 #'@param a      The shape parameter a of the Gamma prior.
 #'@param b      The rate parameter b of the Gamma prior.

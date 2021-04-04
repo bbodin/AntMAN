@@ -81,7 +81,7 @@ AM_mix_components_prior_dirac <- function(Mstar) {
 #' or assigned appropriate prior distributions. 
 #' In the latter case, we assume \eqn{p \sim Beta(a_P,b_P)} and \eqn{r \sim  Gamma(a_R,b_R)}. In AntMAN we assume the following 
 #' parametrization of the Gamma density: 
-#' \deqn{p(x\mid a,b )= \frac{b^a x^{a-1}}{\Gamma(a)} \exp\{ -bx \}, \quad x>0  }
+#' \deqn{p(x\mid a,b )= \frac{b^a x^{a-1}}{\Gamma(a)} \exp\{ -bx \}, \quad x>0.}
 #' 
 #' 
 #' If no arguments are provided, the default is \eqn{r = 1 , a_P = 1, b_P = 1}.
@@ -148,7 +148,7 @@ AM_mix_components_prior_negbin <- function(a_R = NULL, b_R = NULL, a_P = NULL, b
 #' The hyperparameter \eqn{\Lambda} can either be fixed using \code{Lambda} 
 #' or assigned a \eqn{Gamma(a,b)} prior distribution with \code{a} and \code{b}.
 #' In AntMAN we assume the following parametrization of the Gamma density: 
-#' \deqn{p(x\mid a,b )= \frac{b^a x^{a-1}}{\Gamma(a)} \exp\{ -bx \}, \quad x>0  }
+#' \deqn{p(x\mid a,b )= \frac{b^a x^{a-1}}{\Gamma(a)} \exp\{ -bx \}, \quad x>0.}
 #' 
 #' If no arguments are provided, the default is a prior distribution with \code{a = 1} and \code{b = 1}.
 #'

@@ -9,7 +9,7 @@
 ##### Package Definition
 #################################################################################
 
-#' AntMAN: A package for fitting Finite Bayesian Mixture models with a random number of components.
+#' AntMAN: A package for fitting finite Bayesian Mixture models with a random number of components
 #'
 #'@description AntMAN: Anthology of Mixture ANalysis tools 
 #' AntMan is an R package fitting Finite Bayesian Mixture models with a random number of components. 

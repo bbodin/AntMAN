@@ -16,8 +16,8 @@ NULL
 
 #' plot AM_prior
 #' 
-#''
-#' plot the prior on the number of clusters for a given AM_prior object.
+#'
+#' plot the prior on the number of clusters for a given \code{\link{AM_prior}} object.
 #'  
 #'@param x an \code{\link{AM_prior}} object. See \code{\link{AM_prior_K_Delta}}, \code{\link{AM_prior_K_NegBin}},
 #'			\code{\link{AM_prior_K_Pois}} for more details.
@@ -118,8 +118,8 @@ AM_prior_K_Pois <- function (n,gamma,Lambda) {
 #' There are no default values.
 #'
 #' @param n      The sample size.
-#' @param r      The dispersion parameter \code{r} of Negative Binomial.
-#' @param p      The probability of failure parameter \code{p} of Negative Binomial.
+#' @param r      The dispersion parameter \code{r} of the Negative Binomial.
+#' @param p      The probability of failure parameter \code{p} of the Negative Binomial.
 #' @param gamma  The \code{gamma} parameter of the Dirichlet distribution.
 #'
 #' @return an \code{\link{AM_prior}} object, that is a vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}.
