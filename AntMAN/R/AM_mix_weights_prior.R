@@ -40,12 +40,12 @@ summary.AM_mix_weights_prior = function(object, ...){
 
 
 
-#' Generate a configuration object to specify a prior on the hyper-parameter \eqn{\gamma} for the Dirichlet prior on the 
-#' mixture weights. 
+#' specify a prior on the hyperparameter \eqn{\gamma} for the Dirichlet prior for the mixture weights 
+#'
 #' 
-#' Generate a configuration object to specify a prior on the hyper-parameter \eqn{\gamma} for the Dirichlet prior on the 
+#' Generate a configuration object to specify a prior on the hyperparameter \eqn{\gamma} for the Dirichlet prior on the 
 #' mixture weights. 
-#' We assume \eqn{\gamma \sim  Gamma(a,b)}. Alternatively we can fix \eqn{\gamma} to a specific value.
+#' We assume \eqn{\gamma \sim  Gamma(a,b)}. Alternatively, we can fix \eqn{\gamma} to a specific value.
 #' Default is \eqn{\gamma=1/N}, where N is the number of observations. 
 #'In AntMAN we assume the following 
 #' parametrization of the Gamma density: 

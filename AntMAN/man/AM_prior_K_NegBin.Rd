@@ -16,7 +16,7 @@ AM_prior_K_NegBin(n, gamma, r, p)
 \item{p}{The probability of failure parameter \code{p} of Negative Binomial.}
 }
 \value{
-AM_prior object, that is a vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}
+an \code{\link{AM_prior}} object, that is a vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}
 }
 \description{
 This function computes the prior on the number of clusters, i.e. occupied component of the mixture for a Finite Dirichlet process when the

@@ -19,7 +19,8 @@ AM_mix_hyperparams_multinorm(mu0 = NULL, ka0 = NULL, nu0 = NULL, Lam0 = NULL)
 A list to be used as \code{\link{AM_mix_kernel_hyperparams}} argument for \code{\link{AM_mcmc_fit}}.
 }
 \description{
-This function allows the user to specify the hyperparameters for the conjugate prior for a mixture of Multivariate Normals. We assume that the data are d-dimensional vectors \eqn{\boldsymbol{y}_i}, where \eqn{\boldsymbol{y}_i} are i.i.d
+Generate a configuration object that specifies a multivariate Normal mixture kernel, where users can specify the hyperparameters for the conjugate prior for a mixture of
+multivariate Normals. We assume that the data are d-dimensional vectors \eqn{\boldsymbol{y}_i}, where \eqn{\boldsymbol{y}_i} are i.i.d
 Normal random variables with mean \eqn{\boldsymbol{\mu}} and covariance matrix \eqn{\boldsymbol{\Sigma}}.
 The conjugate prior is
 \deqn{\pi(\boldsymbol \mu, \boldsymbol \Sigma\mid\boldsymbol m_0,\kappa_0,\nu_0,\boldsymbol \Lambda_0)= 

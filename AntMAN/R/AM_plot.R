@@ -126,6 +126,7 @@ AM_plot_pmf=function(x,tags = NULL,title = "MCMC Results"){
 #' 
 #'
 #' Given an \code{\link{AM_mcmc_output}} object, \code{\link{AM_plot_traces}} visualises the traceplots of the specified variables involved in the MCMC inference. 
+#' AM_plot_traces is built upon bayesplot's mcmc_trace.
 #'  
 #'@param x An \code{\link{AM_mcmc_output fit object, produced by calling \code{\link{AM_mcmc_fit}}.
 #'@param tags A list of variables to consider. This function only produces meaningful plots for variables that have fixed dimension across the draws. If not specified, plots pertaining to M and K will be produced. 
@@ -218,7 +219,9 @@ AM_plot_similarity_matrix=function(x, ...){
 #'  
 #'  
 #'
-#' Given an \code{\link{AM_mcmc_output}} object, this function produces the autocorrelation function bars describing the MCMC results.
+#' Given an \code{\link{AM_mcmc_output}} object, this function produces the autocorrelation function bars describing the MCMC results. AM_plot_chaincor makes use of bayesplot’s 
+#' plotting function mcmc_acf_bar.
+
 #'  
 #'@param x An \code{\link{AM_mcmc_output} object, produced by calling \code{\link{AM_mcmc_fit}}.
 #'@param tags A list of variables to consider. This function only produces meaningful plots for variables that have fixed dimension across the draws. If not specified, plots pertaining to M and K will be produced. 

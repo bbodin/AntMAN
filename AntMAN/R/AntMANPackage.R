@@ -12,7 +12,7 @@
 #' AntMAN: A package for fitting Finite Bayesian Mixture models with a random number of components.
 #'
 #'@description AntMAN: Anthology of Mixture ANalysis tools 
-#' AntMan is an R package to fit Finite Bayesian Mixture models with a random number of components. 
+#' AntMan is an R package fitting Finite Bayesian Mixture models with a random number of components. 
 #' The MCMC algorithm behind AntMAN is based on point processes and offers a more computationally  
 #' efficient alternative to the Reversible Jump. 
 #' Different mixture kernels can be specified: univariate Gaussian, multivariate Gaussian, univariate Poisson,  

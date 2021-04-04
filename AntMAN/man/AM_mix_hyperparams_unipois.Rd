@@ -15,8 +15,8 @@ AM_mix_hyperparams_unipois(alpha0, beta0)
 A list to be used as \code{\link{mix_kernel_hyperparams}} argument for \code{\link{AM_mcmc_fit}}.
 }
 \description{
-Generate a configuration object that specifies a univariate Poisson mixture kernel and allows to
-specify the hyperparameters of the  conjugate Gamma prior, i.e. the kernel is a \eqn{Poisson(\tau) }
+Generate a configuration object that specifies a univariate Poisson mixture kernel, where users can
+specify the hyperparameters of the conjugate Gamma prior, i.e. the kernel is a \eqn{Poisson(\tau) }
 and \eqn{\tau\sim Gamma(\alpha_0,\beta_0)}.
 In AntMAN we assume the following
 parametrization of the Gamma density:
