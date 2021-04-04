@@ -290,7 +290,7 @@ AM_mcmc_fit <- function(
 #'@param fit previous output from \code{\link{AM_mcmc_fit}} that is used to setup kernel and priors.
 #'@param fixed_clustering is a vector CI of cluster assignment that will remain unchanged for every iterations.
 #'@param mcmc_parameters is a configuration list defined by \code{\link{AM_mcmc_parameters}}. 
-#'@return The return value is a \code{\link{AM_mcmc_output}} object.
+#'@return The return value is an \code{\link{AM_mcmc_output}} object.
 #'@examples
 #' y = AM_sample_unipois()$y
 #' fit = AM_mcmc_fit( y , 

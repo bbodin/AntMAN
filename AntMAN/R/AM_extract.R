@@ -158,7 +158,7 @@ extract_target = function(fit, target, iterations = NULL, debug = FALSE){
 
 #'  Extract values within a \code{\link{AM_mcmc_output}} object. 
 #' 
-#'  Given an object produced by \code{\link{AM_mcmc_fit}}, as well as the target variable names, 
+#'  Given an \code{\link{AM_mcmc_output}} object, as well as the target variable names, 
 #'  AM_extract will return a list of the variables of interest.
 #'
 #'  Due to the complexity of AntMAN outputs, \code{\link{AM_mcmc_output}} object can be difficult
