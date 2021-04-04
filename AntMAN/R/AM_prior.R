@@ -44,7 +44,7 @@ plot.AM_prior=function(x,...){
 #'  summary information of the AM_prior object 
 #'  
 #'
-#' Given an \code{\link{AM_prior object}}, this function prints the summary information of the specified prior on the number of clusters. 
+#' Given an \code{\link{AM_prior}} object, this function prints the summary information of the specified prior on the number of clusters. 
 #'  
 #'@param object an \code{\link{AM_prior}} object. See \code{\link{AM_prior_K_Delta}}, \code{\link{AM_prior_K_NegBin}},
 #'			\code{\link{AM_prior_K_Pois}} for more details.
@@ -72,7 +72,7 @@ summary.AM_prior = function(object, ...){
 #'
 #' This function computes the prior on the number of clusters, i.e. occupied components of the mixture for a Finite Dirichlet process when the prior on the component-weights of the mixture is a 
 #' Dirichlet with parameter \code{gamma} (i.e. when unnormalized weights are distributed as Gamma(\eqn{\gamma},1)). This function can be used when the prior on the number of 
-#' components is Shifted Poisson of parameter \code{Lambda}. See Section 9.1.1 of \insertCite{argiento2019infinity}{AntMAN} for more details.
+#' components is Shifted Poisson of parameter \code{Lambda}. See \insertCite{argiento2019infinity}{AntMAN} for more details.
 #' 
 #' There are no default values.
 #'
@@ -80,7 +80,7 @@ summary.AM_prior = function(object, ...){
 #' @param Lambda   The \code{Lambda} parameter of the Poisson.
 #' @param gamma    The \code{gamma} parameter of the Dirichlet distribution. 
 #'
-#' @return AM_prior object, that is a vector of length n, reporting the values of the prior on the number of clusters induced by the prior on \code{M} and \code{w}, i.e. \code{p^*_k} for \code{k=1,...,n}. See \insertCite{argiento2019infinity}{AntMAN} for more details.
+#' @return an \code{\link{AM_prior}} object, that is a vector of length n, reporting the values of the prior on the number of clusters induced by the prior on \code{M} and \code{w}, i.e. \code{p^*_k} for \code{k=1,...,n}. See \insertCite{argiento2019infinity}{AntMAN} for more details.
 #'
 #' @keywords prior number of clusters
 #'
@@ -112,8 +112,8 @@ AM_prior_K_Pois <- function (n,gamma,Lambda) {
 #'
 #' This function computes the prior on the number of clusters, i.e. occupied component of the mixture for a Finite Dirichlet process when the 
 #' prior on the component-weights of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormalized weights are distributed as 
-#' Gamma(\eqn{\gamma},1)). This function can be used when the prior on the number of components is Negative Binomial with parameter \code{r>0} and
-#' \code{0<p<1}, with  mean is mu =1+ r*p/(1-p). See \insertCite{argiento2019infinity}{AntMAN} for more details. 
+#' Gamma(\eqn{\gamma},1)). This function can be used when the prior on the number of components is Negative Binomial with parameter \eqn{r>0} and
+#' \eqn{0<p<1}, with mean \eqn{mu =1+ r*p/(1-p)}. See \insertCite{argiento2019infinity}{AntMAN} for more details. 
 #' 
 #' There are no default values.
 #'
@@ -122,7 +122,7 @@ AM_prior_K_Pois <- function (n,gamma,Lambda) {
 #' @param p      The probability of failure parameter \code{p} of Negative Binomial.
 #' @param gamma  The \code{gamma} parameter of the Dirichlet distribution.
 #'
-#' @return AM_prior object, that is a vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}
+#' @return an \code{\link{AM_prior}} object, that is a vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}
 #'
 #' @keywords prior number of cluster
 #'
@@ -157,14 +157,14 @@ AM_prior_K_NegBin <- function (n,gamma, r, p){
 #'
 #' This function computes the prior on the number of clusters, i.e. occupied components of the mixture for a Finite Dirichlet process 
 #' when the prior on the component-weights of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormalised weights 
-#' are distributed as Gamma(\eqn{\gamma},1)). This function can be used when the number of components is fixed to \code{M^*}, i.e. 
-#' a Dirac prior assigning mass only to \code{M^*} is assumed. See \insertCite{argiento2019infinity}{AntMAN} There are no default values.
+#' are distributed as Gamma(\eqn{\gamma},1)). This function can be used when the number of components is fixed to \eqn{M^*}, i.e. 
+#' a Dirac prior assigning mass only to \eqn{M^*} is assumed. See \insertCite{argiento2019infinity}{AntMAN} There are no default values.
 #'
 #' @param n        The sample size.
 #' @param Mstar    The number of component of the mixture. 
 #' @param gamma    The \code{gamma} parameter of the Dirichlet distribution. 
 #'
-#' @return AM_prior object, that is a vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}
+#' @return an \code{\link{AM_prior}} object, that is a vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}
 #'
 #' @keywords prior number of cluster
 #'

@@ -15,14 +15,12 @@
 #' AntMan is an R package to fit Finite Bayesian Mixture models with a random number of components. 
 #' The MCMC algorithm behind AntMAN is based on point processes and offers a more computationally  
 #' efficient alternative to the Reversible Jump. 
-#' Different mixture kernels can be specified: univariate Gaussian, univariate Poisson, univariate Binomial, multivariate Gaussian, 
-#' Multivariate Bernoulli (Latent Class Analysis). For the parameters characterising the mixture kernel, we specify 
+#' Different mixture kernels can be specified: univariate Gaussian, multivariate Gaussian, univariate Poisson,  
+#' and multivariate Bernoulli (Latent Class Analysis). For the parameters characterising the mixture kernel, we specify 
 #' conjugate priors, with possibly user specified hyper-parameters.   
 #' We allow for different choices on the prior on the number of components: 
 #' Shifted Poisson, Negative Binomial, and Point Masses (i.e. mixtures with fixed number of components).
 #' 
-#'@section Prior functions:
-#' The Prior functions ...
 #' 
 #'@section Package Philosophy:
 #' 

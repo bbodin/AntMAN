@@ -11,7 +11,7 @@
 #' Heuristic partitioning to minimise the expected Binder loss function 
 #' with respect to a given expected adjacency matrix. 
 #'
-#' @param fit an \code{\link{AM_mcmc_fit}} object. 
+#' @param fit an \code{\link{AM_mcmc_output}} object. 
 #' @param maxClusts Maximum number of clusters. 
 #' The actual number of clusters searched may be lower. 
 #' If set to 0L, the maximum is automatically limited by the number of items. 

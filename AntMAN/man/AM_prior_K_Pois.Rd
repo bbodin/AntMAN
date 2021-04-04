@@ -19,7 +19,7 @@ AM_prior object, that is a vector of length n, reporting the values of the prior
 \description{
 This function computes the prior on the number of clusters, i.e. occupied components of the mixture for a Finite Dirichlet process when the prior on the component-weights of the mixture is a
 Dirichlet with parameter \code{gamma} (i.e. when unnormalized weights are distributed as Gamma(\eqn{\gamma},1)). This function can be used when the prior on the number of
-components is Shifted Poisson of parameter \code{Lambda}. See Section 9.1.1 of \insertCite{argiento2019infinity}{AntMAN} for more details.
+components is Shifted Poisson of parameter \code{Lambda}. See \insertCite{argiento2019infinity}{AntMAN} for more details.
 }
 \details{
 There are no default values.

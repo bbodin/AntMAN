@@ -86,8 +86,8 @@ AM_mix_components_prior_dirac <- function(Mstar) {
 #' 
 #' If no arguments are provided, the default is \eqn{r = 1 , a_P = 1, b_P = 1}.
 #' 
-#' Additionally, when init_R and init_P are not specified, there is default values : 
-#' \eqn{init_R = 1} and \eqn{init_P = 0.5}
+#' Additionally, when init_R and init_P are not specified, there are default values: 
+#' \eqn{init_R = 1} and \eqn{init_P = 0.5}.
 #'
 #'@param a_R      The shape parameter \eqn{a}  of the \eqn{Gamma(a,b)} prior distribution for \eqn{r}.
 #'@param b_R      The  rate parameter \eqn{b} of the \eqn{Gamma(a,b)} prior distribution for \eqn{r}.

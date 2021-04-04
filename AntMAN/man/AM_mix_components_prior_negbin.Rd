@@ -47,8 +47,8 @@ parametrization of the Gamma density:
 \details{
 If no arguments are provided, the default is \eqn{r = 1 , a_P = 1, b_P = 1}.
 
-Additionally, when init_R and init_P are not specified, there is default values :
-\eqn{init_R = 1} and \eqn{init_P = 0.5}
+Additionally, when init_R and init_P are not specified, there are default values:
+\eqn{init_R = 1} and \eqn{init_P = 0.5}.
 }
 \examples{
 

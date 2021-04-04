@@ -15,7 +15,7 @@ AM_binder(
 )
 }
 \arguments{
-\item{fit}{an \code{\link{AM_mcmc_fit}} object.}
+\item{fit}{an \code{\link{AM_mcmc_output}} object.}
 
 \item{maxClusts}{Maximum number of clusters.
 The actual number of clusters searched may be lower.

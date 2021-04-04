@@ -7,11 +7,14 @@
 \method{summary}{AM_prior}(object, ...)
 }
 \arguments{
-\item{object}{a \code{\link{AM_prior}} object. See \code{\link{AM_prior_K_Delta}}, \code{\link{AM_prior_K_NegBin}},
+\item{object}{an \code{\link{AM_prior}} object. See \code{\link{AM_prior_K_Delta}}, \code{\link{AM_prior_K_NegBin}},
 \code{\link{AM_prior_K_Pois}} for more details.}
 
 \item{...}{all additional parameters are ignored.}
 }
 \description{
 Given an \code{\link{AM_prior object}}, this function prints the summary information of the specified prior on the number of clusters.
+}
+\seealso{
+\code{\link{AM_prior}}
 }

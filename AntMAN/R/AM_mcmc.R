@@ -25,6 +25,7 @@ NULL
 #'  summary information of the AM_mcmc_configuration object 
 #'  
 #'  
+#'
 #' Given an \code{\link{AM_mcmc_configuration}} object, this function prints the summary information
 #' of the specified mcmc configuration. 
 #'  

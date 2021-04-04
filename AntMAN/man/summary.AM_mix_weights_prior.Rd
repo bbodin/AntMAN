@@ -7,7 +7,7 @@
 \method{summary}{AM_mix_weights_prior}(object, ...)
 }
 \arguments{
-\item{object}{a \code{\link{AM_mix_weights_prior}} object.}
+\item{object}{an \code{\link{AM_mix_weights_prior}} object.}
 
 \item{...}{all additional parameters are ignored.}
 }

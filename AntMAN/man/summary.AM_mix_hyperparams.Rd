@@ -7,11 +7,14 @@
 \method{summary}{AM_mix_hyperparams}(object, ...)
 }
 \arguments{
-\item{object}{a \code{\link{AM_mix_hyperparams}} object.}
+\item{object}{an \code{\link{AM_mix_hyperparams}} object.}
 
 \item{...}{all additional parameters are ignored.}
 }
 \description{
 Given an \code{\link{AM_mix_hyperparams}} object, this function prints the summary information
 of the specified mixture hyperparameters.
+}
+\seealso{
+\code{\link{AM_mix_hyperparams}}
 }

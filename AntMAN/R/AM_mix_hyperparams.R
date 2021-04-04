@@ -44,8 +44,8 @@ summary.AM_mix_hyperparams = function(object, ...){
 
 #'univariate Poisson mixture hyperparameters
 #'
-#' Generate a configuration object that specifies a univariate Poisson mixture kernel and allows to 
-#' specify the hyperparameters of the  conjugate Gamma prior, i.e. the kernel is a \eqn{Poisson(\tau) }
+#' Generate a configuration object that specifies a univariate Poisson mixture kernel, where users can
+#' specify the hyperparameters of the conjugate Gamma prior, i.e. the kernel is a \eqn{Poisson(\tau) }
 #' and \eqn{\tau\sim Gamma(\alpha_0,\beta_0)}. 
 #' In AntMAN we assume the following 
 #' parametrization of the Gamma density: 
@@ -71,8 +71,8 @@ AM_mix_hyperparams_unipois <- function(alpha0, beta0) {
 
 #' univariate Normal mixture hyperparameters
 #' 
-#' Generate a configuration object that specifies univariate Normal mixture kernel and allows to set the hyperparameters of the Normal-InverseGamma conjugate prior. As such, the kernel is a Gaussian dsistribution 
-#' with mean \eqn{\mu} and variance \eqn{\sigma^2}. The prior on \eqn{(\mu,\sigma^2)} the Normal-InverseGamma:
+#' Generate a configuration object that specifies a univariate Normal mixture kernel, where users can specify the hyperparameters of the Normal-InverseGamma conjugate prior. 
+#' As such, the kernel is a Gaussian distribution with mean \eqn{\mu} and variance \eqn{\sigma^2}. The prior on \eqn{(\mu,\sigma^2)} the Normal-InverseGamma:
 #' \deqn{\pi(\mu,\sigma^2\mid m_0,\kappa_0,\nu_0,\sigma^2_0) = \pi_{\mu}(\mu|\sigma^2,m_0,\kappa_0)\pi_{\sigma^2}(\sigma^2\mid \nu_0,\sigma^2_0)}
 #'  \deqn{\pi_{\mu}(\mu|\sigma^2,m_0,\kappa_0)  =\frac{\sqrt{\kappa_0}}{\sqrt{2\pi\sigma^2}} 
 #'  \exp^{-\frac{\kappa_0}{2\sigma^2}(\mu-m_0)^2 }, \qquad \mu\in\mathcal{R}}
@@ -127,6 +127,7 @@ AM_mix_hyperparams_uninorm <- function(m0, k0, nu0, sig02) {
 
 #' multivariate Bernoulli mixture hyperparameters (Latent Class analysis)
 #' 
+#'
 #' Generate a configuration object that defines the prior hyperparameters for a mixture of multivariate Bernoulli.
 #' If the dimension of the data is P, then the prior is a product of P independent Beta distributions, Beta(\eqn{a_{0i},b_{0i}}). Therefore,
 #' the vectors of hyperparameters, a0 and b0,  are P-dimensional. Default is (a0= c(1,....,1),b0= c(1,....,1))
@@ -152,7 +153,8 @@ AM_mix_hyperparams_multiber <- function(a0, b0) {
 #' multivariate Normal mixture hyperparameters
 #' 
 #' 
-#' This function allows the user to specify the hyperparameters for the conjugate prior for a mixture of Multivariate Normals. We assume that the data are d-dimensional vectors \eqn{\boldsymbol{y}_i}, where \eqn{\boldsymbol{y}_i} are i.i.d 
+#' Generate a configuration object that specifies a multivariate Normal mixture kernel, where users can specify the hyperparameters for the conjugate prior for a mixture of 
+#' multivariate Normals. We assume that the data are d-dimensional vectors \eqn{\boldsymbol{y}_i}, where \eqn{\boldsymbol{y}_i} are i.i.d 
 #' Normal random variables with mean \eqn{\boldsymbol{\mu}} and covariance matrix \eqn{\boldsymbol{\Sigma}}.
 #' The conjugate prior is 
 #' \deqn{\pi(\boldsymbol \mu, \boldsymbol \Sigma\mid\boldsymbol m_0,\kappa_0,\nu_0,\boldsymbol \Lambda_0)= 

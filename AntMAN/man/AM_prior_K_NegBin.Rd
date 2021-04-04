@@ -21,8 +21,8 @@ AM_prior object, that is a vector of length n, reporting the values \code{V(n,k)
 \description{
 This function computes the prior on the number of clusters, i.e. occupied component of the mixture for a Finite Dirichlet process when the
 prior on the component-weights of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormalized weights are distributed as
-Gamma(\eqn{\gamma},1)). This function can be used when the prior on the number of components is Negative Binomial with parameter \code{r>0} and
-\code{0<p<1}, with  mean is mu =1+ r*p/(1-p). See \insertCite{argiento2019infinity}{AntMAN} for more details.
+Gamma(\eqn{\gamma},1)). This function can be used when the prior on the number of components is Negative Binomial with parameter \eqn{r>0} and
+\eqn{0<p<1}, with mean \eqn{mu =1+ r*p/(1-p)}. See \insertCite{argiento2019infinity}{AntMAN} for more details.
 }
 \details{
 There are no default values.
