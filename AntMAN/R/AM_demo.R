@@ -15,9 +15,9 @@
 #'  
 #' @return A list containing the following items:
 #' \itemize{
-#' \item the vector (or matrix) containing the synthetic data used to fit the model
-#' \item the vector containing the final cluster assignment of each observation
-#' \item an \code{\link{AM_mcmc_output}} object, which is the typical output of \code{\link{AM_mcmc_fit}}
+#' \item the vector (or matrix) containing the synthetic data used to fit the model.
+#' \item the vector containing the final cluster assignment of each observation.
+#' \item an \code{\link{AM_mcmc_output}} object, which is the typical output of \code{\link{AM_mcmc_fit}}.
 #' }
 #'
 #' @keywords demo
@@ -68,9 +68,9 @@ AM_demo_mvb_poi = function () {
 #'  
 #' @return A list containing the following items:
 #' \itemize{
-#' \item the vector (or matrix) containing the synthetic data used to fit the model
-#' \item the vector containing the final cluster assignment of each observation
-#' \item an \code{\link{AM_mcmc_output}} object, which is the typical output of \code{\link{AM_mcmc_fit}}
+#' \item the vector (or matrix) containing the synthetic data used to fit the model.
+#' \item the vector containing the final cluster assignment of each observation.
+#' \item an \code{\link{AM_mcmc_output}} object, which is the typical output of \code{\link{AM_mcmc_fit}}.
 #' }
 #'
 #' @keywords demo
@@ -144,9 +144,9 @@ AM_demo_mvn_poi = function () {
 #'  
 #' @return A list containing the following items:
 #' \itemize{
-#' \item the vector (or matrix) containing the synthetic data used to fit the model
-#' \item the vector containing the final cluster assignment of each observation
-#' \item an \code{\link{AM_mcmc_output}} object, which is the typical output of \code{\link{AM_mcmc_fit}}
+#' \item the vector (or matrix) containing the synthetic data used to fit the model.
+#' \item the vector containing the final cluster assignment of each observation.
+#' \item an \code{\link{AM_mcmc_output}} object, which is the typical output of \code{\link{AM_mcmc_fit}}.
 #' }
 #'
 #' @keywords demo
@@ -197,9 +197,9 @@ AM_demo_uvn_poi = function () {
 #'  
 #' @return A list containing the following items:
 #' \itemize{
-#' \item the vector (or matrix) containing the synthetic data used to fit the model
-#' \item the vector containing the final cluster assignment of each observation
-#' \item an \code{\link{AM_mcmc_output}} object, which is the typical output of \code{\link{AM_mcmc_fit}}
+#' \item the vector (or matrix) containing the synthetic data used to fit the model.
+#' \item the vector containing the final cluster assignment of each observation.
+#' \item an \code{\link{AM_mcmc_output}} object, which is the typical output of \code{\link{AM_mcmc_fit}}.
 #' }
 #'
 #' @keywords demo

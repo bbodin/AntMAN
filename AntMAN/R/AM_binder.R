@@ -34,12 +34,12 @@
 #' (in which case \code{batchSize} cannot be 0L).
 #' @return A list containing the following items:
 #' \itemize{
-#' \item \code{Labels} - the vector of partition labels
-#' \item \code{BinderLoss} - the associated binder loss function
-#' \item \code{NumClusts} - the number of clusters found
-#' \item \code{NumPermutations} - the number of permutations actually scanned
-#' \item \code{WallClockTime} - cumulative wall-clock time used by all threads in milliseconds
-#' \item \code{TimeLimitReached} - whether the computation time limit was reached in any of the threads
+#' \item \code{Labels} - the vector of partition labels.
+#' \item \code{BinderLoss} - the associated binder loss function.
+#' \item \code{NumClusts} - the number of clusters found.
+#' \item \code{NumPermutations} - the number of permutations actually scanned.
+#' \item \code{WallClockTime} - cumulative wall-clock time used by all threads in milliseconds.
+#' \item \code{TimeLimitReached} - whether the computation time limit was reached in any of the threads.
 #' \item \code{NumThreads} - actual number of threads used.
 #' }
 #'@export
