@@ -9,7 +9,7 @@
 #'  Return the co-clustering matrix
 #'  
 #'
-#'  Given an MCMC output produced by \code{\link{AM_mcmc_fit}}, this function returns the co-clustering matrix. 
+#'  Given an \code{\link{AM_mcmc_output}} object, this function returns the co-clustering matrix. 
 #'
 #'  The co-clustering matrix is produced by the simultaneous clustering of the rows and columns. Each entry denotes the (posterior) probability 
 #' that items \eqn{i} and \eqn{j} are together.  This technique is also known as

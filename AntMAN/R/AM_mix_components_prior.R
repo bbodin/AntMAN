@@ -15,14 +15,17 @@
 NULL
 
 
-#'  summary AM_mix_components_prior 
+#'  summary information of the AM_mix_components_prior object
 #'  
-#'  Print infos on AM_mix_components_prior Object
+#'
+#' Given an \code{\link{AM_mix_components_prior}} object, this function prints the summary information
+#' of the specified prior on the number of components. 
 #'  
-#'@param object a \code{\link{AM_mix_components_prior}} object
-#'@param ... all additional parameters are ignored
+#'@param object a \code{\link{AM_mix_components_prior}} object.
+#'@param ... all additional parameters are ignored.
 #'  
 #'@importFrom utils head
+#'@seealso \code{\link{AM_mix_components_prior}}
 #'@method summary AM_mix_components_prior 
 #'@export
 summary.AM_mix_components_prior = function(object, ...){
@@ -162,7 +165,6 @@ AM_mix_components_prior_negbin <- function(a_R = NULL, b_R = NULL, a_P = NULL, b
 #' 
 #'@examples
 #' 
-#' See \code{\link{AM_mix_hyperparams_uninorm}} example.
 #' components_prior = AM_mix_components_prior_pois (init=3,  a=1, b=1) 
 #' 
 

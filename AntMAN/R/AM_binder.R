@@ -153,5 +153,5 @@ is.finiteInteger <- function(x) {
 
 is.nonNegNumberLessThan1 <- function(x) {
     return (is.numeric(x) & is.finite(x) & x <= 1 & x >= 0)
-}
+	}
 

@@ -22,15 +22,18 @@ NULL
 ##### AM_mcmc_configuration function
 #################################################################################
 
-#'  summary AM_mcmc_configuration 
+#'  summary information of the AM_mcmc_configuration object 
 #'  
-#'  Print infos on AM_mcmc_configuration Object
 #'  
-#'@param object a \code{\link{AM_mcmc_configuration}} object
-#'@param ... all additionnal parameters are ignored
+#' Given an \code{\link{AM_mcmc_configuration}} object, this function prints the summary information
+#' of the specified mcmc configuration. 
+#'  
+#'@param object an \code{\link{AM_mcmc_configuration}} object. 
+#'@param ... all additional parameters are ignored
 #'  
 #'  
 #'@method summary AM_mcmc_configuration 
+#'@seealso \code{\link{AM_mcmc_parameters}}
 #'@export
 summary.AM_mcmc_configuration = function(object, ...){
 	cat("\n", "AM_mcmc_configuration\n", sep = "")	
@@ -83,15 +86,18 @@ list_values = function (x) {
 	return (paste(arguments, collapse=", "));
 }
 
-#'  summary AM_mcmc_output 
+#'  summary information of the AM_mcmc_output object 
 #'  
-#'  Print some useful informations about the mcmc results
+#'
+#' Given an \code{\link{AM_mcmc_output}} object, this function prints the summary information
+#' pertaining to the given model output. 
 #'  
 #'@param object a \code{\link{AM_mcmc_output}} object
-#'@param ... all additionnal parameters are ignored
+#'@param ... all additional parameters are ignored
 #'  
 #'  
 #'@method summary AM_mcmc_output 
+#'@seealso \code{\link{AM_mcmc_fit}}, \code{\link{AM_mcmc_refit}}
 #'@export
 summary.AM_mcmc_output=function(object,...){
 	cat("\n","Fitted model:","\n");
@@ -214,7 +220,7 @@ AM_reshape <- function(fit, y){
 #'@param fixed_clustering if specified, this is the vector CI containing the cluster assignments. This will remain unchanged for every iteration.
 #'@param init_K initial value for  the number of cluster. When this is specified, AntMAN intitialises the clustering assign usng K-means.
 #'@param mix_components_prior is a configuration list defined by AM_mix_components_prior_* functions, where * denotes the chosen prior. See \code{\link{AM_mix_hyperparams_uninorm}}, 
-#' \code{\link{AM_mix_hyperparams_unipois}},  \code{\link{AM_mix_hyperparams_multinorm}}, and \code{\link{AM_mix_hyperparams_multiber}} for more details.
+#' \code{\link{AM_mix_hyperparams_unipois}}, \code{\link{AM_mix_hyperparams_multinorm}}, and \code{\link{AM_mix_hyperparams_multiber}} for more details.
 #'@param mix_weight_prior is a configuration list defined by AM_weight_prior_* functions, where * denotes the chosen prior specification.
 #'@param mcmc_parameters is a configuration list defined by AM_mcmc_parameters. See \code{\link{AM_mcmc_parameters}} for more details.
 #'@return The return value is a \code{\link{AM_mcmc_output}} object.

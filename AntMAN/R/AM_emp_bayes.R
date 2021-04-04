@@ -13,9 +13,11 @@
 #' \emph{Bayes and empirical Bayes: do they merge?} \insertCite{petrone2012bayes}{AntMAN}.
 #'
 #'@param y The data y. If y is univariate, a vector is expected. Otherwise, y should be a matrix.
-#'@param scEmu a positive value (default=1) such that marginally E(mu)=(sample variance)*scEmu
-#'@param scEsig2 a positive value (default=3) such that marginally E(sig2)=(sample variance)*scEsig2
-#'@param CVsig2 The coefficient of variation of sig2 (default=3)
+#'@param scEmu a positive value (default=1) such that marginally \eqn{\mathbb{E}(\mu) = s^2*scEmu}, where \eqn{s^2} is the
+#'sample variance.
+#'@param scEsig2 a positive value (default=3) such that marginally \eqn{\mathbb{E}(\sig^2) = s^2*scEsig2}, where \eqn{s^2} is the
+#'sample variance.
+#'@param CVsig2 The coefficient of variation of \eqn{\sig^2} (default=3).
 #'  }
 #'@return an object of class \code{\link{AM_mix_hyperparams}}, in which hyperparameters \code{m0}, \code{k0},
 #' \code{nu0} and \code{sig02} are specified. To understand the usage of these hyperparameters, please refer to

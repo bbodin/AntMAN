@@ -21,7 +21,7 @@ NULL
 #'  
 #'@param x an AM_prior object. See \code{\link{AM_prior_K_Delta}}, \code{\link{AM_prior_K_NegBin}},
 #'			\code{\link{AM_prior_K_Pois}} for more details.
-#'@param ... all additionnal parameters are ignored
+#'@param ... all additionnal parameters are ignored.
 #'  
 #'@method plot AM_prior 
 #'@importFrom graphics image
@@ -41,13 +41,14 @@ plot.AM_prior=function(x,...){
 	#legend(x="topright",legend=c("INFORMATION"),col=c(1,2,3),lty=1,lwd=2,cex=1.5)
 }
 
-#'  summary AM_prior 
+#'  summary information of the AM_prior object 
 #'  
-#'  Print summary information on an AM_prior object.
+#'
+#' Given an AM_prior object, this function prints the summary information of the specified prior on the number of clusters. 
 #'  
 #'@param object a \code{\link{AM_prior}} object. See \code{\link{AM_prior_K_Delta}}, \code{\link{AM_prior_K_NegBin}},
 #'			\code{\link{AM_prior_K_Pois}} for more details.
-#'@param ... all additionnal parameters are ignored
+#'@param ... all additional parameters are ignored.
 #'  
 #'  
 #'@method summary AM_prior 
@@ -74,9 +75,9 @@ summary.AM_prior = function(object, ...){
 #' 
 #' There are no default values.
 #'
-#' @param n        The sample size
-#' @param Lambda   The \code{Lambda} parameter of the Poisson
-#' @param gamma    The \code{gamma} parameter of the Dirichlet 
+#' @param n        The sample size.
+#' @param Lambda   The \code{Lambda} parameter of the Poisson.
+#' @param gamma    The \code{gamma} parameter of the Dirichlet distribution. 
 #'
 #' @return AM_prior object, that is a vector of length n, reporting the values of the prior on the number of clusters induced by the prior on \code{M} and \code{w}, i.e. \code{p^*_k} for \code{k=1,...,n}. See \insertCite{argiento2019infinity}{AntMAN} for more details.
 #'
@@ -115,10 +116,10 @@ AM_prior_K_Pois <- function (n,gamma,Lambda) {
 #' 
 #' There are no default values.
 #'
-#' @param n      The sample size
-#' @param r      The dispersion parameter \code{r} of Negative Binomial
-#' @param p      The probability of failure parameter \code{p} of Negative Binomial
-#' @param gamma  The \code{gamma} parameter of the Dirichlet 
+#' @param n      The sample size.
+#' @param r      The dispersion parameter \code{r} of Negative Binomial.
+#' @param p      The probability of failure parameter \code{p} of Negative Binomial.
+#' @param gamma  The \code{gamma} parameter of the Dirichlet distribution.
 #'
 #' @return AM_prior object, that is a vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}
 #'
@@ -158,9 +159,9 @@ AM_prior_K_NegBin <- function (n,gamma, r, p){
 #' are distributed as Gamma(\eqn{\gamma},1)). This function can be used when the number of components is fixed to \code{M^*}, i.e. 
 #' a Dirac prior assigning mass only to \code{M^*} is assumed. See \insertCite{argiento2019infinity}{AntMAN} There are no default values.
 #'
-#' @param n        The sample size
-#' @param Mstar    The number of component of the mixture 
-#' @param gamma    The \code{gamma} parameter of the Dirichlet 
+#' @param n        The sample size.
+#' @param Mstar    The number of component of the mixture. 
+#' @param gamma    The \code{gamma} parameter of the Dirichlet distribution. 
 #'
 #' @return AM_prior object, that is a vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}
 #'
