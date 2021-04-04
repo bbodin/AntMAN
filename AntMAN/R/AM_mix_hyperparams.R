@@ -51,7 +51,7 @@ summary.AM_mix_hyperparams = function(object, ...){
 #' parametrization of the Gamma density: 
 #' \deqn{p(x\mid a,b )= \frac{b^a x^{a-1}}{\Gamma(a)} \exp\{ -bx \}, \quad x>0  }
 #'
-#' Note, by default alpha0=1 and beta0=1.
+#' Note that by default, alpha0=1 and beta0=1.
 #'
 #'
 #'
@@ -80,10 +80,10 @@ AM_mix_hyperparams_unipois <- function(alpha0, beta0) {
 #' 
 #' 
 #' 
-#' where \eqn{m_0} corresponds \code{m0}, 
-#'       \eqn{\kappa_0} corresponds \code{k0}, 
-#'       \eqn{\nu_0} corresponds \code{nu0}, 
-#'       \eqn{\sigma^2_0} corresponds \code{sig02}. 
+#'  \eqn{m_0} corresponds \code{m0}, 
+#'  \eqn{\kappa_0} corresponds \code{k0}, 
+#'  \eqn{\nu_0} corresponds \code{nu0}, and 
+#'  \eqn{\sigma^2_0} corresponds \code{sig02}. 
 #' 
 #'If hyperparameters are not specified, the default is \code{m0=0}, \code{k0=1}, \code{nu0=3}, \code{sig02=1}.
 #'
@@ -153,8 +153,8 @@ AM_mix_hyperparams_multiber <- function(a0, b0) {
 #' multivariate Normal mixture hyperparameters
 #' 
 #' 
-#' Generate a configuration object that specifies a multivariate Normal mixture kernel, where users can specify the hyperparameters for the conjugate prior for a mixture of 
-#' multivariate Normals. We assume that the data are d-dimensional vectors \eqn{\boldsymbol{y}_i}, where \eqn{\boldsymbol{y}_i} are i.i.d 
+#' Generate a configuration object that specifies a multivariate Normal mixture kernel, where users can specify the hyperparameters for the conjugate prior of the multivariate 
+#' Normal mixture. We assume that the data are d-dimensional vectors \eqn{\boldsymbol{y}_i}, where \eqn{\boldsymbol{y}_i} are i.i.d 
 #' Normal random variables with mean \eqn{\boldsymbol{\mu}} and covariance matrix \eqn{\boldsymbol{\Sigma}}.
 #' The conjugate prior is 
 #' \deqn{\pi(\boldsymbol \mu, \boldsymbol \Sigma\mid\boldsymbol m_0,\kappa_0,\nu_0,\boldsymbol \Lambda_0)= 

@@ -40,7 +40,7 @@ summary.AM_mix_weights_prior = function(object, ...){
 
 
 
-#' specify a prior on the hyperparameter \eqn{\gamma} for the Dirichlet prior for the mixture weights 
+#' specify a prior on the hyperparameter \eqn{\gamma} for the Dirichlet mixture weights prior 
 #'
 #' 
 #' Generate a configuration object to specify a prior on the hyperparameter \eqn{\gamma} for the Dirichlet prior on the 

@@ -43,7 +43,7 @@ summary.AM_mix_components_prior = function(object, ...){
 #################################################################################
 
 
-#' Generate a configuration object that contains a Point mass prior.
+#' Generate a configuration object that contains a Point mass prior
 #' 
 #' Generate a configuration object that assigns a Point mass prior to the number of mixture components.
 #' This is the simplest option and it requires users to specify a value \eqn{M^*} 
@@ -72,12 +72,12 @@ AM_mix_components_prior_dirac <- function(Mstar) {
 
 
 
-#' Generate a configuration object for a Shifted Negative Binomial prior on the number of mixture components.
+#' Generate a configuration object for a Shifted Negative Binomial prior on the number of mixture components
 #'
 #' 
 #' This generates a configuration object for a Shifted Negative Binomial prior on the number of mixture components such that 
 #'  \deqn{q_M(m)=Pr(M=m) =\frac{\Gamma(r+m-1)}{(m-1)!\Gamma(r)} p^{m-1}(1-p)^r, \quad m=1,2,3,\ldots}
-#' The hyper-parameters \eqn{p\in (0,1)}  (probability of success) and \eqn{r>0} (size) can either be fixed using \code{r} and \code{p}
+#' The hyperparameters \eqn{p\in (0,1)}  (probability of success) and \eqn{r>0} (size) can either be fixed using \code{r} and \code{p}
 #' or assigned appropriate prior distributions. 
 #' In the latter case, we assume \eqn{p \sim Beta(a_P,b_P)} and \eqn{r \sim  Gamma(a_R,b_R)}. In AntMAN we assume the following 
 #' parametrization of the Gamma density: 
@@ -139,13 +139,13 @@ AM_mix_components_prior_negbin <- function(a_R = NULL, b_R = NULL, a_P = NULL, b
 
 
 
-#' Generate a configuration object for a Poisson prior on the number of mixture components.
+#' Generate a configuration object for a Poisson prior on the number of mixture components
 #' 
 #'
 #' This function generates a configuration object for a Shifted Poisson prior on the number 
 #' of mixture components such that  
 #' \deqn{q_M(m)=     Pr (M=m)= \frac{e^{-\Lambda}\Lambda^{m-1} }{(m-1)!}    ,      \quad m=1,2,3,\ldots}
-#' The hyper-parameter \eqn{\Lambda} can either be fixed using \code{Lambda} 
+#' The hyperparameter \eqn{\Lambda} can either be fixed using \code{Lambda} 
 #' or assigned a \eqn{Gamma(a,b)} prior distribution with \code{a} and \code{b}.
 #' In AntMAN we assume the following parametrization of the Gamma density: 
 #' \deqn{p(x\mid a,b )= \frac{b^a x^{a-1}}{\Gamma(a)} \exp\{ -bx \}, \quad x>0  }
@@ -155,7 +155,7 @@ AM_mix_components_prior_negbin <- function(a_R = NULL, b_R = NULL, a_P = NULL, b
 #'@param a      The shape parameter \code{a} of  the \eqn{Gamma(a,b)} prior distribution.
 #'@param b      The rate  parameter \code{b} of the \eqn{Gamma(a,b)} prior distribution.
 #'@param init   The  initial value for \eqn{\Lambda}, when specifying \code{a} and \code{b}.
-#'@param Lambda It allows to set the  hyper-parameter \eqn{\Lambda} to be assigned a fixed value.
+#'@param Lambda It allows to set the  hyperparameter \eqn{\Lambda} to be assigned a fixed value.
 #'
 #'@return A configuration list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_fit}}. 
 #'
