@@ -2,19 +2,19 @@
 % Please edit documentation in R/AM_mix_components_prior.R
 \name{summary.AM_mix_components_prior}
 \alias{summary.AM_mix_components_prior}
-\title{summary AM_mix_components_prior
-
-Print infos on AM_mix_components_prior Object}
+\title{summary information of the AM_mix_components_prior object}
 \usage{
 \method{summary}{AM_mix_components_prior}(object, ...)
 }
 \arguments{
-\item{object}{a \code{\link{AM_mix_components_prior}} object}
+\item{object}{a \code{\link{AM_mix_components_prior}} object.}
 
-\item{...}{all additional parameters are ignored}
+\item{...}{all additional parameters are ignored.}
 }
 \description{
-summary AM_mix_components_prior
-
-Print infos on AM_mix_components_prior Object
+Given an \code{\link{AM_mix_components_prior}} object, this function prints the summary information
+of the specified prior on the number of components.
+}
+\seealso{
+\code{\link{AM_mix_components_prior}}
 }

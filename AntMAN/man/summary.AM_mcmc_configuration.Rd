@@ -2,19 +2,24 @@
 % Please edit documentation in R/AM_mcmc.R
 \name{summary.AM_mcmc_configuration}
 \alias{summary.AM_mcmc_configuration}
-\title{summary AM_mcmc_configuration
+\title{summary information of the AM_mcmc_configuration object
 
-Print infos on AM_mcmc_configuration Object}
+Given an \code{\link{AM_mcmc_configuration}} object, this function prints the summary information
+of the specified mcmc configuration.}
 \usage{
 \method{summary}{AM_mcmc_configuration}(object, ...)
 }
 \arguments{
-\item{object}{a \code{\link{AM_mcmc_configuration}} object}
+\item{object}{an \code{\link{AM_mcmc_configuration}} object.}
 
-\item{...}{all additionnal parameters are ignored}
+\item{...}{all additional parameters are ignored}
 }
 \description{
-summary AM_mcmc_configuration
+summary information of the AM_mcmc_configuration object
 
-Print infos on AM_mcmc_configuration Object
+Given an \code{\link{AM_mcmc_configuration}} object, this function prints the summary information
+of the specified mcmc configuration.
+}
+\seealso{
+\code{\link{AM_mcmc_parameters}}
 }

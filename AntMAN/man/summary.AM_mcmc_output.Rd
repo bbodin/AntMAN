@@ -2,19 +2,19 @@
 % Please edit documentation in R/AM_mcmc.R
 \name{summary.AM_mcmc_output}
 \alias{summary.AM_mcmc_output}
-\title{summary AM_mcmc_output
-
-Print some useful informations about the mcmc results}
+\title{summary information of the AM_mcmc_output object}
 \usage{
 \method{summary}{AM_mcmc_output}(object, ...)
 }
 \arguments{
 \item{object}{a \code{\link{AM_mcmc_output}} object}
 
-\item{...}{all additionnal parameters are ignored}
+\item{...}{all additional parameters are ignored}
 }
 \description{
-summary AM_mcmc_output
-
-Print some useful informations about the mcmc results
+Given an \code{\link{AM_mcmc_output}} object, this function prints the summary information
+pertaining to the given model output.
+}
+\seealso{
+\code{\link{AM_mcmc_fit}}, \code{\link{AM_mcmc_refit}}
 }

@@ -7,11 +7,11 @@
 AM_prior_K_Delta(n, gamma, Mstar)
 }
 \arguments{
-\item{n}{The sample size}
+\item{n}{The sample size.}
 
-\item{gamma}{The \code{gamma} parameter of the Dirichlet}
+\item{gamma}{The \code{gamma} parameter of the Dirichlet distribution.}
 
-\item{Mstar}{The number of component of the mixture}
+\item{Mstar}{The number of component of the mixture.}
 }
 \value{
 AM_prior object, that is a vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}

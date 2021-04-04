@@ -23,7 +23,7 @@ If set to 0L, the maximum is automatically limited by the number of items.}
 
 \item{Const_Binder}{Relative penalty in the Binder loss function
 for false-positives vis-a-vis false-negatives.
-Must be a real number in the interval \link{0, 1}.}
+Must be a real number in the interval [0, 1].}
 
 \item{batchSize}{Number of permutations scanned per thread.
 If set to 0L, the thread will continue to scan permutations until it times out

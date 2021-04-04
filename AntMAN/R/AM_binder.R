@@ -17,7 +17,7 @@
 #' If set to 0L, the maximum is automatically limited by the number of items. 
 #' @param Const_Binder Relative penalty in the Binder loss function 
 #' for false-positives vis-a-vis false-negatives. 
-#' Must be a real number in the interval [0, 1]. 
+#' Must be a real number in the interval \[0, 1\]. 
 #' @param batchSize Number of permutations scanned per thread. 
 #' If set to 0L, the thread will continue to scan permutations until it times out 
 #' (in which case \code{timeLimit} cannot be 0L).
@@ -95,7 +95,7 @@ AM_binder <- function(fit, maxClusts=0L, Const_Binder = 0.5, batchSize = 1000L, 
 #' @param labels vector of partition labels. Must be integers. 
 #' @param Const_Binder Relative penalty in the Binder loss function 
 #' for false-positives vis-a-vis false-negatives. 
-#' Must be a real number in the interval [0, 1]. 
+#' Must be a real number in the interval \[0, 1\]. 
 #' @return The value of the Binder loss function of the given partition labels
 #' with respect to the given pairwise allocation matrix. 
 #'@export 
@@ -119,11 +119,11 @@ AM_compute_binder_loss <- function(eam, labels, Const_Binder = 0.5){
 #' 
 #' Compute the binder loss function of a partitioning
 #' with respect to the adjacency matrix of another partitioning.
-#' @param testLabels The vector of integer labels of the partitioning
-#' @param refLabels The vector of partition labels to use to construct the adjacency matrix
+#' @param testLabels The vector of integer labels of the partitioning.
+#' @param refLabels The vector of partition labels to use to construct the adjacency matrix.
 #' @param Const_Binder Relative penalty in the Binder loss function 
 #' for false-positives vis-a-vis false-negatives. 
-#' Must be a real number in the interval [0, 1]. 
+#' Must be a real number in the interval \[0, 1\]. 
 #' @return The value of the Binder loss function of \code{testLabels} 
 #' with respect to the adjacency matrix of \code{refLabels}.
 #'@export

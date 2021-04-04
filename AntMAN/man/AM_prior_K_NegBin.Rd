@@ -7,13 +7,13 @@
 AM_prior_K_NegBin(n, gamma, r, p)
 }
 \arguments{
-\item{n}{The sample size}
+\item{n}{The sample size.}
 
-\item{gamma}{The \code{gamma} parameter of the Dirichlet}
+\item{gamma}{The \code{gamma} parameter of the Dirichlet distribution.}
 
-\item{r}{The dispersion parameter \code{r} of Negative Binomial}
+\item{r}{The dispersion parameter \code{r} of Negative Binomial.}
 
-\item{p}{The probability of failure parameter \code{p} of Negative Binomial}
+\item{p}{The probability of failure parameter \code{p} of Negative Binomial.}
 }
 \value{
 AM_prior object, that is a vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}

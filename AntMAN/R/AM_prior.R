@@ -19,9 +19,9 @@ NULL
 #''
 #' plot the prior on the number of clusters for a given AM_prior object.
 #'  
-#'@param x an AM_prior object. See \code{\link{AM_prior_K_Delta}}, \code{\link{AM_prior_K_NegBin}},
+#'@param x an \code{\link{AM_prior}} object. See \code{\link{AM_prior_K_Delta}}, \code{\link{AM_prior_K_NegBin}},
 #'			\code{\link{AM_prior_K_Pois}} for more details.
-#'@param ... all additionnal parameters are ignored.
+#'@param ... all additional parameters are ignored.
 #'  
 #'@method plot AM_prior 
 #'@importFrom graphics image
@@ -44,7 +44,7 @@ plot.AM_prior=function(x,...){
 #'  summary information of the AM_prior object 
 #'  
 #'
-#' Given an AM_prior object, this function prints the summary information of the specified prior on the number of clusters. 
+#' Given an \code{\link{AM_prior object}}, this function prints the summary information of the specified prior on the number of clusters. 
 #'  
 #'@param object a \code{\link{AM_prior}} object. See \code{\link{AM_prior_K_Delta}}, \code{\link{AM_prior_K_NegBin}},
 #'			\code{\link{AM_prior_K_Pois}} for more details.

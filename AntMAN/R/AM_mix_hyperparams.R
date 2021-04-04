@@ -8,16 +8,19 @@
 #' S3 class AM_mix_hyperparams
 #' @description Object type returned by \code{AM_mix_hyperparams_*} commands.
 #' @exportClass AM_mix_hyperparams
-#' @seealso \code{\link{AM_mix_hyperparams}}
+#' @seealso \code{\link{AM_mix_hyperparams_unipois}}, \code{\link{AM_mix_hyperparams_uninorm}}, \code{\link{AM_mix_hyperparams_multiber}},
+#' \code{\link{AM_mix_hyperparams_multinorm}}
 #' @name AM_mix_hyperparams
 NULL
 
-#'  summary AM_mix_hyperparams 
+#' summary information of the AM_mix_hyperparams object 
 #'  
-#'  Print infos on AM_mix_hyperparams Object
+#'
+#' Given an \code{\link{AM_mix_hyperparams}} object, this function prints the summary information
+#' of the specified mixture hyperparameters. 
 #'  
-#'@param object a \code{\link{AM_mix_hyperparams}} object
-#'@param ... all additionnal parameters are ignored
+#'@param object a \code{\link{AM_mix_hyperparams}} object.
+#'@param ... all additional parameters are ignored.
 #'  
 #'  
 #'@method summary AM_mix_hyperparams 
@@ -38,7 +41,7 @@ summary.AM_mix_hyperparams = function(object, ...){
 #################################################################################
 
 
-#'Univariate Poisson Mixture Hyperparameters.
+#'univariate Poisson mixture hyperparameters
 #'
 #' Generate a configuration object that specifies a univariate Poisson mixture kernel and allows to 
 #' specify the hyperparameters of the  conjugate Gamma prior, i.e. the kernel is a \eqn{Poisson(\tau) }
@@ -65,7 +68,7 @@ AM_mix_hyperparams_unipois <- function(alpha0, beta0) {
 	) ;
 }
 
-#' Univariate Normal Mixture Hyperparameters
+#' univariate Normal mixture hyperparameters
 #' 
 #' Generate a configuration object that specifies univariate Normal mixture kernel and allows to set the hyperparameters of the Normal-InverseGamma conjugate prior. As such, the kernel is a Gaussian dsistribution 
 #' with mean \eqn{\mu} and variance \eqn{\sigma^2}. The prior on \eqn{(\mu,\sigma^2)} the Normal-InverseGamma:
@@ -121,7 +124,7 @@ AM_mix_hyperparams_uninorm <- function(m0, k0, nu0, sig02) {
 }
 
 
-#' Multivariate Bernoulli Mixture Hyperparameters (Latent Class analysis)
+#' multivariate Bernoulli mixture hyperparameters (Latent Class analysis)
 #' 
 #' Generate a configuration object that defines the prior hyperparameters for a mixture of multivariate Bernoulli.
 #' If the dimension of the data is P, then the prior is a product of P independent Beta distributions, Beta(\eqn{a_{0i},b_{0i}}). Therefore,
@@ -145,19 +148,19 @@ AM_mix_hyperparams_multiber <- function(a0, b0) {
 
 
 
-#' Multivariate Normal Mixture Hyperparameters.
+#' multivariate Normal mixture hyperparameters
 #' 
 #' 
 #' This function allows the user to specify the hyperparameters for the conjugate prior for a mixture of Multivariate Normals. We assume that the data are d-dimensional vectors \eqn{\boldsymbol{y}_i}, where \eqn{\boldsymbol{y}_i} are i.i.d 
 #' Normal random variables with mean \eqn{\boldsymbol{\mu}} and covariance matrix \eqn{\boldsymbol{\Sigma}}.
 #' The conjugate prior is 
 #' \deqn{\pi(\boldsymbol \mu, \boldsymbol \Sigma\mid\boldsymbol m_0,\kappa_0,\nu_0,\boldsymbol \Lambda_0)= 
-#' \pi_{\mu}(\boldsymbol \mu|\boldsymbol \Sigma,\boldsymbol m_0,\kappa_0)\pi_{\Sigma}(\boldsymbol \Sigma \mid \nu_0,\boldsymbol \Lambda_0)},
+#' \pi_{\mu}(\boldsymbol \mu|\boldsymbol \Sigma,\boldsymbol m_0,\kappa_0)\pi_{\Sigma}(\boldsymbol \Sigma \mid \nu_0,\boldsymbol \Lambda_0),}
 #'  \deqn{ \pi_{\mu}(\boldsymbol \mu|\boldsymbol \Sigma,\boldsymbol m_0,\kappa_0)  = 
 #'  \frac{\sqrt{\kappa_0^d}}{\sqrt {(2\pi )^{d}|{\boldsymbol \Sigma }|}} \exp \left(-{\frac {\kappa_0}{2}}(\boldsymbol\mu -{\boldsymbol m_0 })^{\mathrm {T} }{\boldsymbol{\Sigma }}^{-1}(\boldsymbol\mu-{\boldsymbol m_0 })\right),
-#' \qquad \boldsymbol \mu\in\mathcal{R}^d}
+#' \qquad \boldsymbol \mu\in\mathcal{R}^d,}
 #' \deqn{\pi_{\Sigma}(\boldsymbol \Sigma\mid \nu_0,\boldsymbol \Lambda_0)= {\frac {\left|{\boldsymbol \Lambda_0 }\right|^{\nu_0 /2}}{2^{\nu_0 d/2}\Gamma _{d}({\frac {\nu_0 }{2}})}}\left|\boldsymbol \Sigma \right|^{-(\nu_0 +d+1)/2}e^{-{\frac {1}{2}}\mathrm {tr} (\boldsymbol \Lambda_0 \boldsymbol \Sigma^{-1})}
-#', \qquad \boldsymbol \Sigma^2>0},
+#', \qquad \boldsymbol \Sigma^2>0,}
 #' where \code{mu0} corresponds to \eqn{\boldsymbol m_0}, \code{ka0} corresponds to  \eqn{\kappa_0}, 
 #' \code{nu0} to \eqn{\nu_0}, and \code{Lam0} to \eqn{\Lambda_0}.
 #' 

@@ -46,7 +46,7 @@ AM_find_gamma_Delta <- function (n,Mstar,Kstar=6, gam_min=0.0001,gam_max=10, tol
 #'
 #' Once the prior on the number of mixture components M is assumed to be a Shifted Poisson of parameter \code{Lambda}, 
 #' this function  adopts a \emph{bisection method} to find the value of \eqn{\gamma} such that the induced distribution
-#' on the number of clusters is centered around a user specifed value \eqn{K^{*}}, i.e. the function use a bisection
+#' on the number of clusters is centered around a user specifed value \eqn{K^{*}}, i.e. the function uses a bisection
 #' method to solve for \eqn{\gamma} \insertCite{argiento2019infinity}{AntMAN}. The user can provide a lower \eqn{\gamma_{l}} 
 #' and an upper \eqn{\gamma_{u}} bound for the possible values of \eqn{\gamma}. The default values are \eqn{\gamma_l= 10^{-3}} and \eqn{\gamma_{u}=10}.
 #' A defaault value for the tolerance is \eqn{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31),
@@ -83,7 +83,7 @@ AM_find_gamma_Pois <- function (n,Lambda,Kstar=6, gam_min=0.0001,gam_max=10, tol
 #' Once the prior on the number of mixture components M is assumed to be a Negative Binomial with 
 #' parameter \code{r>0} and \code{0<p<1}, with  mean is 1+ r*p/(1-p), this function adopts a \emph{bisection method} 
 #' to find the value of \code{gamma} such that the induced distribution on the number of clusters is centered around a 
-#' user specifed value \eqn{K^{*}}, i.e. the function use a bisection method to solve for \eqn{\gamma} \insertCite{argiento2019infinity}{AntMAN}.  
+#' user specifed value \eqn{K^{*}}, i.e. the function uses a bisection method to solve for \eqn{\gamma} \insertCite{argiento2019infinity}{AntMAN}.  
 #' The user can provide a lower \eqn{\gamma_{l}} and an upper \eqn{\gamma_{u}} bound for the possible values of \eqn{\gamma}. The default values 
 #' are \eqn{\gamma_l= 10^{-3}} and \eqn{\gamma_{u}=10}.  A defaault value for the tolerance is \eqn{\epsilon=0.1}. Moreover, after a 
 #' maximum number of iteration (default is 31), the function stops warning that convergence has not bee reached.

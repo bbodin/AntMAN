@@ -7,11 +7,11 @@
 AM_prior_K_Pois(n, gamma, Lambda)
 }
 \arguments{
-\item{n}{The sample size}
+\item{n}{The sample size.}
 
-\item{gamma}{The \code{gamma} parameter of the Dirichlet}
+\item{gamma}{The \code{gamma} parameter of the Dirichlet distribution.}
 
-\item{Lambda}{The \code{Lambda} parameter of the Poisson}
+\item{Lambda}{The \code{Lambda} parameter of the Poisson.}
 }
 \value{
 AM_prior object, that is a vector of length n, reporting the values of the prior on the number of clusters induced by the prior on \code{M} and \code{w}, i.e. \code{p^*_k} for \code{k=1,...,n}. See \insertCite{argiento2019infinity}{AntMAN} for more details.

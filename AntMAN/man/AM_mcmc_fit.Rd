@@ -29,7 +29,7 @@ assigned to its own cluster.}
 \item{fixed_clustering}{if specified, this is the vector CI containing the cluster assignments. This will remain unchanged for every iteration.}
 
 \item{mix_components_prior}{is a configuration list defined by AM_mix_components_prior_* functions, where * denotes the chosen prior. See \code{\link{AM_mix_hyperparams_uninorm}},
-\code{\link{AM_mix_hyperparams_unipois}},  \code{\link{AM_mix_hyperparams_multinorm}}, and \code{\link{AM_mix_hyperparams_multiber}} for more details.}
+\code{\link{AM_mix_hyperparams_unipois}}, \code{\link{AM_mix_hyperparams_multinorm}}, and \code{\link{AM_mix_hyperparams_multiber}} for more details.}
 
 \item{mix_weight_prior}{is a configuration list defined by AM_weight_prior_* functions, where * denotes the chosen prior specification.}
 

@@ -32,7 +32,6 @@ If no arguments are provided, the default is a prior distribution with \code{a =
 }
 \examples{
 
-See \code{\link{AM_mix_hyperparams_uninorm}} example.
 components_prior = AM_mix_components_prior_pois (init=3,  a=1, b=1) 
 
 }
