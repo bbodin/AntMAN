@@ -13,6 +13,6 @@ find_package(Boost REQUIRED COMPONENTS program_options)
 
 SET(ANTMAN_INCLUDES "${CMAKE_CURRENT_SOURCE_DIR}/AntMAN/src/")
 
-ADD_SUBDIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/tests_cpp/ build_results/tests)
+ADD_SUBDIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/tests_cpp/ "")
 
 	
