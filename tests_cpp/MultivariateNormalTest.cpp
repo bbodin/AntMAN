@@ -1,38 +1,15 @@
 /*
- *  AntMAN Package
+ * MultivariateNormalTest.cpp
  *
+ *  Created on: May 11, 2021
+ *      Author: toky
  */
 
-#ifndef TESTS_CPP_AM_TEST_MIXTURES_H_
-#define TESTS_CPP_AM_TEST_MIXTURES_H_
+#define BOOST_TEST_MODULE MultivariateNormalTest
+#include "testutils.h"
 
-
-#ifndef NO_RCPP
-#define NO_RCPP
-#endif
-
-#include "../AntMAN/src/Mixture.h"
-#include "../AntMAN/src/MixtureMultivariateBinomial.h"
-#include "../AntMAN/src/MixtureUnivariateNormal.h"
-#include "../AntMAN/src/MixtureUnivariatePoisson.h"
-#include "../AntMAN/src/MixtureMultiVariateNormal.h"
-#include "../AntMAN/src/Priors.h"
-#include "../AntMAN/src/verbose.h"
-
-std::string getString (AntMANLogger& logger) {
-	 std::ostringstream outputstr;
-	std::vector<std::string> names = {};
-	int total = 0;
-
-	if (logger.haslog("CI")) {total++;names.push_back("CI");}
-	if (logger.haslog("CI")) {outputstr << "Size of CI vector = " << logger.getlog<cluster_indices_t>("CI").size() << std::endl ;}
-
-
-	return outputstr.str();
-
-
-
-}
+#include <PriorPoisson.h>
+#include <MixtureMultiVariateNormal.h>
 
 void test_Mixture_MultivariateNormal (long niter, long burnin, long thin) {
 	static const arma::mat y_mvn = {
@@ -111,219 +88,16 @@ void test_Mixture_MultivariateNormal (long niter, long burnin, long thin) {
 }
 
 
-void test_Mixture_UnivariateNormal(long niter, long burnin, long thin) {
+BOOST_AUTO_TEST_SUITE( test_suite_multivariate_normal_dataset )
 
-
-	static const arma::vec y_uvn =  { 9.172,  9.350,  9.483,  9.558,  9.775, 10.227, 10.406, 16.084, 16.170, 18.419,18.552,
-			18.600, 18.927, 19.052, 19.070, 19.330, 19.343, 19.349, 19.440, 19.473,19.529, 19.541, 19.547, 19.663,
-			19.846, 19.856, 19.863, 19.914, 19.918, 19.973,19.989, 20.166, 20.175, 20.179, 20.196, 20.215, 20.221,
-			20.415, 20.629, 20.795,20.821, 20.846, 20.875, 20.986, 21.137, 21.492, 21.701, 21.814, 21.921, 21.960,
-			22.185, 22.209, 22.242, 22.249, 22.314, 22.374, 22.495, 22.746, 22.747, 22.888,22.914, 23.206, 23.241,
-			23.263, 23.484, 23.538, 23.542, 23.666, 23.706, 23.711,24.129, 24.285, 24.289, 24.366, 24.717, 24.990, 25.633, 26.960,
-			26.995, 32.065,32.789, 34.279 };
-	// TODO : Need to go over variable and see what should be checked
-	PriorPoisson *prior = new PriorPoisson(poisson_gamma_h_param_t(2,1,1,0.00001),poisson_gamma_q_param_t(3,1,1));
-	MixtureUnivariateNormal * mixture = new MixtureUnivariateNormal (20.83146, 0.3333333, 4.222222, 3.661027);
-	cluster_indices_t initial_clustering (y_uvn.size());
-	AntMANLogger * logger = new AntMANLogger(std::vector<std::string>(), (niter - burnin) / thin );
-
-	auto start_gibbs           = std::chrono::system_clock::now();
-	mixture->fit(y_uvn , initial_clustering, false, prior , niter ,burnin ,thin , false , logger);
-	auto end_gibbs             = std::chrono::system_clock::now();
-	auto elapsed_gibbs         = end_gibbs - start_gibbs;
-	auto total_gibbs           = elapsed_gibbs.count() / 1000000.0;
-	COUT_STREAM << "Total time: " << total_gibbs << "ms"  << std::endl ;
-
-
-}
-void test_Mixture_UnivariatePoisson(long niter, long burnin, long thin) {
-
-
-	static const arma::ivec y_uvn =  { 9,  9,  9,  9,  9, 10, 10, 16, 16, 18,18,
-			18, 18, 19, 19, 19, 19, 19, 19, 19,19, 19, 19, 19,
-			19, 19, 19, 19, 19, 19,19, 20, 20, 20, 20, 20, 20,
-			20, 20, 20,20, 20, 20, 20, 21, 21, 21, 21, 21, 21,
-			22, 22, 22, 22, 22, 22, 22, 22, 22, 22,22, 23, 23,
-			23, 23, 23, 23, 23, 23, 23,24, 24, 24, 24, 24, 24, 25, 26,
-			26, 32,32, 34 };
-	// TODO : Need to go over variable and see what should be checked
-	PriorPoisson *prior = new PriorPoisson(poisson_gamma_h_param_t(2,1,1,0.00001),poisson_gamma_q_param_t(3,1,1));
-	MixtureUnivariatePoisson * mixture = new MixtureUnivariatePoisson (2, 0.2);
-	cluster_indices_t initial_clustering (y_uvn.size());
-	AntMANLogger * logger = new AntMANLogger(std::vector<std::string>(), (niter - burnin) / thin );
-
-	auto start_gibbs           = std::chrono::system_clock::now();
-	mixture->fit(y_uvn , initial_clustering, false, prior , niter ,burnin ,thin , false , logger);
-	auto end_gibbs             = std::chrono::system_clock::now();
-	auto elapsed_gibbs         = end_gibbs - start_gibbs;
-	auto total_gibbs           = elapsed_gibbs.count() / 1000000.0;
-	COUT_STREAM << "Total time: " << total_gibbs << "ms"  << std::endl ;
-
-
-}
-
-void test_Mixture_MultivariateBernoulli (long niter, long burnin, long thin) {
-	static const arma::imat carcinoma = {
-	     //A  B  C  D  E  F  G
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 0, 0, 0 } ,
-		 { 0, 0, 0, 0, 1, 0, 0 } ,
-		 { 0, 0, 0, 0, 1, 0, 0 } ,
-		 { 0, 1, 0, 0, 0, 0, 0 } ,
-		 { 0, 1, 0, 0, 0, 0, 0 } ,
-		 { 0, 1, 0, 0, 0, 0, 0 } ,
-		 { 0, 1, 0, 0, 0, 0, 0 } ,
-		 { 0, 1, 0, 0, 0, 0, 0 } ,
-		 { 0, 1, 0, 0, 0, 0, 0 } ,
-		 { 0, 1, 0, 0, 0, 0, 1 } ,
-		 { 0, 1, 0, 0, 1, 0, 0 } ,
-		 { 0, 1, 0, 0, 1, 0, 0 } ,
-		 { 0, 1, 0, 0, 1, 0, 0 } ,
-		 { 0, 1, 0, 0, 1, 0, 0 } ,
-		 { 0, 1, 0, 0, 1, 0, 1 } ,
-		 { 0, 1, 0, 0, 1, 0, 1 } ,
-		 { 0, 1, 0, 0, 1, 0, 1 } ,
-		 { 0, 1, 0, 0, 1, 0, 1 } ,
-		 { 0, 1, 0, 0, 1, 0, 1 } ,
-		 { 1, 0, 0, 0, 0, 0, 0 } ,
-		 { 1, 0, 0, 0, 0, 0, 0 } ,
-		 { 1, 0, 1, 0, 1, 0, 1 } ,
-		 { 1, 1, 0, 0, 0, 0, 0 } ,
-		 { 1, 1, 0, 0, 0, 0, 0 } ,
-		 { 1, 1, 0, 0, 0, 0, 1 } ,
-		 { 1, 1, 0, 0, 1, 0, 0 } ,
-		 { 1, 1, 0, 0, 1, 0, 0 } ,
-		 { 1, 1, 0, 0, 1, 0, 1 } ,
-		 { 1, 1, 0, 0, 1, 0, 1 } ,
-		 { 1, 1, 0, 0, 1, 0, 1 } ,
-		 { 1, 1, 0, 0, 1, 0, 1 } ,
-		 { 1, 1, 0, 0, 1, 0, 1 } ,
-		 { 1, 1, 0, 0, 1, 0, 1 } ,
-		 { 1, 1, 0, 0, 1, 0, 1 } ,
-		 { 1, 1, 0, 0, 1, 1, 1 } ,
-		 { 1, 1, 0, 1, 0, 0, 1 } ,
-		 { 1, 1, 0, 1, 1, 0, 1 } ,
-		 { 1, 1, 0, 1, 1, 0, 1 } ,
-		 { 1, 1, 0, 1, 1, 1, 1 } ,
-		 { 1, 1, 0, 1, 1, 1, 1 } ,
-		 { 1, 1, 0, 1, 1, 1, 1 } ,
-		 { 1, 1, 1, 0, 1, 0, 1 } ,
-		 { 1, 1, 1, 0, 1, 0, 1 } ,
-		 { 1, 1, 1, 0, 1, 0, 1 } ,
-		 { 1, 1, 1, 0, 1, 0, 1 } ,
-		 { 1, 1, 1, 0, 1, 0, 1 } ,
-		 { 1, 1, 1, 0, 1, 0, 1 } ,
-		 { 1, 1, 1, 0, 1, 0, 1 } ,
-		 { 1, 1, 1, 0, 1, 0, 1 } ,
-		 { 1, 1, 1, 0, 1, 0, 1 } ,
-		 { 1, 1, 1, 0, 1, 0, 1 } ,
-		 { 1, 1, 1, 0, 1, 0, 1 } ,
-		 { 1, 1, 1, 0, 1, 0, 1 } ,
-		 { 1, 1, 1, 0, 1, 0, 1 } ,
-		 { 1, 1, 1, 0, 1, 1, 1 } ,
-		 { 1, 1, 1, 0, 1, 1, 1 } ,
-		 { 1, 1, 1, 0, 1, 1, 1 } ,
-		 { 1, 1, 1, 0, 1, 1, 1 } ,
-		 { 1, 1, 1, 0, 1, 1, 1 } ,
-		 { 1, 1, 1, 1, 1, 0, 1 } ,
-		 { 1, 1, 1, 1, 1, 0, 1 } ,
-		 { 1, 1, 1, 1, 1, 0, 1 } ,
-		 { 1, 1, 1, 1, 1, 0, 1 } ,
-		 { 1, 1, 1, 1, 1, 0, 1 } ,
-		 { 1, 1, 1, 1, 1, 0, 1 } ,
-		 { 1, 1, 1, 1, 1, 0, 1 } ,
-		 { 1, 1, 1, 1, 1, 0, 1 } ,
-		 { 1, 1, 1, 1, 1, 0, 1 } ,
-		 { 1, 1, 1, 1, 1, 0, 1 } ,
-		 { 1, 1, 1, 1, 1, 1, 1 } ,
-		 { 1, 1, 1, 1, 1, 1, 1 } ,
-		 { 1, 1, 1, 1, 1, 1, 1 } ,
-		 { 1, 1, 1, 1, 1, 1, 1 } ,
-		 { 1, 1, 1, 1, 1, 1, 1 } ,
-		 { 1, 1, 1, 1, 1, 1, 1 } ,
-		 { 1, 1, 1, 1, 1, 1, 1 } ,
-		 { 1, 1, 1, 1, 1, 1, 1 } ,
-		 { 1, 1, 1, 1, 1, 1, 1 } ,
-		 { 1, 1, 1, 1, 1, 1, 1 } ,
-		 { 1, 1, 1, 1, 1, 1, 1 } ,
-		 { 1, 1, 1, 1, 1, 1, 1 } ,
-		 { 1, 1, 1, 1, 1, 1, 1 } ,
-		 { 1, 1, 1, 1, 1, 1, 1 } ,
-		 { 1, 1, 1, 1, 1, 1, 1 } ,
-		 { 1, 1, 1, 1, 1, 1, 1 }
-} ;
-
-int d = carcinoma.n_cols;
-
-arma::vec a0(d);
-arma::vec b0(d);
-a0.fill(1);
-b0.fill(1);
-
-PriorPoisson *priormvb = new PriorPoisson(poisson_gamma_h_param_t(2,1,1,0.00001),poisson_gamma_q_param_t(5,10,2));
-MixtureMultivariateBinomial * mixturemvb = new MixtureMultivariateBinomial (a0,b0);
-AntMANLogger * logger = new AntMANLogger(std::vector<std::string>(), (niter - burnin) / thin );
-
-cluster_indices_t initial_clusteringmvb (carcinoma.n_rows,1);
-
-auto start_gibbs           = std::chrono::system_clock::now();
-mixturemvb->fit(carcinoma , initial_clusteringmvb, false, priormvb , niter,  burnin,  thin, false, logger);
-auto end_gibbs             = std::chrono::system_clock::now();
-auto elapsed_gibbs         = end_gibbs - start_gibbs;
-auto total_gibbs           = elapsed_gibbs.count() / 1000000.0;
-COUT_STREAM << "Total time: " << total_gibbs << "ms" << std::endl ;
-
-}
-void test_mixtures (long niter, long burnin, long thin) {
-
-	VERBOSE_INFO("RUN test_Mixture_UnivariateNormal");
-	test_Mixture_UnivariateNormal (niter,  burnin,  thin) ;
-
-	VERBOSE_INFO("RUN test_Mixture_MultivariateNormal");
-	test_Mixture_MultivariateNormal (niter,  burnin,  thin) ;
-
-	VERBOSE_INFO("RUN test_Mixture_UnivariatePoisson");
-	test_Mixture_UnivariatePoisson(niter,  burnin,  thin);
-
-	VERBOSE_INFO("RUN test_Mixture_MultivariateBernoulli");
-	test_Mixture_MultivariateBernoulli(niter,  burnin,  thin);
-
+BOOST_AUTO_TEST_CASE( test_multivariate_normal_100_10_10 )
+{
+	test_Mixture_MultivariateNormal(100, 10, 10);
 }
 
 
+BOOST_AUTO_TEST_SUITE_END()
 
 
 
-#endif /* TESTS_CPP_AM_TEST_MIXTURES_H_ */
+
