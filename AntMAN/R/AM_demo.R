@@ -8,16 +8,16 @@
 #' Returns an example of \code{\link{AM_mcmc_fit}} output produced by the multivariate bernoulli model
 #'  
 #'
-#' This function allows us to generate a sample output of fitting the multivariate bernoulli model. No arguments are needed to be passed.
+#' This function allows us to generate a sample output of fitting the multivariate Bernoulli model. No arguments are needed to be passed.
 #' The purpose of this function is to serve as a demo for users to understand the model's output, without diving too deep into details. By default,
 #' this demo generates a sample dataset of dimension 500x4, where the MCMC sampler is specified to run for 2000 iterations, with a burn-in of 1000, and a thinning interval of 10. All possible outputs
 #' that can be produced by \code{\link{AM_mcmc_fit}} are returned (see return value below).   
 #'  
 #' @return A list containing the following items:
 #' \itemize{
-#' \item the vector (or matrix) containing the synthetic data used to fit the model
-#' \item the vector containing the final cluster assignment of each observation
-#' \item an \code{\link{AM_mcmc_output}} object, which is the typical output of \code{\link{AM_mcmc_fit}}
+#' \item the vector (or matrix) containing the synthetic data used to fit the model.
+#' \item the vector containing the final cluster assignment of each observation.
+#' \item an \code{\link{AM_mcmc_output}} object, which is the typical output of \code{\link{AM_mcmc_fit}}.
 #' }
 #'
 #' @keywords demo
@@ -28,7 +28,7 @@
 #' mvb_output <- AM_demo_mvb_poi()
 AM_demo_mvb_poi = function () {
 	
-	set.seed(123) # TODO : discuss if this make sense
+	set.seed(123) 
 	
 	d <- 4
 	k <- 3
@@ -61,16 +61,16 @@ AM_demo_mvb_poi = function () {
 #' Returns an example of \code{\link{AM_mcmc_fit}} output produced by the multivariate gaussian model
 #'  
 #'
-#'This function allows us to generate a sample output of fitting the multivariate gaussian model. No arguments are needed to be passed.
+#'This function allows us to generate a sample output of fitting the multivariate Gaussian model. No arguments are needed to be passed.
 #' The purpose of this function is to serve as a demo for users to understand the model's output, without diving too deep into details. By default,
 #' this demo generates a sample dataset of dimension 500x2, where the MCMC sampler is specified to run for 2000 iterations, with a burn-in of 1000, and a thinning interval of 10. All possible outputs
 #' that can be produced by \code{\link{AM_mcmc_fit}} are returned (see return value below).
 #'  
 #' @return A list containing the following items:
 #' \itemize{
-#' \item the vector (or matrix) containing the synthetic data used to fit the model
-#' \item the vector containing the final cluster assignment of each observation
-#' \item an \code{\link{AM_mcmc_output}} object, which is the typical output of \code{\link{AM_mcmc_fit}}
+#' \item the vector (or matrix) containing the synthetic data used to fit the model.
+#' \item the vector containing the final cluster assignment of each observation.
+#' \item an \code{\link{AM_mcmc_output}} object, which is the typical output of \code{\link{AM_mcmc_fit}}.
 #' }
 #'
 #' @keywords demo
@@ -134,7 +134,7 @@ AM_demo_mvn_poi = function () {
 }
 
 
-##' Returns an example of \code{\link{AM_mcmc_fit}} output produced by the univariate gaussian model
+##' Returns an example of \code{\link{AM_mcmc_fit}} output produced by the univariate Gaussian model
 #'  
 #'
 #'This function allows us to generate a sample output of fitting the univariate gaussian model. No arguments are needed to be passed.
@@ -144,9 +144,9 @@ AM_demo_mvn_poi = function () {
 #'  
 #' @return A list containing the following items:
 #' \itemize{
-#' \item the vector (or matrix) containing the synthetic data used to fit the model
-#' \item the vector containing the final cluster assignment of each observation
-#' \item an \code{\link{AM_mcmc_output}} object, which is the typical output of \code{\link{AM_mcmc_fit}}
+#' \item the vector (or matrix) containing the synthetic data used to fit the model.
+#' \item the vector containing the final cluster assignment of each observation.
+#' \item an \code{\link{AM_mcmc_output}} object, which is the typical output of \code{\link{AM_mcmc_fit}}.
 #' }
 #'
 #' @keywords demo
@@ -187,7 +187,7 @@ AM_demo_uvn_poi = function () {
 }
 
 
-##' Returns an example of \code{\link{AM_mcmc_fit}} output produced by the univariate poisson model
+##' Returns an example of \code{\link{AM_mcmc_fit}} output produced by the univariate Poisson model
 #'  
 #'
 #'This function allows us to generate a sample output of fitting the univariate poisson model. No arguments are needed to be passed.
@@ -197,9 +197,9 @@ AM_demo_uvn_poi = function () {
 #'  
 #' @return A list containing the following items:
 #' \itemize{
-#' \item the vector (or matrix) containing the synthetic data used to fit the model
-#' \item the vector containing the final cluster assignment of each observation
-#' \item an \code{\link{AM_mcmc_output}} object, which is the typical output of \code{\link{AM_mcmc_fit}}
+#' \item the vector (or matrix) containing the synthetic data used to fit the model.
+#' \item the vector containing the final cluster assignment of each observation.
+#' \item an \code{\link{AM_mcmc_output}} object, which is the typical output of \code{\link{AM_mcmc_fit}}.
 #' }
 #'
 #' @keywords demo

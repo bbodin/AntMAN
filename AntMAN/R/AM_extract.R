@@ -156,9 +156,9 @@ extract_target = function(fit, target, iterations = NULL, debug = FALSE){
 
 
 
-#'  Extract values within a \code{\link{AM_mcmc_output}} object. 
+#'  Extract values within a \code{\link{AM_mcmc_output}} object
 #' 
-#'  Given an object produced by \code{\link{AM_mcmc_fit}}, as well as the target variable names, 
+#'  Given an \code{\link{AM_mcmc_output}} object, as well as the target variable names, 
 #'  AM_extract will return a list of the variables of interest.
 #'
 #'  Due to the complexity of AntMAN outputs, \code{\link{AM_mcmc_output}} object can be difficult
@@ -167,10 +167,10 @@ extract_target = function(fit, target, iterations = NULL, debug = FALSE){
 #'  variables, the extracted list would correspond to an nx1 list, where n refers to the number of extracted iterations. Each of these nx1 entries consists
 #'  of another list of dimension mx1, where m specifies the number of components inferred for that iteration.
 #'  
-#'@param object an \code{\link{AM_mcmc_output}} object
+#'@param object an \code{\link{AM_mcmc_output}} object.
 #'@param targets List of variables to extract (ie. K, M, mu).
 #'@param iterations Can specify particular iterations to extracts, NULL for all.
-#'@param debug Activate log to 
+#'@param debug Activate log to. 
 #'@return a list of variables specified in \code{targets}.
 #'  
 #'@export

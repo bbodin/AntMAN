@@ -8,7 +8,7 @@
 #' S3 class AM_mix_weights_prior
 #' @description Object type returned by \code{AM_mix_weights_prior_*} commands.
 #' @exportClass AM_mix_weights_prior
-#' @seealso \code{\link{AM_mix_weights_prior}}
+#' @seealso \code{\link{AM_mix_weights_prior_gamma}}
 #' @name AM_mix_weights_prior
 NULL
 
@@ -17,15 +17,18 @@ NULL
 ##### Configuration functions for the prior on the mixture weights
 #################################################################################
 
-#'  summary AM_mix_weights_prior 
+#'  summary information of the AM_mix_weights_prior object 
 #'  
-#'  Print infos on AM_mix_weights_prior Object
+#'
+#' Given an \code{\link{AM_mix_weights_prior}} object, this function prints the summary information
+#' of the specified mixture weights prior. 
 #'  
-#'@param object a \code{\link{AM_mix_weights_prior}} object
-#'@param ... all additionnal parameters are ignored
+#'@param object an \code{\link{AM_mix_weights_prior}} object.
+#'@param ... all additional parameters are ignored.
 #'  
 #'  
 #'@method summary AM_mix_weights_prior 
+#'@seealso \code{\link{AM_mix_weights_prior}}
 #'@importFrom utils head
 #'@export
 summary.AM_mix_weights_prior = function(object, ...){
@@ -37,19 +40,19 @@ summary.AM_mix_weights_prior = function(object, ...){
 
 
 
-#' Generate a configuration object to specify a prior on the hyper-parameter \eqn{\gamma} for the Dirichlet prior on the 
-#' mixture weights. 
+#' specify a prior on the hyperparameter \eqn{\gamma} for the Dirichlet mixture weights prior 
+#'
 #' 
-#' Generate a configuration object to specify a prior on the hyper-parameter \eqn{\gamma} for the Dirichlet prior on the 
+#' Generate a configuration object to specify a prior on the hyperparameter \eqn{\gamma} for the Dirichlet prior on the 
 #' mixture weights. 
-#' We assume \eqn{\gamma \sim  Gamma(a,b)}. Alternatively we can fix \eqn{\gamma} to a specific value.
+#' We assume \eqn{\gamma \sim  Gamma(a,b)}. Alternatively, we can fix \eqn{\gamma} to a specific value.
 #' Default is \eqn{\gamma=1/N}, where N is the number of observations. 
 #'In AntMAN we assume the following 
 #' parametrization of the Gamma density: 
-#' \deqn{p(x\mid a,b )= \frac{b^a x^{a-1}}{\Gamma(a)} \exp\{ -bx \}, \quad x>0  }
+#' \deqn{p(x\mid a,b )= \frac{b^a x^{a-1}}{\Gamma(a)} \exp\{ -bx \}, \quad x>0.}
 #' 
-#'@param a      The shape parameter a of the Gamma prior
-#'@param b      The rate parameter b of the Gamma prior
+#'@param a      The shape parameter a of the Gamma prior.
+#'@param b      The rate parameter b of the Gamma prior.
 #'@param init   The init value for \eqn{\gamma}, when we assume \eqn{\gamma} random.
 #'@param gamma  It allows to fix \eqn{\gamma}  to a specific value.
 #'

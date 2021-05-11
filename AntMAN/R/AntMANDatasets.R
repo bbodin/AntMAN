@@ -10,7 +10,7 @@
 #################################################################################
 
 
-#' Usage frequency of the word "said" in the Brown corpus.
+#' Usage frequency of the word "said" in the Brown corpus
 #'     
 #'@format  A list with 500 observations on the frequency of said in different texts.
 #'  
@@ -39,8 +39,9 @@
 "galaxy"
 
 
-#' carcinoma
-#'  
+#' Carcinoma dataset
+#' 
+#' 
 #' The carcinoma data from Agresti (2002, 542) consist of seven dichotomous variables representing 
 #' the ratings by seven pathologists of 118 slides on the presence or absence of carcinoma.
 #' The purpose of studying this data is to model "interobserver agreement" by examining how
@@ -59,7 +60,7 @@
 
 #' Teen Brain Images from the National Institutes of Health, U.S.
 #'
-#' Picture of brain activities from a teenager consumming drugs. 
+#' Picture of brain activities from a teenager consuming drugs. 
 #'  
 #'@format  A list that contains \code{dim} a (W:width,H:height) pair, and  \code{pic} a data frame (W*H pixels image in RGB format).
 #'  

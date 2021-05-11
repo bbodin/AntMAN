@@ -4,14 +4,14 @@
 ###############
 ###############
 #######################################################################################
-#' S3 class AM_mcmc_output.
+#' S3 class AM_mcmc_output
 #' @description Output type of return values from  \code{\link{AM_mcmc_fit}}. 
 #' @exportClass AM_mcmc_output
 #' @seealso \code{\link{AM_mcmc_fit}}
 #' @name AM_mcmc_output
 NULL
 
-#' S3 class AM_mcmc_configuration.
+#' S3 class AM_mcmc_configuration
 #' @description Output type of return values from  \code{\link{AM_mcmc_parameters}}. 
 #' @exportClass AM_mcmc_configuration
 #' @seealso \code{\link{AM_mcmc_fit}}
@@ -22,15 +22,19 @@ NULL
 ##### AM_mcmc_configuration function
 #################################################################################
 
-#'  summary AM_mcmc_configuration 
+#'  summary information of the AM_mcmc_configuration object 
 #'  
-#'  Print infos on AM_mcmc_configuration Object
 #'  
-#'@param object a \code{\link{AM_mcmc_configuration}} object
-#'@param ... all additionnal parameters are ignored
+#'
+#' Given an \code{\link{AM_mcmc_configuration}} object, this function prints the summary information
+#' of the specified mcmc configuration. 
+#'  
+#'@param object an \code{\link{AM_mcmc_configuration}} object. 
+#'@param ... all additional parameters are ignored
 #'  
 #'  
 #'@method summary AM_mcmc_configuration 
+#'@seealso \code{\link{AM_mcmc_parameters}}
 #'@export
 summary.AM_mcmc_configuration = function(object, ...){
 	cat("\n", "AM_mcmc_configuration\n", sep = "")	
@@ -49,33 +53,34 @@ summary.AM_mcmc_configuration = function(object, ...){
 
 #' plot AM_mcmc_output  
 #' 
-#' plot some useful informations about the mcmc results
+#'
+#' Given an \code{\link{AM_mcmc_output}} object, this function plots some useful information about the MCMC results
+#' regarding \eqn{M} and \eqn{K}. Besides the PMFs, some of the diagnostic plots of the MCMC chain are visualised.
 #'  
-#'@param x a AM_mcmc_output object
-#'@param ... all additionnal parameters passed to image command.
+#'@param x an \code{\link{AM_mcmc_output}} object.
+#'@param ... all additional parameters are ignored.
 #'  
 #'@method plot AM_mcmc_output 
 #'@importFrom graphics image
 #'@importFrom grDevices gray.colors
 #'@export
-plot.AM_mcmc_output=function(x,...){
-	
-	AM_plot_pairs(x);readline(prompt="Press [enter] to continue")
-	AM_plot_density(x);readline(prompt="Press [enter] to continue")
-	AM_plot_traces(x);readline(prompt="Press [enter] to continue")
-	AM_plot_values(x);readline(prompt="Press [enter] to continue")
-	AM_plot_similarity_matrix(x);readline(prompt="Press [enter] to continue")
-	AM_plot_chaincor(x);
-	
+plot.AM_mcmc_output=function(x){
+
+	print(AM_plot_pairs(x));readline(prompt="Press [enter] to continue")
+	print(AM_plot_pmf(x));readline(prompt="Press [enter] to continue")
+	print(AM_plot_traces(x));readline(prompt="Press [enter] to continue")
+	print(AM_plot_values(x));readline(prompt="Press [enter] to continue")
+	print(AM_plot_chaincor(x));
 }
 
 
-#' Internal function that produces a string fro ma list of values
+#' Internal function that produces a string from a list of values
 #'  
 #'@param x a list of values
 #'  
 #'@importFrom utils head
-list_values = function (x) { ## TODO : can be a head + paste
+#' @keywords internal
+list_values = function (x) { 
 	arguments = vector();
 	for (item in names(x)) {
 		arguments = append(arguments,sprintf("%s = %s",item, head(x[[item]]) )) ;
@@ -83,15 +88,18 @@ list_values = function (x) { ## TODO : can be a head + paste
 	return (paste(arguments, collapse=", "));
 }
 
-#'  summary AM_mcmc_output 
+#'  summary information of the AM_mcmc_output object 
 #'  
-#'  Print some useful informations about the mcmc results
+#'
+#' Given an \code{\link{AM_mcmc_output}} object, this function prints the summary information
+#' pertaining to the given model output. 
 #'  
 #'@param object a \code{\link{AM_mcmc_output}} object
-#'@param ... all additionnal parameters are ignored
+#'@param ... all additional parameters are ignored
 #'  
 #'  
 #'@method summary AM_mcmc_output 
+#'@seealso \code{\link{AM_mcmc_fit}}, \code{\link{AM_mcmc_refit}}
 #'@export
 summary.AM_mcmc_output=function(object,...){
 	cat("\n","Fitted model:","\n");
@@ -214,7 +222,7 @@ AM_reshape <- function(fit, y){
 #'@param fixed_clustering if specified, this is the vector CI containing the cluster assignments. This will remain unchanged for every iteration.
 #'@param init_K initial value for  the number of cluster. When this is specified, AntMAN intitialises the clustering assign usng K-means.
 #'@param mix_components_prior is a configuration list defined by AM_mix_components_prior_* functions, where * denotes the chosen prior. See \code{\link{AM_mix_hyperparams_uninorm}}, 
-#' \code{\link{AM_mix_hyperparams_unipois}},  \code{\link{AM_mix_hyperparams_multinorm}}, and \code{\link{AM_mix_hyperparams_multiber}} for more details.
+#' \code{\link{AM_mix_hyperparams_unipois}}, \code{\link{AM_mix_hyperparams_multinorm}}, and \code{\link{AM_mix_hyperparams_multiber}} for more details.
 #'@param mix_weight_prior is a configuration list defined by AM_weight_prior_* functions, where * denotes the chosen prior specification.
 #'@param mcmc_parameters is a configuration list defined by AM_mcmc_parameters. See \code{\link{AM_mcmc_parameters}} for more details.
 #'@return The return value is a \code{\link{AM_mcmc_output}} object.
@@ -273,7 +281,7 @@ AM_mcmc_fit <- function(
 
 #' Performs a Gibbs sampling reusing previous configuration
 #' 
-#' Similar to \code{\link{AM_mcmc_fit}}, the \code{\link{AM_mcmc_refit}} function performs a Gibbs sampling in order to estimate 
+#' Similar to \code{\link{AM_mcmc_fit}}, the \code{AM_mcmc_refit} function performs a Gibbs sampling in order to estimate 
 #' a mixture. However parameters will be reused from a previous result from \code{\link{AM_mcmc_fit}}.
 #' 
 #' In practice this function will call AM_mcmc_fit(y, fixed_clustering = fixed_clustering, ...); with the same parameters as previously
@@ -283,7 +291,7 @@ AM_mcmc_fit <- function(
 #'@param fit previous output from \code{\link{AM_mcmc_fit}} that is used to setup kernel and priors.
 #'@param fixed_clustering is a vector CI of cluster assignment that will remain unchanged for every iterations.
 #'@param mcmc_parameters is a configuration list defined by \code{\link{AM_mcmc_parameters}}. 
-#'@return The return value is a \code{\link{AM_mcmc_output}} object.
+#'@return The return value is an \code{\link{AM_mcmc_output}} object.
 #'@examples
 #' y = AM_sample_unipois()$y
 #' fit = AM_mcmc_fit( y , 
@@ -327,11 +335,11 @@ AM_mcmc_refit <- function(
 #' 
 #'@param niter        Total number of MCMC iterations to be carried out. 
 #'@param burnin       Number of iterations to be considered as burn-in. Samples from this burn-in period are discarded.
-#'@param thin         Thinning rate. This argument specifies how often a draw from the posterior distribution is stored after 
+#'@param thin         Thinning rate. This argument specifies how often a draw from the posterior distribution is stored after
 #' burnin, i.e. one every -th samples is saved. Therefore, the toral number of MCMC samples saved is 
 #' (\code{niter} -\code{burnin})/\code{thin}. If thin =1, then AntMAN stores every iteration. 
-#'@param verbose      A value from 0 to 4, that specifies the desired level of verbosity (0:None, 1:Warnings, 2:Debug, 3:Extras)
-#'@param output       A list of parameters output to return
+#'@param verbose      A value from 0 to 4, that specifies the desired level of verbosity (0:None, 1:Warnings, 2:Debug, 3:Extras).
+#'@param output       A list of parameters output to return.
 #'@param output_dir   Path to an output dir, where to store all the outputs.
 #'@param parallel     Some of the algorithms can be run in parallel using OpenMP. When set to True, this parameter triggers the parallelism.
 #'@return \code{\link{AM_mcmc_configuration}} Object, this is a list to be used as \code{mcmc_parameters} argument with \code{\link{AM_mcmc_fit}}. 

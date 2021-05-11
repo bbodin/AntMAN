@@ -110,15 +110,15 @@ inline arma::mat riwish(const int df, const arma::mat& iSUnchecked) {  // TODO :
 
 	arma::mat iS = iSUnchecked;
 
-		// if (not iS.is_sympd()) {
-		// 	VERBOSE_WARNING("riwish requires iS to be symmetric. iS auto-corrected.");
-		// 	iS  =  arma::symmatu(iS);
-		// }
+		if (not iS.is_sympd()) {
+			VERBOSE_WARNING("riwish requires iS to be symmetric. iS auto-corrected.");
+			iS  =  arma::symmatu(iS);
+		}
 
 
 		arma::mat iwishrndres = iS;
 			try {
-				// remember to uncomment 
+				// commented because the inverse returns warnings 
 				//iwishrndres =  arma::iwishrnd(iS, df) ;
 
 				//debugging the chol warning

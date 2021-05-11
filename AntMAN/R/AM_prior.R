@@ -5,7 +5,7 @@
 ###############
 #######################################################################################
 
-#' S3 class AM_prior.
+#' S3 class AM_prior
 #' @description Object type returned by \code{AM_prior_*} commands.
 #' @exportClass AM_prior
 #' @seealso \code{\link{AM_prior}}
@@ -16,10 +16,12 @@ NULL
 
 #' plot AM_prior
 #' 
-#' plot the prior on the number of clusters for a given AM_prior object.
+#'
+#' plot the prior on the number of clusters for a given \code{\link{AM_prior}} object.
 #'  
-#'@param x a AM_prior object
-#'@param ... all additionnal parameters are ignored
+#'@param x an \code{\link{AM_prior}} object. See \code{\link{AM_prior_K_Delta}}, \code{\link{AM_prior_K_NegBin}},
+#'			\code{\link{AM_prior_K_Pois}} for more details.
+#'@param ... all additional parameters are ignored.
 #'  
 #'@method plot AM_prior 
 #'@importFrom graphics image
@@ -30,23 +32,27 @@ plot.AM_prior=function(x,...){
 	n = length(x)
 	par(mar=c(3,3,1.5,0.5)+0.1)
 	par(mgp=c(2, 1.0, 0))
+	title = sprintf("Prior on the number of clusters,\nn=%d with %s", n, attr(x,'type'))
 	plot(1:n, x, type = "n", bty = "l", xlab = "k", 
 			ylab = expression(paste("P(",K[n],"=k)")),
-			main = sprintf("Prior on the number of clusters, n=%d with %s", n, attr(x,'type') ),
-			xlim=c(.5,20),cex.main=1.5)
+			main = title,
+			xlim=c(.5,20),cex.main=0.8)
 	lines(1:n,x,type="h",lwd=3)
 	#legend(x="topright",legend=c("INFORMATION"),col=c(1,2,3),lty=1,lwd=2,cex=1.5)
 }
 
-#'  summary AM_prior 
+#'  summary information of the AM_prior object 
 #'  
-#'  Print infos on AM_prior Object
+#'
+#' Given an \code{\link{AM_prior}} object, this function prints the summary information of the specified prior on the number of clusters. 
 #'  
-#'@param object a \code{\link{AM_prior}} object
-#'@param ... all additionnal parameters are ignored
+#'@param object an \code{\link{AM_prior}} object. See \code{\link{AM_prior_K_Delta}}, \code{\link{AM_prior_K_NegBin}},
+#'			\code{\link{AM_prior_K_Pois}} for more details.
+#'@param ... all additional parameters are ignored.
 #'  
 #'  
 #'@method summary AM_prior 
+#'@seealso \code{\link{AM_prior}}
 #'@export
 summary.AM_prior = function(object, ...){
 	quantiles = c(0.025, 0.25, 0.5, 0.75, 0.975) 
@@ -61,18 +67,20 @@ summary.AM_prior = function(object, ...){
 
 
 
-#' 
+#' Computes the prior number of clusters
 #'
-#' This function computes the prior on the number of clusters, i.e. occupied components of the mixture for a Finite Dirichlet process when the prior on the component-weights of the mixture is a Dirichlet with parameter \code{gamma} 
-#' (i.e. when unnormalized weights are distributed as Gamma(\eqn{\gamma},1) ) when the prior on the number of component is Shifted Poisson of parameter \code{Lambda}. See Section 9.1.1 of \insertCite{argiento2019infinity}{AntMAN} for more details.
+#'
+#' This function computes the prior on the number of clusters, i.e. occupied components of the mixture for a Finite Dirichlet process when the prior on the component-weights of the mixture is a 
+#' Dirichlet with parameter \code{gamma} (i.e. when unnormalized weights are distributed as Gamma(\eqn{\gamma},1)). This function can be used when the prior on the number of 
+#' components is Shifted Poisson of parameter \code{Lambda}. See \insertCite{argiento2019infinity}{AntMAN} for more details.
 #' 
 #' There are no default values.
 #'
-#' @param n        The sample size
-#' @param Lambda   The \code{Lambda} parameter of the Poisson
-#' @param gamma    The \code{gamma} parameter of the Dirichlet 
+#' @param n        The sample size.
+#' @param Lambda   The \code{Lambda} parameter of the Poisson.
+#' @param gamma    The \code{gamma} parameter of the Dirichlet distribution. 
 #'
-#' @return AM_prior object, that is a vector of length n, reporting the values of the prior on the number of clusters induced by the prior on \code{M} and \code{w}, i.e. \code{p^*_k} for \code{k=1,...,n}. See Section 9.1.1 of Argiento de Iorio (2019) for more details.
+#' @return an \code{\link{AM_prior}} object, that is a vector of length n, reporting the values of the prior on the number of clusters induced by the prior on \code{M} and \code{w}, i.e. \code{p^*_k} for \code{k=1,...,n}. See \insertCite{argiento2019infinity}{AntMAN} for more details.
 #'
 #' @keywords prior number of clusters
 #'
@@ -99,16 +107,22 @@ AM_prior_K_Pois <- function (n,gamma,Lambda) {
 
 
 
-#' This function computes the prior on the number of cluster, i.e. occupied component of the mixutre for a Finite Dirichlet process when the prior on the component-weigts of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights are distributed as Gamma(\eqn{\gamma},1) ) when the prior on the number of componet  is Negative Binomial with parameter \code{r>0} and \code{0<p<1}, with  mean is mu =1+ r*p/(1-p) TODO: CHECK THIS FORMULA!!!. See Section 9.1.1 of the Paper Argiento de Iorio 2019 for more details. 
+#' computes the prior number of clusters
+#'
+#'
+#' This function computes the prior on the number of clusters, i.e. occupied component of the mixture for a Finite Dirichlet process when the 
+#' prior on the component-weights of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormalized weights are distributed as 
+#' Gamma(\eqn{\gamma},1)). This function can be used when the prior on the number of components is Negative Binomial with parameter \eqn{r>0} and
+#' \eqn{0<p<1}, with mean \eqn{mu =1+ r*p/(1-p)}. See \insertCite{argiento2019infinity}{AntMAN} for more details. 
 #' 
 #' There are no default values.
 #'
-#' @param n      The sample size
-#' @param r      The dispersion parameter \code{r} of Negative Binomial
-#' @param p      The probability of failure parameter \code{p} of Negative Binomial
-#' @param gamma  The \code{gamma} parameter of the Dirichlet 
+#' @param n      The sample size.
+#' @param r      The dispersion parameter \code{r} of the Negative Binomial.
+#' @param p      The probability of failure parameter \code{p} of the Negative Binomial.
+#' @param gamma  The \code{gamma} parameter of the Dirichlet distribution.
 #'
-#' @return AM_prior object, that is a vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}
+#' @return an \code{\link{AM_prior}} object, that is a vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}.
 #'
 #' @keywords prior number of cluster
 #'
@@ -138,16 +152,19 @@ AM_prior_K_NegBin <- function (n,gamma, r, p){
 
 
 
-#' This function compute the prior on the number of cluster, i.e. occupied component of the mixutre for a Finite Dirichlet process 
-#' when the prior on the component-weigts of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormailized weights 
-#' are distributed as Gamma(\eqn{\gamma},1) ) when the number of component are fixed to \code{M^*}, i.e. a Dirac prior assigning mass
-#'  only to \code{M^*} is assumed. See Section 9.1.1 of the Paper Argiento de Iorio 2019 for more details.#' There are no default values.
+#' Computes the prior on the number of clusters
 #'
-#' @param n        The sample size
-#' @param Mstar    The number of component of the mixture 
-#' @param gamma    The \code{gamma} parameter of the Dirichlet 
 #'
-#' @return AM_prior object, that is a vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}
+#' This function computes the prior on the number of clusters, i.e. occupied components of the mixture for a Finite Dirichlet process 
+#' when the prior on the component-weights of the mixture is a Dirichlet with parameter \code{gamma} (i.e. when unnormalised weights 
+#' are distributed as Gamma(\eqn{\gamma},1)). This function can be used when the number of components is fixed to \eqn{M^*}, i.e. 
+#' a Dirac prior assigning mass only to \eqn{M^*} is assumed. See \insertCite{argiento2019infinity}{AntMAN} There are no default values.
+#'
+#' @param n        The sample size.
+#' @param Mstar    The number of component of the mixture. 
+#' @param gamma    The \code{gamma} parameter of the Dirichlet distribution. 
+#'
+#' @return an \code{\link{AM_prior}} object, that is a vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}.
 #'
 #' @keywords prior number of cluster
 #'
