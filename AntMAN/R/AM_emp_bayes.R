@@ -18,7 +18,7 @@
 #'@param scEsig2 a positive value (default=3) such that marginally E(\eqn{\sigma^2}) = \eqn{s^2}*scEsig2, where \eqn{s^2} is the
 #'sample variance.
 #'@param CVsig2 The coefficient of variation of \eqn{\sigma^2} (default=3).
-#'  }
+#'  
 #'@return an object of class \code{\link{AM_mix_hyperparams}}, in which hyperparameters \code{m0}, \code{k0},
 #' \code{nu0} and \code{sig02} are specified. To understand the usage of these hyperparameters, please refer to
 #' \code{\link{AM_mix_hyperparams_uninorm}}.

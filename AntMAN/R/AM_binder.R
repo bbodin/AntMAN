@@ -113,7 +113,19 @@ AM_compute_binder_loss <- function(eam, labels, Const_Binder = 0.5){
     return (.computeBinderLoss(eam, labels, Const_Binder))
 }
 
-
+#' Convert partition labels to adjacency matrix
+#' 
+#' @param labels The integer vector of partition labels.
+#' @return A binary integer matrix \eqn{E} where 
+#' \eqn{E_{ij} = 1} if \eqn{i} and \eqn{j} if
+#' item i and item j have the same partition label, and 0 otherwise.
+computeAdjacencyMatrix <- function(labels) {
+    if (!all(is.finiteInteger(labels))) {
+        stop("labels must be a vector of integers.")
+    }
+    N <- length(labels)
+    return (matrix(as.integer(outer(labels, labels, "==")), ncol=N))
+}
 
 #' Binder distance of two partitions
 #' 
@@ -137,7 +149,7 @@ AM_compute_binder_distance <- function(testLabels, refLabels, Const_Binder) {
     if (!is.nonNegNumberLessThan1(Const_Binder)) {
         stop("Const_Binder must be a number between 0 and 1.")
     }
-    return(computeBinderLoss(computeAdjacencyMatrix(refLabels), testLabels, Const_Binder))
+    return(.computeBinderLoss(computeAdjacencyMatrix(refLabels), testLabels, Const_Binder))
 }
 
 is.validAdjacencyMatrix <- function(p) {

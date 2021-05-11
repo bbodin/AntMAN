@@ -128,7 +128,7 @@ AM_plot_pmf=function(x,tags = NULL,title = "MCMC Results"){
 #' Given an \code{\link{AM_mcmc_output}} object, \code{\link{AM_plot_traces}} visualises the traceplots of the specified variables involved in the MCMC inference. 
 #' AM_plot_traces is built upon bayesplot's mcmc_trace.
 #'  
-#'@param x An \code{\link{AM_mcmc_output fit object, produced by calling \code{\link{AM_mcmc_fit}}.
+#'@param x An \code{\link{AM_mcmc_output}} fit object, produced by calling \code{\link{AM_mcmc_fit}}.
 #'@param tags A list of variables to consider. This function only produces meaningful plots for variables that have fixed dimension across the draws. If not specified, plots pertaining to M and K will be produced. 
 #'@param title Title for the plot
 #'@return NULL
@@ -223,7 +223,7 @@ AM_plot_similarity_matrix=function(x, ...){
 #' plotting function mcmc_acf_bar.
 
 #'  
-#'@param x An \code{\link{AM_mcmc_output} object, produced by calling \code{\link{AM_mcmc_fit}}.
+#'@param x An \code{\link{AM_mcmc_output}} object, produced by calling \code{\link{AM_mcmc_fit}}.
 #'@param tags A list of variables to consider. This function only produces meaningful plots for variables that have fixed dimension across the draws. If not specified, plots pertaining to M and K will be produced. 
 #'This function is built upon bayesplot's \code{mcmc_acf_bar}.
 #'@param lags An integer specifying the number of lags to plot. If no value is specified, the default number of lags shown is half the total number of iterations.
@@ -264,6 +264,10 @@ AM_plot_chaincor=function(x, tags = NULL, lags = NULL, title = "MCMC Results"){
 #'@param y A matrix containing the y observations which produced fit.
 #'@param x_lim_param A vector with two elements describing the plot's x_axis scale, e.g. c(0.8, 7.2).
 #'@param y_lim_param A vector with two elements describing the plot's y_axis scale, e.g. c(0, 1).
+#'  
+#'@importFrom grDevices n2mfrow
+#'@importFrom graphics axis
+#'@export
 AM_plot_mvb_cluster_frequency <- function(fit, y, x_lim_param= c(0.8, 7.2), y_lim_param = c(0,1)){
 
   result = AM_binder(fit)
@@ -272,7 +276,7 @@ AM_plot_mvb_cluster_frequency <- function(fit, y, x_lim_param= c(0.8, 7.2), y_li
   ci = t(do.call(cbind,fit$CI)) +1
   
   # obtain dim of y
-  y_dim = dim(y_mvb)[2]
+  y_dim = dim(y)[2]
 
   G = length(fit$K)
   n = length(hatc)
@@ -294,7 +298,7 @@ AM_plot_mvb_cluster_frequency <- function(fit, y, x_lim_param= c(0.8, 7.2), y_li
     plot(1:y_dim,apply(thetahat[hatc==j,],2, mean),type="h",xaxt="n",
          xlim = x_lim_param, ylim= y_lim_param ,col=j, lwd=2, xlab = "",
          ylab = expression(hat(theta)), main=paste("Group", j))
-    lines((1:y_dim)+0.1, apply(y_mvb[hatc==j,],2,mean), type="h",xaxt="n",
+    lines((1:y_dim)+0.1, apply(y[hatc==j,],2,mean), type="h",xaxt="n",
           xlim = x_lim_param, ylim = y_lim_param, col=j, lwd=2, ylab="",lty=2)
     axis(1, at=1:y_dim, labels = col_names)
   }

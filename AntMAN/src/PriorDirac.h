@@ -59,12 +59,12 @@ public:
 
 	int init_M_na(const int K) {
 		int M_na = this->q_param.Mstar - K ;
-		VERBOSE_ASSERT(M_na >= 0, "Please provide initial clustering with K <= Mstar");
+		VERBOSE_ASSERT(M_na >= 0, "Please provide initial clustering with K <= Mstar: " << this->q_param.Mstar << ">" << K);
 		return M_na;
 	}
 	int update_M_na(const double U ,  const int K) {
 		int M_na = this->q_param.Mstar - K ;
-		VERBOSE_ASSERT(M_na >= 0, "Internal Error, K > Mstar.");
+		VERBOSE_ASSERT(M_na >= 0, "Internal Error, K > Mstar." << this->q_param.Mstar << ">" << K);
 		return M_na;
 
 	}

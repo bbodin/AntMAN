@@ -19,9 +19,6 @@
 #'@return co-clustering matrix
 #'
 #'@export
-#'
-#' @examples
-#' ccm <- AM_coclustering(fit)
 AM_coclustering = function (fit) {
 	
 	CI =  as.matrix((AM_extract(fit, c("CI")))[["CI"]]);
