@@ -62,10 +62,10 @@ inline arma::vec mvrnormArma(arma::colvec mu, arma::mat SigUnchecked) {  // TODO
 
 	arma::mat Sig = SigUnchecked;
 
-	if (not Sig.is_sympd()) {
+	//if (not Sig.is_sympd()) {
 		//VERBOSE_WARNING("mvrnormArma requires Sig to be symmetric. Sig auto-corrected.");
 		//Sig  =  arma::symmatu(Sig);
-	}
+	//}
 
 
 	//VERBOSE_ASSERT(Sig.is_sympd(), "mvrnormArma requires Sig to be symmetric. It is not Sig = " << std::endl << Sig);
@@ -73,8 +73,10 @@ inline arma::vec mvrnormArma(arma::colvec mu, arma::mat SigUnchecked) {  // TODO
 
 	arma::vec Y = arma::randn<arma::vec>(Sig.n_cols);
 	arma::mat cholres = Sig;
+
 	try {
 		cholres =  arma::chol(Sig) ;
+
 	} catch (std::runtime_error& e) {
 		VERBOSE_ERROR("cholesky failed....");
 		cholres = Sig;
@@ -109,20 +111,32 @@ inline arma::mat riwish(const int df, const arma::mat& iSUnchecked) {  // TODO :
 	arma::mat iS = iSUnchecked;
 
 		if (not iS.is_sympd()) {
-			//VERBOSE_WARNING("riwish requires iS to be symmetric. iS auto-corrected.");
-			//iS  =  arma::symmatu(iS);
+			VERBOSE_WARNING("riwish requires iS to be symmetric. iS auto-corrected.");
+			iS  =  arma::symmatu(iS);
 		}
 
 
 		arma::mat iwishrndres = iS;
 			try {
-				iwishrndres =  arma::iwishrnd(iS, df) ;
+				// commented because the inverse returns warnings 
+				//iwishrndres =  arma::iwishrnd(iS, df) ;
+
+				//debugging the chol warning
+				arma::mat iS_inv = iS.i();
+				if (not iS_inv.is_symmetric()){
+					iS_inv = arma::symmatu(iS_inv);
+				}
+				iwishrndres = arma::symmatu(arma::wishrnd(iS_inv, df).i());
+				if (not iwishrndres.is_symmetric()){
+					iwishrndres = arma::symmatu(iwishrndres);
+				}
+
+
 			} catch (std::runtime_error& e) {
 				VERBOSE_ERROR("cholesky failed....");
 				iwishrndres = iS;
 
 			}
-
 
 	return iwishrndres;
 }

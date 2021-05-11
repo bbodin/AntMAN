@@ -2,13 +2,7 @@
 % Please edit documentation in R/AM_find_gamma.R
 \name{AM_find_gamma_Pois}
 \alias{AM_find_gamma_Pois}
-\title{Once the prior on the numbuer of mixture $M$ is assumed to be a Shifted Posson of parameter \code{Lambda},
-this function  adopt a \emph{bisection method} to find the value of \code{gamma} such that the induced distribution
-on the number of clusers is centered around a user specifed value \eqn{K^*}, i.e. the function use a bisection
-method to solve Eq.~{eq:findgamma} of WE NEED TO CITE ANTMAN PAPER. The user can provide a lower \eqn{\gamma_{l}}
-and an upper \eqn{\gamma_{u}} bound for the possible values of $gamma$. The default values are \eqn{\gamma_l= 10^{-3}} and \eqn{\gamma_{u}=10}.
-A defaault value for the tolerance is \eqn{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31),
-the function stops warning that convergence has not bee reached.}
+\title{Given that the prior on M is a shifted Poisson, find the \eqn{\gamma} hyperparameter of the weights prior to match \eqn{E(K)=K^{*}}, where \eqn{K^{*}} is user-specified}
 \usage{
 AM_find_gamma_Pois(
   n,
@@ -20,27 +14,27 @@ AM_find_gamma_Pois(
 )
 }
 \arguments{
-\item{n}{The sample size}
+\item{n}{The sample size.}
 
-\item{Lambda}{The parameter of the Shifted Poisson for the number of components of the mixture}
+\item{Lambda}{The parameter of the Shifted Poisson for the number of components of the mixture.}
 
-\item{Kstar}{The mean number of cluster the user want to specify}
+\item{Kstar}{The mean number of clusters the user wants to specify.}
 
-\item{gam_min}{The lower bound of the interval in which \code{gamma} should be lie}
+\item{gam_min}{The lower bound of the interval in which \code{gamma} should lie.}
 
-\item{gam_max}{The upper bound of the interval in which \code{gamma} should lie}
+\item{gam_max}{The upper bound of the interval in which \code{gamma} should lie.}
 
-\item{tolerance}{Tolerance of the method}
+\item{tolerance}{Level of tolerance of the method.}
 }
 \value{
-A value of \code{gamma} such that \code{E(K)=K^*}
+A value of \code{gamma} such that \eqn{E(K)=K^{*}}
 }
 \description{
-Once the prior on the numbuer of mixture $M$ is assumed to be a Shifted Posson of parameter \code{Lambda},
-this function  adopt a \emph{bisection method} to find the value of \code{gamma} such that the induced distribution
-on the number of clusers is centered around a user specifed value \eqn{K^*}, i.e. the function use a bisection
-method to solve Eq.~{eq:findgamma} of WE NEED TO CITE ANTMAN PAPER. The user can provide a lower \eqn{\gamma_{l}}
-and an upper \eqn{\gamma_{u}} bound for the possible values of $gamma$. The default values are \eqn{\gamma_l= 10^{-3}} and \eqn{\gamma_{u}=10}.
+Once the prior on the number of mixture components M is assumed to be a Shifted Poisson of parameter \code{Lambda},
+this function  adopts a \emph{bisection method} to find the value of \eqn{\gamma} such that the induced distribution
+on the number of clusters is centered around a user specifed value \eqn{K^{*}}, i.e. the function uses a bisection
+method to solve for \eqn{\gamma} \insertCite{argiento2019infinity}{AntMAN}. The user can provide a lower \eqn{\gamma_{l}}
+and an upper \eqn{\gamma_{u}} bound for the possible values of \eqn{\gamma}. The default values are \eqn{\gamma_l= 10^{-3}} and \eqn{\gamma_{u}=10}.
 A defaault value for the tolerance is \eqn{\epsilon=0.1}. Moreover, after a maximum number of iteration (default is 31),
 the function stops warning that convergence has not bee reached.
 }
@@ -51,7 +45,7 @@ gam_po <-  AM_find_gamma_Pois(n,Lam,Kstar=6, gam_min=0.0001,gam_max=10, toleranc
 prior_K_po <-  AM_prior_K_Pois(n,gam_po,Lam)
 prior_K_po\\\%*\\\%1:n
 }
-\keyword{cluster}
+\keyword{clusters}
 \keyword{number}
 \keyword{of}
 \keyword{prior}

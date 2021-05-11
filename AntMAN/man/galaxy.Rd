@@ -16,7 +16,7 @@ Roeder, K. (1990) Density estimation with confidence sets exemplified by supercl
 galaxy
 }
 \description{
-This data set consider physical information on velocities (km/second) for
+This data set considers the physical information of velocities (10^3 km/second) for
 82 galaxies reported by Roeder (1990). These are drawn from six well-separated
 conic sections of the Corona Borealis region.
 }

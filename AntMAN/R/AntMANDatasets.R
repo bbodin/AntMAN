@@ -10,7 +10,7 @@
 #################################################################################
 
 
-#' Usage frequency of the word said in the Brown corpus.
+#' Usage frequency of the word "said" in the Brown corpus
 #'     
 #'@format  A list with 500 observations on the frequency of said in different texts.
 #'  
@@ -24,7 +24,7 @@
 
 #' Galaxy velocities dataset
 #' 
-#' This data set consider physical information on velocities (km/second) for
+#' This data set considers the physical information of velocities (10^3 km/second) for
 #' 82 galaxies reported by Roeder (1990). These are drawn from six well-separated
 #' conic sections of the Corona Borealis region.
 #'  
@@ -39,11 +39,12 @@
 "galaxy"
 
 
-#' carcinoma
-#'  
-#' The carcinoma data from Agresti (2002, 542) consist of seven dichotomous variables that represent 
+#' Carcinoma dataset
+#' 
+#' 
+#' The carcinoma data from Agresti (2002, 542) consist of seven dichotomous variables representing 
 #' the ratings by seven pathologists of 118 slides on the presence or absence of carcinoma.
-#' The purpose of studying these data is to model "interobserver agreement" by examining how
+#' The purpose of studying this data is to model "interobserver agreement" by examining how
 #' subjects might be divided into groups depending upon the consistency of their diagnoses.
 #'  
 #'@format A data frame with 118 rows and 7 variables (from A to G).
@@ -59,7 +60,7 @@
 
 #' Teen Brain Images from the National Institutes of Health, U.S.
 #'
-#' Picture of brain activities from a teenager consumming drugs. 
+#' Picture of brain activities from a teenager consuming drugs. 
 #'  
 #'@format  A list that contains \code{dim} a (W:width,H:height) pair, and  \code{pic} a data frame (W*H pixels image in RGB format).
 #'  

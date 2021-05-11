@@ -61,7 +61,7 @@ test : build_test/Makefile
 	+make -C build_test CTEST_OUTPUT_ON_FAILURE=1 all test
 
 deps :
-	for f in devtools salso mvtnorm mcclust GGally bayesplot RcppArmadillo dendextend ggdendro jpeg magrittr stringr ; do echo $$f ; R -q -e "install.packages(\"$f\",repos = \"http://cran.us.r-project.org\");"; done
+	for f in devtools Rdpack salso mvtnorm mcclust GGally bayesplot RcppArmadillo dendextend ggdendro jpeg magrittr stringr ; do echo $$f ; R -q -e "install.packages(\"$$f\",repos = \"http://cran.us.r-project.org\");"; done
 
 clean : 
 	rm -rf build_test/ current *~ *.Rinstall *.pdf  *.tar.gz *.Rcheck ./AntMAN/NAMESPACE ./AntMAN/src/*.o ./AntMAN/src/*.so 	./AntMAN/src/*.rds ./AntMAN/src/RcppExports.cpp  ./AntMAN/R/RcppExports.R  ./AntMAN/man/*.Rd .Rd2pdf*

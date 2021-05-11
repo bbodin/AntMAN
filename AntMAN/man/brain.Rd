@@ -14,7 +14,7 @@ https://www.flickr.com/photos/nida-nih/29741916012
 brain
 }
 \description{
-Picture of brain activities from a teenager consumming drugs.
+Picture of brain activities from a teenager consuming drugs.
 }
 \examples{
  data(brain)

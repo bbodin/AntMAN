@@ -156,23 +156,29 @@ extract_target = function(fit, target, iterations = NULL, debug = FALSE){
 
 
 
-#'  Extract values within a AM_mcmc_output object. 
+#'  Extract values within a \code{\link{AM_mcmc_output}} object
 #' 
-#'  Due to the complexity of AntMAN outputs, AM_mcmc_output object can be difficult
-#'  to handle. The AM_extract function ease access of particular variables within 
-#'  AM_mcmc_output object.
+#'  Given an \code{\link{AM_mcmc_output}} object, as well as the target variable names, 
+#'  AM_extract will return a list of the variables of interest.
+#'
+#'  Due to the complexity of AntMAN outputs, \code{\link{AM_mcmc_output}} object can be difficult
+#'  to handle. The AM_extract function eases access of particular variables within the
+#'  \code{\link{AM_mcmc_output}} object. Variables of varying dimension are expected to result from the transdimensional moves. When considering such
+#'  variables, the extracted list would correspond to an nx1 list, where n refers to the number of extracted iterations. Each of these nx1 entries consists
+#'  of another list of dimension mx1, where m specifies the number of components inferred for that iteration.
 #'  
-#'@param object a \code{\link{AM_mcmc_output}} object
-#'@param targets List of variables to extract (ie. K, M, Mna, mu).
+#'@param object an \code{\link{AM_mcmc_output}} object.
+#'@param targets List of variables to extract (ie. K, M, mu).
 #'@param iterations Can specify particular iterations to extracts, NULL for all.
-#'@param debug Activate log to 
+#'@param debug Activate log to. 
+#'@return a list of variables specified in \code{targets}.
 #'  
 #'@export
 AM_extract = function(object, targets, iterations = NULL, debug = FALSE){
 	
+	
 	df = NULL;
 	for (target in targets) {
-		
 		
 		if (target == "CI") {
 			## CI Extractor
@@ -183,9 +189,18 @@ AM_extract = function(object, targets, iterations = NULL, debug = FALSE){
 			if (!is.null(iterations)) {
 				tmp = tmp[iterations,];
 			}
-		} else {
+		}
+		#TODO: working but not elegant
+		if (target == "mu" || target == "sig2" || target == "Sig" || target == "theta"){
+			tmp = as.matrix(object[[target]])
+			if (!is.null(iterations)){
+				tmp = as.matrix(tmp[iterations,])
+			}
+		}
+
+		 else {
 			## Generic extractor (SLOW)
-			tmp = extract_target(object,target,iterations,debug);
+			tmp = as.matrix(extract_target(object,target,iterations,debug));
 		}
 		
 		
@@ -195,14 +210,15 @@ AM_extract = function(object, targets, iterations = NULL, debug = FALSE){
 		}
 		
 		if(is.null(df)) {
-			df = tmp;
+			nrows = nrow(tmp)
+			df = list();
 		} else {
-			if (nrow(df) != nrow(tmp)) {
+			if (nrow(tmp) != nrows) {
 				warning("ERROR: Invalid extraction size, previously found ",nrow(df),"while with target '",target,"' we have ", nrow(tmp),"\n", sep="");
 				return (NULL);
 			}
-			df = data.frame(df,tmp);
 		}
+		df[[target]] = tmp;
 	}
 	return (df);
 	

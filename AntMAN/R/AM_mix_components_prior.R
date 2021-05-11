@@ -5,7 +5,7 @@
 ###############
 #######################################################################################
 
-#' S3 class AM_mix_components_prior.
+#' S3 class AM_mix_components_prior
 #' @description Object return by \code{AM_mix_components_prior_*}. 
 #' @exportClass AM_mix_components_prior
 #' @seealso \code{\link{AM_mix_components_prior_dirac}} 
@@ -15,14 +15,17 @@
 NULL
 
 
-#'  summary AM_mix_components_prior 
+#'  summary information of the AM_mix_components_prior object
 #'  
-#'  Print infos on AM_mix_components_prior Object
+#'
+#' Given an \code{\link{AM_mix_components_prior}} object, this function prints the summary information
+#' of the specified prior on the number of components. 
 #'  
-#'@param object a \code{\link{AM_mix_components_prior}} object
-#'@param ... all additionnal parameters are ignored
+#'@param object an \code{\link{AM_mix_components_prior}} object.
+#'@param ... all additional parameters are ignored.
 #'  
 #'@importFrom utils head
+#'@seealso \code{\link{AM_mix_components_prior}}
 #'@method summary AM_mix_components_prior 
 #'@export
 summary.AM_mix_components_prior = function(object, ...){
@@ -40,13 +43,13 @@ summary.AM_mix_components_prior = function(object, ...){
 #################################################################################
 
 
-#' Generate a configuration object that contains a Point mass prior.
+#' Generate a configuration object that contains a Point mass prior
 #' 
 #' Generate a configuration object that assigns a Point mass prior to the number of mixture components.
-#' This is the simplest option and it requires to specify a value \eqn{\widetilde{M}} 
-#' such that \eqn{Pr(M=\widetilde{M}) =1}. 
+#' This is the simplest option and it requires users to specify a value \eqn{M^*} 
+#' such that \eqn{Pr(M=M^* =1}. 
 #'
-#'@param Mstar      Fixed value  \eqn{\widetilde{M}} for the number of components. 
+#'@param Mstar      Fixed value  \eqn{M^*} for the number of components. 
 #'@return list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_fit}}. 
 #'
 #'@keywords prior
@@ -69,26 +72,27 @@ AM_mix_components_prior_dirac <- function(Mstar) {
 
 
 
-#' Negative Binomial Prior.
+#' Generate a configuration object for a Shifted Negative Binomial prior on the number of mixture components
+#'
 #' 
-#' This generate a configuration object for a Shifted Negative Binomial prior on the number of mixture components such as 
+#' This generates a configuration object for a Shifted Negative Binomial prior on the number of mixture components such that 
 #'  \deqn{q_M(m)=Pr(M=m) =\frac{\Gamma(r+m-1)}{(m-1)!\Gamma(r)} p^{m-1}(1-p)^r, \quad m=1,2,3,\ldots}
-#' The hyper-parameters \eqn{p\in (0,1)}  (probability of success) and \eqn{r>0} (size) can either be fixed using \code{r} and \code{p}
+#' The hyperparameters \eqn{p\in (0,1)}  (probability of success) and \eqn{r>0} (size) can either be fixed using \code{r} and \code{p}
 #' or assigned appropriate prior distributions. 
 #' In the latter case, we assume \eqn{p \sim Beta(a_P,b_P)} and \eqn{r \sim  Gamma(a_R,b_R)}. In AntMAN we assume the following 
 #' parametrization of the Gamma density: 
-#' \deqn{p(x\mid a,b )= \frac{b^a x^{a-1}}{\Gamma(a)} \exp\{ -bx \}, \quad x>0  }
+#' \deqn{p(x\mid a,b )= \frac{b^a x^{a-1}}{\Gamma(a)} \exp\{ -bx \}, \quad x>0.}
 #' 
 #' 
 #' If no arguments are provided, the default is \eqn{r = 1 , a_P = 1, b_P = 1}.
 #' 
-#' Additionnaly, when init_R and init_P are no specified, there is default values : 
-#' \eqn{init_R = 1} and \eqn{init_P = 0.5}
+#' Additionally, when init_R and init_P are not specified, there are default values: 
+#' \eqn{init_R = 1} and \eqn{init_P = 0.5}.
 #'
 #'@param a_R      The shape parameter \eqn{a}  of the \eqn{Gamma(a,b)} prior distribution for \eqn{r}.
 #'@param b_R      The  rate parameter \eqn{b} of the \eqn{Gamma(a,b)} prior distribution for \eqn{r}.
 #'@param init_R   The initial value of \eqn{r}, when specifying \code{a_R} and \code{b_R}.
-#'@param a_P      The parameter\eqn{a}  of the \eqn{Beta(a,b)} prior distribution for \eqn{p}.
+#'@param a_P      The parameter \eqn{a}  of the \eqn{Beta(a,b)} prior distribution for \eqn{p}.
 #'@param b_P      The parameter \eqn{b}  of the \eqn{Beta(a,b)} prior distribution for \eqn{p}.
 #'@param init_P   The inivial  value of \eqn{p}, when specifying \code{a_P} and \code{b_P}.
 #'@param R        It allows  to fix  \eqn{r} to a specific value.
@@ -135,22 +139,23 @@ AM_mix_components_prior_negbin <- function(a_R = NULL, b_R = NULL, a_P = NULL, b
 
 
 
-#' Generate a configuration object for a Poisson prior on the number of mixture components.
+#' Generate a configuration object for a Poisson prior on the number of mixture components
 #' 
+#'
 #' This function generates a configuration object for a Shifted Poisson prior on the number 
 #' of mixture components such that  
 #' \deqn{q_M(m)=     Pr (M=m)= \frac{e^{-\Lambda}\Lambda^{m-1} }{(m-1)!}    ,      \quad m=1,2,3,\ldots}
-#' The hyper-parameter \eqn{\Lambda} can either be fixed using \code{Lambda} 
+#' The hyperparameter \eqn{\Lambda} can either be fixed using \code{Lambda} 
 #' or assigned a \eqn{Gamma(a,b)} prior distribution with \code{a} and \code{b}.
 #' In AntMAN we assume the following parametrization of the Gamma density: 
-#' \deqn{p(x\mid a,b )= \frac{b^a x^{a-1}}{\Gamma(a)} \exp\{ -bx \}, \quad x>0  }
+#' \deqn{p(x\mid a,b )= \frac{b^a x^{a-1}}{\Gamma(a)} \exp\{ -bx \}, \quad x>0.}
 #' 
 #' If no arguments are provided, the default is a prior distribution with \code{a = 1} and \code{b = 1}.
 #'
 #'@param a      The shape parameter \code{a} of  the \eqn{Gamma(a,b)} prior distribution.
 #'@param b      The rate  parameter \code{b} of the \eqn{Gamma(a,b)} prior distribution.
 #'@param init   The  initial value for \eqn{\Lambda}, when specifying \code{a} and \code{b}.
-#'@param Lambda It allows to set the   hyper-parameter \eqn{\Lambda} to  fixed value.
+#'@param Lambda It allows to set the  hyperparameter \eqn{\Lambda} to be assigned a fixed value.
 #'
 #'@return A configuration list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_fit}}. 
 #'
@@ -160,8 +165,7 @@ AM_mix_components_prior_negbin <- function(a_R = NULL, b_R = NULL, a_P = NULL, b
 #' 
 #'@examples
 #' 
-#' ## See \code{\link{AM_mix_hyperparams_uninorm}} example.
-#' components_prior   = AM_mix_components_prior_pois (init=3,  a=1, b=1) 
+#' components_prior = AM_mix_components_prior_pois (init=3,  a=1, b=1) 
 #' 
 
 AM_mix_components_prior_pois <- function(a=NULL, b=NULL, Lambda=NULL, init=NULL) {

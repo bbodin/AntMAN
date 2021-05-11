@@ -18,9 +18,8 @@
 #'
 #' @return A vector of length n, reporting the values \code{C(gamma,n,k)} for \code{k=1,...,n}
 #'
-#' @keywords prior number of cluster
+#' @keywords internal
 #'
-#' @export
 #' @examples
 #' dd= IAM_compute_stirling_ricor_abs(11,10)
 #' print(dd)
@@ -29,7 +28,7 @@ IAM_compute_stirling_ricor_abs <- function (n,gamma) {
 }
 
 
-#' Compute ...
+#' Compute stirling ricor log
 #' 
 #' There are no default values.
 #'
@@ -38,9 +37,7 @@ IAM_compute_stirling_ricor_abs <- function (n,gamma) {
 #'
 #' @return A vector of length n, reporting the values ... for \code{k=1,...,n}
 #'
-#' @keywords prior number of cluster
-#'
-#' @export
+#' @keywords internal
 #' @examples
 #' dd= IAM_compute_stirling_ricor_log(11,10)
 #' print(dd)
@@ -58,9 +55,8 @@ IAM_compute_stirling_ricor_log<- function (n,gamma) {
 #'
 #' @return A vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}
 #'
-#' @keywords prior number of cluster
+#' @keywords internal
 #'
-#' @export
 #' @examples
 #' n=1000
 #' Lam=100
@@ -86,9 +82,8 @@ IAM_VnkPoisson <- function (n,Lambda,gamma) {
 #'
 #' @return A vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}
 #'
-#' @keywords prior number of cluster
+#' @keywords internal
 #'
-#' @export
 #' @examples
 #' n=1000
 #' r=1000
@@ -117,9 +112,8 @@ IAM_VnkNegBin <- function (n,r,p,gam) {
 #'
 #' @return A vector of length n, reporting the values \code{V(n,k)} for \code{k=1,...,n}
 #'
-#' @keywords prior number of cluster
+#' @keywords internal
 #'
-#' @export
 #' @examples
 #' n=200
 #' Mstar=100
@@ -140,16 +134,12 @@ IAM_VnkDelta <- function (n,Mstar,gamma) {
 #' 
 #' TBD
 #' 
-#'@export
-#'@param  unichain  TBD
-#'@return TBD
-### Provo a calcolare l'effective sample size
+#'@keywords internal
+#'@param  unichain  
+#'@return Effective Sample Size
 IAM_mcmc_neff <- function(unichain){ # Using 11.5 of Bayesian Data Analysis
 	
-	## TODO: Compare with this : 
-	#library(coda)
-	#effectiveSize(mcmc(unichain))
-	
+
 	
 	# Dunson Ventari Rubin Section 11.5
 	# Whit rho estimated using the acf function of R
@@ -172,7 +162,7 @@ IAM_mcmc_neff <- function(unichain){ # Using 11.5 of Bayesian Data Analysis
 
 #' Internal function used to compute the MCMC Error as a batch mean.
 #' 
-#'@export
+#'@keywords internal
 #'@param  X is a chain
 #'@return the MCMC Error (sqrt(sigma2) / sqrt(N))
 IAM_mcmc_error <- function(X){

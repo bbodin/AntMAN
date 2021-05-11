@@ -22,10 +22,12 @@ res = AM_demo_uvn_poi ()
 ### Run
 ##############################################
 
-binder_result = AM_binder(res$fit , with_coclustering_probability=TRUE)
-
-cluster                    = binder_result[["clustering"]]
-coclustering_probability   = binder_result[["coclustering_probability"]]
+binder_result = AM_binder(res$fit)
+cluster = binder_result[["Labels"]]
+coclustering_probability = AM_coclustering(res$fit)
+#binder_result = AM_binder(res$fit , with_coclustering_probability=TRUE)
+# cluster                    = binder_result[["clustering"]]
+# coclustering_probability   = binder_result[["coclustering_probability"]]
 
 ##############################################
 ### Verify
