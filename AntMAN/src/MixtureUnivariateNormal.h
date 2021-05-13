@@ -59,7 +59,7 @@ public :
 		std::vector<double> pow_sig2_current (M);
 		std::vector<double> log_pow_sig2_current (M);
 
-		arma::vec random_u   = arma::randu(n);
+		arma::vec random_u   = am_randu(n);
 
 
 		for(int l=0;l<M;l++){

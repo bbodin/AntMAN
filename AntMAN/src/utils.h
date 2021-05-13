@@ -71,7 +71,7 @@ inline arma::vec mvrnormArma(arma::colvec mu, arma::mat SigUnchecked) {  // TODO
 	//VERBOSE_ASSERT(Sig.is_sympd(), "mvrnormArma requires Sig to be symmetric. It is not Sig = " << std::endl << Sig);
 
 
-	arma::vec Y = arma::randn<arma::vec>(Sig.n_cols);
+	arma::vec Y = am_randn(Sig.n_cols);
 	arma::mat cholres = Sig;
 
 	try {

@@ -6,7 +6,8 @@
  */
 
 #define BOOST_TEST_MODULE BasicTest
-#include "testutils.h"
+
+#include <boost/test/included/unit_test.hpp>
 
 #include <Prior.h>
 #include <PriorPoisson.h>

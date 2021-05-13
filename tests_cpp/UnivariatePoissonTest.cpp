@@ -6,7 +6,8 @@
  */
 
 #define BOOST_TEST_MODULE UnivariatePoissonTest
-#include "testutils.h"
+
+#include <boost/test/included/unit_test.hpp>
 
 #include <PriorPoisson.h>
 #include <MixtureUnivariatePoisson.h>

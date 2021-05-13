@@ -17,20 +17,20 @@ enum AntMANType {
 };
 
 template <typename T>
-AntMANType getType(const T* v) {
+inline AntMANType getType(const T* v) {
 	VERBOSE_ASSERT(false, "Better to give the type of something, this was " << *v);
 	return AM_UNKNOWN;
 }
-template<> AntMANType getType(const int* v) {return AntMANType::AM_INT;}
-template<> AntMANType getType(const double* v) {return AntMANType::AM_DOUBLE;}
-template<> AntMANType getType(const unsigned int* v) {return AntMANType::AM_UINT;}
-template<> AntMANType getType(const arma::vec* v) {return AntMANType::AM_ARMA_VEC;}
-template<> AntMANType getType(const arma::mat* v) {return AntMANType::AM_ARMA_MAT;}
-template<> AntMANType getType(const arma::cube* v) {return AntMANType::AM_ARMA_CUBE;}
-template<> AntMANType getType(const arma::ivec* v) {return AntMANType::AM_ARMA_IVEC;}
-template<> AntMANType getType(const arma::imat* v) {return AntMANType::AM_ARMA_IMAT;}
-template<> AntMANType getType(const arma::icube* v) {return AntMANType::AM_ARMA_ICUBE;}
-template<> AntMANType getType(const std::vector<double>* v) {return AntMANType::AM_VEC_DOUBLE;}
+template<> inline AntMANType getType(const int* v) {return AntMANType::AM_INT;}
+template<> inline AntMANType getType(const double* v) {return AntMANType::AM_DOUBLE;}
+template<> inline AntMANType getType(const unsigned int* v) {return AntMANType::AM_UINT;}
+template<> inline AntMANType getType(const arma::vec* v) {return AntMANType::AM_ARMA_VEC;}
+template<> inline AntMANType getType(const arma::mat* v) {return AntMANType::AM_ARMA_MAT;}
+template<> inline AntMANType getType(const arma::cube* v) {return AntMANType::AM_ARMA_CUBE;}
+template<> inline AntMANType getType(const arma::ivec* v) {return AntMANType::AM_ARMA_IVEC;}
+template<> inline AntMANType getType(const arma::imat* v) {return AntMANType::AM_ARMA_IMAT;}
+template<> inline AntMANType getType(const arma::icube* v) {return AntMANType::AM_ARMA_ICUBE;}
+template<> inline AntMANType getType(const std::vector<double>* v) {return AntMANType::AM_VEC_DOUBLE;}
 
 
 class AntMANLogger {

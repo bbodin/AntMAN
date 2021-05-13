@@ -12,7 +12,7 @@ docker : Dockerfile
 	mkdir -p docker_share
 	sudo rm -rf docker_share/* 
 	chcon -Rt svirt_sandbox_file_t  docker_share/
-	cp -rf AntMAN Makefile new_tutorial.R tests_cpp/ docker_share/
+	cp -rf AntMAN Makefile tests_cpp/ docker_share/
 	sudo docker build -f Dockerfile.3.4.4 -t bbodin/antman344 .
 	sudo docker run -v `pwd`/docker_share:/tmp/mixture bbodin/antman344 
 

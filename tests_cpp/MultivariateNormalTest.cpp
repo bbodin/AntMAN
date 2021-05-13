@@ -8,6 +8,7 @@
 #define BOOST_TEST_MODULE MultivariateNormalTest
 #include "testutils.h"
 
+#include <boost/test/included/unit_test.hpp>
 #include <PriorPoisson.h>
 #include <MixtureMultiVariateNormal.h>
 

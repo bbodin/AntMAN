@@ -64,19 +64,24 @@ static inline double am_rchisq (double a)                   {
 	 std::chi_squared_distribution<double> distribution(a);
 	 return (distribution(generator));
 }
+
+static inline arma::vec am_randu   (arma::uword n)               {return arma::randu(n);}
+static inline arma::vec am_randn   (arma::uword n)               {return arma::randn(n);}
+
 #else
 #ifdef HAS_RCPP
 #include <RcppArmadillo.h>
 // [[Rcpp::depends(RcppArmadillo)]]
 
-
-static inline double am_rpois   (double n)                    {return R::rpois(n);  }
-static inline double am_runif   (double a ,double b)          {return R::runif(a,b);  }
-static inline double am_rnbinom (double a ,double b)          {return R::rnbinom(a,b);}
-static inline double am_rgamma (double a ,double b)           {return R::rgamma(a,b); }
-static inline double am_rbeta  (double a ,double b)           {return R::rbeta(a,b); }
-static inline double am_rnorm (double a ,double b)            {return R::rnorm(a,b); }
-static inline double am_rchisq (double a)                     {return R::rchisq(a); }
+static inline arma::vec am_randu   (arma::uword n)               {return arma::randu(n);}
+static inline arma::vec am_randn   (arma::uword n)               {return arma::randn(n);}
+static inline double    am_rpois   (double n)                    {return R::rpois(n);  }
+static inline double    am_runif   (double a ,double b)          {return R::runif(a,b);  }
+static inline double    am_rnbinom (double a ,double b)          {return R::rnbinom(a,b);}
+static inline double    am_rgamma (double a ,double b)           {return R::rgamma(a,b); }
+static inline double    am_rbeta  (double a ,double b)           {return R::rbeta(a,b); }
+static inline double    am_rnorm  (double a ,double b)           {return R::rnorm(a,b); }
+static inline double    am_rchisq (double a)                     {return R::rchisq(a); }
 #else
 #error "Unsupported Compilation flags, Need NO_RCPP or HAS_RCPP"
 #endif

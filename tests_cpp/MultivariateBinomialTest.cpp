@@ -6,7 +6,8 @@
  */
 
 #define BOOST_TEST_MODULE MultivariateBinomialTest
-#include "testutils.h"
+
+#include <boost/test/included/unit_test.hpp>
 
 #include <PriorPoisson.h>
 #include <MixtureMultivariateBinomial.h>

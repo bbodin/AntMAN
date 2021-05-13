@@ -141,7 +141,7 @@ public :
 			const std::vector<double>& theta_current = this->_theta;
 			arma::vec Log_S_current = arma::log(S_current);
 			cluster_indices_t ci_current(n);
-			arma::vec random_u   = arma::randu(n);
+			arma::vec random_u   = am_randu(n);
 
 			for (int i=0; i < n; i++) {
 

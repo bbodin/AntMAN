@@ -90,7 +90,7 @@ public :
 
 			cluster_indices_t ci_current(n);
 			arma::vec Log_S_current = arma::log(S_current);
-			arma::vec random_u   = arma::randu(n);
+			arma::vec random_u   = am_randu(n);
 
 			VERBOSE_DEBUG("GibbsFramework<Tau_MultivariateNormal>::up_ci: for (int i=0; i < n; i++) {");
 
