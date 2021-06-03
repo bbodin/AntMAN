@@ -155,3 +155,31 @@ is.nonNegNumberLessThan1 <- function(x) {
     return (is.numeric(x) & is.finite(x) & x <= 1 & x >= 0)
 	}
 
+
+
+
+#' Sequentially Allocated Latent Structure Optimisation
+#'
+#' Heuristic partitioning to minimise the expected loss function 
+#' with respect to a given expected adjacency matrix. This function is built upon R-package salso's implementation of the
+#' salso function. See salso for more details.
+#'  
+
+#' @param fit an \code{\link{AM_mcmc_output}} object. 
+#' @param loss the recommended loss functions to be used are the "binder" or "VI". However, other loss functions that are supported
+#' can be found in the R-package salso's salso function. 
+#' @param maxClusts Maximum number of clusters to be considered. 
+#' The actual number of clusters searched may be lower. 
+#' @param nRuns Number of runs to try.
+#' @param maxZealousAttempts Maximum number of tries for zealous updates. See salso for more information.
+#' @param probSequentialAllocation  The probability of sequential allocation instead of using random sampling via sample(1:K,ncol(x),TRUE), 
+#' where K is maxNClusters. See salso for more information.
+#' argument.
+#' @param nCores Number of CPU cores to engage.
+
+#' @return An integer vector containing the expected partition labels of the observations.
+
+#'@export
+AM_salso <- function(fit, loss, maxNClusters = 0, nRuns = 16, maxZealousAttempts = 10, probSequentialAllocation = 0.5, nCores = 0, ...){
+	return(salso(fit, loss, maxNClusters, nRuns, maxZealousAttempts, probSequentialAllocation, nCores))
+}
