@@ -266,8 +266,10 @@ AM_plot_chaincor=function(x, tags = NULL, lags = NULL, title = "MCMC Results"){
 #'@param y_lim_param A vector with two elements describing the plot's y_axis scale, e.g. c(0, 1).
 AM_plot_mvb_cluster_frequency <- function(fit, y, x_lim_param= c(0.8, 7.2), y_lim_param = c(0,1)){
 
-  result = AM_binder(fit)
-  hatc = result$Labels
+
+  eam = AM_clustering(fit)
+  result = AM_salso(eam, "binder")
+  hatc = result
   hatk = length(unique(hatc))
   ci = t(do.call(cbind,fit$CI)) +1
   

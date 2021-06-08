@@ -165,7 +165,7 @@ is.nonNegNumberLessThan1 <- function(x) {
 #' salso function. See salso for more details.
 #'  
 
-#' @param fit an \code{\link{AM_mcmc_output}} object. 
+#' @param eam a co-clustering/ clustering matrix. 
 #' @param loss the recommended loss functions to be used are the "binder" or "VI". However, other loss functions that are supported
 #' can be found in the R-package salso's salso function. 
 #' @param maxClusts Maximum number of clusters to be considered. 
@@ -180,6 +180,6 @@ is.nonNegNumberLessThan1 <- function(x) {
 #' @return An integer vector containing the expected partition labels of the observations.
 
 #'@export
-AM_salso <- function(fit, loss, maxNClusters = 0, nRuns = 16, maxZealousAttempts = 10, probSequentialAllocation = 0.5, nCores = 0, ...){
-	return(salso(fit, loss, maxNClusters, nRuns, maxZealousAttempts, probSequentialAllocation, nCores))
+AM_salso <- function(eam, loss, maxNClusters = 0, nRuns = 16, maxZealousAttempts = 10, probSequentialAllocation = 0.5, nCores = 0, ...){
+	return(salso(eam, loss, maxNClusters, nRuns, maxZealousAttempts, probSequentialAllocation, nCores))
 }
