@@ -111,12 +111,21 @@ Thanks for your contributions:
   - File writing feature
   - Arrange layout of summary
 
-## To Remember before submit
+## To Remember before submitting
 
 ### Package testing
 
- - Check the package works for windows with not ERRORS no WARNINGS and possibly no NOTES.
+ - `make check` has to pass locally and remotely (on travis) with no WARNINGs and no ERRORs.
+
+ - Making sure to go through the points
+  - here: https://cran.r-project.org/web/packages/submission_checklist.html
+  - and here: https://cran.r-project.org/web/packages/policies.html
+
+
+
+ - Checking that the package works for windows with no ERRORS no WARNINGS and possibly no NOTES.
    URL: https://win-builder.r-project.org/
+
 
 ### Feedback from CRAN
 
@@ -133,3 +142,7 @@ suppressed if needed.
   - Check every headers with wrong authors
   - Please remove the command 'rm(list=ls())' from your files.
 
+### Submit the Package
+
+ - The URL is here: https://cran.r-project.org/submit.html
+ - To make the package: `make AntMAN_1.1.0.tar.gz`
