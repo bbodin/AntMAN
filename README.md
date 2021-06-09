@@ -113,6 +113,13 @@ Thanks for your contributions:
 
 ## To Remember before submit
 
+### Package testing
+
+ - Check the package works for windows with not ERRORS no WARNINGS and possibly no NOTES.
+   URL: https://win-builder.r-project.org/
+
+### Feedback from CRAN
+
   - Please replace \\\% in your Rd-files by \%.
   - Please add and explain the returned objects.
   - Please ensure that your functions do not modify (save or delete) the
