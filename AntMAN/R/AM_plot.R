@@ -41,7 +41,7 @@ density_discrete_variables <- function(Par, color=rgb(0.4, 0.8, 1, alpha=0.7), s
 
 #' Plot \code{\link{AM_mcmc_output}} scatterplot matrix
 #' 
-#' visualise a matrix of plots describing the MCMC results. This function is built upon ggpairs.
+#' visualise a matrix of plots describing the MCMC results. This function is built upon GGally's plotting function ggpairs \insertCite{GGally}{AntMAN}.
 #'  
 #'@param x an \code{\link{AM_mcmc_output}} object, produced by calling \code{\link{AM_mcmc_fit}}.
 #'@param tags A list of variables to consider for plotting. This function only produces meaningful plots for variables that have fixed dimension across the draws. If not specified, plots pertaining to M and K will be produced. 
@@ -67,11 +67,11 @@ AM_plot_pairs=function(x,tags = NULL,title = "MCMC Results"){
 
 }
 
-#' Plot the density of variables from \code{\link{AM_mcmc_output}} object.
+#' Plot the density of variables from \code{\link{AM_mcmc_output}} object
 #' 
 #'
 #' Given an \code{\link{AM_mcmc_output}} object, AM_plot_density plots the posterior density of the specified variables of interest. AM_plot_density makes use 
-#' of bayesplot's plotting function mcmc_areas.
+#' of bayesplot's plotting function mcmc_areas \insertCite{bayesplot}{AntMAN}.
 #' 
 #'  
 #'@param x An \code{\link{AM_mcmc_output}} fit object, produced by calling \code{\link{AM_mcmc_fit}}.
@@ -96,7 +96,7 @@ AM_plot_density=function(x,tags = NULL,title = "MCMC Results"){
 }
 
 
-#' Plot the probability mass function of variables from \code{\link{AM_mcmc_output}} object.
+#' Plot the probability mass function of variables from \code{\link{AM_mcmc_output}} object
 #' 
 #'
 #' Given an \code{\link{AM_mcmc_output}} object, AM_plot_pmf plots the posterior probability mass function of the specified variables.
@@ -122,11 +122,11 @@ AM_plot_pmf=function(x,tags = NULL,title = "MCMC Results"){
 	
 }
 
-#' Plot traces of variables from an \code{\link{AM_mcmc_output}} object.  
+#' Plot traces of variables from an \code{\link{AM_mcmc_output}} object 
 #' 
 #'
 #' Given an \code{\link{AM_mcmc_output}} object, \code{\link{AM_plot_traces}} visualises the traceplots of the specified variables involved in the MCMC inference. 
-#' AM_plot_traces is built upon bayesplot's mcmc_trace.
+#' AM_plot_traces is built upon bayesplot's mcmc_trace \insertCite{bayesplot}{AntMAN}.
 #'  
 #'@param x An \code{\link{AM_mcmc_output}} fit object, produced by calling \code{\link{AM_mcmc_fit}}.
 #'@param tags A list of variables to consider. This function only produces meaningful plots for variables that have fixed dimension across the draws. If not specified, plots pertaining to M and K will be produced. 
@@ -151,10 +151,11 @@ AM_plot_traces=function(x,tags = NULL,title = "MCMC Results"){
 	
 }
 
-#' Plot posterior interval estimates obtained from MCMC draws.
+#' Plot posterior interval estimates obtained from MCMC draws
 #' 
 #' Given an object of class \code{\link{AM_mcmc_fit}}, AM_plot_values visualises the interval estimates of the specified variables involved in the MCMC inference. 
-#'  
+#' AM_plot_values is built upon bayesplot's mcmc_intervals \insertCite{bayesplot}{AntMAN}.  
+#'
 #'@param x An \code{\link{AM_mcmc_output}} fit object, produced by calling \code{\link{AM_mcmc_fit}}.
 #'@param tags A list of variables to consider. This function only produces meaningful plots for variables that have fixed dimension across the draws. If not specified, plots pertaining to M and K will be produced. 
 #'@param title Title for the plot.
@@ -185,10 +186,11 @@ AM_plot_values=function(x,tags = NULL,title = "MCMC Results"){
 #'  Given an \code{\link{AM_mcmc_output}} object, this function will produce an image of the Similarity Matrix.
 #'  
 #'@param x An \code{\link{AM_mcmc_output}} fit object, produced by calling \code{AM_mcmc_fit}.
+#'@param loss Loss function to minimise
 #'@param ... All additional parameters wil lbe pass to the image command.
 #'  
 #'@export
-AM_plot_similarity_matrix=function(x, ...){
+AM_plot_similarity_matrix=function(x, loss, ...){
 	
 	sorted = TRUE
 	arguments <- list(...)
@@ -201,9 +203,12 @@ AM_plot_similarity_matrix=function(x, ...){
 		
 		message("Plotting Similarity Matrix");
 
-		binder_result = AM_binder(x)
-		clustering = binder_result[["Labels"]]
-		pij = AM_coclustering(x)
+		pij = AM_clustering(x)
+		clustering = AM_salso(pij, loss=loss)
+
+		# binder_result = AM_binder(x)
+		# clustering = binder_result[["Labels"]]
+		# pij = AM_coclustering(x)
 		
 		if (sorted) {
 			new_indexes = order(clustering, decreasing = T)
@@ -220,7 +225,7 @@ AM_plot_similarity_matrix=function(x, ...){
 #'  
 #'
 #' Given an \code{\link{AM_mcmc_output}} object, this function produces the autocorrelation function bars describing the MCMC results. AM_plot_chaincor makes use of bayesplot’s 
-#' plotting function mcmc_acf_bar.
+#' plotting function mcmc_acf_bar \insertCite{bayesplot}{AntMAN}.
 
 #'  
 #'@param x An \code{\link{AM_mcmc_output}} object, produced by calling \code{\link{AM_mcmc_fit}}.
@@ -270,8 +275,10 @@ AM_plot_chaincor=function(x, tags = NULL, lags = NULL, title = "MCMC Results"){
 #'@export
 AM_plot_mvb_cluster_frequency <- function(fit, y, x_lim_param= c(0.8, 7.2), y_lim_param = c(0,1)){
 
-  result = AM_binder(fit)
-  hatc = result$Labels
+
+  eam = AM_clustering(fit)
+  result = AM_salso(eam, "binder")
+  hatc = result
   hatk = length(unique(hatc))
   ci = t(do.call(cbind,fit$CI)) +1
   

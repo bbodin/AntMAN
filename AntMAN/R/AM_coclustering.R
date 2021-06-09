@@ -17,6 +17,7 @@
 #'  
 #'@param fit an \code{\link{AM_mcmc_output}} object.
 #'@return co-clustering matrix
+#'@seealso \code{\link{AM_clustering}}
 #'
 #'@export
 AM_coclustering = function (fit) {
@@ -32,5 +33,29 @@ AM_coclustering = function (fit) {
 	pij = matrix(unlist(pij), ncol=N, nrow=N, byrow=F)
 	
 	return(coclustering_probability = pij);
+}
+
+
+#'  Return the clustering matrix
+#'  
+#'
+#'  Given an \code{\link{AM_mcmc_output}} object, this function returns the clustering matrix. 
+#'
+#' The clustering matrix is an M by n matrix. Each of the M rows represents a clustering of n items
+#' using cluster labels. Items i and j are in the same cluster if fit[m,i] == fit[m,j] for the mth clustering.
+
+
+#'@param fit an \code{\link{AM_mcmc_output}} object.
+#'@return clustering matrix
+#'@export
+#'@seealso \code{\link{AM_coclustering}}
+#'
+#' @examples
+#' ccm <- AM_clustering(fit)
+
+AM_clustering = function (fit) {
+	CI = as.matrix((AM_extract(fit, c("CI")))[["CI"]]);
+
+	return(CI);
 }
 
