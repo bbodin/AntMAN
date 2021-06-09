@@ -15,13 +15,15 @@ addons:
      - ccache
 r:
   - release
+  
 r_packages:
-  - devtools
+  - testthat 
+  - devtools 
 
 before_install:
   - mkdir $HOME/.R && echo -e 'CXX_STD = CXX14\n\nVER=\nCCACHE=ccache\nCC=$(CCACHE) gcc$(VER) -std=gnu99\nCXX=$(CCACHE) g++$(VER)\nC11=$(CCACHE) g++$(VER)\nC14=$(CCACHE) g++$(VER)\nFC=$(CCACHE) gfortran$(VER)\nF77=$(CCACHE) gfortran$(VER)' > $HOME/.R/Makevars
   - echo -e 'max_size = 5.0G\nsloppiness = include_file_ctime\nhash_dir=false' > $HOME/.ccache/ccache.conf
-  - make ./AntMAN/NAMESPACE
+#  - make ./AntMAN/NAMESPACE
   - cd AntMAN
   
 warnings_are_errors: true
