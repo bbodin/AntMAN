@@ -177,8 +177,7 @@
 #' argument.
 #' @param nCores Number of CPU cores to engage.
 
-#' @return An integer vector containing the expected partition labels of the observations.
-#'@importFrom salso
+
 
 #'@export
 AM_salso <- function(eam, loss, maxNClusters = 0, nRuns = 16, maxZealousAttempts = 10, probSequentialAllocation = 0.5, nCores = 0, ...){

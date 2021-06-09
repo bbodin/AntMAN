@@ -46,7 +46,4 @@ plot (fit_poisson_dirac)
 
 cluster = AM_binder(fit_poisson_dirac)$cluster 
 
-refit = AM_mcmc_refit(y = y_uvp , 
-              fit = fit_poisson_dirac , 
-              fixed_clustering = cluster, 
-              mcmc_parameters = mcmc_params )
+

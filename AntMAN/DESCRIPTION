@@ -1,6 +1,6 @@
 Package: AntMAN
-Version: 1.0.2
-Date: 2020-04-17
+Version: 1.1.0
+Date: 2021-05-26
 Type: Package
 Title: Anthology of Mixture Analysis Tools
 Authors@R: c(person("Priscilla", "Ong", role = c("aut", "edt"), email = "priscilla.ong@u.yale-nus.edu.sg"),

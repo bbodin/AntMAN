@@ -61,7 +61,7 @@ salso_result_t salsoCpp(const arma::mat &eam, ind_t maxClusts,
 				/* ITERATE OVER ITEMS */
 				tryNumClusts = std::min(currNumClusts + 1, maxClusts);
 				double bestLabelDelta = negative_infinity, tmpLabelDelta; // change in Binder score
-				ind_t bestLabel;
+				ind_t bestLabel = 0;
 				for (ind_t t = 0; t < tryNumClusts; ++t) {
 					/* ITERATE OVER CANDIDATE LABELS */
 					tmpLabelDelta = arma::accu(pOrd.unsafe_col(k).elem(arma::uvec(labelIndices[t]))); // change in Binder score if we use label t for item k

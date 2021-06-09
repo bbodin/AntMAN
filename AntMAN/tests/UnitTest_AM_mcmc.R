@@ -50,14 +50,14 @@ plot (fit)
 
 cluster = AM_binder(fit)$Labels 
 
-refit = AM_mcmc_refit(y = y_uvp , 
-		fit = fit , 
-		fixed_clustering = cluster, 
-		mcmc_parameters = mcmc_params )
+#refit = AM_mcmc_refit(y = y_uvp , 
+#		fit = fit , 
+#		fixed_clustering = cluster, 
+#		mcmc_parameters = mcmc_params )
 
 
-summary (refit)
-plot (refit)
+#summary (refit)
+#plot (refit)
 
 
 
@@ -66,5 +66,5 @@ plot (refit)
 ##############################################
 
 stopifnot(is.list(fit))
-stopifnot(is.list(refit))
+#stopifnot(is.list(refit))
 

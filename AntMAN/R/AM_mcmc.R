@@ -64,7 +64,7 @@ summary.AM_mcmc_configuration = function(object, ...){
 #'@importFrom graphics image
 #'@importFrom grDevices gray.colors
 #'@export
-plot.AM_mcmc_output=function(x){
+plot.AM_mcmc_output=function(x, ...){
 
 	print(AM_plot_pairs(x));readline(prompt="Press [enter] to continue")
 	print(AM_plot_pmf(x));readline(prompt="Press [enter] to continue")

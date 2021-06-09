@@ -4,7 +4,7 @@ R_FILES := $(shell find ./AntMAN/R ./AntMAN/tests -name \*.R -not -name RcppExpo
 
 R_CMD := R -q
 
-PACKAGE_VERSION=1.0.2
+PACKAGE_VERSION=1.1.0
 
 all : build_test/test_mixtures AntMAN.Rinstall/AntMAN/libs/AntMAN.so  AntMAN.pdf 
 
@@ -12,7 +12,7 @@ docker : Dockerfile
 	mkdir -p docker_share
 	sudo rm -rf docker_share/* 
 	chcon -Rt svirt_sandbox_file_t  docker_share/
-	cp -rf AntMAN Makefile new_tutorial.R tests_cpp/ docker_share/
+	cp -rf AntMAN Makefile tests_cpp/ docker_share/
 	sudo docker build -f Dockerfile.3.4.4 -t bbodin/antman344 .
 	sudo docker run -v `pwd`/docker_share:/tmp/mixture bbodin/antman344 
 
@@ -61,7 +61,7 @@ test : build_test/Makefile
 	+make -C build_test CTEST_OUTPUT_ON_FAILURE=1 all test
 
 deps :
-	echo "To be defined."
+	for f in devtools Rdpack salso mvtnorm mcclust GGally bayesplot RcppArmadillo dendextend ggdendro jpeg magrittr stringr ; do echo $$f ; R -q -e "install.packages(\"$$f\",repos = \"http://cran.us.r-project.org\");"; done
 
 clean : 
 	rm -rf build_test/ current *~ *.Rinstall *.pdf  *.tar.gz *.Rcheck ./AntMAN/NAMESPACE ./AntMAN/src/*.o ./AntMAN/src/*.so 	./AntMAN/src/*.rds ./AntMAN/src/RcppExports.cpp  ./AntMAN/R/RcppExports.R  ./AntMAN/man/*.Rd .Rd2pdf*

@@ -1,17 +1,20 @@
 /*
- *  AntMAN Package
+ * BasicTest.cpp
  *
+ *  Created on: May 11, 2021
+ *      Author: toky
  */
 
+#define BOOST_TEST_MODULE BasicTest
 
-#ifndef TESTS_CPP_AM_TEST_PRIORS_H_
-#define TESTS_CPP_AM_TEST_PRIORS_H_
+#include <boost/test/included/unit_test.hpp>
 
-#ifndef NO_RCPP
-#define NO_RCPP
-#endif
+#include <Prior.h>
+#include <PriorPoisson.h>
+#include <PriorNegativeBinomial.h>
 
-#include "../AntMAN/src/Priors.h"
+BOOST_AUTO_TEST_SUITE( test_suite_prior )
+
 
 void test_prior (Prior & to_test) {
 
@@ -43,13 +46,16 @@ void test_prior (Prior & to_test) {
 
 }
 
-PriorPoisson prepare_poisson () {
+
+BOOST_AUTO_TEST_CASE( test_poisson_prior )
+{
 	PriorPoisson to_test(poisson_gamma_h_param_t(2,1,1,0),poisson_gamma_q_param_t(1));
-	return to_test;
+	test_prior (to_test);
 }
 
-PriorNegativeBinomial prepare_negative_binomial () {
 
+BOOST_AUTO_TEST_CASE( test_negbin_prior )
+{
 	negbin_component R;
 	negbin_component P;
 	R.value = 1;
@@ -57,25 +63,12 @@ PriorNegativeBinomial prepare_negative_binomial () {
 	R.fixed = true;
 	P.fixed = true;
 
-    PriorNegativeBinomial to_test(negative_binomial_gamma_h_param_t(2,1,1,0),negative_binomial_gamma_q_param_t(R,P));
-	return to_test;
+	PriorNegativeBinomial to_test(negative_binomial_gamma_h_param_t(2,1,1,0),negative_binomial_gamma_q_param_t(R,P));
+
+	test_prior (to_test);
 }
 
-void test_priors () {
-
-	VERBOSE_LEVEL ( LOG_LEVEL );
-
-	PriorNegativeBinomial negbin  = prepare_negative_binomial ();
-	PriorPoisson     pois    = prepare_poisson ();
-
-	test_prior (pois);
-	test_prior (negbin);
+BOOST_AUTO_TEST_SUITE_END()
 
 
 
-}
-
-
-
-
-#endif /* TESTS_CPP_AM_TEST_PRIORS_H_ */
