@@ -168,7 +168,7 @@
 #' @param eam a co-clustering/ clustering matrix. See salso for more information on which matrix to use.
 #' @param loss the recommended loss functions to be used are the "binder" or "VI". However, other loss functions that are supported
 #' can be found in the R-package salso's salso function. 
-#' @param maxClusts Maximum number of clusters to be considered. 
+#' @param maxNClusters Maximum number of clusters to be considered. 
 #' The actual number of clusters searched may be lower. 
 #' @param nRuns Number of runs to try.
 #' @param maxZealousAttempts Maximum number of tries for zealous updates. See salso for more information.
