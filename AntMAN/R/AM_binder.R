@@ -178,7 +178,7 @@
 #' @param nCores Number of CPU cores to engage.
 
 
-
+#'@importFrom salso salso
 #'@export
 AM_salso <- function(eam, loss, maxNClusters = 0, nRuns = 16, maxZealousAttempts = 10, probSequentialAllocation = 0.5, nCores = 0, ...){
 	return(salso(eam, loss, maxNClusters, nRuns, maxZealousAttempts, probSequentialAllocation, nCores))
