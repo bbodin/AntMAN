@@ -1,6 +1,6 @@
 # AntMAN: Anthology of Mixture ANalysis tools
 
-[![Travis build status](https://travis-ci.org/bbodin/AntMAN.svg?branch=master)](https://travis-ci.org/bbodin/AntMAN)
+[![Travis build status](https://travis-ci.com/bbodin/AntMAN.svg?branch=master)](https://travis-ci.com/bbodin/AntMAN)
 
  AntMan is a R package to fit Finite Bayesian Mixture model with random number of component. The MCMC algorithm beyond batman is based on point processes and offer a more computational efficeint alternative to Reversible Jump. Different mixture kernels can be specified: Univariate Gaussian, Univariate Poisson, Univariate Binomial, Multivariate Gaussian, Multivariate Bernoulli (Latent Class Analysis). For the parameters characterising the mixture kernel, we specify conjugate priors, with possibly user specified hyper-parameters. We allow for different choices for the prior on the number of components: Shifted Poisson, Negative Binomial, and Point Masses (i.e. mixtures with fixed number of components).
 
@@ -111,7 +111,23 @@ Thanks for your contributions:
   - File writing feature
   - Arrange layout of summary
 
-## To Remember before submit
+## To Remember before submitting
+
+### Package testing
+
+ - `make check` has to pass locally and remotely (on travis) with no WARNINGs and no ERRORs.
+
+ - Making sure to go through the points
+  - here: https://cran.r-project.org/web/packages/submission_checklist.html
+  - and here: https://cran.r-project.org/web/packages/policies.html
+
+
+
+ - Checking that the package works for windows with no ERRORS no WARNINGS and possibly no NOTES.
+   URL: https://win-builder.r-project.org/
+
+
+### Feedback from CRAN
 
   - Please replace \\\% in your Rd-files by \%.
   - Please add and explain the returned objects.
@@ -126,3 +142,7 @@ suppressed if needed.
   - Check every headers with wrong authors
   - Please remove the command 'rm(list=ls())' from your files.
 
+### Submit the Package
+
+ - The URL is here: https://cran.r-project.org/submit.html
+ - To make the package: `make AntMAN_1.1.0.tar.gz`
