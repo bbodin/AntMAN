@@ -234,7 +234,7 @@ AM_plot_similarity_matrix = function(x, loss, ...){
 # 		# pij = AM_coclustering(x)
 		
 # 		if (sorted) {
-# 			new_indexes = order(clustering, decreasing = T)
+# 			new_indexes = order(clustering, decreasing = TRUE)
 # 			pij = pij[new_indexes,new_indexes];
 # 		}
 # 		image(pij,main="Similarity matrix") 

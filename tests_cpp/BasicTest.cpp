@@ -1,8 +1,7 @@
 /*
- * BasicTest.cpp
+ *  AntMAN Package
+ *  Unit test
  *
- *  Created on: May 11, 2021
- *      Author: toky
  */
 
 #define BOOST_TEST_MODULE BasicTest
