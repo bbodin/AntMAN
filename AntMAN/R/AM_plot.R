@@ -190,12 +190,13 @@ AM_plot_values=function(x,tags = NULL,title = "MCMC Results"){
 #' to minimise is "binder".
 #'@param ... All additional parameters wil lbe pass to the image command.
 #'  
+#'@importFrom graphics title
 #'@export
 
 AM_plot_similarity_matrix = function(x, loss, ...){
 
-	CCM = AM_coclustering(fit)
-	CM = AM_clustering(fit)
+	CCM = AM_coclustering(x)
+	CM = AM_clustering(x)
 
 	if (loss == 'VI'){
 		eam = CM
@@ -297,7 +298,7 @@ AM_plot_chaincor=function(x, tags = NULL, lags = NULL, title = "MCMC Results"){
 #'@importFrom grDevices n2mfrow
 #'@importFrom graphics axis
 #'@export
-AM_plot_mvb_cluster_frequency <- function(fit, y, x_lim_param= c(0.8, 7.2), y_lim_param = c(0,1)){
+AM_plot_mvb_cluster_frequency = function(fit, y, x_lim_param= c(0.8, 7.2), y_lim_param = c(0,1)){
 
 
   eam = AM_clustering(fit)
