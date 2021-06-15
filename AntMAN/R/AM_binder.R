@@ -168,18 +168,18 @@
 #' @param eam a co-clustering/ clustering matrix. See salso for more information on which matrix to use.
 #' @param loss the recommended loss functions to be used are the "binder" or "VI". However, other loss functions that are supported
 #' can be found in the R-package salso's salso function. 
-#' @param maxClusts Maximum number of clusters to be considered. 
-#' The actual number of clusters searched may be lower. 
-#' @param nRuns Number of runs to try.
-#' @param maxZealousAttempts Maximum number of tries for zealous updates. See salso for more information.
+#' @param maxNClusters Maximum number of clusters to be considered. 
+#' The actual number of clusters searched may be lower. Default is 0.
+#' @param nRuns Number of runs to try. Default is 16.
+#' @param maxZealousAttempts Maximum number of tries for zealous updates. Default is 10. See salso for more information.
 #' @param probSequentialAllocation  The probability of using sequential allocation instead of using random sampling via sample(1:K,ncol(x),TRUE), 
-#' where K is maxNClusters. See salso for more information.
+#' where K is maxNClusters. Default is 0.5. See salso for more information.
 #' argument.
-#' @param nCores Number of CPU cores to engage.
+#' @param nCores Number of CPU cores to engage. Default is 0.
 
 
 #'@importFrom salso salso
 #'@export
-AM_salso <- function(eam, loss, maxNClusters = 0, nRuns = 16, maxZealousAttempts = 10, probSequentialAllocation = 0.5, nCores = 0, ...){
+AM_salso = function(eam, loss, maxNClusters = 0, nRuns = 16, maxZealousAttempts = 10, probSequentialAllocation = 0.5, nCores = 0){
 	return(salso(eam, loss, maxNClusters, nRuns, maxZealousAttempts, probSequentialAllocation, nCores))
 }
