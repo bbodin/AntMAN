@@ -44,6 +44,8 @@ fit_poisson_dirac <- AM_mcmc_fit(
 summary (fit_poisson_dirac)
 plot (fit_poisson_dirac)
 
-cluster = AM_binder(fit_poisson_dirac)$cluster 
+eam = AM_clustering(fit)
+cluster = AM_salso(eam, "binder")
+#cluster = AM_binder(fit_poisson_dirac)$cluster 
 
 

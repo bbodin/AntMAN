@@ -186,40 +186,64 @@ AM_plot_values=function(x,tags = NULL,title = "MCMC Results"){
 #'  Given an \code{\link{AM_mcmc_output}} object, this function will produce an image of the Similarity Matrix.
 #'  
 #'@param x An \code{\link{AM_mcmc_output}} fit object, produced by calling \code{AM_mcmc_fit}.
-#'@param loss Loss function to minimise
+#'@param loss Loss function to minimise. Specify either "VI" or "binder". If not specified, the default loss
+#' to minimise is "binder".
 #'@param ... All additional parameters wil lbe pass to the image command.
 #'  
 #'@export
-AM_plot_similarity_matrix=function(x, loss, ...){
-	
-	sorted = TRUE
-	arguments <- list(...)
-	if ("sorted" %in% names(arguments)) {
-		sorted = arguments[[sorted]]
-	}
-	
-	
-	if (!is.null(x$CI)) {
-		
-		message("Plotting Similarity Matrix");
 
-		pij = AM_clustering(x)
-		clustering = AM_salso(pij, loss=loss)
+AM_plot_similarity_matrix = function(x, loss, ...){
 
-		# binder_result = AM_binder(x)
-		# clustering = binder_result[["Labels"]]
-		# pij = AM_coclustering(x)
-		
-		if (sorted) {
-			new_indexes = order(clustering, decreasing = T)
-			pij = pij[new_indexes,new_indexes];
-		}
-		image(pij,main="Similarity matrix") 
-	} else {
-		warning("CI has not been generated. Cannot plot the similarity matrix.")
+	CCM = AM_coclustering(fit)
+	CM = AM_clustering(fit)
+
+	if (loss == 'VI'){
+		eam = CM
 	}
-	
+	else{
+		eam = CCM
+	}
+
+	hatc = AM_salso(eam, loss, 'maxZealousAttempts'=0, 'probSequentialAllocation'=1)
+
+	par(mar=c(5,5,5,5))
+	image(CCM[sort(hatc), sort(hatc)], axes=FALSE)
+	axis(side=1, at=seq(0,1,length.out=ncol(CCM)), labels=sort(hatc), las=2)
+	axis(side=2, at=seq(0,1,length.out=ncol(CCM)), labels=sort(hatc), las=2)
+	title(main = "Ordered Similarity Matrix", cex.main=0.7)
 }
+
+# AM_plot_similarity_matrix=function(x, loss, ...){
+	
+# 	sorted = TRUE
+# 	arguments <- list(...)
+# 	if ("sorted" %in% names(arguments)) {
+# 		sorted = arguments[[sorted]]
+# 	}
+	
+	
+# 	if (!is.null(x$CI)) {
+		
+# 		message("Plotting Similarity Matrix");
+
+# 		pij = AM_clustering(x)
+# 		clustering = AM_salso(pij, loss=loss)
+
+# 		# binder_result = AM_binder(x)
+# 		# clustering = binder_result[["Labels"]]
+# 		# pij = AM_coclustering(x)
+		
+# 		if (sorted) {
+# 			new_indexes = order(clustering, decreasing = T)
+# 			pij = pij[new_indexes,new_indexes];
+# 		}
+# 		image(pij,main="Similarity matrix") 
+# 	} else {
+# 		warning("CI has not been generated. Cannot plot the similarity matrix.")
+# 	}
+	
+# }
+
 #'  Plot the Autocorrelation function
 #'  
 #'  
