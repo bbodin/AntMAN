@@ -68,7 +68,7 @@ public :
 		}
 
 
-#pragma omp parallel for num_threads(4) schedule(static, 8) if (this->get_parallel())
+#pragma omp parallel for if (this->get_parallel())  num_threads(4) schedule(static, 8)
 		for (int i=0; i < n; i++) {
 
 			arma::vec pesi(M);

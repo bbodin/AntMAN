@@ -7,7 +7,6 @@
 
 #' S3 class AM_mix_hyperparams
 #' @description Object type returned by \code{AM_mix_hyperparams_*} commands.
-#' @exportClass AM_mix_hyperparams
 #' @seealso \code{\link{AM_mix_hyperparams_unipois}}, \code{\link{AM_mix_hyperparams_uninorm}}, \code{\link{AM_mix_hyperparams_multiber}},
 #' \code{\link{AM_mix_hyperparams_multinorm}}
 #' @name AM_mix_hyperparams

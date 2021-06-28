@@ -25,7 +25,7 @@
 #' @export
 #'
 #' @examples
-#' mvb_output <- AM_demo_mvb_poi()
+#' # mvb_output <- AM_demo_mvb_poi()
 AM_demo_mvb_poi = function () {
 	
 	set.seed(123) 
@@ -78,7 +78,7 @@ AM_demo_mvb_poi = function () {
 #' @export
 #'
 #' @examples
-#' mvn_output <- AM_demo_mvn_poi()
+#' # mvn_output <- AM_demo_mvn_poi()
 AM_demo_mvn_poi = function () {
 	
 	set.seed(123) 
@@ -154,7 +154,7 @@ AM_demo_mvn_poi = function () {
 #' @export
 #'
 #' @examples
-#' mvn_output <- AM_demo_uvn_poi()
+#' # mvn_output <- AM_demo_uvn_poi()
 AM_demo_uvn_poi = function () {
 	
 	set.seed(123) 
@@ -207,7 +207,7 @@ AM_demo_uvn_poi = function () {
 #' @export
 #'
 #' @examples
-#' mvn_output <- AM_demo_uvn_poi()
+#' # mvn_output <- AM_demo_uvn_poi()
 AM_demo_uvp_poi = function () {
 	
 	set.seed(123) 

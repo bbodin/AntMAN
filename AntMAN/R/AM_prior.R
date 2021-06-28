@@ -7,7 +7,6 @@
 
 #' S3 class AM_prior
 #' @description Object type returned by \code{AM_prior_*} commands.
-#' @exportClass AM_prior
 #' @seealso \code{\link{AM_prior}}
 #' @name AM_prior
 NULL
