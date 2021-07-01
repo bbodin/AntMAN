@@ -50,10 +50,10 @@ AM_coclustering = function (fit) {
 #'@export
 #'@seealso \code{\link{AM_coclustering}}
 #'
-#' @examples
-#' # ccm <- AM_clustering(fit)
-
-
+#'@examples
+#'\dontrun{
+#'ccm <- AM_clustering(fit)
+#'}
 AM_clustering = function (fit) {
 	CI = as.matrix((AM_extract(fit, c("CI")))[["CI"]]);
 	return(CI);
