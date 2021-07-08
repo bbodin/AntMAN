@@ -20,9 +20,6 @@
 #'
 #' @keywords internal
 #'
-#' @examples
-#' #dd= IAM_compute_stirling_ricor_abs(11,10)
-#' #print(dd)
 IAM_compute_stirling_ricor_abs <- function (n,gamma) {
 	return(compute_stirling_ricor_abs(n,gamma));
 }
@@ -38,9 +35,6 @@ IAM_compute_stirling_ricor_abs <- function (n,gamma) {
 #' @return A vector of length n, reporting the values ... for \code{k=1,...,n}
 #'
 #' @keywords internal
-#' @examples
-#' #dd= IAM_compute_stirling_ricor_log(11,10)
-#' #print(dd)
 IAM_compute_stirling_ricor_log<- function (n,gamma) {
 	return(compute_stirling_ricor_log(n,gamma));
 }
@@ -57,15 +51,6 @@ IAM_compute_stirling_ricor_log<- function (n,gamma) {
 #'
 #' @keywords internal
 #'
-#' @examples
-#' #n=1000
-#' #Lam=100
-#' #gam=0.5
-#' #vnk= IAM_VnkPoisson(n,Lam,gam)
-#' #stir= IAM_compute_stirling_ricor_log(n, gam)
-#' #plot(exp(vnk+stir))
-#' #sum(exp(vnk+stir ))
-
 IAM_VnkPoisson <- function (n,Lambda,gamma) {
 	return(VnkPoisson(n,Lambda,gamma));
 }
@@ -84,16 +69,6 @@ IAM_VnkPoisson <- function (n,Lambda,gamma) {
 #'
 #' @keywords internal
 #'
-#' @examples
-#' #n=1000
-#' #r=1000
-#' #p=0.5
-#' #gam=0.5
-#' #vnk= IAM_VnkNegBin(n,r,p,gam);
-#' #stir= IAM_compute_stirling_ricor_log(n, gam)
-#' #plot(exp(vnk+stir+(1:n)*log(gam)))
-#' #sum(exp(vnk+stir))
-
 IAM_VnkNegBin <- function (n,r,p,gam) {
 	return(VnkNegBin(n,r,p,gam));
 }
@@ -114,16 +89,6 @@ IAM_VnkNegBin <- function (n,r,p,gam) {
 #'
 #' @keywords internal
 #'
-#' @examples
-#' #n=200
-#' #Mstar=100
-#' #gam=0.5
-#' #vvv=IAM_VnkDelta(n,Mstar,gam);
-#' #stir= IAM_compute_stirling_ricor_log(n, gam)
-#' #stir
-#' #plot(exp(vvv+stir) )
-#' #sum(exp(vvv+stir ))
-
 IAM_VnkDelta <- function (n,Mstar,gamma) {
 	return(VnkDelta(n,Mstar,gamma));
 }
