@@ -24,10 +24,10 @@ density_discrete_variables <- function(Par, color=rgb(0.4, 0.8, 1, alpha=0.7), s
 		#	print("ciao")
 	}else{
 		maxy <- rep(max(unlist(tables)),rows)
-		#	print("CIAO")
 	}
-	#print(maxy)
-	### Allow the user to set a 
+
+	oldpar <- par(no.readonly = TRUE)   
+  	on.exit(par(oldpar)) 
 	
 	par(mfrow=c(rows,1))
 	for(r in 1:rows){
@@ -323,6 +323,9 @@ AM_plot_mvb_cluster_frequency = function(fit, y, x_lim_param= c(0.8, 7.2), y_lim
   
   # obtain col names (if any)
   col_names = colnames(y)
+
+  oldpar <- par(no.readonly = TRUE)   
+  on.exit(par(oldpar)) 
   
   par(mfrow=rev(n2mfrow(hatk)))
   

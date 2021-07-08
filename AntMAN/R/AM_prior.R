@@ -29,6 +29,8 @@ NULL
 #'@importFrom grDevices gray.colors
 #'@export
 plot.AM_prior=function(x,...){
+	oldpar <- par(no.readonly = TRUE)   
+  	on.exit(par(oldpar)) 
 	n = length(x)
 	par(mar=c(3,3,1.5,0.5)+0.1)
 	par(mgp=c(2, 1.0, 0))
