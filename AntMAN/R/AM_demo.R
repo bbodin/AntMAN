@@ -28,7 +28,6 @@
 #' mvb_output <- AM_demo_mvb_poi()
 AM_demo_mvb_poi = function () {
 	
-	set.seed(123) 
 	
 	d <- 4
 	k <- 3
@@ -81,7 +80,6 @@ AM_demo_mvb_poi = function () {
 #' mvn_output <- AM_demo_mvn_poi()
 AM_demo_mvn_poi = function () {
 	
-	set.seed(123) 
 	
 	
 	MU <- matrix(nrow=3,ncol=2)
@@ -157,8 +155,7 @@ AM_demo_mvn_poi = function () {
 #' mvn_output <- AM_demo_uvn_poi()
 AM_demo_uvn_poi = function () {
 	
-	set.seed(123) 
-	
+
 	demo_univariate_normal <-AM_sample_uninorm(n = 500, pro=c(0.2,0.5,0.3),mmu=c(-2.1,0,2.3),ssd=c(0.5,0.5,0.5))
 	y_uvn  <- demo_univariate_normal$y
 	ci_uvn <- demo_univariate_normal$ci
@@ -210,7 +207,6 @@ AM_demo_uvn_poi = function () {
 #' mvn_output <- AM_demo_uvn_poi()
 AM_demo_uvp_poi = function () {
 	
-	set.seed(123) 
 	
 	demo_univariate_poisson <-AM_sample_unipois(n = 500, pro=c(0.2,0.5,0.3))
 	y_uvp  <- demo_univariate_poisson$y
