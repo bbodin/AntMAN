@@ -25,7 +25,9 @@
 #' @export
 #'
 #' @examples
-#' mvb_output <- AM_demo_mvb_poi()
+#' \donttest{
+#'  mvb_output <- AM_demo_mvb_poi()
+#' }
 AM_demo_mvb_poi = function () {
 	
 	
@@ -77,7 +79,9 @@ AM_demo_mvb_poi = function () {
 #' @export
 #'
 #' @examples
-#' mvn_output <- AM_demo_mvn_poi()
+#' \donttest{
+#'  mvn_output <- AM_demo_mvn_poi()
+#' }
 AM_demo_mvn_poi = function () {
 	
 	
@@ -152,7 +156,9 @@ AM_demo_mvn_poi = function () {
 #' @export
 #'
 #' @examples
-#' mvn_output <- AM_demo_uvn_poi()
+#' \donttest{
+#'  mvn_output <- AM_demo_uvn_poi()
+#' }
 AM_demo_uvn_poi = function () {
 	
 
@@ -204,7 +210,9 @@ AM_demo_uvn_poi = function () {
 #' @export
 #'
 #' @examples
-#' mvn_output <- AM_demo_uvn_poi()
+#' \donttest{
+#'  mvn_output <- AM_demo_uvn_poi()
+#' }
 AM_demo_uvp_poi = function () {
 	
 	

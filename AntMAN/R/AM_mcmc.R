@@ -6,14 +6,12 @@
 #######################################################################################
 #' S3 class AM_mcmc_output
 #' @description Output type of return values from  \code{\link{AM_mcmc_fit}}. 
-#' @exportClass AM_mcmc_output
 #' @seealso \code{\link{AM_mcmc_fit}}
 #' @name AM_mcmc_output
 NULL
 
 #' S3 class AM_mcmc_configuration
 #' @description Output type of return values from  \code{\link{AM_mcmc_parameters}}. 
-#' @exportClass AM_mcmc_configuration
 #' @seealso \code{\link{AM_mcmc_fit}}
 #' @name AM_mcmc_configuration
 NULL
@@ -227,9 +225,11 @@ AM_reshape <- function(fit, y){
 #'@param mcmc_parameters is a configuration list defined by AM_mcmc_parameters. See \code{\link{AM_mcmc_parameters}} for more details.
 #'@return The return value is a \code{\link{AM_mcmc_output}} object.
 #'@examples
-#' AM_mcmc_fit( AM_sample_unipois()$y, 
-#'              AM_mix_hyperparams_unipois (alpha0=2, beta0=0.2), 
-#'              mcmc_parameters = AM_mcmc_parameters(niter=50, burnin=0, thin=1, verbose=0))
+#' \donttest{
+#'  AM_mcmc_fit( AM_sample_unipois()$y, 
+#'               AM_mix_hyperparams_unipois (alpha0=2, beta0=0.2), 
+#'               mcmc_parameters = AM_mcmc_parameters(niter=50, burnin=0, thin=1, verbose=0))
+#' }
 #'@useDynLib AntMAN
 #'@export
 
@@ -293,14 +293,16 @@ AM_mcmc_fit <- function(
 #'@param mcmc_parameters is a configuration list defined by \code{\link{AM_mcmc_parameters}}. 
 #'@return The return value is an \code{\link{AM_mcmc_output}} object.
 #'@examples
-#' y = AM_sample_unipois()$y
-#' fit = AM_mcmc_fit( y , 
-#'              AM_mix_hyperparams_unipois (alpha0=2, beta0=0.2), 
-#'              mcmc_parameters = AM_mcmc_parameters(niter=20, burnin=0, thin=1, verbose=0))
-#' eam = AM_coclustering(fit)
-#' cluster = AM_salso(eam, "binder")
-#' refit = AM_mcmc_refit(y , fit, cluster, 
-#'         mcmc_parameters = AM_mcmc_parameters(niter=20, burnin=0, thin=1, verbose=0));
+#' \donttest{
+#'  y = AM_sample_unipois()$y
+#'  fit = AM_mcmc_fit( y , 
+#'               AM_mix_hyperparams_unipois (alpha0=2, beta0=0.2), 
+#'               mcmc_parameters = AM_mcmc_parameters(niter=20, burnin=0, thin=1, verbose=0))
+#'  eam = AM_coclustering(fit)
+#'  cluster = AM_salso(eam, "binder")
+#'  refit = AM_mcmc_refit(y , fit, cluster, 
+#'          mcmc_parameters = AM_mcmc_parameters(niter=20, burnin=0, thin=1, verbose=0));
+#' }
 #'@export
 
 AM_mcmc_refit <- function(

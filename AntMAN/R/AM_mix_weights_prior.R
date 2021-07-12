@@ -7,7 +7,6 @@
 
 #' S3 class AM_mix_weights_prior
 #' @description Object type returned by \code{AM_mix_weights_prior_*} commands.
-#' @exportClass AM_mix_weights_prior
 #' @seealso \code{\link{AM_mix_weights_prior_gamma}}
 #' @name AM_mix_weights_prior
 NULL
