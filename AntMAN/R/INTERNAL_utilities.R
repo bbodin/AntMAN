@@ -69,6 +69,7 @@ IAM_VnkPoisson <- function (n,Lambda,gamma) {
 #'
 #' @keywords internal
 #'
+
 IAM_VnkNegBin <- function (n,r,p,gam) {
 	return(VnkNegBin(n,r,p,gam));
 }
