@@ -20,14 +20,11 @@
 #'
 #' @keywords internal
 #'
-<<<<<<< HEAD
-=======
 #' @examples
 #' \dontrun{
 #'  dd= IAM_compute_stirling_ricor_abs(11,10)
 #'  print(dd)
 #' }
->>>>>>> d8c1a0ce39a011820a494b0bc60c2940ec14d725
 IAM_compute_stirling_ricor_abs <- function (n,gamma) {
 	return(compute_stirling_ricor_abs(n,gamma));
 }
@@ -43,14 +40,11 @@ IAM_compute_stirling_ricor_abs <- function (n,gamma) {
 #' @return A vector of length n, reporting the values ... for \code{k=1,...,n}
 #'
 #' @keywords internal
-<<<<<<< HEAD
-=======
 #' @examples
 #' \dontrun{
 #'  dd= IAM_compute_stirling_ricor_log(11,10)
 #'  print(dd)
 #' }
->>>>>>> d8c1a0ce39a011820a494b0bc60c2940ec14d725
 IAM_compute_stirling_ricor_log<- function (n,gamma) {
 	return(compute_stirling_ricor_log(n,gamma));
 }
@@ -67,8 +61,6 @@ IAM_compute_stirling_ricor_log<- function (n,gamma) {
 #'
 #' @keywords internal
 #'
-<<<<<<< HEAD
-=======
 #' @examples
 #' \dontrun{
 #'  n=1000
@@ -79,7 +71,6 @@ IAM_compute_stirling_ricor_log<- function (n,gamma) {
 #'  plot(exp(vnk+stir))
 #'  sum(exp(vnk+stir ))
 #' }
->>>>>>> d8c1a0ce39a011820a494b0bc60c2940ec14d725
 IAM_VnkPoisson <- function (n,Lambda,gamma) {
 	return(VnkPoisson(n,Lambda,gamma));
 }
@@ -98,9 +89,6 @@ IAM_VnkPoisson <- function (n,Lambda,gamma) {
 #'
 #' @keywords internal
 #'
-<<<<<<< HEAD
-
-=======
 #' @examples
 #' \dontrun{
 #'  n=1000
@@ -112,7 +100,6 @@ IAM_VnkPoisson <- function (n,Lambda,gamma) {
 #'  plot(exp(vnk+stir+(1:n)*log(gam)))
 #'  sum(exp(vnk+stir))
 #' }
->>>>>>> d8c1a0ce39a011820a494b0bc60c2940ec14d725
 IAM_VnkNegBin <- function (n,r,p,gam) {
 	return(VnkNegBin(n,r,p,gam));
 }
@@ -133,8 +120,6 @@ IAM_VnkNegBin <- function (n,r,p,gam) {
 #'
 #' @keywords internal
 #'
-<<<<<<< HEAD
-=======
 #' @examples
 #' \dontrun{
 #'  n=200
@@ -146,7 +131,6 @@ IAM_VnkNegBin <- function (n,r,p,gam) {
 #'  plot(exp(vvv+stir) )
 #'  sum(exp(vvv+stir ))
 #' }
->>>>>>> d8c1a0ce39a011820a494b0bc60c2940ec14d725
 IAM_VnkDelta <- function (n,Mstar,gamma) {
 	return(VnkDelta(n,Mstar,gamma));
 }
