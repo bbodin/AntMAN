@@ -172,6 +172,9 @@
 #' The actual number of clusters searched may be lower. Default is 0.
 #' @param nRuns Number of runs to try. Default is 16.
 #' @param maxZealousAttempts Maximum number of tries for zealous updates. Default is 10. See salso for more information.
+#' The actual number of clusters searched may be lower. 
+#' @param nRuns Number of runs to try.
+#' @param maxZealousAttempts Maximum number of tries for zealous updates. See salso for more information.
 #' @param probSequentialAllocation  The probability of using sequential allocation instead of using random sampling via sample(1:K,ncol(x),TRUE), 
 #' where K is maxNClusters. Default is 0.5. See salso for more information.
 #' argument.
