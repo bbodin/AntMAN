@@ -7,10 +7,11 @@
 
 #' S3 class AM_prior
 #' @description Object type returned by \code{AM_prior_*} commands.
-#' @seealso \code{\link{AM_prior_K_delta}}, \code{\link{AM_prior_K_Pois}},  \code{\link{AM_prior_K_NegBin}}
+#' @seealso \code{\link{AM_prior_K_Delta}}, \code{\link{AM_prior_K_Pois}},  \code{\link{AM_prior_K_NegBin}}
 #' @name AM_prior
 #' @return \code{\link{AM_prior}}
 NULL
+
 
 
 
