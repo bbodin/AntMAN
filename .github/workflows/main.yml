@@ -27,5 +27,5 @@ jobs:
       - uses: r-lib/actions/setup-r@v1
       - name: Check package
         run: |
-	  make deps
-	  make check
+          make deps
+          make check
