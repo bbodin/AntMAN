@@ -6,7 +6,7 @@
 #######################################################################################
 
 #' S3 class AM_mix_components_prior
-#' @description Object return by \code{AM_mix_components_prior_*}. 
+#' @description Object returned by \code{AM_mix_components_prior_*}. 
 #' @seealso \code{\link{AM_mix_components_prior_dirac}} 
 #'          \code{\link{AM_mix_components_prior_negbin}}
 #'          \code{\link{AM_mix_components_prior_pois}}
@@ -48,8 +48,8 @@ summary.AM_mix_components_prior = function(object, ...){
 #' This is the simplest option and it requires users to specify a value \eqn{M^*} 
 #' such that \eqn{Pr(M=M^* =1}. 
 #'
-#'@param Mstar      Fixed value  \eqn{M^*} for the number of components. 
-#'@return list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_fit}}. 
+#'@param Mstar   Fixed value  \eqn{M^*} for the number of components. 
+#'@return An \code{\link{AM_mix_components_prior}} object. This is a configuration list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_fit}}. 
 #'
 #'@keywords prior
 #'@seealso \code{\link{AM_mcmc_fit}}
@@ -97,7 +97,7 @@ AM_mix_components_prior_dirac <- function(Mstar) {
 #'@param R        It allows  to fix  \eqn{r} to a specific value.
 #'@param P        It allows  to fix  \eqn{p} to a specific value.
 #'
-#'@return A configuration list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_fit}}. 
+#'@return An \code{\link{AM_mix_components_prior}} object. This is a configuration list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_fit}}. 
 #'
 #'
 #'@keywords prior
@@ -156,7 +156,7 @@ AM_mix_components_prior_negbin <- function(a_R = NULL, b_R = NULL, a_P = NULL, b
 #'@param init   The  initial value for \eqn{\Lambda}, when specifying \code{a} and \code{b}.
 #'@param Lambda It allows to set the  hyperparameter \eqn{\Lambda} to be assigned a fixed value.
 #'
-#'@return A configuration list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_fit}}. 
+#'@return An \code{\link{AM_mix_components_prior}} object. This is a configuration list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_fit}}. 
 #'
 #'@keywords prior
 #'@seealso \code{\link{AM_mcmc_fit}}

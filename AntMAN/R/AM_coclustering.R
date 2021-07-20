@@ -16,7 +16,7 @@
 #' bi-clustering and block clustering \insertCite{govaert2013co}{AntMAN}, and is useful for understanding the number of clusters in the dataset. 
 #'  
 #'@param fit an \code{\link{AM_mcmc_output}} object.
-#'@return co-clustering matrix
+#'@return A numeric co-clustering matrix
 #'@seealso \code{\link{AM_clustering}}
 #'
 #'@export
@@ -46,7 +46,7 @@ AM_coclustering = function (fit) {
 
 
 #'@param fit an \code{\link{AM_mcmc_output}} object.
-#'@return clustering matrix
+#'@return A numeric clustering matrix
 #'@export
 #'@seealso \code{\link{AM_coclustering}}
 #'
