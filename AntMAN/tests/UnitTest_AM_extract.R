@@ -10,14 +10,18 @@
 ##############################################
 
 library("AntMAN")
-set.seed(123)
 
 ##############################################
 ### Prepare the data
 ##############################################
 
+set.seed(123)
 res_mvn_poi = AM_demo_mvn_poi () 
+
+set.seed(123)
 res_mvb_poi = AM_demo_mvb_poi () 
+
+set.seed(123)
 res_uvn_poi = AM_demo_uvn_poi () 
 
 
