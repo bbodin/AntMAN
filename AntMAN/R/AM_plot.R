@@ -24,10 +24,10 @@ density_discrete_variables <- function(Par, color=rgb(0.4, 0.8, 1, alpha=0.7), s
 		#	print("ciao")
 	}else{
 		maxy <- rep(max(unlist(tables)),rows)
-		#	print("CIAO")
 	}
-	#print(maxy)
-	### Allow the user to set a 
+
+	oldpar <- par(no.readonly = TRUE)   
+  	on.exit(par(oldpar)) 
 	
 	par(mfrow=c(rows,1))
 	for(r in 1:rows){
@@ -104,7 +104,7 @@ AM_plot_density=function(x,tags = NULL,title = "MCMC Results"){
 #'@param x An \code{\link{AM_mcmc_output}} object, produced by calling \code{\link{AM_mcmc_fit}}.
 #'@param tags A list of variables to consider. If not specified, the pmf of both M and K will be plotted.
 #'@param title Title for the plot.
-#'@return NULL
+#'@return No return value. Called for side effects.
 #'@importFrom grDevices rgb
 #'@export
 AM_plot_pmf=function(x,tags = NULL,title = "MCMC Results"){
@@ -131,7 +131,7 @@ AM_plot_pmf=function(x,tags = NULL,title = "MCMC Results"){
 #'@param x An \code{\link{AM_mcmc_output}} fit object, produced by calling \code{\link{AM_mcmc_fit}}.
 #'@param tags A list of variables to consider. This function only produces meaningful plots for variables that have fixed dimension across the draws. If not specified, plots pertaining to M and K will be produced. 
 #'@param title Title for the plot
-#'@return NULL
+#'@return No return value. Called for side effects.
 #'@importFrom bayesplot mcmc_trace color_scheme_set
 #'@export
 AM_plot_traces=function(x,tags = NULL,title = "MCMC Results"){
@@ -159,7 +159,7 @@ AM_plot_traces=function(x,tags = NULL,title = "MCMC Results"){
 #'@param x An \code{\link{AM_mcmc_output}} fit object, produced by calling \code{\link{AM_mcmc_fit}}.
 #'@param tags A list of variables to consider. This function only produces meaningful plots for variables that have fixed dimension across the draws. If not specified, plots pertaining to M and K will be produced. 
 #'@param title Title for the plot.
-#'@return NULL
+#'@return No return value. Called for side effects.
 #'@importFrom bayesplot mcmc_intervals color_scheme_set
 #'@export
 AM_plot_values=function(x,tags = NULL,title = "MCMC Results"){
@@ -189,7 +189,7 @@ AM_plot_values=function(x,tags = NULL,title = "MCMC Results"){
 #'@param loss Loss function to minimise. Specify either "VI" or "binder". If not specified, the default loss
 #' to minimise is "binder".
 #'@param ... All additional parameters wil lbe pass to the image command.
-#'  
+#'@return No return value. Called for side effects.
 #'@importFrom graphics title
 #'@export
 
@@ -259,6 +259,7 @@ AM_plot_similarity_matrix = function(x, loss, ...){
 #'@param lags An integer specifying the number of lags to plot. If no value is specified, the default number of lags shown is half the total number of iterations.
 #'@param title Title for the plot.
 #'  
+#'@return A ggplot object.
 #'@importFrom bayesplot mcmc_acf_bar
 #'@export
 AM_plot_chaincor=function(x, tags = NULL, lags = NULL, title = "MCMC Results"){
@@ -295,6 +296,7 @@ AM_plot_chaincor=function(x, tags = NULL, lags = NULL, title = "MCMC Results"){
 #'@param x_lim_param A vector with two elements describing the plot's x_axis scale, e.g. c(0.8, 7.2).
 #'@param y_lim_param A vector with two elements describing the plot's y_axis scale, e.g. c(0, 1).
 #'  
+#'@return No return value. Called for side effects.
 #'@importFrom grDevices n2mfrow
 #'@importFrom graphics axis
 #'@export
@@ -323,6 +325,9 @@ AM_plot_mvb_cluster_frequency = function(fit, y, x_lim_param= c(0.8, 7.2), y_lim
   
   # obtain col names (if any)
   col_names = colnames(y)
+
+  oldpar <- par(no.readonly = TRUE)   
+  on.exit(par(oldpar)) 
   
   par(mfrow=rev(n2mfrow(hatk)))
   

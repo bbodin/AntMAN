@@ -7,9 +7,12 @@
 
 #' S3 class AM_prior
 #' @description Object type returned by \code{AM_prior_*} commands.
-#' @seealso \code{\link{AM_prior}}
+#' @seealso \code{\link{AM_prior_K_delta}}, \code{\link{AM_prior_K_Pois}},  \code{\link{AM_prior_K_NegBin}}
 #' @name AM_prior
+#' @return \code{\link{AM_prior}}
 NULL
+
+
 
 
 
@@ -21,6 +24,7 @@ NULL
 #'@param x an \code{\link{AM_prior}} object. See \code{\link{AM_prior_K_Delta}}, \code{\link{AM_prior_K_NegBin}},
 #'			\code{\link{AM_prior_K_Pois}} for more details.
 #'@param ... all additional parameters are ignored.
+#'@return NULL. Called for side effects.
 #'  
 #'@method plot AM_prior 
 #'@importFrom graphics image
@@ -28,6 +32,8 @@ NULL
 #'@importFrom grDevices gray.colors
 #'@export
 plot.AM_prior=function(x,...){
+	oldpar <- par(no.readonly = TRUE)   
+  	on.exit(par(oldpar)) 
 	n = length(x)
 	par(mar=c(3,3,1.5,0.5)+0.1)
 	par(mgp=c(2, 1.0, 0))
@@ -40,6 +46,7 @@ plot.AM_prior=function(x,...){
 	#legend(x="topright",legend=c("INFORMATION"),col=c(1,2,3),lty=1,lwd=2,cex=1.5)
 }
 
+
 #'  summary information of the AM_prior object 
 #'  
 #'
@@ -48,7 +55,7 @@ plot.AM_prior=function(x,...){
 #'@param object an \code{\link{AM_prior}} object. See \code{\link{AM_prior_K_Delta}}, \code{\link{AM_prior_K_NegBin}},
 #'			\code{\link{AM_prior_K_Pois}} for more details.
 #'@param ... all additional parameters are ignored.
-#'  
+#'@return NULL. Called for side effects. 
 #'  
 #'@method summary AM_prior 
 #'@seealso \code{\link{AM_prior}}

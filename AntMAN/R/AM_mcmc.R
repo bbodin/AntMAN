@@ -8,12 +8,14 @@
 #' @description Output type of return values from  \code{\link{AM_mcmc_fit}}. 
 #' @seealso \code{\link{AM_mcmc_fit}}
 #' @name AM_mcmc_output
+#' @return \code{\link{AM_mcmc_output}}
 NULL
 
 #' S3 class AM_mcmc_configuration
 #' @description Output type of return values from  \code{\link{AM_mcmc_parameters}}. 
 #' @seealso \code{\link{AM_mcmc_fit}}
 #' @name AM_mcmc_configuration
+#' @return \code{\link{AM_mcmc_configuration}}
 NULL
 
 #################################################################################
@@ -33,6 +35,7 @@ NULL
 #'  
 #'@method summary AM_mcmc_configuration 
 #'@seealso \code{\link{AM_mcmc_parameters}}
+#'@return NULL. Called for side effects.
 #'@export
 summary.AM_mcmc_configuration = function(object, ...){
 	cat("\n", "AM_mcmc_configuration\n", sep = "")	
@@ -57,6 +60,7 @@ summary.AM_mcmc_configuration = function(object, ...){
 #'  
 #'@param x an \code{\link{AM_mcmc_output}} object.
 #'@param ... all additional parameters are ignored.
+#'@return NULL. Called for side effects.
 #'  
 #'@method plot AM_mcmc_output 
 #'@importFrom graphics image
@@ -69,6 +73,7 @@ plot.AM_mcmc_output=function(x, ...){
 	print(AM_plot_traces(x));readline(prompt="Press [enter] to continue")
 	print(AM_plot_values(x));readline(prompt="Press [enter] to continue")
 	print(AM_plot_chaincor(x));
+	return(NULL)
 }
 
 
@@ -94,6 +99,7 @@ list_values = function (x) {
 #'  
 #'@param object a \code{\link{AM_mcmc_output}} object
 #'@param ... all additional parameters are ignored
+#'@return NULL. Called for side effects.
 #'  
 #'  
 #'@method summary AM_mcmc_output 
@@ -219,11 +225,14 @@ AM_reshape <- function(fit, y){
 #' assigned to its own cluster.
 #'@param fixed_clustering if specified, this is the vector CI containing the cluster assignments. This will remain unchanged for every iteration.
 #'@param init_K initial value for  the number of cluster. When this is specified, AntMAN intitialises the clustering assign usng K-means.
-#'@param mix_components_prior is a configuration list defined by AM_mix_components_prior_* functions, where * denotes the chosen prior. See \code{\link{AM_mix_hyperparams_uninorm}}, 
-#' \code{\link{AM_mix_hyperparams_unipois}}, \code{\link{AM_mix_hyperparams_multinorm}}, and \code{\link{AM_mix_hyperparams_multiber}} for more details.
-#'@param mix_weight_prior is a configuration list defined by AM_weight_prior_* functions, where * denotes the chosen prior specification.
+#'@param mix_components_prior is a configuration list defined by AM_mix_components_prior_* functions, where * denotes the chosen prior.
+#' See \code{\link{AM_mix_components_prior_dirac}}, 
+#' \cr \code{\link{AM_mix_components_prior_negbin}}, \code{\link{AM_mix_components_prior_pois}} for more \cr
+#' details.
+#'@param mix_weight_prior is a configuration list defined by AM_weight_prior_* functions, where * denotes the chosen prior specification. 
+#' See \code{\link{AM_mix_weights_prior_gamma}} for more \cr details.
 #'@param mcmc_parameters is a configuration list defined by AM_mcmc_parameters. See \code{\link{AM_mcmc_parameters}} for more details.
-#'@return The return value is a \code{\link{AM_mcmc_output}} object.
+#'@return The return value is an \code{\link{AM_mcmc_output}} object.
 #'@examples
 #' \donttest{
 #'  AM_mcmc_fit( AM_sample_unipois()$y, 
@@ -346,7 +355,7 @@ AM_mcmc_refit <- function(
 #'@param output       A list of parameters output to return.
 #'@param output_dir   Path to an output dir, where to store all the outputs.
 #'@param parallel     Some of the algorithms can be run in parallel using OpenMP. When set to True, this parameter triggers the parallelism.
-#'@return \code{\link{AM_mcmc_configuration}} Object, this is a list to be used as \code{mcmc_parameters} argument with \code{\link{AM_mcmc_fit}}. 
+#'@return An \code{\link{AM_mcmc_configuration}} Object. This is a list to be used as \code{mcmc_parameters} argument with \code{\link{AM_mcmc_fit}}. 
 #'@examples 
 #' AM_mcmc_parameters (niter=1000, burnin=10000, thin=50)
 #' AM_mcmc_parameters (niter=1000, burnin=10000, thin=50, output=c("CI","W","TAU"))
