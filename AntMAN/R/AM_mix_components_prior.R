@@ -7,11 +7,14 @@
 
 #' S3 class AM_mix_components_prior
 #' @description Object returned by \code{AM_mix_components_prior_*}. 
-#' @seealso \code{\link{AM_mix_components_prior_dirac}} 
-#'          \code{\link{AM_mix_components_prior_negbin}}
+#' @seealso \code{\link{AM_mix_components_prior_dirac}},
+#'          \code{\link{AM_mix_components_prior_negbin}},
 #'          \code{\link{AM_mix_components_prior_pois}}
 #' @name AM_mix_components_prior
+#' @return \code{\link{AM_mix_components_prior}}
 NULL
+
+
 
 
 #'  summary information of the AM_mix_components_prior object
@@ -22,6 +25,7 @@ NULL
 #'  
 #'@param object an \code{\link{AM_mix_components_prior}} object.
 #'@param ... all additional parameters are ignored.
+#'@return NULL. Called for side effects.
 #'  
 #'@importFrom utils head
 #'@seealso \code{\link{AM_mix_components_prior}}

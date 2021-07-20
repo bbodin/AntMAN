@@ -175,10 +175,13 @@
 #' The actual number of clusters searched may be lower. 
 #' @param nRuns Number of runs to try.
 #' @param maxZealousAttempts Maximum number of tries for zealous updates. See salso for more information.
-#' @param probSequentialAllocation  The probability of using sequential allocation instead of using random sampling via sample(1:K,ncol(x),TRUE), 
+#' @param probSequentialAllocation  The probability of using sequential allocation instead of random sampling via sample(1:K,ncol(x),TRUE), 
 #' where K is maxNClusters. Default is 0.5. See salso for more information.
 #' argument.
 #' @param nCores Number of CPU cores to engage. Default is 0.
+
+#'@source David B. Dahl and Devin J. Johnson and Peter Müller (2021). salso: Search Algorithms and Loss Functions for Bayesian Clustering. R package version 0.2.15.
+#'@return A numeric vector describing the estimated partition. The integer values represent the cluster labels of each item respectively. 
 
 
 #'@importFrom salso salso

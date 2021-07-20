@@ -10,7 +10,10 @@
 #' @seealso \code{\link{AM_mix_hyperparams_unipois}}, \code{\link{AM_mix_hyperparams_uninorm}}, \code{\link{AM_mix_hyperparams_multiber}},
 #' \code{\link{AM_mix_hyperparams_multinorm}}
 #' @name AM_mix_hyperparams
+#' @return \code{\link{AM_mix_hyperparams}}
 NULL
+
+
 
 #' summary information of the AM_mix_hyperparams object 
 #'  
@@ -20,7 +23,7 @@ NULL
 #'  
 #'@param object an \code{\link{AM_mix_hyperparams}} object.
 #'@param ... all additional parameters are ignored.
-#'  
+#'@return NULL. Called for side effects.
 #'  
 #'@method summary AM_mix_hyperparams 
 #'@seealso \code{\link{AM_mix_hyperparams}}
@@ -56,7 +59,7 @@ summary.AM_mix_hyperparams = function(object, ...){
 #'
 #'@param alpha0       The shape  hyperparameter \eqn{\alpha_0}.
 #'@param beta0        The  rate hyperparameter \eqn{\beta_0}.
-#'@return A list to be used as \code{\link{AM_mix_hyperparams}} argument for \code{\link{AM_mcmc_fit}}.
+#'@return An \code{\link{AM_mix_hyperparams}} object. This is a configuration list to be used as \code{mix_kernel_hyperparams} argument for \code{\link{AM_mcmc_fit}}.
 #'@examples 
 #' AM_mix_hyperparams_unipois (alpha0=2, beta0=0.2)
 #'@export
@@ -90,7 +93,7 @@ AM_mix_hyperparams_unipois <- function(alpha0, beta0) {
 #'@param k0      The \eqn{\kappa_0} hyperparameter.
 #'@param nu0     The \eqn{\nu_0} hyperparameter.
 #'@param sig02   The \eqn{\sigma^2_0} hyperparameter.
-#'@return A list to be used as \code{\link{AM_mix_hyperparams}} argument for \code{\link{AM_mcmc_fit}}. 
+#'@return An \code{\link{AM_mix_hyperparams}} object. This is a configuration list to be used as \code{mix_kernel_hyperparams} argument for \code{\link{AM_mcmc_fit}}.
 #'@examples 
 #'      
 #'      #### This example ...
@@ -133,7 +136,7 @@ AM_mix_hyperparams_uninorm <- function(m0, k0, nu0, sig02) {
 #'
 #'@param a0        The a0 hyperparameters.
 #'@param b0        The b0 hyperparameters.
-#'@return A list to be used as \code{\link{AM_mix_hyperparams}} argument for \code{\link{AM_mcmc_fit}}.
+#'@return An \code{\link{AM_mix_hyperparams}} object. This is a configuration list to be used as \code{mix_kernel_hyperparams} argument for \code{\link{AM_mcmc_fit}}.
 #'@examples 
 #' AM_mix_hyperparams_multiber (a0= c(1,1,1,1),b0= c(1,1,1,1))
 #'@export
@@ -173,7 +176,7 @@ AM_mix_hyperparams_multiber <- function(a0, b0) {
 #'@param ka0    The hyperparameter \eqn{\kappa_0}.
 #'@param nu0    The hyperparameter \eqn{\nu_0}.
 #'@param Lam0   The hyperparameter \eqn{\Lambda_0}.
-#'@return A list to be used as \code{\link{AM_mix_hyperparams}} argument for \code{\link{AM_mcmc_fit}}.
+#'@return An \code{\link{AM_mix_hyperparams}} object. This is a configuration list to be used as \code{mix_kernel_hyperparams} argument for \code{\link{AM_mcmc_fit}}.
 #'@examples 
 #' AM_mix_hyperparams_multinorm ()
 #'@export

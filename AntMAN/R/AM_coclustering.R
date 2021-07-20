@@ -19,6 +19,11 @@
 #'@return A numeric co-clustering matrix
 #'@seealso \code{\link{AM_clustering}}
 #'
+#'@examples
+#'\donttest{
+#' fit = AM_demo_uvp_poi()$fit
+#'ccm <- AM_coclustering(fit)
+#'}
 #'@export
 AM_coclustering = function (fit) {
 	
@@ -51,7 +56,8 @@ AM_coclustering = function (fit) {
 #'@seealso \code{\link{AM_coclustering}}
 #'
 #'@examples
-#'\dontrun{
+#'\donttest{
+#' fit = AM_demo_uvp_poi()$fit
 #'ccm <- AM_clustering(fit)
 #'}
 AM_clustering = function (fit) {

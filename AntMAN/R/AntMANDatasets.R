@@ -33,7 +33,7 @@
 #'@format A numeric vector giving the speed of galaxies (1000*(km/second)) 
 #'@examples
 #'  data(galaxy)
-#'@source  Roeder, K. (1990) Density estimation with confidence sets exemplified by superclusters and voids in the galaxies, Journal of the American Statistical Association, 85: 617-624.  
+#'@source  Roeder, K. (1990). Density estimation with confidence sets exemplified by superclusters and voids in the galaxies, Journal of the American Statistical Association, 85: 617-624.  
 #'@keywords datasets
 #'@docType data
 "galaxy"

@@ -9,6 +9,7 @@
 #' @description Object type returned by \code{AM_mix_weights_prior_*} commands.
 #' @seealso \code{\link{AM_mix_weights_prior_gamma}}
 #' @name AM_mix_weights_prior
+#' @return \code{\link{AM_mix_weights_prior}}
 NULL
 
 
@@ -24,6 +25,7 @@ NULL
 #'  
 #'@param object an \code{\link{AM_mix_weights_prior}} object.
 #'@param ... all additional parameters are ignored.
+#'@return NULL. Called for side effects.
 #'  
 #'  
 #'@method summary AM_mix_weights_prior 
@@ -55,7 +57,7 @@ summary.AM_mix_weights_prior = function(object, ...){
 #'@param init   The init value for \eqn{\gamma}, when we assume \eqn{\gamma} random.
 #'@param gamma  It allows to fix \eqn{\gamma}  to a specific value.
 #'
-#'@return A configuration list to be used as \code{mix_components_prior} argument for \code{\link{AM_mcmc_fit}}. 
+#'@return A \code{\link{AM_mix_weights_prior}} object. This is a configuration list to be used as \code{mix_weight_prior} argument for \code{\link{AM_mcmc_fit}}. 
 #'
 #'@examples 
 #' AM_mix_weights_prior_gamma (a=1, b=1)
