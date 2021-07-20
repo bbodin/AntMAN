@@ -191,7 +191,7 @@ AM_extract = function(object, targets, iterations = NULL, debug = FALSE){
 			}
 		}
 		#TODO: working but not elegant
-		if (target == "mu" || target == "sig2" || target == "Sig" || target == "theta"){
+		if (target == "mu" || target == "sig2" || target == "Sig" || target == "theta" || target == "W"){
 			tmp = as.matrix(object[[target]])
 			if (!is.null(iterations)){
 				tmp = as.matrix(tmp[iterations,])
