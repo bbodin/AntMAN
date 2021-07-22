@@ -70,6 +70,9 @@ set.seed(321)
 #load("fit_car_long.Rout")
 plot(fit)
 
+#### Obtain original graphical parameters
+oldpar <- par(no.readonly = TRUE)
+
 #### Plot the trace plot of the number of cluster as well as the posterior pdf 
 par(mfrow=c(1,2))
 plot(fit$K)
@@ -250,6 +253,8 @@ plot(hclu,main="Cluster Dendogram",xlab="ord labels")
 plot(pnew,col=hatc,pch=pchin,xlab="1:n",ylab=expression(paste(p^new)),main="predictive index")
 abline(h=0.7,lty=2,col="red")
 
+#### reset the graphical parameters
+par(oldpar)
 
 
 dev.off()
