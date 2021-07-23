@@ -22,7 +22,7 @@ We also see:
  * Used \donttest{} and \dontrun{} where necessary
 
 
-### Last feedback - 1st July 2021
+### Previous feedback - 1st July 2021
 Please add \value to .Rd files regarding exported methods and explain
 the functions results in the documentation. Please write about the
 structure of the output (class) and also what the output means. (If a
@@ -97,4 +97,23 @@ Please explain this in the submission comments.
  - We removed dontrun{} or replaced it by donttest{} when necessary.
  - We made sure that any used of par() in the package functions is protected by on.exit()
  - We removed seed() from the package functions
- - To answer the question regarding the package being archived, we remove the include of openmp header and dont specify openmp options anymore. 
+ - To answer the question regarding the package being archived, we remove the include of openmp header and dont specify openmp options anymore.
+
+### Last feedback - 23rd July 2021
+
+Please always make sure to reset to user's options(), working directory
+or par() after you changed it in examples and vignettes and demos.
+e.g.:
+oldpar <- par(mfrow = c(1,2))
+...
+par(oldpar)
+
+e.g.: tests/UseCaseCarcinoma.R
+
+
+Please fix and resubmit.
+
+#### Update - 23rd July 2021
+
+ - We made sure that any used of par() in the Tests are secured with a oldpar.
+
